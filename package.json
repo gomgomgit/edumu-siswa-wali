@@ -3,10 +3,10 @@
   "version": "8.0.38",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --skip-plugins @vue/cli-plugin-eslint",
     "lint": "vue-cli-service lint",
     "rtl": "webpack --config webpack-rtl.config.js",
-    "serve": "vue-cli-service serve"
+    "serve": "vue-cli-service serve --skip-plugins @vue/cli-plugin-eslint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
