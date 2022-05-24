@@ -46,7 +46,7 @@ const config: LayoutConfigTypes = {
     theme: "dark",
     fixed: true,
     menuIcon: "svg",
-    minimized: false,
+    minimized: true,
     minimize: true,
     hoverable: true,
   },

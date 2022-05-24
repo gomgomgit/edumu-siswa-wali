@@ -1,3 +1,25 @@
+<script setup>
+import { defineProps, ref } from "vue";
+import KTAsidePrimary from "@/layout/aside/AsidePrimary.vue";
+import KTAsideSecondary from "@/layout/aside/AsideSecondary.vue";
+
+const props = defineProps({
+  lightLogo: String,
+  darkLogo: String,
+})
+
+function openAside () {
+  document.body.removeAttribute('data-kt-aside-minimize')
+  document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.remove('active')
+}
+
+function closeAside () {
+  document.body.setAttribute('data-kt-aside-minimize', 'on')
+  document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.add('active')
+}
+
+</script>
+
 <template>
   <div
     id="kt_aside"
@@ -9,26 +31,10 @@
     data-kt-drawer-width="auto"
     data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_toggle"
+    @mouseenter="openAside"
+    @mouseleave="closeAside"
   >
     <KTAsidePrimary></KTAsidePrimary>
     <KTAsideSecondary></KTAsideSecondary>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import KTAsidePrimary from "@/layout/aside/AsidePrimary.vue";
-import KTAsideSecondary from "@/layout/aside/AsideSecondary.vue";
-
-export default defineComponent({
-  name: "KTAside",
-  components: {
-    KTAsidePrimary,
-    KTAsideSecondary,
-  },
-  props: {
-    lightLogo: String,
-    darkLogo: String,
-  },
-});
-</script>
