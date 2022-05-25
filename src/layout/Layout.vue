@@ -34,15 +34,15 @@
   </div>
   <!-- end:: Body -->
   <KTScrollTop />
-  <KTMessengerDrawer />
+  <!-- <KTMessengerDrawer /> -->
   <KTUserMenu />
-  <KTCreateApp />
-  <KTInviteFriendsModal />
-  <KTUpgradePlanModal />
+  <!-- <KTCreateApp /> -->
+  <!-- <KTInviteFriendsModal /> -->
+  <!-- <KTUpgradePlanModal /> -->
 
-  <KTToolbarButtons />
-  <KTDemosDrawer />
-  <KTHelpDrawer />
+  <!-- <KTToolbarButtons /> -->
+  <!-- <KTDemosDrawer /> -->
+  <!-- <KTHelpDrawer /> -->
 </template>
 
 <script lang="ts">
