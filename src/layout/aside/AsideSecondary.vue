@@ -1255,61 +1255,44 @@
 
             <div
               class="tab-pane fade"
-              id="kt_aside_nav_tab_menu"
-              role="tabpanel"
-            >
-              <KTMenu></KTMenu>
-            </div>
-
-            <div
-              class="tab-pane fade"
               id="kt_aside_nav_tab_lms"
               role="tabpanel"
             >
               <KTLms></KTLms>
             </div>
-
+            
             <div
               class="tab-pane fade"
-              id="kt_aside_nav_tab_tasks"
+              id="kt_aside_nav_tab_sekolah"
               role="tabpanel"
             >
-              <KTTasksOverview></KTTasksOverview>
+              <KTSekolah></KTSekolah>
             </div>
 
             <div
               class="tab-pane fade"
-              id="kt_aside_nav_tab_notifications"
+              id="kt_aside_nav_tab_iuran"
               role="tabpanel"
             >
-              <KTNotifications></KTNotifications>
+              <KTIuran></KTIuran>
             </div>
 
             <div
               class="tab-pane fade"
-              id="kt_aside_nav_tab_authors"
+              id="kt_aside_nav_tab_absensi"
               role="tabpanel"
             >
-              <KTAuthors></KTAuthors>
+              <KTAbsensi></KTAbsensi>
+            </div>
+
+            <div
+              class="tab-pane fade"
+              id="kt_aside_nav_tab_pengaturan"
+              role="tabpanel"
+            >
+              <KTPengaturan></KTPengaturan>
             </div>
           </div>
-        </div>
-
-        <div class="flex-column-auto pt-10 px-5" id="kt_aside_secondary_footer">
-          <a
-            href="https://preview.keenthemes.com/metronic8/vue/docs/#/doc-overview"
-            class="btn btn-bg-light btn-color-gray-600 btn-flex btn-active-color-primary flex-center w-100"
-            data-bs-toggle="tooltip"
-            data-bs-custom-class="tooltip-dark"
-            data-bs-trigger="hover"
-            data-bs-offset="0,5"
-            data-bs-dismiss-="click"
-          >
-            <span class="btn-label">{{ t("docsAndComponents") }}</span>
-            <span class="svg-icon btn-icon svg-icon-4 ms-2">
-              <inline-svg src="media/icons/duotune/general/gen005.svg" />
-            </span>
-          </a>
         </div>
       </div>
     </div>
@@ -1334,12 +1317,12 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n/index";
-import KTMenu from "@/layout/aside/Menu.vue";
 import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
 import KTLms from "@/layout/aside/tabs/Lms.vue";
-import KTTasksOverview from "@/layout/aside/tabs/TasksOverview.vue";
-import KTAuthors from "@/layout/aside/tabs/Authors.vue";
-import KTNotifications from "@/layout/aside/tabs/Notifications.vue";
+import KTSekolah from "@/layout/aside/tabs/Sekolah.vue";
+import KTIuran from "@/layout/aside/tabs/Iuran.vue";
+import KTAbsensi from "@/layout/aside/tabs/Absensi.vue";
+import KTPengaturan from "@/layout/aside/tabs/Pengaturan.vue";
 import {
   minimizedAsideSecondary,
   asideSecondaryDisplay,
@@ -1350,12 +1333,12 @@ import { getIllustrationsPath } from "@/core/helpers/assets";
 export default defineComponent({
   name: "kt-aside-secondary",
   components: {
-    KTMenu,
     Dropdown1,
-    KTTasksOverview,
     KTLms,
-    KTAuthors,
-    KTNotifications,
+    KTSekolah,
+    KTIuran,
+    KTAbsensi,
+    KTPengaturan,
   },
   setup() {
     const { t } = useI18n();
