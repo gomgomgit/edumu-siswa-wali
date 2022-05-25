@@ -55,7 +55,7 @@
 
         <!--begin::Logo-->
         <a href="#" class="d-flex align-items-center">
-          <img alt="Logo" src="media/logos/logo-demo7.svg" class="h-30px" />
+          <img alt="Logo" src="media/logos/Logo-Edumu.png" class="h-30px" />
         </a>
         <!--end::Logo-->
       </div>

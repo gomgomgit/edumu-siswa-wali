@@ -26,7 +26,7 @@
       >
         <ul class="nav flex-column">
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
@@ -45,17 +45,17 @@
           </li>
 
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Subscription"
+            data-bs-original-title="Lms"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_subscription"
+              href="#kt_aside_nav_tab_lms"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -89,17 +89,17 @@
           </li>
 
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Menu"
+            data-bs-original-title="Sekolah"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_menu"
+              href="#kt_aside_nav_tab_sekolah"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -133,17 +133,17 @@
           </li>
 
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Tasks"
+            data-bs-original-title="Iuran"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_tasks"
+              href="#kt_aside_nav_tab_iuran"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -178,17 +178,17 @@
           </li>
 
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Notifications"
+            data-bs-original-title="Absensi"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_notifications"
+              href="#kt_aside_nav_tab_absensi"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -217,17 +217,17 @@
           </li>
 
           <li
-            class="nav-item mb-2 big-menu"
+            class="nav-item mb-2"
             data-bs-toggle="tooltip"
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Authors"
+            data-bs-original-title="Pengaturan"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_authors"
+              href="#kt_aside_nav_tab_pengaturan"
             >
               <span class="svg-icon svg-icon-2x">
                 <inline-svg src="media/icons/duotune/general/gen019.svg" />
