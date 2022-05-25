@@ -55,7 +55,7 @@
             <a
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_subscription"
+              href="#kt_aside_nav_tab_lms"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg

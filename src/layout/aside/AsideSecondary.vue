@@ -1263,47 +1263,10 @@
 
             <div
               class="tab-pane fade"
-              id="kt_aside_nav_tab_subscription"
+              id="kt_aside_nav_tab_lms"
               role="tabpanel"
             >
-              <!--begin::Subscription-->
-              <div class="mx-5">
-                <!--begin::Container-->
-                <div class="text-center pt-10 mb-20">
-                  <!--begin::Title-->
-                  <h2 class="fs-2 fw-bolder mb-7">My Subscription</h2>
-                  <!--end::Title-->
-
-                  <!--begin::Description-->
-                  <p class="text-gray-400 fs-4 fw-bold mb-10">
-                    There are no customers added yet.<br />
-                    Kickstart your CRM by adding a your first customer
-                  </p>
-                  <!--end::Description-->
-
-                  <!--begin::Action-->
-                  <a
-                    href="#"
-                    class="btn btn-primary"
-                    data-bs-toggle="modal"
-                    data-bs-target="#kt_modal_upgrade_plan"
-                    >Upgrade Plan</a
-                  >
-                  <!--end::Action-->
-                </div>
-                <!--end::Container-->
-
-                <!--begin::Illustration-->
-                <div class="text-center px-4">
-                  <img
-                    class="mw-100 mh-300px"
-                    alt=""
-                    :src="getIllustrationsPath('18.png')"
-                  />
-                </div>
-                <!--end::Illustration-->
-              </div>
-              <!--end::Subscription-->
+              <KTLms></KTLms>
             </div>
 
             <div
@@ -1373,6 +1336,7 @@ import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n/index";
 import KTMenu from "@/layout/aside/Menu.vue";
 import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
+import KTLms from "@/layout/aside/tabs/Lms.vue";
 import KTTasksOverview from "@/layout/aside/tabs/TasksOverview.vue";
 import KTAuthors from "@/layout/aside/tabs/Authors.vue";
 import KTNotifications from "@/layout/aside/tabs/Notifications.vue";
@@ -1389,6 +1353,7 @@ export default defineComponent({
     KTMenu,
     Dropdown1,
     KTTasksOverview,
+    KTLms,
     KTAuthors,
     KTNotifications,
   },
