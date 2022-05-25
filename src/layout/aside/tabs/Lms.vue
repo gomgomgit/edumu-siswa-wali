@@ -53,13 +53,13 @@ export default defineComponent({
   setup() {
     const items = [
       {
-        icon: "media/icons/duotune/abstract/abs027.svg",
+        icon: "media/icons/duotune/art/art005.svg",
         color: "success",
         title: "Tugas Offline",
         description: "Pengerjaan tugas secara offline",
       },
       {
-        icon: "media/icons/duotune/art/art005.svg",
+        icon: "media/icons/duotune/electronics/elc001.svg",
         color: "warning",
         title: "Ujian Online",
         description: "Pengerjaan ujian secara online",
