@@ -1,6 +1,13 @@
-<script setup>
+<script lang="ts" setup>
   import { ref } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
+
+  const value1 = ref('')
+  const value2 = ref('')
+
+  const disabledDate = (time: Date) => {
+    return time.getTime() > Date.now()
+  }
 
   const tableHeader = ref([
     {
@@ -117,25 +124,21 @@
                 <option value="3">Three</option>
               </select>
             </div>
+            <div>
+              <el-date-picker class="" v-model="value1" type="date" placeholder="Mulai" />
+            </div>
+            <div>
+              <el-date-picker class="" v-model="value2" type="date" placeholder="Selesai" />
+            </div>
           </div>
 
           <div class="position-relative mt-4 mt-lg-0 w-100 w-lg-auto">
-            <span
-              class="svg-icon svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 translate-middle-y ms-5"
-            >
-              <inline-svg
-                src="media/icons/duotune/general/gen021.svg"
-              />
-            </span>
-
-            <input
-              type="text"
-              class="form-control form-control-solid ps-15"
-              name="search"
-              value=""
-              placeholder="Judul Tugas"
-              data-kt-search-element="input"
-            />
+            <a href="#" class="btn btn-warning d-flex gap-3 align-items-center">
+              <span>
+                Tambah Ujian
+              </span>
+              <i class="fas fa-plus fs-5"></i>
+            </a>
           </div>
         </div>
       </div>

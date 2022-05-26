@@ -20,6 +20,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/components/page-layouts/UjianOnline.vue"),
         children: [
           {
+            path: "",
+            redirect: "/ujian-online/peserta-ujian",
+          },
+          {
             path: "peserta-ujian",
             name: "ujian-online-peserta-ujian",
             component: () =>
@@ -29,13 +33,13 @@ const routes: Array<RouteRecordRaw> = [
             path: "pantau-ujian",
             name: "ujian-online-pantau-ujian",
             component: () =>
-              import("@/views/crafted/pages/profile/Projects.vue"),
+              import("@/views/crafted/pages/ujian-online/pantau-ujian.vue"),
           },
           {
             path: "kategori",
             name: "ujian-online-kategori",
             component: () =>
-              import("@/views/crafted/pages/profile/Overview.vue"),
+              import("@/views/crafted/pages/ujian-online/kategori.vue"),
           },
         ]
       },

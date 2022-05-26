@@ -48,42 +48,6 @@
       mulai_selesai : "4/22/2022 14:10 - 4/25/2022 18:10",
       status : "Tersimpan",
     },
-    {
-      no : "1",
-      kelas : "Kelas Edumu, X IPA",
-      mapel : "B.Indonesia",
-      guru : "Aldry Azzari",
-      judul_tugas : "Syair",
-      mulai_selesai : "4/22/2022 14:10 - 4/25/2022 18:10",
-      status : "Tersimpan",
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu, X IPA",
-      mapel : "B.Indonesia",
-      guru : "Aldry Azzari",
-      judul_tugas : "Syair",
-      mulai_selesai : "4/22/2022 14:10 - 4/25/2022 18:10",
-      status : "Tersimpan",
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu, X IPA",
-      mapel : "B.Indonesia",
-      guru : "Aldry Azzari",
-      judul_tugas : "Syair",
-      mulai_selesai : "4/22/2022 14:10 - 4/25/2022 18:10",
-      status : "Tersimpan",
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu, X IPA",
-      mapel : "B.Indonesia",
-      guru : "Aldry Azzari",
-      judul_tugas : "Syair",
-      mulai_selesai : "4/22/2022 14:10 - 4/25/2022 18:10",
-      status : "Tersimpan",
-    },
   ])
 </script>
 

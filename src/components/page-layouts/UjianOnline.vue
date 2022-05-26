@@ -4,10 +4,10 @@
     <div class="card-body pt-5 pb-5">
       <div class="d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
 
-        <h3 class="m-0 fs-1">Ujian Online</h3>
+        <h3 class="mb-4 mb-sm-0 fs-1">Ujian Online</h3>
 
         <!-- begin::Tabs  -->
-        <div class="d-flex">
+        <div class="d-flex w-100 gap-4 w-sm-auto justify-content-end">
           <router-link
             to="/ujian-online/peserta-ujian"
             active-class="active"
@@ -21,7 +21,7 @@
             <a href="#" class="btn btn-active-warning">Pantau Ujian</a>
           </router-link>
           <router-link
-            to="/ujian-online"
+            to="/ujian-online/kategori"
             active-class="active"
           >
             <a href="#" class="btn btn-active-warning">Kategori</a>
