@@ -124,16 +124,16 @@
                 <option value="3">Three</option>
               </select>
             </div>
-            <div>
-              <el-date-picker class="" v-model="value1" type="date" placeholder="Mulai" />
+            <div class="position-relative">
+              <el-date-picker class="w-125px" v-model="value1" type="date" placeholder="Mulai" />
             </div>
-            <div>
-              <el-date-picker class="" v-model="value2" type="date" placeholder="Selesai" />
+            <div class="position-relative">
+              <el-date-picker class="w-125px" v-model="value2" type="date" placeholder="Selesai" />
             </div>
           </div>
 
-          <div class="position-relative mt-4 mt-lg-0 w-100 w-lg-auto">
-            <a href="#" class="btn btn-warning d-flex gap-3 align-items-center">
+          <div class="position-relative mt-4 mt-lg-0 w-100 w-lg-auto text-end d-flex justify-content-end">
+            <a href="#" class="btn btn-warning d-flex gap-3 align-items-center w-auto">
               <span>
                 Tambah Ujian
               </span>
