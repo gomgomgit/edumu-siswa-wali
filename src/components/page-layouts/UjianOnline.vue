@@ -11,20 +11,23 @@
           <router-link
             to="/ujian-online/peserta-ujian"
             active-class="active"
+            class="btn btn-active-warning"
           >
-            <a href="#" class="btn btn-active-warning">Peserta Ujian</a>
+            <span>Peserta Ujian</span>
           </router-link>
           <router-link
             to="/ujian-online/pantau-ujian"
             active-class="active"
+            class="btn btn-active-warning"
           >
-            <a href="#" class="btn btn-active-warning">Pantau Ujian</a>
+            <span>Pantau Ujian</span>
           </router-link>
           <router-link
             to="/ujian-online/kategori"
             active-class="active"
+            class="btn btn-active-warning"
           >
-            <a href="#" class="btn btn-active-warning">Kategori</a>
+            <span>Kategori</span>
           </router-link>
         </div>
         <!-- end::Tabs  -->
