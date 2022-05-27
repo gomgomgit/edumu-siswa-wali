@@ -99,7 +99,7 @@
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body pt-5 pb-5">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
-          <div class="d-flex gap-4">
+          <div class="d-flex flex-wrap gap-4">
             <div>
               <select class="form-select" aria-label="Select example">
                 <option>Pilih Guru</option>
@@ -125,10 +125,10 @@
               </select>
             </div>
             <div class="position-relative">
-              <el-date-picker class="w-125px" v-model="value1" type="date" placeholder="Mulai" />
+              <el-date-picker class="w-150px" v-model="value1" type="date" placeholder="Mulai" />
             </div>
             <div class="position-relative">
-              <el-date-picker class="w-125px" v-model="value2" type="date" placeholder="Selesai" />
+              <el-date-picker class="w-150px" v-model="value2" type="date" placeholder="Selesai" />
             </div>
           </div>
 
