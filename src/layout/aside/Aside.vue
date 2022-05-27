@@ -18,6 +18,15 @@ function closeAside () {
   document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.add('active')
 }
 
+function openSubMenu(menuId) {
+  const submenus = document.getElementsByClassName('submenus')
+  for (let index = 0; index < submenus.length; index++) {
+    submenus[index].classList.remove('active', 'show');
+  }
+  
+  document.getElementById(menuId).classList.add('active', 'show')
+}
+
 </script>
 
 <template>
@@ -34,7 +43,7 @@ function closeAside () {
     @mouseenter="openAside"
     @mouseleave="closeAside"
   >
-    <KTAsidePrimary></KTAsidePrimary>
-    <KTAsideSecondary></KTAsideSecondary>
+    <KTAsidePrimary @openSubMenu="openSubMenu"></KTAsidePrimary>
+    <KTAsideSecondary ></KTAsideSecondary>
   </div>
 </template>

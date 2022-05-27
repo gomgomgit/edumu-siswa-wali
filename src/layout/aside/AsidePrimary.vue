@@ -1,3 +1,15 @@
+<script setup>
+import { defineComponent } from "vue";
+import KTQuickLinksMenu from "@/layout/header/partials/QuickLinksMenu.vue";
+
+const emit = defineEmits(['openSubMenu', 'closeSubMenu'])
+
+function openSubMenu(menu) {
+  emit('openSubMenu', menu)
+}
+
+</script>
+
 <template>
   <div
     class="aside-primary d-flex flex-column align-items-lg-center flex-row-auto"
@@ -37,6 +49,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light active"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_projects"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_projects')"
             >
               <span class="svg-icon svg-icon-2x">
                 <inline-svg src="media/icons/duotune/general/gen025.svg" />
@@ -56,6 +69,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_lms"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_lms')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -100,6 +114,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_sekolah"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_sekolah')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -144,6 +159,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_iuran"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_iuran')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -189,6 +205,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_absensi"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_absensi')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -228,6 +245,7 @@
               class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_pengaturan"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_pengaturan')"
             >
               <span class="svg-icon svg-icon-2x">
                 <inline-svg src="media/icons/duotune/general/gen019.svg" />
@@ -263,15 +281,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import KTQuickLinksMenu from "@/layout/header/partials/QuickLinksMenu.vue";
-
-export default defineComponent({
-  name: "kt-aside-primary",
-  components: {
-    KTQuickLinksMenu,
-  },
-});
-</script>

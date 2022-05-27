@@ -1,3 +1,23 @@
+
+<script setup>
+import { defineComponent } from "vue";
+import { useI18n } from "vue-i18n/index";
+import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
+import KTLms from "@/layout/aside/tabs/Lms.vue";
+import KTSekolah from "@/layout/aside/tabs/Sekolah.vue";
+import KTIuran from "@/layout/aside/tabs/Iuran.vue";
+import KTAbsensi from "@/layout/aside/tabs/Absensi.vue";
+import KTPengaturan from "@/layout/aside/tabs/Pengaturan.vue";
+import {
+  minimizedAsideSecondary,
+  asideSecondaryDisplay,
+  minimizationEnabled,
+} from "@/core/helpers/config";
+import { getIllustrationsPath } from "@/core/helpers/assets";
+
+const { t } = useI18n();
+</script>
+
 <template>
   <div
     v-if="asideSecondaryDisplay"
@@ -16,7 +36,7 @@
         >
           <div class="tab-content">
             <div
-              class="tab-pane fade active show"
+              class="submenus tab-pane fade active show"
               id="kt_aside_nav_tab_projects"
               role="tabpanel"
             >
@@ -1254,7 +1274,7 @@
             </div>
 
             <div
-              class="tab-pane fade"
+              class="submenus tab-pane fade"
               id="kt_aside_nav_tab_lms"
               role="tabpanel"
             >
@@ -1262,7 +1282,7 @@
             </div>
             
             <div
-              class="tab-pane fade"
+              class="submenus tab-pane fade"
               id="kt_aside_nav_tab_sekolah"
               role="tabpanel"
             >
@@ -1270,7 +1290,7 @@
             </div>
 
             <div
-              class="tab-pane fade"
+              class="submenus tab-pane fade"
               id="kt_aside_nav_tab_iuran"
               role="tabpanel"
             >
@@ -1278,7 +1298,7 @@
             </div>
 
             <div
-              class="tab-pane fade"
+              class="submenus tab-pane fade"
               id="kt_aside_nav_tab_absensi"
               role="tabpanel"
             >
@@ -1286,7 +1306,7 @@
             </div>
 
             <div
-              class="tab-pane fade"
+              class="submenus tab-pane fade"
               id="kt_aside_nav_tab_pengaturan"
               role="tabpanel"
             >
@@ -1313,43 +1333,3 @@
     </span>
   </button>
 </template>
-
-<script lang="ts">
-import { defineComponent } from "vue";
-import { useI18n } from "vue-i18n/index";
-import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
-import KTLms from "@/layout/aside/tabs/Lms.vue";
-import KTSekolah from "@/layout/aside/tabs/Sekolah.vue";
-import KTIuran from "@/layout/aside/tabs/Iuran.vue";
-import KTAbsensi from "@/layout/aside/tabs/Absensi.vue";
-import KTPengaturan from "@/layout/aside/tabs/Pengaturan.vue";
-import {
-  minimizedAsideSecondary,
-  asideSecondaryDisplay,
-  minimizationEnabled,
-} from "@/core/helpers/config";
-import { getIllustrationsPath } from "@/core/helpers/assets";
-
-export default defineComponent({
-  name: "kt-aside-secondary",
-  components: {
-    Dropdown1,
-    KTLms,
-    KTSekolah,
-    KTIuran,
-    KTAbsensi,
-    KTPengaturan,
-  },
-  setup() {
-    const { t } = useI18n();
-
-    return {
-      minimizedAsideSecondary,
-      asideSecondaryDisplay,
-      minimizationEnabled,
-      getIllustrationsPath,
-      t,
-    };
-  },
-});
-</script>
