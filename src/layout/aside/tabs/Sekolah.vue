@@ -69,7 +69,10 @@
             :class="{ show: hasActiveChildren(menuItem.route) }"
             class="menu-item menu-accordion"
             data-kt-menu-sub="accordion"
-            data-kt-menu-trigger="click"
+            data-kt-menu-trigger="hover"
+            @mouseenter="showSubMenu"
+            @mouseleave="hideSubMenu"
+            @click="preventDefault()"
           >
             <span class="menu-link">
               <span
@@ -157,9 +160,25 @@
       </template>
     </div>
     <!--end::Menu-->
+
   </div>
   <!--end::Menu wrapper-->
 </template>
+
+<style scoped>
+.menu-sub.menu-sub-accordion {
+  height: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all .4s ease-in-out;
+}
+.menu-sub.menu-sub-accordion.show {
+  height: 100%;
+  max-height: 150px;
+  overflow: hidden;
+  transition: all .4s ease-in;
+}
+</style>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
@@ -315,12 +334,23 @@ export default defineComponent({
       return route.path.indexOf(match) !== -1;
     };
 
+    function showSubMenu(event) {
+      event.target.classList.add('show', 'hover')
+      event.target.getElementsByClassName('menu-sub')[0].classList.add('show')
+    }
+    function hideSubMenu(event) {
+      event.target.classList.remove('show', 'hover')
+      event.target.getElementsByClassName('menu-sub')[0].classList.remove('show')
+    }
+
     return {
       hasActiveChildren,
       MainMenuConfig,
       asideMenuIcons,
       version,
       translate,
+      showSubMenu,
+      hideSubMenu,
     };
   },
 });
