@@ -67,12 +67,12 @@
           <div
             v-if="menuItem.sectionTitle"
             :class="{ show: hasActiveChildren(menuItem.route) }"
-            class="menu-item menu-accordion"
+            class="menu-item menu-accordion position-relative"
             data-kt-menu-sub="accordion"
-            data-kt-menu-trigger="hover"
+            data-kt-menu-trigger="click"
             @mouseenter="showSubMenu"
             @mouseleave="hideSubMenu"
-            @click="preventDefault()"
+            @click="clickSubMenu"
           >
             <span class="menu-link">
               <span
@@ -169,6 +169,7 @@
 .menu-sub.menu-sub-accordion {
   height: 0;
   max-height: 0;
+  display: block;
   overflow: hidden;
   transition: all .4s ease-in-out;
 }
@@ -343,6 +344,20 @@ export default defineComponent({
       event.target.getElementsByClassName('menu-sub')[0].classList.remove('show')
     }
 
+    function clickSubMenu(event) {
+      const oldMenu = document.querySelectorAll('.menu-item.show')
+      if (oldMenu.length > 0) {
+        oldMenu[0].classList.remove('show', 'hover')
+        oldMenu[0].getElementsByClassName('menu-sub')[0].classList.remove('show')
+      } else {
+        const menu = event.target.closest('.menu-item')
+        menu.classList.add('show', 'hover')
+        menu.getElementsByClassName('menu-sub')[0].classList.add('show')
+      }
+
+
+    }
+
     return {
       hasActiveChildren,
       MainMenuConfig,
@@ -351,6 +366,7 @@ export default defineComponent({
       translate,
       showSubMenu,
       hideSubMenu,
+      clickSubMenu,
     };
   },
 });
