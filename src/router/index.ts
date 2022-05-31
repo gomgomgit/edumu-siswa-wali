@@ -44,6 +44,21 @@ const routes: Array<RouteRecordRaw> = [
         ]
       },
       {
+        path: "/sekolah/akademik/tahun-ajar",
+        name: "sekolah-akademik-tahun-ajar",
+        component: () => import("@/views/sekolah/akademik/TahunAjar.vue"),
+      },
+      {
+        path: "/sekolah/akademik/data-kelas",
+        name: "sekolah-akademik-data-kelas",
+        component: () => import("@/views/sekolah/akademik/DataKelas.vue"),
+      },
+      {
+        path: "/sekolah/akademik/kalender-akademik",
+        name: "sekolah-akademik-kalender-akademik",
+        component: () => import("@/views/sekolah/akademik/KalenderAkademik.vue"),
+      },
+      {
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),

@@ -225,21 +225,20 @@ export default defineComponent({
           },
           {
             sectionTitle: "Akademik",
-            route: "/pages",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
             sub: [
               {
                 heading: "Tahun Ajar",
-                route: "/profile",
+                route: "/sekolah/akademik/tahun-ajar",
               },
               {
                 heading: "Data Kelas",
-                route: "/profile",
+                route: "/sekolah/akademik/data-kelas",
               },
               {
                 heading: "Kalender Akademik",
-                route: "/profile",
+                route: "/sekolah/akademik/kalender-akademik",
               },
             ],
           },
