@@ -17,17 +17,15 @@ import { getIllustrationsPath } from "@/core/helpers/assets";
 
 const { t } = useI18n();
 
-const emit = defineEmits('togglePin')
-
-function togglePin() {
-  emit('togglePin')
-}
+const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
 </script>
 
 <template>
   <div
     v-if="asideSecondaryDisplay"
     class="aside-secondary d-flex flex-row-fluid"
+      @mouseenter="emit('openAside')"
+      @mouseleave="emit('closeAside')"
   >
     <div class="aside-workspace my-5 p-5" id="kt_aside_wordspace">
       <div class="d-flex h-100 flex-column">
@@ -1333,7 +1331,7 @@ function togglePin() {
     data-kt-toggle-target="body"
     data-kt-toggle-name="main-minimize"
     style="margin-bottom: 1.35rem"
-    @click="togglePin"
+    @click="emit('togglePin')"
   >
     <span class="svg-icon svg-icon-2 rotate-180">
       <inline-svg src="media/icons/duotune/arrows/arr063.svg" />

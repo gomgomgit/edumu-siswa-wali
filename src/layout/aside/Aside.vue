@@ -11,21 +11,23 @@ const props = defineProps({
 const pinned = ref(false)
 
 function pinAside () {
-  pinned = true
+  document.body.removeAttribute('data-kt-aside-minimize')
   document.body.setAttribute('data-kt-main-minimize', 'on')
 }
 
 function unpinAside () {
-  pinned = false
   document.body.removeAttribute('data-kt-main-minimize')
+  document.body.setAttribute('data-kt-aside-minimize', 'on')
 }
 
 function togglePin() {
-  if (pinned) {
+  if (pinned.value == true) {
     unpinAside()
   } else {
     pinAside()
   }
+  pinned.value = !pinned.value
+  console.log(pinned)
 }
 
 function openAside () {
@@ -34,7 +36,9 @@ function openAside () {
 }
 
 function closeAside () {
-  document.body.setAttribute('data-kt-aside-minimize', 'on')
+  if (pinned.value == false) {
+    document.body.setAttribute('data-kt-aside-minimize', 'on')
+  }
   // document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.add('active')
 }
 
@@ -67,6 +71,8 @@ function openSubMenu(menuId) {
       @openSubMenu="openSubMenu"
     ></KTAsidePrimary>
     <KTAsideSecondary 
+      @openAside="openAside"
+      @closeAside="closeAside"
       @togglePin="togglePin"
     ></KTAsideSecondary>
   </div>
