@@ -16,6 +16,12 @@ import {
 import { getIllustrationsPath } from "@/core/helpers/assets";
 
 const { t } = useI18n();
+
+const emit = defineEmits('togglePin')
+
+function togglePin() {
+  emit('togglePin')
+}
 </script>
 
 <template>
@@ -1325,8 +1331,9 @@ const { t } = useI18n();
     data-kt-toggle="true"
     data-kt-toggle-state="active"
     data-kt-toggle-target="body"
-    data-kt-toggle-name="aside-minimize"
+    data-kt-toggle-name="main-minimize"
     style="margin-bottom: 1.35rem"
+    @click="togglePin"
   >
     <span class="svg-icon svg-icon-2 rotate-180">
       <inline-svg src="media/icons/duotune/arrows/arr063.svg" />

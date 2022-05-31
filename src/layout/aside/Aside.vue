@@ -8,14 +8,34 @@ const props = defineProps({
   darkLogo: String,
 })
 
+const pinned = ref(false)
+
+function pinAside () {
+  pinned = true
+  document.body.setAttribute('data-kt-main-minimize', 'on')
+}
+
+function unpinAside () {
+  pinned = false
+  document.body.removeAttribute('data-kt-main-minimize')
+}
+
+function togglePin() {
+  if (pinned) {
+    unpinAside()
+  } else {
+    pinAside()
+  }
+}
+
 function openAside () {
   document.body.removeAttribute('data-kt-aside-minimize')
-  document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.remove('active')
+  // document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.remove('active')
 }
 
 function closeAside () {
   document.body.setAttribute('data-kt-aside-minimize', 'on')
-  document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.add('active')
+  // document.querySelector('[data-kt-toggle-name="aside-minimize"]').classList.add('active')
 }
 
 function openSubMenu(menuId) {
@@ -40,10 +60,14 @@ function openSubMenu(menuId) {
     data-kt-drawer-width="auto"
     data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_toggle"
-    @mouseenter="openAside"
-    @mouseleave="closeAside"
   >
-    <KTAsidePrimary @openSubMenu="openSubMenu"></KTAsidePrimary>
-    <KTAsideSecondary ></KTAsideSecondary>
+    <KTAsidePrimary 
+      @mouseenter="openAside"
+      @mouseleave="closeAside"
+      @openSubMenu="openSubMenu"
+    ></KTAsidePrimary>
+    <KTAsideSecondary 
+      @togglePin="togglePin"
+    ></KTAsideSecondary>
   </div>
 </template>
