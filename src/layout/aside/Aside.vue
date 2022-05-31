@@ -12,11 +12,11 @@ const pinned = ref(false)
 
 function pinAside () {
   document.body.removeAttribute('data-kt-aside-minimize')
-  document.body.setAttribute('data-kt-main-minimize', 'on')
+  document.body.removeAttribute('data-kt-main-maximize')
 }
 
 function unpinAside () {
-  document.body.removeAttribute('data-kt-main-minimize')
+  document.body.setAttribute('data-kt-main-maximize', 'on')
   document.body.setAttribute('data-kt-aside-minimize', 'on')
 }
 

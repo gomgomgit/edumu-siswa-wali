@@ -83,6 +83,10 @@ class LayoutService {
         qulifiedName: "data-kt-aside-minimize",
         value: "on",
       });
+      store.dispatch(Actions.ADD_BODY_ATTRIBUTE, {
+        qulifiedName: "data-kt-main-maximize",
+        value: "on",
+      });
     }
   }
 
