@@ -28,7 +28,7 @@ body {
 		// Aside secondary enabled & aside fixed modes
 		.aside-secondary-enabled.aside-fixed & {
 			transition: padding-left get($aside-config, transition-speed) ease;
-			padding-left: get($aside-config, primary-width, desktop);
+			padding-left: get($aside-config, width, desktop);
 		}
 
 		// Aside secondary enabled, aside fixed modes and aside minimize modes
