@@ -5,6 +5,8 @@
   const semester = ref('')
   const status = ref('')
 
+  const modalAddData = ref(false)
+
   const options = [
     {
       value: 'Option1',
@@ -87,109 +89,181 @@
 </script>
 
 <template>
-  <!--begin::Head-->
-  <div class="card mb-5 mb-xxl-8">
-    <div class="card-body pt-5 pb-5">
-      <!-- Page Header -->
-      <div class="page-header border-bottom border-black-50 mb-3">
-        <div class="page-title px-3 py-7 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-          <h3 class="mb-0 fs-2x">Akademik - Tahun Ajar</h3>
+  <div>
+    <!--begin::Head-->
+    <div class="card mb-5 mb-xxl-8">
+      <div class="card-body pt-5 pb-5">
+        <!-- Page Header -->
+        <div class="page-header border-bottom border-black-50 mb-3">
+          <div class="page-title px-3 py-7 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
+            <h3 class="mb-0 fs-2x">Akademik - Tahun Ajar</h3>
+          </div>
+          <div class="page-breadcrumb px-3 py-3 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
+            <h3 class="mb-0 fs-4"><span class="text-black-50"> Sekolah / Akademik / </span>Tahun Ajar</h3>
+          </div>
         </div>
-        <div class="page-breadcrumb px-3 py-3 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-          <h3 class="mb-0 fs-4"><span class="text-black-50"> Sekolah / Akademik / </span>Tahun Ajar</h3>
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <div>
+                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div>
+                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+
+            <div class="position-relative d-flex ">
+              <a @click="modalAddData = true" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
+                <i class="text-white fas fa-plus fs-5"></i>
+                <span>
+                  Tambah Tahun Ajar
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-      <!-- Page Content -->
-      <div class="page-content">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
-          <div class="d-flex gap-4">
-            <div>
-              <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
-            </div>
-            <div>
-              <el-select v-model="status" class="m-2" placeholder="Status" size="large">
-                <el-option
-                  v-for="item in options"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
-            </div>
-          </div>
+      <div class="mb-5 mb-xxl-8 px-12">
+        <Datatable :table-header="tableHeader" :table-data="tableData">
+          <template v-slot:cell-no="{ row: data }">
+            {{ data.no }}
+          </template>
+          <template v-slot:cell-tahun_ajar="{ row: data }">
+            {{ data.tahun_ajar }}
+          </template>
+          <template v-slot:cell-semester="{ row: data }">
+            {{ data.semester }}
+          </template>
+          <template v-slot:cell-status_aktif="{ row: data }">
+            {{ data.status_aktif }}
+          </template>
+          <template v-slot:cell-action>
+            <div>  
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen019.svg"
+                  />
+                </span>
+              </a>
 
-          <div class="position-relative d-flex ">
-            <a href="#" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
-              <i class="text-white fas fa-plus fs-5"></i>
-              <span>
-                Tambah Tahun Ajar
-              </span>
-            </a>
-          </div>
-        </div>
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg src="media/icons/duotune/art/art005.svg" />
+                </span>
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen027.svg"
+                  />
+                </span>
+              </a>
+            </div>
+          </template>
+        </Datatable>
       </div>
     </div>
-    <div class="mb-5 mb-xxl-8 px-12">
-      <Datatable :table-header="tableHeader" :table-data="tableData">
-        <template v-slot:cell-no="{ row: data }">
-          {{ data.no }}
-        </template>
-        <template v-slot:cell-tahun_ajar="{ row: data }">
-          {{ data.tahun_ajar }}
-        </template>
-        <template v-slot:cell-semester="{ row: data }">
-          {{ data.semester }}
-        </template>
-        <template v-slot:cell-status_aktif="{ row: data }">
-          {{ data.status_aktif }}
-        </template>
-        <template v-slot:cell-action>
-          <div>  
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg
-                  src="media/icons/duotune/general/gen019.svg"
-                />
-              </span>
-            </a>
 
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg src="media/icons/duotune/art/art005.svg" />
-              </span>
-            </a>
+    <!-- Modal -->
 
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg
-                  src="media/icons/duotune/general/gen027.svg"
-                />
-              </span>
-            </a>
+    <div class="modal-wrapper">
+      <transition name="fade">
+        <div v-if="modalAddData" class="modal-overlay" @click="modalAddData = false"></div>
+      </transition>
+
+      <transition name="fade">
+        <div v-if="modalAddData" class="modal-container">
+          <div class="modal-head">
+            <div class="fw-bold fs-1">
+              Tambah Data
+            </div>
+            <div class="fw-bold fs-4">
+              <span>Sekolah / Akademik / Tahun Ajar /</span>
+              Tambah Data
+            </div>
           </div>
-        </template>
-      </Datatable>
-    </div>
+          <div>
+            Content
+          </div>
+        </div>
+      </transition>
+      
+      </div>
   </div>
 </template>
 
 <style>
+  .modal-overlay {
+    content: '';
+    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 98;
+    background: #2c3e50;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+  .modal-container {
+    position: absolute;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+    background: #FFF;
+    z-index: 999;
+    transform: none;
+  }
+
+  .fade-enter-active,
+  .fade-leave-active {
+    opacity: 0.6;
+    transition: opacity .4s linear;
+  }
+
+  .fade-enter,
+  .fade-leave-to {
+    transition: opacity .4s linear;
+    opacity: 0;
+  }
+  
+
   .el-input__inner {
     background: rgba(32, 139, 255, 0.5);
   }
