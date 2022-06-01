@@ -52,6 +52,24 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sekolah/akademik/data-kelas",
         name: "sekolah-akademik-data-kelas",
         component: () => import("@/views/sekolah/akademik/DataKelas.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/akademik/data-kelas/wali-kelas",
+          },
+          {
+            path: "wali-kelas",
+            name: "sekolah-akademik-data-kelas-wali-kelas",
+            component: () =>
+              import("@/views/sekolah/akademik/tabs/WaliKelas.vue"),
+          },
+          {
+            path: "mutasi-kelas",
+            name: "sekolah-akademik-data-kelas-mutasi-kelas",
+            component: () =>
+              import("@/views/sekolah/akademik/tabs/MutasiKelas.vue"),
+          },
+        ],
       },
       {
         path: "/sekolah/akademik/kalender-akademik",
