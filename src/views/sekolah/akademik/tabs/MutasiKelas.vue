@@ -4,6 +4,7 @@
 
   const semester = ref('')
   const status = ref('')
+  const checked = ref('')
 
   const options = [
     {
@@ -140,36 +141,7 @@
         </template>
         <template v-slot:cell-action>
           <div>  
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg
-                  src="media/icons/duotune/general/gen019.svg"
-                />
-              </span>
-            </a>
-
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg src="media/icons/duotune/art/art005.svg" />
-              </span>
-            </a>
-
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg
-                  src="media/icons/duotune/general/gen027.svg"
-                />
-              </span>
-            </a>
+            <el-checkbox v-model="checked" label="" size="large" />
           </div>
         </template>
       </Datatable>

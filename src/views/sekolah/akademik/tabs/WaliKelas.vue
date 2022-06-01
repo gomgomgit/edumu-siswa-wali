@@ -140,18 +140,7 @@
           {{ data.tahun_ajar }}
         </template>
         <template v-slot:cell-action>
-          <div>  
-            <a
-              href="#"
-              class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-            >
-              <span class="svg-icon svg-icon-3">
-                <inline-svg
-                  src="media/icons/duotune/general/gen019.svg"
-                />
-              </span>
-            </a>
-
+          <div>
             <a
               href="#"
               class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
