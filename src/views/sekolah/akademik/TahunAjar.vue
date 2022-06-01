@@ -116,7 +116,6 @@
             <div>
               <el-select v-model="status" class="m-2" placeholder="Status" size="large">
                 <el-option
-                  class="bg-primary"
                   v-for="item in options"
                   :key="item.value"
                   :label="item.label"
