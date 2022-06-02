@@ -1,10 +1,16 @@
 <script setup>
   import { ref } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
-  import Modal from "@/components/modals/Default.vue";
+  import Modal from "@/components/modals/CustomModal.vue";
+  
+  import 'vue-good-table-next/dist/vue-good-table-next.css'
+  import { VueGoodTable } from 'vue-good-table-next';
 
   const semester = ref('')
   const status = ref('')
+
+  const startDate = ref('')
+  const endDate = ref('')
 
   const modalAddData = ref(false)
 
@@ -87,6 +93,77 @@
       status_aktif : "Aldry Azzari",
     },
   ])
+  const columns = ref([
+    {
+      label: 'Name',
+      field: 'name',
+    },
+    {
+      label: 'Age',
+      field: 'age',
+      type: 'number',
+    },
+    {
+      label: 'Created On',
+      field: 'createdAt',
+      type: 'date',
+      dateInputFormat: 'yyyy-MM-dd',
+      dateOutputFormat: 'MMM do yy',
+    },
+    {
+      label: 'Percent',
+      field: 'score',
+      type: 'percentage',
+    },
+  ])
+  const rows = ref([
+    { id:1,
+     name:"John",
+     age: 20,
+     createdAt: '',
+    score: 0.03343 
+  },
+    
+    { id:2,
+     name:"Jane",
+     age: 24,
+     createdAt: '2011-10-31',
+     score: 0.03343 
+    },
+    
+    { id:3,
+     name:"Susan",
+     age: 16,
+     createdAt: '2011-10-30',
+     score: 0.03343 
+    },
+    
+    { id:4,
+     name:"Chris",
+     age: 55,
+     createdAt: '2011-10-11',
+     score: 0.03343 
+    },
+    
+    { id:5,
+     name:"Dan",
+     age: 40,
+     createdAt: '2011-10-21',
+     score: 0.03343 
+    },
+    
+    { id:6,
+     name:"John",
+     age: 20,
+     createdAt: '2011-10-31',
+     score: 0.03343 
+    },
+    
+  ])
+
+  function addData() {
+    alert('tambah data')
+  }
 </script>
 
 <template>
@@ -189,12 +266,25 @@
             </div>
           </template>
         </Datatable>
+
+        <div>
+          <vue-good-table
+            :columns="columns"
+            :rows="rows"/>
+        </div>
       </div>
     </div>
 
     <!-- Modal -->
 
-    <Modal :show="modalAddData" @closeModal="modalAddData = false">
+    <Modal 
+      title="Tambah Data" 
+      :breadcrumb="Array('Sekolah', 'Akademik', 'Tahun Ajar', 'Tambah Data')" 
+      :show="modalAddData" 
+      @closeModal="modalAddData = false"
+      @confirm="addData"
+      @dismiss="modalAddData = false"
+    >
         <div class="">
           <div class="row gy-6">
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
@@ -204,22 +294,30 @@
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Status</div>
             <div class="col-8">
-              <input type="text" class="form-control" placeholder="name@example.com"/>
+              <select class="form-select form-select-solid" aria-label="Select example">
+                <option>Pilih Status</option>
+                <option value="1">Aktif</option>
+                <option value="2">Non Aktif</option>
+              </select>
             </div>
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Semester</div>
             <div class="col-8">
-              <input type="text" class="form-control" placeholder="name@example.com"/>
+              <select class="form-select form-select-solid" aria-label="Select example">
+                <option>Pilih Semester</option>
+                <option value="1">Ganjil</option>
+                <option value="2">Genap</option>
+              </select>
             </div>
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai</div>
             <div class="col-8">
-              <input type="text" class="form-control" placeholder="name@example.com"/>
+              <el-date-picker class="w-100" v-model="startDate" type="date" placeholder="Pick a day" />
             </div>
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Selesai</div>
             <div class="col-8">
-              <input type="text" class="form-control" placeholder="name@example.com"/>
+              <el-date-picker  class="w-100" v-model="endDate" type="date" placeholder="Pick a day" />
             </div>
           </div>
         </div>
@@ -228,8 +326,7 @@
   </div>
 </template>
 
-<style>
-
+<style scoped>
   .el-input__inner {
     background: rgba(32, 139, 255, 0.5);
   }

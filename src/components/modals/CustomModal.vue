@@ -1,9 +1,11 @@
 <script setup>
   const props = defineProps({
-    show: Boolean
+    show: Boolean,
+    title: String,
+    breadcrumb: Array
   })
 
-  const emits = defineEmits('closeModal')
+  const emits = defineEmits(['closeModal', 'confirm', 'dismiss'])
 </script>
 
 <template>
@@ -16,11 +18,15 @@
         <div v-if="props.show" class="modal-container">
           <div class="modal-header d-block border-bottom border-secondary">
             <div class="fw-bold fs-1 m-4">
-              Tambah Data
+              <span v-text="props.title"></span>
             </div>
             <div class="fw-bold fs-4 m-4">
-              <span class="text-black-50">Sekolah / Akademik / Tahun Ajar /</span>
-              <span> Tambah Data</span> 
+              <template v-for="bc, index in props.breadcrumb" :key="index">
+                <span v-if="index == props.breadcrumb.length - 1" v-text="bc"> </span> 
+                <span v-else class="text-black-50">
+                  <span v-text="bc"></span> /
+                </span>
+              </template>
             </div>
           </div>
           <div class="modal-body py-4">
@@ -28,8 +34,8 @@
           </div>
           <div class="modal-footer border-top border-secondary">
             <div class="d-flex justify-content-end gap-4">
-              <a href="#" class="btn bg-guru text-white">Discard</a>
-              <a href="#" class="btn btn-primary text-white">Save Changes</a>
+              <button @click="emits('dismiss')" class="btn btn-light">Discard</button>
+              <button @click="emits('confirm')" class="btn btn-primary text-white">Save Changes</button>
             </div>
           </div>
         </div>
