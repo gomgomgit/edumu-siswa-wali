@@ -1,6 +1,7 @@
 <script setup>
   import { ref } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
+  import Modal from "@/components/modals/Default.vue";
 
   const semester = ref('')
   const status = ref('')
@@ -193,76 +194,41 @@
 
     <!-- Modal -->
 
-    <div class="modal-wrapper">
-      <transition name="fade">
-        <div v-if="modalAddData" class="modal-overlay" @click="modalAddData = false"></div>
-      </transition>
+    <Modal :show="modalAddData" @closeModal="modalAddData = false">
+        <div class="">
+          <div class="row gy-6">
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="name@example.com"/>
+            </div>
 
-      <transition name="fade">
-        <div v-if="modalAddData" class="modal-container">
-          <div class="modal-head">
-            <div class="fw-bold fs-1">
-              Tambah Data
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Status</div>
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="name@example.com"/>
             </div>
-            <div class="fw-bold fs-4">
-              <span>Sekolah / Akademik / Tahun Ajar /</span>
-              Tambah Data
+
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Semester</div>
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="name@example.com"/>
             </div>
-          </div>
-          <div>
-            Content
+
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai</div>
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="name@example.com"/>
+            </div>
+
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Selesai</div>
+            <div class="col-8">
+              <input type="text" class="form-control" placeholder="name@example.com"/>
+            </div>
           </div>
         </div>
-      </transition>
-      
-      </div>
+    </Modal>
+    
   </div>
 </template>
 
 <style>
-  .modal-overlay {
-    content: '';
-    position: absolute;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 98;
-    background: #2c3e50;
-    opacity: 0.6;
-    cursor: pointer;
-  }
-  .modal-container {
-    position: absolute;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    margin: auto;
-    width: fit-content;
-    height: fit-content;
-    padding: 2rem;
-    border-radius: 1rem;
-    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
-    background: #FFF;
-    z-index: 999;
-    transform: none;
-  }
-
-  .fade-enter-active,
-  .fade-leave-active {
-    opacity: 0.6;
-    transition: opacity .4s linear;
-  }
-
-  .fade-enter,
-  .fade-leave-to {
-    transition: opacity .4s linear;
-    opacity: 0;
-  }
-  
 
   .el-input__inner {
     background: rgba(32, 139, 255, 0.5);
@@ -275,5 +241,8 @@
   }
   .bg-fwf {
     background: #0084AD;
+  }
+  .bg-guru {
+    background: #04C8C8;
   }
 </style>
