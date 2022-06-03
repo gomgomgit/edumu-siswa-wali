@@ -10,21 +10,24 @@ import ElementPlus from "element-plus";
 import i18n from "@/core/plugins/i18n";
 
 //imports for app initialization
-import ApiService from "@/core/services/ApiService";
+// import ApiService from "@/core/services/ApiService";
 import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
+import VueToast from 'vue-toast-notification';
 
 import "@/core/plugins/prismjs";
 import "bootstrap";
+import 'vue-toast-notification/dist/theme-default.css';
 
 const app = createApp(App);
 
 app.use(store);
 app.use(router);
 app.use(ElementPlus);
+app.use(VueToast);
 
-ApiService.init(app);
+// ApiService.init(app);
 initApexCharts(app);
 initInlineSvg(app);
 initVeeValidate();

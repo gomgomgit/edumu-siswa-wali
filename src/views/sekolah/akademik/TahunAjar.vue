@@ -1,19 +1,18 @@
 <script setup>
   import { ref, onMounted, reactive } from "vue";
-  import axios from 'axios';
+  import { request } from '@/util'
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
 
-  onMounted(() => {
-    getDataKelas
-  })
+  onMounted(getDataKelas)
 
   function getDataKelas() {
-    axios.post('https://apistaging.edumu.id/devel/apischool/thn_ajar', {page: 1, id: 1})
-    .then((res) => {
-      console.log(res.data)
+    request.post('thn_ajars', null, {
+      params: { page: 1 }
     })
-    .catch(err => console.log(err.request))
+    .then((res) => {
+      console.log('success', res.data)
+    })
   }
 
   const semester = ref('')
@@ -84,30 +83,6 @@
       semester : "genap",
       start : "02/12/2022",
       end : "02/12/2022",
-    },
-    {
-      no : "1",
-      tahun_ajar : "2021/2022",
-      status : 1,
-      semester : "ganjil",
-      start : "02/02/2020",
-      end : "02/02/2020",
-    },
-    {
-      no : "1",
-      tahun_ajar : "2021/2022",
-      status : 1,
-      semester : "ganjil",
-      start : "02/02/2020",
-      end : "02/02/2020",
-    },
-    {
-      no : "1",
-      tahun_ajar : "2021/2022",
-      status : 1,
-      semester : "ganjil",
-      start : "02/02/2020",
-      end : "02/02/2020",
     },
   ])
 
@@ -197,8 +172,8 @@
         </div>
       </div>
       <div class="mb-5 mb-xxl-8 px-12">
-        <Datatable 
-          :table-header="tableHeader" 
+        <Datatable
+          :table-header="tableHeader"
           :table-data="tableData"
           @currentChange="getData"
           :total="100"
@@ -246,10 +221,10 @@
 
     <!-- Modal -->
 
-    <Modal 
-      :title="modalData" 
-      :breadcrumb="Array('Sekolah', 'Akademik', 'Tahun Ajar', modalData)" 
-      :show="modalData" 
+    <Modal
+      :title="modalData"
+      :breadcrumb="Array('Sekolah', 'Akademik', 'Tahun Ajar', modalData)"
+      :show="modalData"
       @closeModal="closeModalData"
       @confirm="addData"
       @dismiss="closeModalData"
@@ -291,7 +266,7 @@
           </div>
         </div>
     </Modal>
-    
+
   </div>
 </template>
 
