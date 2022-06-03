@@ -1,7 +1,7 @@
 <script setup>
   const props = defineProps({
-    show: Boolean,
-    title: String,
+    show: {type:  String, required: true},
+    title: {type: String, required: true},
     breadcrumb: Array
   })
 
