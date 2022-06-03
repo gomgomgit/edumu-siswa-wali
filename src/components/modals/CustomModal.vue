@@ -18,13 +18,13 @@
         <div v-if="props.show" class="modal-container">
           <div class="modal-header d-block border-bottom border-secondary">
             <div class="fw-bold fs-1 m-4">
-              <span v-text="props.title"></span>
+              <span>{{props.title}}</span>
             </div>
             <div class="fw-bold fs-4 m-4">
               <template v-for="bc, index in props.breadcrumb" :key="index">
-                <span v-if="index == props.breadcrumb.length - 1" v-text="bc"> </span> 
+                <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span> 
                 <span v-else class="text-black-50">
-                  <span v-text="bc"></span> /
+                  <span>{{bc}} / </span>
                 </span>
               </template>
             </div>

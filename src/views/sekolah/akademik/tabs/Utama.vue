@@ -3,7 +3,7 @@
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
 
-  const semester = ref('')
+  const tingkatKelas = ref('')
   const status = ref('')
 
   const modalData = ref(false)
@@ -94,16 +94,20 @@
       key: "no",
     },
     {
-      name: "Guru",
-      key: "guru",
-    },
-    {
       name: "Kelas",
       key: "kelas",
     },
     {
-      name: "Tahun Ajar",
-      key: "tahun_ajar",
+      name: "Jam Masuk",
+      key: "jam_masuk",
+    },
+    {
+      name: "Tingkat Kelas",
+      key: "tingkat_kelas",
+    },
+    {
+      name: "Status",
+      key: "status",
     },
     {
       name: "Action",
@@ -115,33 +119,58 @@
   const tableData = ref([
     {
       no : "1",
-      guru : "Faradillah S.Pd",
       kelas : "X IPA",
-      tahun_ajar : "2021/2022",
+      jam_masuk : {
+        name: "pagi",
+        start: "7:00 AM", 
+        end: "12.00 AM"
+      },
+      tingkat_kelas : "12",
+      status : 1,
     },
     {
       no : "1",
-      guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
+      jam_masuk : {
+        name: "pagi",
+        start: "7:00 AM", 
+        end: "12.00 AM"
+      },
+      tingkat_kelas : "12",
+      status : 1,
     },
     {
       no : "1",
-      guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
+      jam_masuk : {
+        name: "pagi",
+        start: "7:00 AM", 
+        end: "12.00 AM"
+      },
+      tingkat_kelas : "12",
+      status : 1,
     },
     {
       no : "1",
-      guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
+      jam_masuk : {
+        name: "pagi",
+        start: "7:00 AM", 
+        end: "12.00 AM"
+      },
+      tingkat_kelas : "12",
+      status : 1,
     },
     {
       no : "1",
-      guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
+      jam_masuk : {
+        name: "pagi",
+        start: "7:00 AM", 
+        end: "12.00 AM"
+      },
+      tingkat_kelas : "12",
+      status : 1,
     },
   ])
 
@@ -180,7 +209,7 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center">
       <div class="d-flex gap-4">
         <div>
-          <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+          <el-select v-model="tingkatKelas" class="m-2" placeholder="Tingkat Kelas" size="large">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -205,7 +234,7 @@
         <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
           <i class="text-white fas fa-plus fs-5"></i>
           <span>
-            Wali Kelas
+            Tambah Kelas
           </span>
         </a>
       </div>
@@ -219,14 +248,18 @@
         <template class="text-center" v-slot:cell-no="{ row: data }">
           {{ data.no }}
         </template>
-        <template v-slot:cell-guru="{ row: data }">
-          {{ data.guru }}
-        </template>
         <template v-slot:cell-kelas="{ row: data }">
           {{ data.kelas }}
         </template>
-        <template v-slot:cell-tahun_ajar="{ row: data }">
-          {{ data.tahun_ajar }}
+        <template v-slot:cell-jam_masuk="{ row: data }">
+          {{ data.jam_masuk.name }}
+          <span class="badge badge-light-primary">{{data.jam_masuk.start}} - {{data.jam_masuk.end}}</span>
+        </template>
+        <template v-slot:cell-tingkat_kelas="{ row: data }">
+          {{ data.tingkat_kelas }}
+        </template>
+        <template v-slot:cell-status="{ row: data }">
+          {{ data.status ? 'Aktif' : 'Non Aktif' }}
         </template>
         <template v-slot:cell-action="scope">
           <div>

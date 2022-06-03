@@ -10,6 +10,13 @@
         <!-- begin::Tabs  -->
           <div class="d-flex w-100 gap-4 w-sm-auto justify-content-end">
             <router-link
+              to="/sekolah/akademik/data-kelas/utama"
+              active-class="active"
+              class="btn btn-active-fwf"
+            >
+              <span>Utama</span>
+            </router-link>
+            <router-link
               to="/sekolah/akademik/data-kelas/wali-kelas"
               active-class="active"
               class="btn btn-active-fwf"

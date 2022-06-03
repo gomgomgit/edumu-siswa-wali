@@ -55,7 +55,13 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "",
-            redirect: "/sekolah/akademik/data-kelas/wali-kelas",
+            redirect: "/sekolah/akademik/data-kelas/utama",
+          },
+          {
+            path: "utama",
+            name: "sekolah-akademik-data-kelas-utama",
+            component: () =>
+              import("@/views/sekolah/akademik/tabs/Utama.vue"),
           },
           {
             path: "wali-kelas",
