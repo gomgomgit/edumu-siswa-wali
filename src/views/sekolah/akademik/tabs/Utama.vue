@@ -61,30 +61,33 @@
     },
   ])
 
-  const kelas = ref([
+  const dataTingkatKelas = ref([
     {
-      name: 'X IPA 1'
+      name: '10'
     },
     {
-      name: 'X IPA 2'
+      name: '11'
     },
     {
-      name: 'X IPS 1'
+      name: '12'
+    },
+  ])
+
+  const jamMasuk = ref([
+    {
+      name: 'pagi',
+      start: '08:00 AM',
+      end: '10:00 AM',
     },
     {
-      name: 'XI IPA 1'
+      name: 'siang',
+      start: '11:00 AM',
+      end: '03:00 PM',
     },
     {
-      name: 'XI IPS 1'
-    },
-    {
-      name: 'XII IPA 1'
-    },
-    {
-      name: 'XII IPS 1'
-    },
-    {
-      name: 'XII IPS 2'
+      name: 'sore',
+      start: '03:00 PM',
+      end: '07:00 PM',
     },
   ])
 
@@ -174,12 +177,14 @@
     },
   ])
 
-  const initialFormData = {guru: '', tahun_ajar: '', kelas: ''}
+  const initialFormData = {namaKelas: '', wali: '', tingkatKelas: '', jamMasuk: '', status: ''}
 
   const formData = reactive({
-    guru: '',
-    tahun_ajar: '',
-    kelas: '',
+    namaKelas: '', 
+    wali: '', 
+    tingkatKelas: '', 
+    jamMasuk: '', 
+    status: ''
   })
 
   function addData() {
@@ -299,7 +304,11 @@
     >
         <div class="">
           <div class="row gy-6">
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Guru</div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Nama Kelas</div>
+            <div class="col-8">
+              <input type="text" v-model="formData.namaKelas" class="form-control" placeholder="X IPA , IX IPS , DST"/>
+            </div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Wali Kelas</div>
             <div class="col-8">
               <select  v-model="formData.guru" class="form-select form-select-solid" aria-label="Select example">
                 <option>Pilih Guru</option>
@@ -308,21 +317,21 @@
                 </template>
               </select>
             </div>
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Tingkat Kelas</div>
             <div class="col-8">
               <select  v-model="formData.tahun_ajar" class="form-select form-select-solid" aria-label="Select example">
-                <option>Pilih Tahun Ajar</option>
-                <template v-for="(tahun, tahunIndex) in tahunAjar" :key="tahunIndex">
-                  <option value="1">{{tahun.name}}</option>
+                <option>Pilih Tingkat Kelas</option>
+                <template v-for="(kelas, kelasIndex) in dataTingkatKelas" :key="kelasIndex">
+                  <option value="1">{{kelas.name}}</option>
                 </template>
               </select>
             </div>
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Kelas</div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Jam Masuk</div>
             <div class="col-8">
-              <select  v-model="formData.kelas" class="form-select form-select-solid" aria-label="Select example">
-                <option>Pilih Kelas</option>
-                <template v-for="(kelas, kelasIndex) in kelas" :key="kelasIndex">
-                  <option value="1">{{kelas.name}}</option>
+              <select  v-model="formData.jamMasuk" class="form-select form-select-solid" aria-label="Select example">
+                <option>Pilih Jam Masuk</option>
+                <template v-for="(jam, jamIndex) in jamMasuk" :key="jamIndex">
+                  <option value="1">{{jam.name}} ({{jam.start}}-{{jam.end}})</option>
                 </template>
               </select>
             </div>
