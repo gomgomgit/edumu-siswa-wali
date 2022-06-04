@@ -1,6 +1,7 @@
 <script setup>
 import { defineComponent } from "vue";
 import KTQuickLinksMenu from "@/layout/header/partials/QuickLinksMenu.vue";
+import KTUserMenu from "@/layout/header/partials/UserMenu.vue";
 
 const emit = defineEmits(['openSubMenu', 'closeSubMenu'])
 
@@ -260,7 +261,7 @@ function openSubMenu(menu) {
       class="aside-footer d-flex flex-column align-items-center flex-column-auto"
       id="kt_aside_footer"
     >
-      <div class="d-flex align-items-center mb-2">
+      <div class="d-flex align-items-center mb-3">
         <div
           class="btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
           data-kt-menu-trigger="click"
@@ -278,6 +279,26 @@ function openSubMenu(menu) {
         </div>
         <KTQuickLinksMenu></KTQuickLinksMenu>
       </div>
+      <div
+        class="d-flex align-items-center mb-6"
+        id="kt_header_user_menu_toggle"
+      >
+        <div
+          class="cursor-pointer symbol symbol-40px"
+          data-kt-menu-trigger="click"
+          data-kt-menu-overflow="true"
+          data-kt-menu-placement="top-start"
+          data-kt-menu-flip="top-end"
+          data-bs-toggle="tooltip"
+          data-bs-placement="right"
+          data-bs-dismiss="click"
+          title="User profile"
+        >
+          <img src="media/avatars/300-1.jpg" alt="metronic" />
+        </div>
+        <KTUserMenu></KTUserMenu>
+      </div>
+      
     </div>
   </div>
 </template>
