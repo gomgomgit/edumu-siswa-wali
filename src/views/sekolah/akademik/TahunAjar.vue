@@ -4,16 +4,23 @@
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
 
-  onMounted(getDataKelas)
+  onMounted(getTahunAjar)
 
-  function getDataKelas() {
-    request.post('thn_ajars', null, {
+  function getTahunAjar() {
+    loadingTahunAjar.value = true
+    request.post('thn_ajar', null, {
       params: { page: 1 }
     })
     .then((res) => {
+      tahunAjars.value = res.data.data
+      tableData.value = res.data.data.data
+      loadingTahunAjar.value = false
       console.log('success', res.data)
     })
   }
+
+  const loadingTahunAjar = ref(false)
+  const tahunAjars = ref([])
 
   const semester = ref('')
   const status = ref('')
@@ -45,20 +52,16 @@
 
   const tableHeader = ref([
     {
-      name: "No",
-      key: "no",
-    },
-    {
       name: "Tahun Ajar",
-      key: "tahun_ajar",
+      key: "thn_ajar_value",
     },
     {
       name: "Semester",
-      key: "semester",
+      key: "thn_ajar_semester",
     },
     {
       name: "Status Aktif",
-      key: "status",
+      key: "thn_ajar_status",
     },
     {
       name: "Action",
@@ -68,22 +71,6 @@
   ])
 
   const tableData = ref([
-    {
-      no : "1",
-      tahun_ajar : "2021/2022",
-      status : 1,
-      semester : "ganjil",
-      start : "02/02/2020",
-      end : "02/02/2020",
-    },
-    {
-      no : "1",
-      tahun_ajar : "2021/2022",
-      status : 0,
-      semester : "genap",
-      start : "02/12/2022",
-      end : "02/12/2022",
-    },
   ])
 
   const initialFormData = {tahun_ajar: '', status: '', semester: '', start: '', end: ''}
@@ -176,20 +163,18 @@
           :table-header="tableHeader"
           :table-data="tableData"
           @currentChange="getData"
-          :total="100"
+          :total="tahunAjars.total"
           :currentPage="3"
+          :loading="loadingTahunAjar"
         >
-          <template v-slot:cell-no="{ row: data }">
-            {{ data.no }}
+          <template v-slot:cell-thn_ajar_value="{ row: data }">
+            {{ data.thn_ajar_value }}
           </template>
-          <template v-slot:cell-tahun_ajar="{ row: data }">
-            {{ data.tahun_ajar }}
+          <template v-slot:cell-thn_ajar_semester="{ row: data }">
+            {{ data.thn_ajar_semester }}
           </template>
-          <template v-slot:cell-semester="{ row: data }">
-            {{ data.semester }}
-          </template>
-          <template v-slot:cell-status="{ row: data }">
-            {{ data.status ? 'Aktif' : 'Non Aktif' }}
+          <template v-slot:cell-thn_ajar_status="{ row: data }">
+            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
           </template>
           <template v-slot:cell-action="scope">
             <div>

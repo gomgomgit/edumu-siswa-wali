@@ -4,7 +4,8 @@
 
   const semester = ref('')
   const status = ref('')
-  const checked = ref('')
+
+  const checkedStudents = ref([])
 
   const options = [
     {
@@ -61,30 +62,35 @@
       tahun_ajar : "2021/2022",
     },
     {
-      no : "1",
+      no : "2",
       guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
       tahun_ajar : "2021/2022",
     },
     {
-      no : "1",
+      no : "3",
       guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
       tahun_ajar : "2021/2022",
     },
     {
-      no : "1",
+      no : "4",
       guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
       tahun_ajar : "2021/2022",
     },
     {
-      no : "1",
+      no : "5",
       guru : "Faradillah S.Pd",
       kelas : "Kelas Edumu 2",
       tahun_ajar : "2021/2022",
     },
   ])
+
+  function check(data) {
+    checkedStudents.value.push({id: data.no})
+    console.log(checkedStudents)
+  }
 </script>
 
 <template>
@@ -139,9 +145,10 @@
         <template v-slot:cell-tahun_ajar="{ row: data }">
           {{ data.tahun_ajar }}
         </template>
-        <template v-slot:cell-action>
+        <template v-slot:cell-action="scope">
           <div>  
-            <el-checkbox v-model="checked" label="" size="large" />
+            <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
+            {{scope.row.no}}
           </div>
         </template>
       </Datatable>
