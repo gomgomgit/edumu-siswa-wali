@@ -95,6 +95,15 @@
   function getData(event) {
     console.log(event)
     console.log('getData')
+    request.post('thn_ajar', null, {
+      params: { page: 2 }
+    })
+    .then((res) => {
+      tahunAjars.value = res.data.data
+      tableData.value = res.data.data.data
+      loadingTahunAjar.value = false
+      console.log('success', res.data)
+    })
   }
 
   function editData(data) {
@@ -164,7 +173,8 @@
           :table-data="tableData"
           @currentChange="getData"
           :total="tahunAjars.total"
-          :currentPage="3"
+          :rows-per-page="tahunAjars.per_page"
+          :currentPage="tahunAjars.current_page"
           :loading="loadingTahunAjar"
         >
           <template v-slot:cell-thn_ajar_value="{ row: data }">
@@ -256,7 +266,7 @@
 </template>
 
 <style scoped>
-  .el-input__inner {
+  /* .el-input__inner {
     background: rgba(32, 139, 255, 0.5);
   }
   .el-input__inner::placeholder {
@@ -264,5 +274,5 @@
   }
   .el-input__suffix .icon {
     color: #0084AD;
-  }
+  } */
 </style>
