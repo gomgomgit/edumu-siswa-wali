@@ -24,7 +24,11 @@
             'container-xxl': !contentWidthFluid,
           }"
         >
-          <router-view />
+          <router-view v-slot="{ Component, route }">
+            <transition :name="route.meta.transition || 'slide-fade'">
+              <component :is="Component" />
+            </transition>
+          </router-view> 
         </div>
         <!-- end:: Content Body -->
       </div>
@@ -44,6 +48,24 @@
   <!-- <KTDemosDrawer /> -->
   <!-- <KTHelpDrawer /> -->
 </template>
+
+<style scoped>
+  .slide-fade-enter-active {
+    opacity: 100;
+    transition: all 0.4s ease-out;
+  }
+
+  .slide-fade-leave-active {
+    opacity: 100;
+    transition: all .4s cubic-bezier(1, 0.5, 0.8, 1), 2;
+  }
+
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+</style>
 
 <script lang="ts">
 import { defineComponent, computed, onMounted, watch, nextTick } from "vue";
