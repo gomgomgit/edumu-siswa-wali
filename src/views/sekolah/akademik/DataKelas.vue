@@ -12,21 +12,21 @@
             <router-link
               to="/sekolah/akademik/data-kelas/utama"
               active-class="active"
-              class="btn btn-active-fwf"
+              class="btn btn-active-primary"
             >
               <span>Utama</span>
             </router-link>
             <router-link
               to="/sekolah/akademik/data-kelas/wali-kelas"
               active-class="active"
-              class="btn btn-active-fwf"
+              class="btn btn-active-primary"
             >
               <span>Wali Kelas</span>
             </router-link>
             <router-link
               to="/sekolah/akademik/data-kelas/mutasi-kelas"
               active-class="active"
-              class="btn btn-active-fwf"
+              class="btn btn-active-primary"
             >
               <span>Mutasi Kelas</span>
             </router-link>
@@ -51,12 +51,5 @@
   }
   .el-input__suffix .icon {
     color: #0084AD;
-  }
-  .bg-fwf {
-    background: #0084AD;
-  }
-  .btn-active-fwf:hover, .btn-active-fwf.active {
-    color: white;
-    background: #0084AD;
   }
 </style>

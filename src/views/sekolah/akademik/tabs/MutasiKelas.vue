@@ -120,7 +120,7 @@
       </div>
 
       <div class="position-relative d-flex ">
-        <a href="#" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
+        <a href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
           <span>
             Pindahkan
           </span>

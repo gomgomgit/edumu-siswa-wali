@@ -148,8 +148,8 @@
             </div>
 
             <div class="position-relative d-flex ">
-              <a @click="modalData = 'Tambah Data'" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
-                <i class="text-white fas fa-plus fs-5"></i>
+              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <i class="fas fa-plus fs-5"></i>
                 <span>
                   Tambah Tahun Ajar
                 </span>
@@ -264,11 +264,5 @@
   }
   .el-input__suffix .icon {
     color: #0084AD;
-  }
-  .bg-fwf {
-    background: #0084AD;
-  }
-  .bg-guru {
-    background: #04C8C8;
   }
 </style>

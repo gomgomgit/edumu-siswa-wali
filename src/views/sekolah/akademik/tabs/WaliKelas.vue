@@ -202,8 +202,8 @@
       </div>
 
       <div class="position-relative d-flex ">
-        <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn bg-fwf text-white d-flex gap-3 align-items-center w-auto">
-          <i class="text-white fas fa-plus fs-5"></i>
+        <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+          <i class="fas fa-plus fs-5"></i>
           <span>
             Wali Kelas
           </span>
