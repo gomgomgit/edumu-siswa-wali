@@ -4,7 +4,7 @@
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
+    setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
   })
 
   const semester = ref('')

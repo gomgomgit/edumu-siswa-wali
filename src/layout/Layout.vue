@@ -26,7 +26,7 @@
         >
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'slide-fade'">
-              <component :is="Component" :key="route.path"/>
+              <component :is="Component"/>
             </transition>
           </router-view> 
         </div>
@@ -49,7 +49,7 @@
   <!-- <KTHelpDrawer /> -->
 </template>
 
-<style scoped>
+<style>
   .slide-fade-enter-active {
     opacity: 100;
     transition: all 0.4s ease-out;

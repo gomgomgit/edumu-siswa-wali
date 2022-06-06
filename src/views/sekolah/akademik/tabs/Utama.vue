@@ -1,7 +1,12 @@
 <script setup>
-  import { ref, reactive } from "vue";
+  import { ref, reactive, onMounted } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
+  import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  
+  onMounted(() => {
+    setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
+  })
 
   const tingkatKelas = ref('')
   const status = ref('')
