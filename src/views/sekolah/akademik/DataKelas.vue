@@ -1,5 +1,5 @@
 <script setup>
-import PageTabs from '@/components/page-tabs'
+import PageTabs from '@/components/page-tabs/index.vue'
 import { ref } from 'vue'
 
 const tabs = [
@@ -35,15 +35,3 @@ const tabs = [
     </div>
   </div>
 </template>
-
-<style>
-  .el-input__inner {
-    background: rgba(32, 139, 255, 0.5);
-  }
-  .el-input__inner::placeholder {
-    color: #0084AD;
-  }
-  .el-input__suffix .icon {
-    color: #0084AD;
-  }
-</style>

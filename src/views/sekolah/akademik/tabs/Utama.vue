@@ -219,7 +219,8 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center">
       <div class="d-flex gap-4">
         <div>
-          <el-select v-model="tingkatKelas" class="m-2" placeholder="Tingkat Kelas" size="large">
+          <el-select clearable v-model="tingkatKelas" class="m-2 table-filter" placeholder="Tingkat Kelas" size="large">
+            <el-option value="" selected label="Pilih Kelas"/>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -229,7 +230,8 @@
           </el-select>
         </div>
         <div>
-          <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+          <el-select clearable v-model="status" class="m-2 table-filter" placeholder="Status" size="large">
+            <el-option value="" selected label="Status"/>
             <el-option
               v-for="item in options"
               :key="item.value"
