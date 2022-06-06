@@ -99,64 +99,117 @@
 </script>
 
 <template>
-  <div class="page-content">
-    <div class="d-flex flex-wrap justify-content-between align-items-center">
-      <div class="d-flex gap-4">
-        <div>
-          <el-select v-model="semester" class="m-2" placeholder="Pilih Kelas Asal" size="large">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-        <div>
-          <el-select v-model="status" class="m-2" placeholder="Pilih Kelas Tujuan" size="large">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-      </div>
+  <div class="row g-8">
+    <div class="col-7">
+      <div class="card mb-5 mb-xxl-8">
+        <div class="card-body pt-5 pb-5">
+          <div>
+            <h2 class="fs-1">Data Siswa</h2>
+            <p class="text-black-50 fw-bold">Kelas Asal</p>
+          </div>
+          <div class="separator border-black-50 border-3 my-4"></div>
+          <div class="page-content">
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <div class="d-flex gap-4">
+                <div>
+                  <el-select v-model="semester" class="m-2" placeholder="Pilih Kelas Asal" size="large">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </div>
+                <div>
+                  <el-select v-model="status" class="m-2" placeholder="Pilih Kelas Tujuan" size="large">
+                    <el-option
+                      v-for="item in options"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    />
+                  </el-select>
+                </div>
+              </div>
 
-      <div class="position-relative d-flex ">
-        <a href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
-          <span>
-            Pindahkan
-          </span>
-        </a>
+              <div class="position-relative d-flex ">
+                <a href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Pindahkan
+                  </span>
+                </a>
+              </div>
+            </div>
+            <div class="mb-5 mb-xxl-8 px-12">
+              <Datatable 
+                id="datatable"
+                :table-header="tableHeader" 
+                :table-data="tableData"
+              >
+                <template class="text-center" v-slot:cell-no="{ row: data }">
+                  {{ data.no }}
+                </template>
+                <template v-slot:cell-guru="{ row: data }">
+                  {{ data.guru }}
+                </template>
+                <template v-slot:cell-kelas="{ row: data }">
+                  {{ data.kelas }}
+                </template>
+                <template v-slot:cell-tahun_ajar="{ row: data }">
+                  {{ data.tahun_ajar }}
+                </template>
+                <template v-slot:cell-action="scope">
+                  <div>  
+                    <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
+                    {{scope.row.no}}
+                  </div>
+                </template>
+              </Datatable>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="mb-5 mb-xxl-8 px-12">
-      <Datatable 
-        id="datatable"
-        :table-header="tableHeader" 
-        :table-data="tableData"
-      >
-        <template class="text-center" v-slot:cell-no="{ row: data }">
-          {{ data.no }}
-        </template>
-        <template v-slot:cell-guru="{ row: data }">
-          {{ data.guru }}
-        </template>
-        <template v-slot:cell-kelas="{ row: data }">
-          {{ data.kelas }}
-        </template>
-        <template v-slot:cell-tahun_ajar="{ row: data }">
-          {{ data.tahun_ajar }}
-        </template>
-        <template v-slot:cell-action="scope">
-          <div>  
-            <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
-            {{scope.row.no}}
+    <div class="col-5">
+      <div class="card mb-5 mb-xxl-8">
+        <div class="card-body pt-5 pb-5">
+          
+          <div>
+            <h2 class="fs-1">Data Siswa</h2>
+            <p class="text-black-50 fw-bold">Kelas Tujuan</p>
           </div>
-        </template>
-      </Datatable>
+          <div class="separator border-black-50 border-3 my-4"></div>
+          <div class="page-content">
+            <div class="mb-5 mb-xxl-8 px-12">
+              <Datatable 
+                id="datatable"
+                :table-header="tableHeader" 
+                :table-data="tableData"
+              >
+                <template class="text-center" v-slot:cell-no="{ row: data }">
+                  {{ data.no }}
+                </template>
+                <template v-slot:cell-guru="{ row: data }">
+                  {{ data.guru }}
+                </template>
+                <template v-slot:cell-kelas="{ row: data }">
+                  {{ data.kelas }}
+                </template>
+                <template v-slot:cell-tahun_ajar="{ row: data }">
+                  {{ data.tahun_ajar }}
+                </template>
+                <template v-slot:cell-action="scope">
+                  <div>  
+                    <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
+                    {{scope.row.no}}
+                  </div>
+                </template>
+              </Datatable>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

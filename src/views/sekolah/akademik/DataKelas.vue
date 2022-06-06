@@ -22,16 +22,10 @@ const tabs = [
   <div>
     <PageTabs :tabs="tabs"></PageTabs>
 
-    <div class="card mb-5 mb-xxl-8">
-      <div class="card-body pt-5 pb-5">
-        <!-- Page Content -->
-        
-        <router-view v-slot="{ Component, route }">
-          <transition :name="route.meta.transition || 'slide-fade'">
-            <component :is="Component"/>
-          </transition>
-        </router-view> 
-      </div>
-    </div>
+    <router-view v-slot="{ Component, route }">
+      <transition :name="route.meta.transition || 'slide-fade'">
+        <component :is="Component"/>
+      </transition>
+    </router-view> 
   </div>
 </template>
