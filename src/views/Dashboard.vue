@@ -81,7 +81,7 @@ import MixedWidget2 from "@/components/widgets/mixed/Widget2.vue";
 import MixedWidget5 from "@/components/widgets/mixed/Widget5.vue";
 import MixedWidget7 from "@/components/widgets/mixed/Widget7.vue";
 import MixedWidget10 from "@/components/widgets/mixed/Widget10.vue";
-import { setCurrentPageTitle } from "@/core/helpers/breadcrumb";
+import { setCurrentPageTitle, setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 
 export default defineComponent({
   name: "dashboard-main",
@@ -100,7 +100,7 @@ export default defineComponent({
   },
   setup() {
     onMounted(() => {
-      setCurrentPageTitle("Dashboard");
+      setCurrentPageBreadcrumbs("Dashboard", ['dsaf', 'dfdsfa']);
     });
   },
 });

@@ -1,10 +1,15 @@
 <script setup>
   import { ref, onMounted, reactive } from "vue";
   import { request } from '@/util'
+  import Header from "@/components/header"
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
+  import { setCurrentPageTitle, setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 
-  onMounted(getTahunAjar)
+  onMounted(() => {
+    setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
+    getTahunAjar
+  })
 
   function getTahunAjar() {
     loadingTahunAjar.value = true
@@ -118,18 +123,354 @@
 
 <template>
   <div>
-    <!--begin::Head-->
+    
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body pt-5 pb-5">
-        <!-- Page Header -->
-        <div class="page-header border-bottom border-black-50 mb-3">
-          <div class="page-title px-3 py-7 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-            <h3 class="mb-0 fs-2x">Akademik - Tahun Ajar</h3>
-          </div>
-          <div class="page-breadcrumb px-3 py-3 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-            <h3 class="mb-0 fs-4"><span class="text-black-50"> Sekolah / Akademik / </span>Tahun Ajar</h3>
+        
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <div>
+                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div>
+                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+
+            <div class="position-relative d-flex ">
+              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <i class="fas fa-plus fs-5"></i>
+                <span>
+                  Tambah Tahun Ajar
+                </span>
+              </a>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="mb-5 mb-xxl-8 px-12">
+        <Datatable
+          :table-header="tableHeader"
+          :table-data="tableData"
+          @currentChange="getData"
+          :total="tahunAjars.total"
+          :rows-per-page="tahunAjars.per_page"
+          :currentPage="tahunAjars.current_page"
+          :loading="loadingTahunAjar"
+        >
+          <template v-slot:cell-thn_ajar_value="{ row: data }">
+            {{ data.thn_ajar_value }}
+          </template>
+          <template v-slot:cell-thn_ajar_semester="{ row: data }">
+            {{ data.thn_ajar_semester }}
+          </template>
+          <template v-slot:cell-thn_ajar_status="{ row: data }">
+            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
+          </template>
+          <template v-slot:cell-action="scope">
+            <div>
+              <a
+                @click.prevent="editData(scope.row)"
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg src="media/icons/duotune/art/art005.svg" />
+                </span>
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen027.svg"
+                  />
+                </span>
+              </a>
+            </div>
+          </template>
+        </Datatable>
+      </div>
+    </div>
+    <div class="card mb-5 mb-xxl-8">
+      <div class="card-body pt-5 pb-5">
+        
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <div>
+                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div>
+                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+
+            <div class="position-relative d-flex ">
+              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <i class="fas fa-plus fs-5"></i>
+                <span>
+                  Tambah Tahun Ajar
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-5 mb-xxl-8 px-12">
+        <Datatable
+          :table-header="tableHeader"
+          :table-data="tableData"
+          @currentChange="getData"
+          :total="tahunAjars.total"
+          :rows-per-page="tahunAjars.per_page"
+          :currentPage="tahunAjars.current_page"
+          :loading="loadingTahunAjar"
+        >
+          <template v-slot:cell-thn_ajar_value="{ row: data }">
+            {{ data.thn_ajar_value }}
+          </template>
+          <template v-slot:cell-thn_ajar_semester="{ row: data }">
+            {{ data.thn_ajar_semester }}
+          </template>
+          <template v-slot:cell-thn_ajar_status="{ row: data }">
+            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
+          </template>
+          <template v-slot:cell-action="scope">
+            <div>
+              <a
+                @click.prevent="editData(scope.row)"
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg src="media/icons/duotune/art/art005.svg" />
+                </span>
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen027.svg"
+                  />
+                </span>
+              </a>
+            </div>
+          </template>
+        </Datatable>
+      </div>
+    </div>
+    <div class="card mb-5 mb-xxl-8">
+      <div class="card-body pt-5 pb-5">
+        
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <div>
+                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div>
+                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+
+            <div class="position-relative d-flex ">
+              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <i class="fas fa-plus fs-5"></i>
+                <span>
+                  Tambah Tahun Ajar
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-5 mb-xxl-8 px-12">
+        <Datatable
+          :table-header="tableHeader"
+          :table-data="tableData"
+          @currentChange="getData"
+          :total="tahunAjars.total"
+          :rows-per-page="tahunAjars.per_page"
+          :currentPage="tahunAjars.current_page"
+          :loading="loadingTahunAjar"
+        >
+          <template v-slot:cell-thn_ajar_value="{ row: data }">
+            {{ data.thn_ajar_value }}
+          </template>
+          <template v-slot:cell-thn_ajar_semester="{ row: data }">
+            {{ data.thn_ajar_semester }}
+          </template>
+          <template v-slot:cell-thn_ajar_status="{ row: data }">
+            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
+          </template>
+          <template v-slot:cell-action="scope">
+            <div>
+              <a
+                @click.prevent="editData(scope.row)"
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg src="media/icons/duotune/art/art005.svg" />
+                </span>
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen027.svg"
+                  />
+                </span>
+              </a>
+            </div>
+          </template>
+        </Datatable>
+      </div>
+    </div>
+    <div class="card mb-5 mb-xxl-8">
+      <div class="card-body pt-5 pb-5">
+        
+        <!-- Page Content -->
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <div>
+                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+              <div>
+                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  />
+                </el-select>
+              </div>
+            </div>
+
+            <div class="position-relative d-flex ">
+              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <i class="fas fa-plus fs-5"></i>
+                <span>
+                  Tambah Tahun Ajar
+                </span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mb-5 mb-xxl-8 px-12">
+        <Datatable
+          :table-header="tableHeader"
+          :table-data="tableData"
+          @currentChange="getData"
+          :total="tahunAjars.total"
+          :rows-per-page="tahunAjars.per_page"
+          :currentPage="tahunAjars.current_page"
+          :loading="loadingTahunAjar"
+        >
+          <template v-slot:cell-thn_ajar_value="{ row: data }">
+            {{ data.thn_ajar_value }}
+          </template>
+          <template v-slot:cell-thn_ajar_semester="{ row: data }">
+            {{ data.thn_ajar_semester }}
+          </template>
+          <template v-slot:cell-thn_ajar_status="{ row: data }">
+            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
+          </template>
+          <template v-slot:cell-action="scope">
+            <div>
+              <a
+                @click.prevent="editData(scope.row)"
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg src="media/icons/duotune/art/art005.svg" />
+                </span>
+              </a>
+
+              <a
+                href="#"
+                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+              >
+                <span class="svg-icon svg-icon-3">
+                  <inline-svg
+                    src="media/icons/duotune/general/gen027.svg"
+                  />
+                </span>
+              </a>
+            </div>
+          </template>
+        </Datatable>
+      </div>
+    </div>
+    <div class="card mb-5 mb-xxl-8">
+      <div class="card-body pt-5 pb-5">
+        
         <!-- Page Content -->
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">

@@ -26,7 +26,7 @@
         >
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'slide-fade'">
-              <component :is="Component" />
+              <component :is="Component" :key="route.path"/>
             </transition>
           </router-view> 
         </div>
