@@ -1,6 +1,11 @@
 <script setup>
-  import { ref } from "vue";
+  import { onMounted, ref } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
+  import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  
+  onMounted(() => {
+    setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
+  })
 
   const semester = ref('')
   const status = ref('')
