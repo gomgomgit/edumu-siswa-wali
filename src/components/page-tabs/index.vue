@@ -34,7 +34,7 @@ const props = defineProps({
             <router-link 
               active-class="active router-link-exact-active text-active-primary" 
               :to="tab.to" 
-              class="nav-link text-dark me-6"
+              class="nav-link text-black-50 me-6"
             > 
               <span>{{tab.title}}</span>
             </router-link>
