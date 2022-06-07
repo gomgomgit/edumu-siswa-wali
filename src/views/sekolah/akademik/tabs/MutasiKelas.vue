@@ -1,15 +1,15 @@
 <script setup>
   import { onMounted, reactive, ref } from "vue";
-  import Datatable from "@/components/kt-datatable/KTDatatable.vue";
+  import ServerSideTable from "@/components/ServerSideTable.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
-import { request } from "@/util";
+  import { request } from "@/util";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
   })
   
   function getSiswaDataKelas (payload) {
-    request.post('kelas', null, {
+    request.post('siswa_data_kelas', null, {
       params: {
         page: payload.page ?? 1,
         sortby: payload.sort?.type ?? 'ASC'
@@ -67,7 +67,7 @@ import { request } from "@/util";
           </div>
           <div class="separator border-black-50 border-3 my-4"></div>
           <div class="page-content">
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
               <div class="d-flex gap-4">
                 <div>
                   <el-select v-model="semester" class="m-2" placeholder="Pilih Kelas Asal" size="large">
@@ -92,14 +92,14 @@ import { request } from "@/util";
               </div>
 
               <div class="position-relative d-flex ">
-                <a href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+                <a href="#" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Pindahkan
                   </span>
                 </a>
               </div>
             </div>
-            <div class="mb-5 mb-xxl-8 px-12">
+            <div class="mb-5 mb-xxl-8">
               <ServerSideTable
                 :totalRows="siswaDataKelas.totalRows || 0"
                 :columns="siswaDataKelas.columns"
