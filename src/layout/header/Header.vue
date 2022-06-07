@@ -61,7 +61,7 @@
       </div>
       <!--end::Wrapper-->
 
-      <KTTopbar></KTTopbar>
+      <!-- <KTTopbar></KTTopbar> -->
     </div>
     <!--end::Container-->
   </div>

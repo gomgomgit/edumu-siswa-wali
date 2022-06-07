@@ -69,7 +69,7 @@
             :class="{ show: hasActiveChildren(menuItem.route) }"
             class="menu-item menu-accordion position-relative"
             data-kt-menu-sub="accordion"
-            data-kt-menu-trigger="click"
+            data-kt-menu-trigger="hover"
             @mouseenter="showSubMenu"
             @mouseleave="hideSubMenu"
             @click="clickSubMenu"

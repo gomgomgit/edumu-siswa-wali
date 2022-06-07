@@ -3,8 +3,12 @@
   import { request } from '@/util'
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
+  import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 
-  onMounted(getTahunAjar)
+  onMounted(() => {
+    setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
+    getTahunAjar
+  })
 
   function getTahunAjar() {
     loadingTahunAjar.value = true
@@ -118,18 +122,9 @@
 
 <template>
   <div>
-    <!--begin::Head-->
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body pt-5 pb-5">
-        <!-- Page Header -->
-        <div class="page-header border-bottom border-black-50 mb-3">
-          <div class="page-title px-3 py-7 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-            <h3 class="mb-0 fs-2x">Akademik - Tahun Ajar</h3>
-          </div>
-          <div class="page-breadcrumb px-3 py-3 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-            <h3 class="mb-0 fs-4"><span class="text-black-50"> Sekolah / Akademik / </span>Tahun Ajar</h3>
-          </div>
-        </div>
+        
         <!-- Page Content -->
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">

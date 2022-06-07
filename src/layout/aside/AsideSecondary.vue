@@ -1324,8 +1324,7 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
 
   <button
     v-if="asideSecondaryDisplay && minimizationEnabled"
-    :class="{ active: minimizedAsideSecondary }"
-    class="btn btn-sm btn-icon btn-white btn-active-primary position-absolute translate-middle start-100 end-0 bottom-0 shadow-sm d-none d-lg-flex"
+    class="btn btn-sm btn-icon btn-primary position-absolute translate-middle start-100 end-0 bottom-0 shadow-sm d-none d-lg-flex"
     data-kt-toggle="true"
     data-kt-toggle-state="active"
     data-kt-toggle-target="body"
@@ -1334,7 +1333,7 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
     @click="emit('togglePin')"
   >
     <span class="svg-icon svg-icon-2 rotate-180">
-      <inline-svg src="media/icons/duotune/arrows/arr063.svg" />
+      <inline-svg src="media/icons/duotune/arrows/arr064.svg" />
     </span>
   </button>
 </template>
