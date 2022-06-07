@@ -83,6 +83,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/akademik/KalenderAkademik.vue"),
       },
       {
+        path: "/sekolah/mata-pelajaran/data-mapel",
+        name: "sekolah-mata-pelajaran-data-mapel",
+        component: () => import("@/views/sekolah/mata-pelajaran/DataMapel.vue"),
+      },
+      {
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),
@@ -133,7 +138,7 @@ const router = createRouter({
 router.beforeEach((from, to) => {
   // reset config to initial state
   store.commit(Mutations.RESET_LAYOUT_CONFIG);
-  
+
   // store.dispatch(Actions.VERIFY_AUTH, { api_token: JwtService.getToken() });
   // Scroll page to top on every route change
   setTimeout(() => {

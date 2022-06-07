@@ -1284,7 +1284,7 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
             >
               <KTLms></KTLms>
             </div>
-            
+
             <div
               class="submenus tab-pane fade"
               id="kt_aside_nav_tab_sekolah"

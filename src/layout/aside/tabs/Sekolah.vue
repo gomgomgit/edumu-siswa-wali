@@ -1,4 +1,4 @@
-<template>  
+<template>
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
@@ -250,7 +250,7 @@ export default defineComponent({
             sub: [
               {
                 heading: "Data Mapel",
-                route: "/profile",
+                route: "/sekolah/mata-pelajaran/data-mapel",
               },
               {
                 heading: "Jadwal Mapel",
