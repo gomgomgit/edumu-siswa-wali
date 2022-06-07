@@ -47,7 +47,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Projects"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light active"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light active"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_projects"
               @mouseenter="openSubMenu('kt_aside_nav_tab_projects')"
@@ -67,7 +67,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Lms"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_lms"
               @mouseenter="openSubMenu('kt_aside_nav_tab_lms')"
@@ -112,7 +112,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Sekolah"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_sekolah"
               @mouseenter="openSubMenu('kt_aside_nav_tab_sekolah')"
@@ -157,7 +157,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Iuran"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_iuran"
               @mouseenter="openSubMenu('kt_aside_nav_tab_iuran')"
@@ -203,7 +203,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Absensi"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_absensi"
               @mouseenter="openSubMenu('kt_aside_nav_tab_absensi')"
@@ -243,7 +243,7 @@ function openSubMenu(menu) {
             data-bs-original-title="Pengaturan"
           >
             <a
-              class="nav-link btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_pengaturan"
               @mouseenter="openSubMenu('kt_aside_nav_tab_pengaturan')"
@@ -263,7 +263,7 @@ function openSubMenu(menu) {
     >
       <div class="d-flex align-items-center mb-3">
         <div
-          class="btn btn-icon btn-active-color-success btn-color-gray-400 btn-active-light"
+          class="btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
           data-kt-menu-trigger="click"
           data-kt-menu-overflow="true"
           data-kt-menu-placement="top-start"
