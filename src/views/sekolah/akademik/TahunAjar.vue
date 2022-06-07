@@ -1,30 +1,38 @@
 <script setup>
   import { ref, onMounted, reactive } from "vue";
   import { request } from '@/util'
-  import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  import ServerSideTable from '@/components/ServerSideTable.vue'
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
-    getTahunAjar
   })
 
-  function getTahunAjar() {
-    loadingTahunAjar.value = true
-    request.post('thn_ajar', null, {
-      params: { page: 1 }
-    })
-    .then((res) => {
-      tahunAjars.value = res.data.data
-      tableData.value = res.data.data.data
-      loadingTahunAjar.value = false
-      console.log('success', res.data)
-    })
-  }
+  function getTahunAjar (payload) {
+      request.post('thn_ajar', null, {
+        params: {
+          page: payload.page ?? 1,
+          sortby: payload.sort?.type ?? 'ASC'
+        }
+      }).then(res => {
+        tahunAjar.rows = res.data.data.data
+        tahunAjar.totalRows = res.data.data.total
+      })
+    }
 
   const loadingTahunAjar = ref(false)
-  const tahunAjars = ref([])
+  
+  const tahunAjar = reactive({
+    columns: [
+      { label: 'Tahun Ajar', field: 'thn_ajar_value' },
+      { label: 'Semester', field: 'thn_ajar_semester' },
+      { label: 'Status', field: 'thn_ajar_status' },
+      { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+    ],
+    rows: [],
+    totalRows: 0,
+  })
 
   const semester = ref('')
   const status = ref('')
@@ -163,49 +171,33 @@
         </div>
       </div>
       <div class="mb-5 mb-xxl-8 px-12">
-        <Datatable
-          :table-header="tableHeader"
-          :table-data="tableData"
-          @currentChange="getData"
-          :total="tahunAjars.total"
-          :rows-per-page="tahunAjars.per_page"
-          :currentPage="tahunAjars.current_page"
-          :loading="loadingTahunAjar"
+        <ServerSideTable
+          :totalRows="tahunAjar.totalRows || 0"
+          :columns="tahunAjar.columns"
+          :rows="tahunAjar.rows"
+          @loadItems="getTahunAjar"
         >
-          <template v-slot:cell-thn_ajar_value="{ row: data }">
-            {{ data.thn_ajar_value }}
-          </template>
-          <template v-slot:cell-thn_ajar_semester="{ row: data }">
-            {{ data.thn_ajar_semester }}
-          </template>
-          <template v-slot:cell-thn_ajar_status="{ row: data }">
-            {{ data.thn_ajar_status ? 'Aktif' : 'Non Aktif' }}
-          </template>
-          <template v-slot:cell-action="scope">
-            <div>
-              <a
-                @click.prevent="editData(scope.row)"
-                href="#"
-                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-              >
-                <span class="svg-icon svg-icon-3">
-                  <inline-svg src="media/icons/duotune/art/art005.svg" />
-                </span>
-              </a>
-
-              <a
-                href="#"
-                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-              >
-                <span class="svg-icon svg-icon-3">
-                  <inline-svg
-                    src="media/icons/duotune/general/gen027.svg"
-                  />
-                </span>
-              </a>
-            </div>
-          </template>
-        </Datatable>
+          <template #table-row="{column, row}">
+              <div v-if="column.field == 'thn_ajar_semester'">
+                {{row.thn_ajar_semester[0].toUpperCase() + row.thn_ajar_semester.substring(1)}}
+              </div>
+              <div v-if="column.field == 'thn_ajar_status'">
+                <span :class="'badge badge-light-' + (row.thn_ajar_status ? 'success' : 'danger')">{{row.thn_ajar_status ? 'Aktif' : 'Non Aktif'}}</span>
+              </div>
+              <div v-if="column.field == 'action'">
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/art/art005.svg" />
+                  </span>
+                </button>
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/general/gen027.svg"/>
+                  </span>
+                </button>
+              </div>
+            </template>
+        </ServerSideTable>
       </div>
     </div>
 

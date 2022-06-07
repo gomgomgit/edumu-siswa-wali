@@ -22,7 +22,6 @@
     })
   }
 
-  const tahunAjars = ref('')
   const tingkatKelas = ref('')
   const status = ref('')
 

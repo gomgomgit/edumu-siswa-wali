@@ -1,16 +1,35 @@
 <script setup>
-  import { onMounted, ref } from "vue";
+  import { onMounted, reactive, ref } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+import { request } from "@/util";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
   })
+  
+  function getSiswaDataKelas (payload) {
+    request.post('kelas', null, {
+      params: {
+        page: payload.page ?? 1,
+        sortby: payload.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      siswaDataKelas.rows = res.data.data.data
+      siswaDataKelas.totalRows = res.data.data.total
+    })
+  }
+  
+  const siswaDataKelas = reactive({
+    columns: [
+      { label: 'NISN', field: 'siswa_nisn' },
+      { label: 'Siswa', field: 'user_nama' },
+    ],
+    rows: [],
+    totalRows: 0,
+  })
 
-  const semester = ref('')
-  const status = ref('')
-
-  const checkedStudents = ref([])
+  const filterkelas = ref('')
 
   const options = [
     {
@@ -35,67 +54,6 @@
     },
   ]
 
-  const tableHeader = ref([
-    {
-      name: "No",
-      key: "no",
-    },
-    {
-      name: "Guru",
-      key: "guru",
-    },
-    {
-      name: "Kelas",
-      key: "kelas",
-    },
-    {
-      name: "Tahun Ajar",
-      key: "tahun_ajar",
-    },
-    {
-      name: "Action",
-      key: "action",
-      sortable: false,
-    },
-  ])
-
-  const tableData = ref([
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "X IPA",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "2",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "3",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "4",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "5",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-  ])
-
-  function check(data) {
-    checkedStudents.value.push({id: data.no})
-    console.log(checkedStudents)
-  }
 </script>
 
 <template>
@@ -142,30 +100,18 @@
               </div>
             </div>
             <div class="mb-5 mb-xxl-8 px-12">
-              <Datatable 
-                id="datatable"
-                :table-header="tableHeader" 
-                :table-data="tableData"
+              <ServerSideTable
+                :totalRows="siswaDataKelas.totalRows || 0"
+                :columns="siswaDataKelas.columns"
+                :rows="siswaDataKelas.rows"
+                @loadItems="getSiswaDataKelas"
               >
-                <template class="text-center" v-slot:cell-no="{ row: data }">
-                  {{ data.no }}
-                </template>
-                <template v-slot:cell-guru="{ row: data }">
-                  {{ data.guru }}
-                </template>
-                <template v-slot:cell-kelas="{ row: data }">
-                  {{ data.kelas }}
-                </template>
-                <template v-slot:cell-tahun_ajar="{ row: data }">
-                  {{ data.tahun_ajar }}
-                </template>
-                <template v-slot:cell-action="scope">
-                  <div>  
-                    <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
-                    {{scope.row.no}}
+                <template #table-row="{column, row}">
+                  <div v-if="column.field == 'user_nama'">
+                    {{row.user_nama}}
                   </div>
                 </template>
-              </Datatable>
+              </ServerSideTable>
             </div>
           </div>
         </div>
@@ -182,30 +128,7 @@
           <div class="separator border-black-50 border-3 my-4"></div>
           <div class="page-content">
             <div class="mb-5 mb-xxl-8 px-12">
-              <Datatable 
-                id="datatable"
-                :table-header="tableHeader" 
-                :table-data="tableData"
-              >
-                <template class="text-center" v-slot:cell-no="{ row: data }">
-                  {{ data.no }}
-                </template>
-                <template v-slot:cell-guru="{ row: data }">
-                  {{ data.guru }}
-                </template>
-                <template v-slot:cell-kelas="{ row: data }">
-                  {{ data.kelas }}
-                </template>
-                <template v-slot:cell-tahun_ajar="{ row: data }">
-                  {{ data.tahun_ajar }}
-                </template>
-                <template v-slot:cell-action="scope">
-                  <div>  
-                    <el-checkbox :value="scope.row.no" @change="check(scope.row)" v-model="checkedStudents[{id: scope.row.no}]" label="" size="large" />
-                    {{scope.row.no}}
-                  </div>
-                </template>
-              </Datatable>
+              
             </div>
           </div>
         </div>

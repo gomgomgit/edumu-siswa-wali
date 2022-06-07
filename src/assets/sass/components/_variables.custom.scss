@@ -8,14 +8,13 @@
 // Primary
 $primary:       									if(isDarkMode(), #0BB783, #159BEA);
 $primary-active:    								if(isDarkMode(), #04AA77, #1590d7);
-$primary-light:    									if(isDarkMode(), #1C3238, #9EC7DF);
 $primary-light:    									if(isDarkMode(), #1C3238, #c0e8ff);
 $primary-inverse:  									#ffffff;
 
 // Success
-$success:       									if(isDarkMode(), #3699FF, #009EF7);
-$success-active:    								if(isDarkMode(), #187DE4, #0095E8);
-$success-light:    								    if(isDarkMode(), #212E48, #F1FAFF);
+$success:       									if(isDarkMode(), #0BB783, #04C8C8);
+$success-active:    								if(isDarkMode(), #04AA77, #00AFAF);
+$success-light:    								    if(isDarkMode(), #1C3238, #DCFDFD);
 $success-inverse:  									#ffffff;
 
 // Info
