@@ -1,15 +1,26 @@
 <script setup>
   import { ref, reactive, onMounted } from "vue";
   import { request } from '@/util'
-  import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import FilterSelect from '@/components/filter-select'
+  import ServerSideTable from '@/components/ServerSideTable.vue'
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
   })
 
+  function getTableData (payload) {
+    request.post('kelas', null, {
+      params: {
+        page: payload.page ?? 1,
+        sortby: payload.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      tableData.rows = res.data.data.data
+      tableData.totalRows = res.data.data.total
+    })
+  }
 
   const tahunAjars = ref('')
   const tingkatKelas = ref('')
@@ -100,91 +111,17 @@
     },
   ])
 
-  const tableHeader = ref([
-    {
-      name: "No",
-      key: "no",
-    },
-    {
-      name: "Kelas",
-      key: "kelas",
-    },
-    {
-      name: "Jam Masuk",
-      key: "jam_masuk",
-    },
-    {
-      name: "Tingkat Kelas",
-      key: "tingkat_kelas",
-    },
-    {
-      name: "Status",
-      key: "status",
-    },
-    {
-      name: "Action",
-      key: "action",
-      sortable: false,
-    },
-  ])
-
-  const tableData = ref([
-    {
-      no : "1",
-      kelas : "X IPA",
-      jam_masuk : {
-        name: "pagi",
-        start: "7:00 AM", 
-        end: "12.00 AM"
-      },
-      tingkat_kelas : "12",
-      status : 1,
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu 2",
-      jam_masuk : {
-        name: "pagi",
-        start: "7:00 AM", 
-        end: "12.00 AM"
-      },
-      tingkat_kelas : "12",
-      status : 1,
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu 2",
-      jam_masuk : {
-        name: "pagi",
-        start: "7:00 AM", 
-        end: "12.00 AM"
-      },
-      tingkat_kelas : "12",
-      status : 1,
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu 2",
-      jam_masuk : {
-        name: "pagi",
-        start: "7:00 AM", 
-        end: "12.00 AM"
-      },
-      tingkat_kelas : "12",
-      status : 1,
-    },
-    {
-      no : "1",
-      kelas : "Kelas Edumu 2",
-      jam_masuk : {
-        name: "pagi",
-        start: "7:00 AM", 
-        end: "12.00 AM"
-      },
-      tingkat_kelas : "12",
-      status : 1,
-    },
-  ])
+  const tableData = reactive({
+    columns: [
+      { label: 'Kelas', field: 'kelas_nama' },
+      { label: 'Jam Masuk', field: 'shift' },
+      { label: 'Tingkat Kelas', field: 'kelas_level' },
+      { label: 'Status', field: 'kelas_status' },
+      { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+    ],
+    rows: [],
+    totalRows: 0,
+  })
 
   const initialFormData = {namaKelas: '', wali: '', tingkatKelas: '', jamMasuk: '', status: ''}
 
@@ -226,7 +163,7 @@
   <div class="card mb-5 mb-xxl-8">
     <div class="card-body pt-5 pb-5">
       <div class="page-content">
-        <div class="d-flex flex-wrap justify-content-between align-items-center">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
             <div>
               <FilterSelect v-model:filterValue="tingkatKelas" placeholder="Pilih Kelas">
@@ -259,53 +196,34 @@
             </a>
           </div>
         </div>
-        <div class="mb-5 mb-xxl-8 px-12">
-          <Datatable 
-            id="datatable"
-            :table-header="tableHeader" 
-            :table-data="tableData"
+        <div class="mb-5 mb-xxl-8">
+          <ServerSideTable
+            :totalRows="tableData.totalRows || 0"
+            :columns="tableData.columns"
+            :rows="tableData.rows"
+            @loadItems="getTableData"
           >
-            <template class="text-center" v-slot:cell-no="{ row: data }">
-              {{ data.no }}
-            </template>
-            <template v-slot:cell-kelas="{ row: data }">
-              {{ data.kelas }}
-            </template>
-            <template v-slot:cell-jam_masuk="{ row: data }">
-              {{ data.jam_masuk.name }}
-              <span class="badge badge-light-primary">{{data.jam_masuk.start}} - {{data.jam_masuk.end}}</span>
-            </template>
-            <template v-slot:cell-tingkat_kelas="{ row: data }">
-              {{ data.tingkat_kelas }}
-            </template>
-            <template v-slot:cell-status="{ row: data }">
-              {{ data.status ? 'Aktif' : 'Non Aktif' }}
-            </template>
-            <template v-slot:cell-action="scope">
-              <div>
-                <a
-                  @click.prevent="editData(scope.row)"
-                  href="#"
-                  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                >
+            <template #table-row="{column, row}">
+              <div v-if="column.field == 'shift'">
+                {{row.shift.name}} <span class="badge badge-primary ms-4">{{row.shift.start}} - {{row.shift.end}}</span>
+              </div>
+              <div v-if="column.field == 'kelas_status'">
+                <span :class="'badge badge-light-' + (row.kelas_status ? 'success' : 'danger')">{{row.kelas_status ? 'Aktif' : 'Non Aktif'}}</span>
+              </div>
+              <div v-if="column.field == 'action'">
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </a>
-
-                <a
-                  href="#"
-                  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                >
+                </button>
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
-                    <inline-svg
-                      src="media/icons/duotune/general/gen027.svg"
-                    />
+                    <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>
-                </a>
+                </button>
               </div>
             </template>
-          </Datatable>
+          </ServerSideTable>
         </div>
 
         
