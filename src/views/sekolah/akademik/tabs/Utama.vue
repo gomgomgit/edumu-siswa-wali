@@ -3,6 +3,7 @@
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  import FilterSelect from '@/components/filter-select'
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
@@ -212,6 +213,10 @@
     formData.kelas = data.kelas
     modalData.value = 'Edit Data'
   }
+
+  function changeStatus() {
+    console.log(status.value)
+  }
 </script>
 
 <template>
@@ -231,7 +236,7 @@
                 />
               </el-select>
             </div>
-            <div>
+            <!-- <div>
               <el-select clearable v-model="status" class="m-2 table-filter" placeholder="Status" size="large">
                 <el-option value="" selected label="Status"/>
                 <el-option
@@ -241,6 +246,9 @@
                   :value="item.value"
                 />
               </el-select>
+            </div> -->
+            <div>
+              <FilterSelect v-model:filterValue="status" :options="options" placeholder="Pilih Status" @changeFilter="changeStatus"></FilterSelect>
             </div>
           </div>
 

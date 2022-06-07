@@ -50,18 +50,6 @@
 </template>
 
 <style>
-  .table-filter .el-input__inner {
-    background: #159BEA;
-    color: white;
-    font-weight: 500;
-  }
-  .table-filter .el-input__inner::placeholder {
-    color: white;
-  }
-  .table-filter .el-input__suffix .icon {
-    color: white;
-  }
-
   .slide-fade-enter-active {
     opacity: 100;
     transition: all 0.4s ease-out;
