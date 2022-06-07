@@ -2,11 +2,36 @@
   import { ref, reactive, onMounted } from "vue";
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
+  import ServerSideTable from "@/components/ServerSideTable.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import FilterSelect from '@/components/filter-select'
+  import { request } from "@/util";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Wali Kelas", ['Sekolah', "Akademik"]);
+  })
+
+  function getWaliKelas (payload) {
+    request.post('listwalikelas', null, {
+      params: {
+        page: payload.page ?? 1,
+        sortby: payload.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      waliKelas.rows = res.data.data.data
+      waliKelas.totalRows = res.data.data.total
+    })
+  }
+
+  const waliKelas = reactive({
+    columns: [
+      {label: 'Guru', field: 'user_nama'},
+      {label: 'Kelas', field: 'kelas_nama'},
+      {label: 'Tahun Ajar', field: 'thn_ajar'},
+      { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+    ],
+    rows: [],
+    totalRows: 0,
   })
 
   const semester = ref('')
@@ -126,7 +151,7 @@
 <div class="card mb-5 mb-xxl-8">
   <div class="card-body pt-5 pb-5">
     <div class="page-content">
-      <div class="d-flex flex-wrap justify-content-between align-items-center">
+      <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div class="d-flex gap-4">
           <div>
             <FilterSelect v-model:filterValue="semester" :options="semesterOption" placeholder="Pilih Semester"></FilterSelect>
@@ -137,7 +162,7 @@
         </div>
 
         <div class="position-relative d-flex ">
-          <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+          <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
             <i class="fas fa-plus fs-5"></i>
             <span>
               Wali Kelas
@@ -145,49 +170,28 @@
           </a>
         </div>
       </div>
-      <div class="mb-5 mb-xxl-8 px-12">
-        <Datatable 
-          id="datatable"
-          :table-header="tableHeader" 
-          :table-data="tableData"
+      <div class="mb-5 mb-xxl-8">
+        <ServerSideTable
+          :totalRows="waliKelas.totalRows || 0"
+          :columns="waliKelas.columns"
+          :rows="waliKelas.rows"
+          @loadItems="getWaliKelas"
         >
-          <template class="text-center" v-slot:cell-no="{ row: data }">
-            {{ data.no }}
-          </template>
-          <template v-slot:cell-guru="{ row: data }">
-            {{ data.guru }}
-          </template>
-          <template v-slot:cell-kelas="{ row: data }">
-            {{ data.kelas }}
-          </template>
-          <template v-slot:cell-tahun_ajar="{ row: data }">
-            {{ data.tahun_ajar }}
-          </template>
-          <template v-slot:cell-action="scope">
-            <div>
-              <a
-                @click.prevent="editData(scope.row)"
-                href="#"
-                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-              >
-                <span class="svg-icon svg-icon-3">
-                  <inline-svg src="media/icons/duotune/art/art005.svg" />
-                </span>
-              </a>
-
-              <a
-                href="#"
-                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-              >
-                <span class="svg-icon svg-icon-3">
-                  <inline-svg
-                    src="media/icons/duotune/general/gen027.svg"
-                  />
-                </span>
-              </a>
-            </div>
-          </template>
-        </Datatable>
+          <template #table-row="{column, row}">
+              <div v-if="column.field == 'action'">
+                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/art/art005.svg" />
+                  </span>
+                </button>
+                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/general/gen027.svg"/>
+                  </span>
+                </button>
+              </div>
+            </template>
+        </ServerSideTable>
       </div>
 
       
