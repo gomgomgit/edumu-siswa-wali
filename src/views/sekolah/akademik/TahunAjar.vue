@@ -4,6 +4,7 @@
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import ServerSideTable from '@/components/ServerSideTable.vue'
+  import FilterSelect from '@/components/filter-select'
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
@@ -34,56 +35,31 @@
     totalRows: 0,
   })
 
-  const semester = ref('')
-  const status = ref('')
+  const semesterFilter = ref('')
+  const statusFilter = ref('')
 
   const modalData = ref(false)
 
-  const options = [
+  const semesterOption = [
     {
-      value: 'Option1',
-      label: 'Option1',
+      value: 'ganjil',
+      label: 'Ganjil',
     },
     {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-    {
-      value: 'Option4',
-      label: 'Option4',
-    },
-    {
-      value: 'Option5',
-      label: 'Option5',
+      value: 'genap',
+      label: 'Genap',
     },
   ]
-
-  const tableHeader = ref([
+  const statusOption = [
     {
-      name: "Tahun Ajar",
-      key: "thn_ajar_value",
+      value: 1,
+      label: 'Aktif',
     },
     {
-      name: "Semester",
-      key: "thn_ajar_semester",
+      value: 0,
+      label: 'Non Aktif',
     },
-    {
-      name: "Status Aktif",
-      key: "thn_ajar_status",
-    },
-    {
-      name: "Action",
-      key: "action",
-      sortable: false,
-    },
-  ])
-
-  const tableData = ref([
-  ])
+  ]
 
   const initialFormData = {tahun_ajar: '', status: '', semester: '', start: '', end: ''}
 
@@ -95,6 +71,10 @@
     end: '',
   })
 
+  function changeFilter(changed){
+    console.log(changed)
+  }
+
   function addData() {
     alert('tambah data')
   }
@@ -104,26 +84,13 @@
     Object.assign(formData, initialFormData)
   }
 
-  function getData(event) {
-    console.log(event)
-    console.log('getData')
-    request.post('thn_ajar', null, {
-      params: { page: 2 }
-    })
-    .then((res) => {
-      tahunAjars.value = res.data.data
-      tableData.value = res.data.data.data
-      loadingTahunAjar.value = false
-      console.log('success', res.data)
-    })
-  }
-
   function editData(data) {
-    formData.tahun_ajar = data.tahun_ajar
-    formData.status = data.status
-    formData.semester = data.semester
-    formData.start = data.start
-    formData.end = data.end
+    // console.log(data)
+    formData.tahun_ajar = data.thn_ajar_value
+    formData.status = data.thn_ajar_status
+    formData.semester = data.thn_ajar_semester
+    formData.start = data.thn_ajar_start
+    formData.end = data.thn_ajar_end
     modalData.value = 'Edit Data'
   }
 </script>
@@ -138,29 +105,15 @@
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
               <div>
-                <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
-                </el-select>
+                <FilterSelect v-model:filterValue="semesterFilter" :options="semesterOption" @changeFilter="changeFilter('semester')" placeholder="Pilih Semester" />
               </div>
               <div>
-                <el-select v-model="status" class="m-2" placeholder="Status" size="large">
-                  <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
-                  />
-                </el-select>
+                <FilterSelect v-model:filterValue="statusFilter" :options="statusOption" @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
               </div>
             </div>
 
             <div class="position-relative d-flex ">
-              <a @click="modalData = 'Tambah Data'" class="btn btn-light-primary d-flex gap-3 align-items-center w-auto">
+              <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                 <i class="fas fa-plus fs-5"></i>
                 <span>
                   Tambah Tahun Ajar
@@ -185,7 +138,7 @@
                 <span :class="'badge badge-light-' + (row.thn_ajar_status ? 'success' : 'danger')">{{row.thn_ajar_status ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
@@ -251,15 +204,3 @@
 
   </div>
 </template>
-
-<style scoped>
-  /* .el-input__inner {
-    background: rgba(32, 139, 255, 0.5);
-  }
-  .el-input__inner::placeholder {
-    color: #0084AD;
-  }
-  .el-input__suffix .icon {
-    color: #0084AD;
-  } */
-</style>

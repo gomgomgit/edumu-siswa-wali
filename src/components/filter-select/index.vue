@@ -3,6 +3,7 @@ import { ref } from "@vue/reactivity"
 
   const props = defineProps({
     filterValue : String,
+    options: {type: Array, default: []},
     placeholder: {type: String, default: 'Pilih'},
     multiple: {type: Boolean, default: false},
     noData: {type: String, default: 'No Data'},
@@ -28,6 +29,12 @@ import { ref } from "@vue/reactivity"
     size="large"
   >
     <slot/> 
+    <el-option
+      v-for="item, index in props.options"
+      :key="index"
+      :label="item.label"
+      :value="item.value"
+    />
   </el-select>
 </template>
 
