@@ -3,10 +3,10 @@ import { ref } from "@vue/reactivity"
 
   const props = defineProps({
     filterValue : String,
-    options: {type: Array, default: []},
     placeholder: {type: String, default: 'Pilih'},
     multiple: {type: Boolean, default: false},
-    multiple: {type: String, default: false}
+    noData: {type: String, default: 'No Data'},
+    class: {type: String, default: ''},
   })
 
   const emits = defineEmits(['changeFilter','update:filterValue'])
@@ -20,13 +20,14 @@ import { ref } from "@vue/reactivity"
 </script>
 
 <template>
-  <el-select :multiple="props.multiple" @change="updateValue" clearable v-model="selectValue" class="m-2 select-filter" :placeholder="props.placeholder" size="large">
-    <el-option
-      v-for="item, index in props.options"
-      :key="index"
-      :label="item.label"
-      :value="item.value"
-    />
+  <el-select v-model="selectValue"  
+    class="m-2 select-filter" :class="props.class" 
+    :no-data-text="props.noData" :multiple="props.multiple" 
+    :placeholder="props.placeholder" 
+    @change="updateValue" clearable 
+    size="large"
+  >
+    <slot/> 
   </el-select>
 </template>
 
@@ -44,8 +45,17 @@ import { ref } from "@vue/reactivity"
   }
 </style>
 
+// Contoh pemakaian:
+// <FilterSelect v-model:filterValue="status" class="w-100" placeholder="Pilih Status" @changeFilter="changeStatus">
+  <el-option
+    v-for="item, index in options"
+    :key="index"
+    :label="item.label"
+    :value="item.value"
+  />
+// </FilterSelect>
 
-// Contoh Props dan Emit :
+// Props dan Emit :
 //
 // v-model:filterValue="select" //menyimpan value yang di select // Required
 //
@@ -53,7 +63,12 @@ import { ref } from "@vue/reactivity"
 //
 // multiple: {type: Boolean, default: false}, //multiple option
 //
-// option="options"  //Array pilihan filter (value & label) contoh dibawah //optional
+// noData: {type: String, default: 'No Data'}, //text ketika tidak ada data
+//
+// class: {type: String, default: ''}, //tambahan class
+//
+// @filterChange="console.log('value')" // ketika value berubah
+//
 // const options = [
 //   {
 //     value: 'ID 1',

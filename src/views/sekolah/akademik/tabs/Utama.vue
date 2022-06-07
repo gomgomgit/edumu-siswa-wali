@@ -1,5 +1,6 @@
 <script setup>
   import { ref, reactive, onMounted } from "vue";
+  import { request } from '@/util'
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
@@ -9,6 +10,8 @@
     setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
   })
 
+
+  const tahunAjars = ref('')
   const tingkatKelas = ref('')
   const status = ref('')
 
@@ -226,29 +229,24 @@
         <div class="d-flex flex-wrap justify-content-between align-items-center">
           <div class="d-flex gap-4">
             <div>
-              <el-select clearable v-model="tingkatKelas" class="m-2 table-filter" placeholder="Tingkat Kelas" size="large">
-                <el-option value="" selected label="Pilih Kelas"/>
+              <FilterSelect v-model:filterValue="tingkatKelas" placeholder="Pilih Kelas">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
+                  v-for="item, index in options"
+                  :key="index"
                   :label="item.label"
                   :value="item.value"
                 />
-              </el-select>
+              </FilterSelect>
             </div>
-            <!-- <div>
-              <el-select clearable v-model="status" class="m-2 table-filter" placeholder="Status" size="large">
-                <el-option value="" selected label="Status"/>
+            <div>
+              <FilterSelect v-model:filterValue="status" placeholder="Pilih Status" @changeFilter="changeStatus">
                 <el-option
-                  v-for="item in options"
-                  :key="item.value"
+                  v-for="item, index in options"
+                  :key="index"
                   :label="item.label"
                   :value="item.value"
                 />
-              </el-select>
-            </div> -->
-            <div>
-              <FilterSelect v-model:filterValue="status" :options="options" placeholder="Pilih Status" @changeFilter="changeStatus"></FilterSelect>
+              </FilterSelect>
             </div>
           </div>
 

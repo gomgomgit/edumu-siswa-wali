@@ -3,6 +3,7 @@
   import Datatable from "@/components/kt-datatable/KTDatatable.vue";
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  import FilterSelect from '@/components/filter-select'
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Wali Kelas", ['Sekolah', "Akademik"]);
@@ -13,83 +14,24 @@
 
   const modalData = ref(false)
 
-  const options = [
+  const semesterOption = ref([
     {
-      value: 'Option1',
-      label: 'Option1',
+      label: 'Ganjil',
+      value: 'ganjil'
     },
     {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-    {
-      value: 'Option4',
-      label: 'Option4',
-    },
-    {
-      value: 'Option5',
-      label: 'Option5',
-    },
-  ]
-
-  const waliKelas = ref([
-    {
-      name: 'Guru 1'
-    },
-    {
-      name: 'Guru 1'
-    },
-    {
-      name: 'Guru 1'
-    },
-    {
-      name: 'Guru 1'
-    },
-    {
-      name: 'Guru 1'
+      label: 'Genap',
+      value: 'genap'
     },
   ])
-
-  const tahunAjar = ref([
+  const statusOption = ref([
     {
-      name: '2020/2021'
+      label: 'Aktif',
+      value: 1
     },
     {
-      name: '2021/2022'
-    },
-    {
-      name: '2022/2023'
-    },
-  ])
-
-  const kelas = ref([
-    {
-      name: 'X IPA 1'
-    },
-    {
-      name: 'X IPA 2'
-    },
-    {
-      name: 'X IPS 1'
-    },
-    {
-      name: 'XI IPA 1'
-    },
-    {
-      name: 'XI IPS 1'
-    },
-    {
-      name: 'XII IPA 1'
-    },
-    {
-      name: 'XII IPS 1'
-    },
-    {
-      name: 'XII IPS 2'
+      label: 'Non Aktif',
+      value: 0
     },
   ])
 
@@ -187,24 +129,10 @@
       <div class="d-flex flex-wrap justify-content-between align-items-center">
         <div class="d-flex gap-4">
           <div>
-            <el-select v-model="semester" class="m-2" placeholder="Semester" size="large">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
+            <FilterSelect v-model:filterValue="semester" :options="semesterOption" placeholder="Pilih Semester"></FilterSelect>
           </div>
           <div>
-            <el-select v-model="status" class="m-2" placeholder="Status" size="large">
-              <el-option
-                v-for="item in options"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
+            <FilterSelect v-model:filterValue="status" :options="statusOption" placeholder="Pilih Status"></FilterSelect>
           </div>
         </div>
 
