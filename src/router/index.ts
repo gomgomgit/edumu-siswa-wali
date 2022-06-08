@@ -88,6 +88,39 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/mata-pelajaran/DataMapel.vue"),
       },
       {
+        path: "/sekolah/informasi/pengumuman",
+        name: "sekolah-informasi-pengumuman",
+        component: () => import("@/views/sekolah/informasi/Pengumuman.vue"),
+      },
+      {
+        path: "/sekolah/informasi/prestasi",
+        name: "sekolah-informasi-prestasi",
+        component: () => import("@/views/sekolah/informasi/Prestasi.vue"),
+      },
+      {
+        path: "/sekolah/informasi/berita",
+        name: "sekolah-informasi-berita",
+        component: () => import("@/views/sekolah/informasi/Berita.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/informasi/berita/utama",
+          },
+          {
+            path: "utama",
+            name: "sekolah-informasi-berita-utama",
+            component: () =>
+              import("@/views/sekolah/informasi/tabs/Utama.vue"),
+          },
+          {
+            path: "kategori",
+            name: "sekolah-informasi-berita-kategori",
+            component: () =>
+              import("@/views/sekolah/informasi/tabs/Kategori.vue"),
+          },
+        ],
+      },
+      {
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),

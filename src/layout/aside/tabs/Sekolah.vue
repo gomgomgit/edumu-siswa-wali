@@ -266,15 +266,15 @@ export default defineComponent({
             sub: [
               {
                 heading: "Pengumuman",
-                route: "/profile",
+                route: "/sekolah/informasi/pengumuman",
               },
               {
                 heading: "Prestasi Sekolah",
-                route: "/profile",
+                route: "/sekolah/informasi/prestasi",
               },
               {
                 heading: "Berita",
-                route: "/profile",
+                route: "/sekolah/informasi/berita",
               },
             ],
           },
