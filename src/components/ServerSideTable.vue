@@ -7,7 +7,11 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 const props = defineProps({
 	columns: { type: Array, required: true },
 	rows: { type: Array, required: true },
-	totalRows: { type: Number, required: true }
+	totalRows: { type: Number, required: true },
+	perPage: { type: Number, default: 10 },
+	paginationOptions: { type: Object, default: () => ({ enabled: true }) },
+	sortOptions: { type: Object, default: () => ({ enabled: true }) },
+	searchOptions: { type: Object, default: () => ({ enabled: false }) },
 })
 
 const emit = defineEmits(['loadItems'])
@@ -18,8 +22,8 @@ const serverParams = ref({
 		field: '',
 		type: '',
 	},
-	page: 0,
-	perPage: 10
+	page: 1,
+	perPage: props.perPage
 })
 
 onMounted(loadItems)
@@ -31,7 +35,7 @@ function loadItems() {
 	emit('loadItems', serverParams.value)
 }
 function onPageChange(params) {
-	updateParams({ page: params.currentPage - 1 })
+	updateParams({ page: params.currentPage })
 	loadItems()
 }
 function onPerPageChange(params) {
@@ -56,8 +60,9 @@ function onColumnFilter(params) {
 		styleClass="vgt-table"
 		mode="remote"
 		:totalRows="props.totalRows"
-		:pagination-options="{ enabled: true }"
-		:sort-options="{ enabled: true }"
+		:pagination-options="props.paginationOptions"
+		:sort-options="props.sortOptions"
+		:search-options="props.searchOptions"
 		:rows="props.rows"
 		:columns="props.columns"
 		@page-change="onPageChange"
@@ -83,12 +88,13 @@ function onColumnFilter(params) {
 table.vgt-table {
 	border: none;
 }
-.vgt-table thead th {
+table.vgt-table thead th {
 	background: #F5F8FA;
 	border-bottom: none;
 	color: #A1ABC0;
 	font-weight: 600;
 	font-size: 1rem;
+	padding: 1.75rem;
 }
 .vgt-table thead th:first-child {
 	border-top-left-radius: 10px;
@@ -98,12 +104,11 @@ table.vgt-table {
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
-#ss-table table.vgt-table :where(td, th) {
-	padding: 1.75rem;
-}
 table.vgt-table td {
 	border-bottom: 1px dashed #A1ABC055;
 	font-size: 1.15rem;
+	padding: 1.25rem 1.75rem;
+	vertical-align: middle;
 }
 .vgt-table th.sortable button:before {
 	border-top: 5px solid #A1ABC0;
