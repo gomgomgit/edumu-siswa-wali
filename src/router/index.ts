@@ -83,9 +83,25 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/akademik/KalenderAkademik.vue"),
       },
       {
-        path: "/sekolah/mata-pelajaran/data-mapel",
-        name: "sekolah-mata-pelajaran-data-mapel",
-        component: () => import("@/views/sekolah/mata-pelajaran/DataMapel.vue"),
+        path: "/sekolah/mata-pelajaran",
+        name: "sekolah-mata-pelajaran",
+        component: () => import("@/views/sekolah/mata-pelajaran/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/mata-pelajaran/data-mapel"
+          },
+          {
+            path: "data-mapel",
+            name: "sekolah-mata-pelajaran-data-mapel",
+            component: () => import("@/views/sekolah/mata-pelajaran/DataMapel.vue")
+          },
+          {
+            path: "jadwal-pelajaran",
+            name: "sekolah-mata-pelajaran-jadwal-pelajaran",
+            component: () => import("@/views/sekolah/mata-pelajaran/JadwalPelajaran.vue")
+          },
+        ],
       },
       {
         path: "/sekolah/informasi/pengumuman",

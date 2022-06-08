@@ -1,7 +1,8 @@
 <script setup>
-import { reactive } from 'vue'
+import { reactive, onMounted } from 'vue'
 import { request } from '@/util'
 import ServerSideTable from '@/components/ServerSideTable.vue'
+import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
 
 const tableData = reactive({
 	columns: [
@@ -24,21 +25,16 @@ function getTableData (payload) {
 		tableData.totalRows = res.data.data.total
 	})
 }
+
+onMounted(() => {
+	setCurrentPageBreadcrumbs("Data Mapel", ['Sekolah', "Mata Pelajaran"]);
+})
 </script>
 
 <template>
 	<div>
 		<div class="card mb-5 mb-xxl-8">
 			<div class="card-body pt-5 pb-5">
-				<div class="page-header border-bottom border-black-50 mb-3">
-					<div class="page-title px-3 py-7 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-						<h3 class="mb-0 fs-2x">Mata Pelajaran - Data Mapel</h3>
-					</div>
-					<div
-						class="page-breadcrumb px-3 py-3 mb-6 d-flex flex-wrap flex-sm-nowrap justify-content-between align-items-center">
-						<h3 class="mb-0 fs-4"><span class="text-black-50"> Sekolah / Mata Pelajaran / </span>Data Mapel</h3>
-					</div>
-				</div>
 
 				<ServerSideTable
 					:totalRows="tableData.totalRows || 0"
