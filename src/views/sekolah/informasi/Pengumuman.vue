@@ -95,7 +95,10 @@
           </div>
         </div>
         <div class="my-5 mb-xxl-8">
-          <ServerSideTable :totalRows="pengumuman.totalRows || 0" :columns="pengumuman.columns" :rows="pengumuman.rows"
+          <ServerSideTable 
+            :totalRows="pengumuman.totalRows || 0" 
+            :columns="pengumuman.columns" 
+            :rows="pengumuman.rows"
             @loadItems="getPengumuman">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'thn_ajar_semester'">
