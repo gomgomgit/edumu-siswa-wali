@@ -8,35 +8,39 @@
   import { Search } from '@element-plus/icons-vue'
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Berita", ['Sekolah', "Informasi"]);
+    setCurrentPageBreadcrumbs("Siswa", ['Sekolah', "Profil Pengguna"]);
   })
 
-  function getBerita (payload) {
-      request.post('konten', null, {
+  function getSiswa (payload) {
+      request.post('user', null, {
         params: {
+          level: 'siswa',
+          cari: searchSiswa.value,
           page: payload.page ?? 1,
           sortby: payload.sort?.type ?? 'ASC'
         }
       }).then(res => {
-        berita.rows = res.data.data.data
-        berita.totalRows = res.data.data.total
+        siswa.rows = res.data.data.data
+        siswa.totalRows = res.data.data.total
       })
     }
 
   const loadingTahunAjar = ref(false)
   
-  const berita = reactive({
+  const siswa = reactive({
     columns: [
-      { label: 'Judul', field: 'content_name' },
-      { label: 'Deskripsi', field: 'content_shortdesc' },
-      { label: 'Status', field: 'content_status' },
-      { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+      { label: 'Nama Lengkap', field: 'user_nama' },
+      { label: 'Kelas', field: 'kelas_nama' },
+      { label: 'Username', field: 'user_username' },
+      { label: 'NISN', field: 'siswa_nisn' },
+      { label: 'NIS', field: 'siswa_nis' },
+      // { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
     totalRows: 0,
   })
 
-  const statusFilter = ref('')
+  const searchSiswa = ref('')
 
   const modalData = ref(false)
 
@@ -62,46 +66,67 @@
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Data Berita</h2>
+          <h2 class="fs-1 fw-bold py-6">Data Siswa</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
-          <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="d-flex gap-4">
-              <div>
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-4">
+            <div class="d-flex w-25 gap-4">
                 <el-input
-                  v-model="input2"
+                  v-model="searchSiswa"
+                  clearable
                   class="m-2"
-                  placeholder="Please Input"
-                  :suffix-icon="Search"
-                />
-              </div>
+                  placeholder="Cari Siswa"
+                >
+                  <template #append>
+                    <el-button aria-disabled="true" class="pe-none" :icon="Search" />
+                  </template>
+                </el-input>
             </div>
 
             <div class="position-relative d-flex gap-4">
-              <div>
-                <FilterSelect v-model:filterValue="statusFilter" :options="statusOption"
-                  @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
+              <div class="d-flex align-items-center">
+                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Siswa Absen GPS
+                  </span>
+                </a>
               </div>
               <div class="d-flex align-items-center">
                 <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Export Data
+                  </span>
+                  <i class="bi bi-cloud-arrow-up fs-1"></i>
+                </a>
+              </div>
+              <div class="d-flex align-items-center">
+                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Import Data
+                  </span>
+                  <i class="bi bi-cloud-arrow-down fs-1"></i>
+                </a>
+              </div>
+              <div class="d-flex align-items-center">
+                <router-link to="/sekolah/profil-pengguna/siswa/tambah-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
-                    Tambah Pengumuman
+                    Tambah Siswa
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
         <div class="my-5 mb-xxl-8">
-          <ServerSideTable :totalRows="berita.totalRows || 0" :columns="berita.columns" :rows="berita.rows"
-            @loadItems="getBerita">
+          <ServerSideTable 
+            :key="searchSiswa"
+            :totalRows="siswa.totalRows || 0" 
+            :columns="siswa.columns" 
+            :rows="siswa.rows"
+            @loadItems="getSiswa">
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'content_status'">
-                <span :class="'badge badge-light-' + (row.content_status == '1' ? 'success' : 'danger')">{{row.content_status == '1' ?
-                  'Aktif' : 'Non Aktif'}}</span>
-              </div>
               <div v-if="column.field == 'action'">
               
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">

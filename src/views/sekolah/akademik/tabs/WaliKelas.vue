@@ -163,7 +163,7 @@
 
         <div class="position-relative d-flex ">
           <a @click.prevent="modalData = 'Tambah Data'" href="#" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-            <i class="fas fa-plus fs-5"></i>
+            <i class="bi bi-plus fs-1"></i>
             <span>
               Wali Kelas
             </span>

@@ -207,15 +207,15 @@ export default defineComponent({
             sub: [
               {
                 heading: "Siswa",
-                route: "/profile",
+                route: "/sekolah/profil-pengguna/siswa",
               },
               {
                 heading: "Wali",
-                route: "/profile",
+                route: "/sekolah/profil-pengguna/wali",
               },
               {
                 heading: "Guru",
-                route: "/profile",
+                route: "/sekolah/profil-pengguna/guru",
               },
               {
                 heading: "Pegawai",

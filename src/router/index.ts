@@ -43,6 +43,27 @@ const routes: Array<RouteRecordRaw> = [
           },
         ]
       },
+
+      {
+        path: "/sekolah/profil-pengguna/siswa",
+        name: "sekolah-profil-pengguna-siswa",
+        component: () => import("@/views/sekolah/profil-pengguna/Siswa.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/siswa/tambah-data",
+        name: "sekolah-profil-pengguna-siswa-tambah",
+        component: () => import("@/views/sekolah/profil-pengguna/TambahSiswa.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/wali",
+        name: "sekolah-profil-pengguna-wali",
+        component: () => import("@/views/sekolah/profil-pengguna/Wali.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/guru",
+        name: "sekolah-profil-pengguna-guru",
+        component: () => import("@/views/sekolah/profil-pengguna/Guru.vue"),
+      },
       {
         path: "/sekolah/akademik/tahun-ajar",
         name: "sekolah-akademik-tahun-ajar",

@@ -85,7 +85,7 @@
               </div>
               <div class="d-flex align-items-center">
                 <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                  <i class="fas fa-plus fs-5"></i>
+                  <i class="bi bi-plus fs-1"></i>
                   <span>
                     Tambah Pengumuman
                   </span>

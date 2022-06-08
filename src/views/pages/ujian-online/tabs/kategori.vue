@@ -137,7 +137,7 @@
               <span>
                 Tambah Ujian
               </span>
-              <i class="fas fa-plus fs-5"></i>
+              <i class="bi bi-plus fs-1"></i>
             </a>
           </div>
         </div>
