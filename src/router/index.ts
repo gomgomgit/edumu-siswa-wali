@@ -60,9 +60,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/profil-pengguna/Wali.vue"),
       },
       {
+        path: "/sekolah/profil-pengguna/wali/tambah-data",
+        name: "sekolah-profil-pengguna-wali-tambah",
+        component: () => import("@/views/sekolah/profil-pengguna/TambahWali.vue"),
+      },
+      {
         path: "/sekolah/profil-pengguna/guru",
         name: "sekolah-profil-pengguna-guru",
         component: () => import("@/views/sekolah/profil-pengguna/Guru.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/guru/tambah-data",
+        name: "sekolah-profil-pengguna-guru-tambah",
+        component: () => import("@/views/sekolah/profil-pengguna/TambahGuru.vue"),
       },
       {
         path: "/sekolah/akademik/tahun-ajar",

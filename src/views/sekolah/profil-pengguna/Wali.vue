@@ -80,12 +80,12 @@ function changeFilter(changed) {
 
             <div class="position-relative d-flex gap-4">
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/profil-pengguna/wali/tambah-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
                     Tambah Wali
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
