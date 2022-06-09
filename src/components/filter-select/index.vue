@@ -21,14 +21,14 @@ import { ref } from "@vue/reactivity"
 </script>
 
 <template>
-  <el-select v-model="selectValue"  
-    class="m-2 select-filter" :class="props.class" 
-    :no-data-text="props.noData" :multiple="props.multiple" 
-    :placeholder="props.placeholder" 
-    @change="updateValue" clearable 
+  <el-select v-model="selectValue"
+    class="select-filter" :class="props.class"
+    :no-data-text="props.noData" :multiple="props.multiple"
+    :placeholder="props.placeholder"
+    @change="updateValue" clearable
     size="large"
   >
-    <slot/> 
+    <slot/>
     <el-option
       v-for="item, index in props.options"
       :key="index"
@@ -66,7 +66,7 @@ import { ref } from "@vue/reactivity"
 //
 // v-model:filterValue="select" //menyimpan value yang di select // Required
 //
-// placeholder: {type: String, default: 'Pilih'}, 
+// placeholder: {type: String, default: 'Pilih'},
 //
 // multiple: {type: Boolean, default: false}, //multiple option
 //

@@ -8,8 +8,7 @@ const props = defineProps({
 	columns: { type: Array, required: true },
 	rows: { type: Array, required: true },
 	totalRows: { type: Number, required: true },
-	perPage: { type: Number, default: 10 },
-	paginationOptions: { type: Object, default: () => ({ enabled: true }) },
+	paginationOptions: { type: Object, default: () => ({ enabled: true, perPage: 10 }) },
 	sortOptions: { type: Object, default: () => ({ enabled: true }) },
 	searchOptions: { type: Object, default: () => ({ enabled: false }) },
 })
@@ -23,7 +22,7 @@ const serverParams = ref({
 		type: '',
 	},
 	page: 1,
-	perPage: props.perPage
+	perPage: props.paginationOptions.perPage ?? 10
 })
 
 onMounted(loadItems)
