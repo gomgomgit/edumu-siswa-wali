@@ -253,8 +253,8 @@ export default defineComponent({
                 route: "/sekolah/mata-pelajaran/data-mapel",
               },
               {
-                heading: "Jadwal Mapel",
-                route: "/profile",
+                heading: "Jadwal Pelajaran",
+                route: "/sekolah/mata-pelajaran/jadwal-pelajaran",
               },
             ],
           },

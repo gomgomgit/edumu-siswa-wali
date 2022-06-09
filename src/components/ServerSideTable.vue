@@ -8,7 +8,7 @@ const props = defineProps({
 	columns: { type: Array, required: true },
 	rows: { type: Array, required: true },
 	totalRows: { type: Number, required: true },
-	paginationOptions: { type: Object, default: () => ({ enabled: true, perPage: 10 }) },
+	paginationOptions: { type: Object, default: () => ({ enabled: true, perPage: 20 }) },
 	sortOptions: { type: Object, default: () => ({ enabled: true }) },
 	searchOptions: { type: Object, default: () => ({ enabled: false }) },
 })
