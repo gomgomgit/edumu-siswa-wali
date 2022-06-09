@@ -43,6 +43,9 @@ import { ref } from "@vue/reactivity"
     background: #159BEA;
     color: white;
     font-weight: 500;
+    border-radius: 6.175px;
+    border: none;
+    height: 45px;
   }
   .select-filter .el-input__inner::placeholder {
     color: white;
