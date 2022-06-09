@@ -14,7 +14,6 @@
   function getKelas () {
     request.post('kelas', null, {
       params: {
-        id: 1,
       }
     }).then(res=>{
       kelas.value = res.data.data
