@@ -22,7 +22,6 @@
       })
     }
 
-  const loadingTahunAjar = ref(false)
   
   const tahunAjar = reactive({
     columns: [
@@ -39,6 +38,12 @@
   const statusFilter = ref('')
 
   const modalData = ref(false)
+  const monthRange = ref([])
+
+  function changeMonth() {
+    formData.start = monthRange.value[0]
+    formData.end = monthRange.value[1]
+  }
 
   const semesterOption = [
     {
@@ -64,11 +69,13 @@
   const initialFormData = {tahun_ajar: '', status: '', semester: '', start: '', end: ''}
 
   const formData = reactive({
-    tahun_ajar: '',
-    status: '',
-    semester: '',
-    start: '',
-    end: '',
+    thn_ajar_value: '',
+    thn_ajar_status: '',
+    thn_ajar_semester: '',
+    thn_ajar_start_moment: '',
+    thn_ajar_end_moment: '',
+    thn_ajar_start: '2022-7',
+    thn_ajar_end: '2023-8',
   })
 
   function changeFilter(changed){
@@ -76,7 +83,14 @@
   }
 
   function addData() {
+
+    console.log(formData)
     alert('tambah data')
+
+    request.post('thn_ajar/add', formData)
+    .then(res => {
+      console.log(res)
+    })
   }
 
   function closeModalData() {
@@ -91,6 +105,8 @@
     formData.semester = data.thn_ajar_semester
     formData.start = data.thn_ajar_start
     formData.end = data.thn_ajar_end
+    // monthRange.value.push(data.thn_ajar_start)
+    // monthRange.value.push(data.thn_ajar_end)
     modalData.value = 'Edit Data'
   }
 </script>
@@ -161,19 +177,19 @@
       :breadcrumb="Array('Sekolah', 'Akademik', 'Tahun Ajar', modalData)"
       :show="modalData"
       @closeModal="closeModalData"
-      @confirm="addData"
+      @confirm="addData()"
       @dismiss="closeModalData"
     >
         <div class="">
           <div class="row gy-6">
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
             <div class="col-8">
-              <input type="text" v-model="formData.tahun_ajar" class="form-control" placeholder="Masukkan Tahun Ajar Cth : 2021/2022"/>
+              <input type="text" v-model="formData.thn_ajar_value" class="form-control" placeholder="Masukkan Tahun Ajar Cth : 2021/2022"/>
             </div>
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Status</div>
             <div class="col-8">
-              <select  v-model="formData.status" class="form-select form-select-solid" aria-label="Select example">
+              <select  v-model="formData.thn_ajar_status" class="form-select form-select-solid" aria-label="Select example">
                 <option>Pilih Status</option>
                 <option value="1">Aktif</option>
                 <option value="0">Non Aktif</option>
@@ -182,22 +198,41 @@
 
             <div class="col-4 d-flex align-items-center fw-bold fs-4">Semester</div>
             <div class="col-8">
-              <select v-model="formData.semester" class="form-select form-select-solid" aria-label="Select example">
+              <select v-model="formData.thn_ajar_semester" class="form-select form-select-solid" aria-label="Select example">
                 <option>Pilih Semester</option>
                 <option value="ganjil">Ganjil</option>
                 <option value="genap">Genap</option>
               </select>
             </div>
 
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai</div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
             <div class="col-8">
-              <el-date-picker class="w-100" v-model="formData.start" type="date" placeholder="Pick a day" />
+              <el-date-picker class="w-100" 
+                v-model="formData.thn_ajar_start_moment"
+                start-placeholder="Bulan Mulai"
+                type="month"
+              />
             </div>
-
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Selesai</div>
+            <div class="col-4 d-flex align-items-center fw-bold fs-4"> Selesai</div>
             <div class="col-8">
-              <el-date-picker  class="w-100" v-model="formData.end" type="date" placeholder="Pick a day" />
+              <el-date-picker class="w-100" 
+                v-model="formData.thn_ajar_end_moment"
+                placeholder="Bulan selesai" 
+                type="month"
+              />
             </div>
+            <!-- <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
+            <div class="col-8">
+              <el-date-picker class="w-100" 
+                v-model="monthRange"
+                range-separator="Sampai"
+                start-placeholder="Bulan Mulai"
+                end-placeholder="Bulan selesai" 
+                type="monthrange"
+                @change="changeMonth()"
+                unlink-panels
+              />
+            </div> -->
           </div>
         </div>
     </Modal>
