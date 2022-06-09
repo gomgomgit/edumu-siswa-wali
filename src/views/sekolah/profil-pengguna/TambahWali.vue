@@ -7,9 +7,7 @@ import { UploadProps, UploadUserFile } from 'element-plus'
 
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Tambah Siswa", ['Sekolah', "Profil Pengguna", "Siswa"]);
-  getDataKelas()
-  getDataWali()
+  setCurrentPageBreadcrumbs("Tambah Wali", ['Sekolah', "Profil Pengguna", "Wali"]);
 })
 
 const kelas = ref('')
@@ -30,22 +28,6 @@ const username = ref('')
 const password = ref('')
 const statusAktif = ref('')
 const foto = ref('')
-
-const kelasData = ref([])
-const waliData = ref([])
-
-function getDataKelas() {
-  request.post('kelas', null).then(res => {
-    kelasData.value = res.data.data
-  })
-}
-function getDataWali() {
-  request.post('get_wali', null).then(res => {
-    waliData.value = res.data.data
-  })
-}
-
-
 
 
 const dialogImageUrl = ref('')
@@ -72,84 +54,24 @@ function handlePictureCardPreview (uploadFile) {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data Siswa</h2>
+          <h2 class="fs-1 fw-bold py-6">Tambah Data Wali</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
           <div class="row">
             <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Kelas</p>
+              <p class="m-0 fs-4 fw-bold">Nama Wali</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <div class="flex-grow-1">
-                <el-select class="w-100" v-model="kelas" filterable placeholder="Select">
-                  <el-option v-for="kls in kelasData" :key="kls.kelas_id" :label="kls.kelas_nama"
-                    :value="kls.kelas_id" />
-                </el-select>
-              </div>
-              <div>
-                <button to="/sekolah/profil-pengguna/siswa/tambah-data"
-                  class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                  <i class="bi bi-plus fs-1"></i>
-                  <span>
-                    Tambah Kelas
-                  </span>
-                </button>
-              </div>
+              <el-input v-model="namaWali" placeholder="Nama Wali" />
             </div>
           </div>
           <div class="row">
             <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Wali</p>
+              <p class="m-0 fs-4 fw-bold">No Handphone</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <div class="flex-grow-1">
-                <el-select class="w-100" v-model="wali" filterable placeholder="Select">
-                  <el-option v-for="wali in waliData" :key="wali.wali_id" :label="wali.user_nama"
-                    :value="wali.wali_id" />
-                </el-select>
-              </div>
-              <div>
-                <button to="/sekolah/profil-pengguna/siswa/tambah-data"
-                  class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                  <i class="bi bi-plus fs-1"></i>
-                  <span>
-                    Tambah Wali
-                  </span>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Nama Lengkap</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="namaLengkap" placeholder="Nama Lengkap" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">NISN</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="nisn" placeholder="NISN" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">No.Induk Siswa</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="nis" placeholder="Nomor Induk Siswa" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Tahun Angkatan</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="tahunAngkatan" placeholder="Tahun Angkatan" />
+              <el-input v-model="noHp" placeholder="No Handphone" />
             </div>
           </div>
           <div class="row">
@@ -179,14 +101,6 @@ function handlePictureCardPreview (uploadFile) {
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <el-input v-model="kota" placeholder="Kota" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">No Handphone</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="noHp" placeholder="No Handphone" />
             </div>
           </div>
           <div class="row">
@@ -224,14 +138,6 @@ function handlePictureCardPreview (uploadFile) {
           </div>
           <div class="row">
             <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">REF ID KARTU</p>
-            </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="refIdKartu" placeholder="Masukkan REF ID KARTU valid" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
               <p class="m-0 fs-4 fw-bold">Username</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
@@ -259,7 +165,7 @@ function handlePictureCardPreview (uploadFile) {
           </div>
 
           <div class="">
-            <p class="m-0 fs-4 fw-bold mb-6">File Foto Siswa</p>
+            <p class="m-0 fs-4 fw-bold mb-6">File Foto</p>
             <div>
               <el-upload
                 list-type="picture-card"

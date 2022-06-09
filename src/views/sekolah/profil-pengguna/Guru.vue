@@ -65,13 +65,13 @@ function changeFilter(changed) {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Data Siswa</h2>
+          <h2 class="fs-1 fw-bold py-6">Data Guru</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center gap-4">
             <div class="d-flex w-25 gap-4">
-              <el-input v-model="searchGuru" clearable class="m-2" placeholder="Cari Siswa">
+              <el-input v-model="searchGuru" clearable class="m-2" placeholder="Cari Guru">
                 <template #append>
                   <el-button aria-disabled="true" class="pe-none" :icon="Search" />
                 </template>
@@ -95,12 +95,12 @@ function changeFilter(changed) {
                 </a>
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/profil-pengguna/guru/tambah-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
                     Tambah Guru
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
