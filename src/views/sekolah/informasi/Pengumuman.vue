@@ -20,6 +20,7 @@
       }).then(res => {
         pengumuman.rows = res.data.data.data
         pengumuman.totalRows = res.data.data.total
+        pengumuman.perPage = res.data.data.per_page
       })
     }
 
@@ -34,6 +35,7 @@
     ],
     rows: [],
     totalRows: 0,
+    perPage: 0,
   })
 
   const statusFilter = ref('')
@@ -99,6 +101,7 @@
             :totalRows="pengumuman.totalRows || 0" 
             :columns="pengumuman.columns" 
             :rows="pengumuman.rows"
+            :paginationOptions="{enabled: true, perPage: pengumuman.perPage}"
             @loadItems="getPengumuman">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'thn_ajar_semester'">
