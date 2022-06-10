@@ -1,10 +1,12 @@
 <script setup>
   import { ref, onMounted, reactive } from "vue";
   import { request } from '@/util'
+  import qs from 'qs'
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
+  import { useToast } from "vue-toast-notification"
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
@@ -13,8 +15,8 @@
   function getTahunAjar (payload) {
       request.post('thn_ajar', null, {
         params: {
-          page: payload.page ?? 1,
-          sortby: payload.sort?.type ?? 'ASC'
+          page: payload?.page ?? 1,
+          sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
         tahunAjar.rows = res.data.data.data
@@ -37,12 +39,12 @@
   const semesterFilter = ref('')
   const statusFilter = ref('')
 
-  const modalData = ref(false)
+  const modalData = ref(null)
   const monthRange = ref([])
 
   function changeMonth() {
-    formData.start = monthRange.value[0]
-    formData.end = monthRange.value[1]
+    formData.thn_ajar_start = monthRange.value[0]
+    formData.thn_ajar_end = monthRange.value[1]
   }
 
   const semesterOption = [
@@ -66,48 +68,53 @@
     },
   ]
 
-  const initialFormData = {tahun_ajar: '', status: '', semester: '', start: '', end: ''}
+  const initialFormData = {thn_ajar_value: null, thn_ajar_status: null, thn_ajar_semester: null, thn_ajar_start: null, thn_ajar_end: null}
 
-  const formData = reactive({
-    thn_ajar_value: '',
-    thn_ajar_status: '',
-    thn_ajar_semester: '',
-    thn_ajar_start_moment: '',
-    thn_ajar_end_moment: '',
-    thn_ajar_start: '2022-7',
-    thn_ajar_end: '2023-8',
-  })
+  const formData = reactive({...initialFormData})
 
   function changeFilter(changed){
     console.log(changed)
   }
 
-  function addData() {
-
-    console.log(formData)
-    alert('tambah data')
-
-    request.post('thn_ajar/add', formData)
-    .then(res => {
-      console.log(res)
-    })
+  function closeModalData() {
+    modalData.value = null
+    monthRange.value = []
+    Object.assign(formData, initialFormData)
   }
 
-  function closeModalData() {
-    modalData.value = '',
-    Object.assign(formData, initialFormData)
+  function submitData() {
+    // return console.log(modalData.value)
+    request.post('thn_ajar/' + (modalData.value == 'Tambah Data' ? 'add' : 'edit') , qs.stringify(formData))
+    .then(res => {
+      useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
+      Object.assign(formData, initialFormData)
+      monthRange.value = []
+      modalData.value = null
+      getTahunAjar()
+    })
   }
 
   function editData(data) {
     // console.log(data)
-    formData.tahun_ajar = data.thn_ajar_value
-    formData.status = data.thn_ajar_status
-    formData.semester = data.thn_ajar_semester
-    formData.start = data.thn_ajar_start
-    formData.end = data.thn_ajar_end
-    // monthRange.value.push(data.thn_ajar_start)
-    // monthRange.value.push(data.thn_ajar_end)
+    formData.thn_ajar_id = data.thn_ajar_id
+    formData.thn_ajar_value = data.thn_ajar_value
+    formData.thn_ajar_status = data.thn_ajar_status
+    formData.thn_ajar_semester = data.thn_ajar_semester
+    formData.thn_ajar_start = data.thn_ajar_start
+    formData.thn_ajar_end = data.thn_ajar_end
+
+    
+    monthRange.value.push(data.thn_ajar_start)
+    monthRange.value.push(data.thn_ajar_end)
     modalData.value = 'Edit Data'
+  }
+
+  function deleteData(id) {
+    request.get('thn_ajar/delete/' + id)
+    .then(res => {
+      useToast().success('Data Berhasil Dihapus!')
+      getTahunAjar()
+    })
   }
 </script>
 
@@ -151,7 +158,7 @@
                 {{row.thn_ajar_semester[0].toUpperCase() + row.thn_ajar_semester.substring(1)}}
               </div>
               <div v-if="column.field == 'thn_ajar_status'">
-                <span :class="'badge badge-light-' + (row.thn_ajar_status ? 'success' : 'danger')">{{row.thn_ajar_status ? 'Aktif' : 'Non Aktif'}}</span>
+                <span :class="'badge badge-light-' + (row.thn_ajar_status == 1 ? 'success' : 'danger')">{{row.thn_ajar_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
                 <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
@@ -159,7 +166,7 @@
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteData(row.thn_ajar_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>
@@ -177,7 +184,7 @@
       :breadcrumb="Array('Sekolah', 'Akademik', 'Tahun Ajar', modalData)"
       :show="modalData"
       @closeModal="closeModalData"
-      @confirm="addData()"
+      @confirm="submitData()"
       @dismiss="closeModalData"
     >
         <div class="">
@@ -205,10 +212,10 @@
               </select>
             </div>
 
-            <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
+            <!-- <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
             <div class="col-8">
               <el-date-picker class="w-100" 
-                v-model="formData.thn_ajar_start_moment"
+                v-model="formData.thn_ajar_start"
                 start-placeholder="Bulan Mulai"
                 type="month"
               />
@@ -216,12 +223,12 @@
             <div class="col-4 d-flex align-items-center fw-bold fs-4"> Selesai</div>
             <div class="col-8">
               <el-date-picker class="w-100" 
-                v-model="formData.thn_ajar_end_moment"
+                v-model="formData.thn_ajar_end"
                 placeholder="Bulan selesai" 
                 type="month"
               />
-            </div>
-            <!-- <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
+            </div> -->
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Mulai & Selesai</div>
             <div class="col-8">
               <el-date-picker class="w-100" 
                 v-model="monthRange"
@@ -232,7 +239,7 @@
                 @change="changeMonth()"
                 unlink-panels
               />
-            </div> -->
+            </div>
           </div>
         </div>
     </Modal>

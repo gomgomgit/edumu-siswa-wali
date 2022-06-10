@@ -77,7 +77,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/akademik/tahun-ajar",
         name: "sekolah-akademik-tahun-ajar",
-        component: () => import("@/views/sekolah/akademik/TahunAjar.vue"),
+        component: () => import("@/views/sekolah/akademik/tahun-ajar/Index.vue"),
       },
       {
         path: "/sekolah/akademik/data-kelas",
