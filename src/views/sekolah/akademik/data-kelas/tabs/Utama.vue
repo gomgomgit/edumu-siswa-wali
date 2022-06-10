@@ -5,22 +5,31 @@
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import FilterSelect from '@/components/filter-select'
   import ServerSideTable from '@/components/ServerSideTable.vue'
+import QueryString from "qs";
+  import { useToast } from "vue-toast-notification"
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
+    getShiftData()
   })
 
-  function getTableData (payload) {
+  function getKelasData (payload) {
     request.post('kelas', null, {
       params: {
-        page: payload.page ?? 1,
-        sortby: payload.sort?.type ?? 'ASC'
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
-      tableData.rows = res.data.data.data
-      tableData.totalRows = res.data.data.total
+      kelasData.rows = res.data.data.data
+      kelasData.totalRows = res.data.data.total
     })
   }
+  function getShiftData () {
+    request.post('shift', null).then(res => {
+      shiftData.value = res.data.data
+    })
+  }
+  const shiftData = ref([])
 
   const tingkatKelas = ref('')
   const status = ref('')
@@ -82,35 +91,56 @@
 
   const dataTingkatKelas = ref([
     {
+      value: 1,
+      name: '1'
+    },
+    {
+      value: 2,
+      name: '2'
+    },
+    {
+      value: 3,
+      name: '3'
+    },
+    {
+      value: 4,
+      name: '4'
+    },
+    {
+      value: 5,
+      name: '5'
+    },
+    {
+      value: 6,
+      name: '6'
+    },
+    {
+      value: 7,
+      name: '7'
+    },
+    {
+      value: 8,
+      name: '8'
+    },
+    {
+      value: 9,
+      name: '9'
+    },
+    {
+      value: 10,
       name: '10'
     },
     {
+      value: 11,
       name: '11'
     },
     {
+      value: 12,
       name: '12'
     },
   ])
 
-  const jamMasuk = ref([
-    {
-      name: 'pagi',
-      start: '08:00 AM',
-      end: '10:00 AM',
-    },
-    {
-      name: 'siang',
-      start: '11:00 AM',
-      end: '03:00 PM',
-    },
-    {
-      name: 'sore',
-      start: '03:00 PM',
-      end: '07:00 PM',
-    },
-  ])
-
-  const tableData = reactive({
+  const kelasData = reactive({
     columns: [
       { label: 'Kelas', field: 'kelas_nama' },
       { label: 'Jam Masuk', field: 'shift' },
@@ -122,39 +152,40 @@
     totalRows: 0,
   })
 
-  const initialFormData = {namaKelas: '', wali: '', tingkatKelas: '', jamMasuk: '', status: ''}
+  const initialFormData = {kelas_nama: '', wali: '', kelas_level: '', shift_id: '', kelas_status: ''}
 
-  const formData = reactive({
-    namaKelas: '', 
-    wali: '', 
-    tingkatKelas: '', 
-    jamMasuk: '', 
-    status: ''
-  })
-
-  function addData() {
-    alert('tambah data')
-  }
+  const formData = reactive({...initialFormData})
 
   function closeModalData() {
     modalData.value = '',
     Object.assign(formData, initialFormData)
   }
 
-  function getData(event) {
-    console.log(event)
-    console.log('getData')
+  function submitData(event) {
+    request.post('/kelas/'  + (modalData.value == 'Tambah Data' ? 'add' : 'edit'), QueryString.stringify(formData))
+      .then(res => {
+        useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
+        Object.assign(formData, initialFormData)
+        getKelasData()
+        modalData.value = null
+      })
   }
 
   function editData(data) {
-    formData.guru = data.guru
-    formData.tahun_ajar = data.tahun_ajar
-    formData.kelas = data.kelas
+    formData.kelas_id = data.kelas_id,
+    formData.kelas_nama = data.kelas_nama,
+    formData.shift_id = data.shift_id,
+    formData.kelas_level = data.kelas_level,
+    formData.kelas_status = data.kelas_status,
     modalData.value = 'Edit Data'
   }
 
-  function changeStatus() {
-    console.log(status.value)
+  function deleteData(id) {
+    request.get('/kelas/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getKelasData()
+      })
   }
 </script>
 
@@ -197,25 +228,25 @@
         </div>
         <div class="mb-5 mb-xxl-8">
           <ServerSideTable
-            :totalRows="tableData.totalRows || 0"
-            :columns="tableData.columns"
-            :rows="tableData.rows"
-            @loadItems="getTableData"
+            :totalRows="kelasData.totalRows || 0"
+            :columns="kelasData.columns"
+            :rows="kelasData.rows"
+            @loadItems="getKelasData"
           >
             <template #table-row="{column, row}">
               <div v-if="column.field == 'shift'">
                 {{row.shift.name}} <span class="badge badge-primary ms-4">{{row.shift.start}} - {{row.shift.end}}</span>
               </div>
               <div v-if="column.field == 'kelas_status'">
-                <span :class="'badge badge-light-' + (row.kelas_status ? 'success' : 'danger')">{{row.kelas_status ? 'Aktif' : 'Non Aktif'}}</span>
+                <span :class="'badge badge-light-' + (row.kelas_status == 1 ? 'success' : 'danger')">{{row.kelas_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteData(row.kelas_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>
@@ -231,14 +262,14 @@
           :breadcrumb="Array('Sekolah', 'Akademik', 'Data Kelas', modalData)" 
           :show="modalData" 
           @closeModal="closeModalData"
-          @confirm="addData"
+          @confirm="submitData"
           @dismiss="closeModalData"
         >
             <div class="">
               <div class="row gy-6">
                 <div class="col-4 d-flex align-items-center fw-bold fs-4">Nama Kelas</div>
                 <div class="col-8">
-                  <input type="text" v-model="formData.namaKelas" class="form-control" placeholder="X IPA , IX IPS , DST"/>
+                  <input type="text" v-model="formData.kelas_nama" class="form-control" placeholder="X IPA , IX IPS , DST"/>
                 </div>
                 <div class="col-4 d-flex align-items-center fw-bold fs-4">Wali Kelas</div>
                 <div class="col-8">
@@ -251,20 +282,28 @@
                 </div>
                 <div class="col-4 d-flex align-items-center fw-bold fs-4">Tingkat Kelas</div>
                 <div class="col-8">
-                  <select  v-model="formData.tahun_ajar" class="form-select form-select-solid" aria-label="Select example">
+                  <select  v-model="formData.kelas_level" class="form-select form-select-solid" aria-label="Select example">
                     <option>Pilih Tingkat Kelas</option>
                     <template v-for="(kelas, kelasIndex) in dataTingkatKelas" :key="kelasIndex">
-                      <option value="1">{{kelas.name}}</option>
+                      <option :value="kelas.value">{{kelas.name}}</option>
                     </template>
                   </select>
                 </div>
                 <div class="col-4 d-flex align-items-center fw-bold fs-4">Jam Masuk</div>
                 <div class="col-8">
-                  <select  v-model="formData.jamMasuk" class="form-select form-select-solid" aria-label="Select example">
+                  <select  v-model="formData.shift_id" class="form-select form-select-solid" aria-label="Pilih Jam Masuk">
                     <option>Pilih Jam Masuk</option>
-                    <template v-for="(jam, jamIndex) in jamMasuk" :key="jamIndex">
-                      <option value="1">{{jam.name}} ({{jam.start}}-{{jam.end}})</option>
+                    <template v-for="(shift, shiftIndex) in shiftData" :key="shift.id">
+                      <option :value="shift.id">{{shift.name}} ({{shift.start}}-{{shift.end}})</option>
                     </template>
+                  </select>
+                </div>
+                <div class="col-4 d-flex align-items-center fw-bold fs-4">Status Aktif</div>
+                <div class="col-8">
+                  <select  v-model="formData.kelas_status" class="form-select form-select-solid" aria-label="Status Aktif">
+                    <option>Pilih Status</option>
+                    <option value="1">Aktif</option>
+                    <option value="0">Non Aktif</option>
                   </select>
                 </div>
               </div>

@@ -82,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/akademik/data-kelas",
         name: "sekolah-akademik-data-kelas",
-        component: () => import("@/views/sekolah/akademik/DataKelas.vue"),
+        component: () => import("@/views/sekolah/akademik/data-kelas/Index.vue"),
         children: [
           {
             path: "",
@@ -92,19 +92,19 @@ const routes: Array<RouteRecordRaw> = [
             path: "utama",
             name: "sekolah-akademik-data-kelas-utama",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/Utama.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/Utama.vue"),
           },
           {
             path: "wali-kelas",
             name: "sekolah-akademik-data-kelas-wali-kelas",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/WaliKelas.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/WaliKelas.vue"),
           },
           {
             path: "mutasi-kelas",
             name: "sekolah-akademik-data-kelas-mutasi-kelas",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/MutasiKelas.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/MutasiKelas.vue"),
           },
         ],
       },

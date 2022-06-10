@@ -24,7 +24,6 @@
       })
     }
 
-  
   const tahunAjar = reactive({
     columns: [
       { label: 'Tahun Ajar', field: 'thn_ajar_value' },
