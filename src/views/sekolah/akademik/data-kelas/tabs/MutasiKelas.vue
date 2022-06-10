@@ -4,6 +4,8 @@
   import FilterSelect from "@/components/filter-select";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import { request } from "@/util";
+import QueryString from "qs";
+import { useToast } from "vue-toast-notification";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
@@ -84,6 +86,7 @@
     totalRows: 0,
   })
 
+  const tahunAjar = ref('test 1312')
   const kelas = ref([])
   const kelasAsal = ref('')
   const kelasTujuan = ref('')
@@ -121,7 +124,17 @@
   }
 
   function moveStudent() {
-    console.log(selectedStudent.value)
+    request.post('/siswa/naik_kelas', QueryString.stringify({
+      thn_ajar_value: tahunAjar.value,
+      kelas_id: kelasAsal.value,
+      kelas_id_tujuan: kelasTujuan.value,
+      siswa_selected: selectedStudent.value
+    }))
+      .then(res => {
+        useToast().success('Berhasil pindah kelas!')
+        getDataSiswaKelas()
+        getDataSiswaKelasTujuan()
+      })
   }
 
 </script>
@@ -177,7 +190,7 @@
                     />
                   </div>
                   <div v-if="column.field == 'user_nama'">
-                    {{row.user_nama}}
+                    <span class="fw-bold">{{row.user_nama}}</span> - {{row.kelas_nama}}
                   </div>
                 </template>
               </ServerSideTable>
@@ -203,7 +216,7 @@
                 :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelas">
                 <template #table-row="{column, row}">
                   <div v-if="column.field == 'user_nama'">
-                    {{row.user_nama}}
+                    <span class="fw-bold">{{row.user_nama}}</span> - {{row.kelas_nama}}
                   </div>
                 </template>
               </ServerSideTable>
