@@ -23,13 +23,23 @@
   function getDataSiswaKelas (payload) {
     request.post('siswa_data_kelas', null, {
       params: {
-        page: payload.page ?? 1,
-        sortby: payload.sort?.type ?? 'ASC',
-        kelas_id: kelasAsal?.value ?? ''
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC',
+        kelas_id: kelasAsal.value ?? ''
       }
     }).then(res => {
       dataSiswaKelas.rows = res.data.data.data
       dataSiswaKelas.totalRows = res.data.data.total
+    })
+  }
+  function getDataSiswaKelasTujuan (payload) {
+    request.post('siswa_data_kelas_tujuan', null, {
+      params: {
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC',
+        kelas_id: kelasTujuan.value ?? ''
+      }
+    }).then(res => {
       dataSiswaKelasTujuan.rows = res.data.data.data
       dataSiswaKelasTujuan.totalRows = res.data.data.total
     })
@@ -45,23 +55,25 @@
     totalRows: 0,
   })
   
-  const dataSiswaFilter = computed(() => {
-      console.log(kelasAsal.value)
-      return kelasAsal.value === '' 
-        ? dataSiswaKelas.rows 
-        : dataSiswaKelas.rows.filter(row => 
-          row.kelas_id == kelasAsal.value
-        )
-    }
-  )
-  const dataSiswaTujuanFilter = computed(() => {
-      return kelasTujuan.value === '' 
-        ? []
-        : dataSiswaKelasTujuan.rows.filter(row => 
-          row.kelas_id == kelasTujuan.value
-        )
-    }
-  )
+  // const dataSiswaFilter = computed(() => {
+  //     console.log(kelasAsal.value)
+  //     return kelasAsal.value === '' 
+  //       ? dataSiswaKelas.rows 
+  //       : dataSiswaKelas.rows.filter(row => 
+  //         row.kelas_id == kelasAsal.value
+  //       )
+  //   }
+  // )
+  // const dataSiswaTujuanFilter = computed(() => {
+  //     return kelasTujuan.value === '' 
+  //       ? []
+  //       : dataSiswaKelasTujuan.rows.filter(row => 
+  //         row.kelas_id == kelasTujuan.value
+  //       )
+  //   }
+  // )
+
+  const selectedStudent = ref([])
 
   const dataSiswaKelasTujuan = reactive({
     columns: [
@@ -102,8 +114,14 @@
   ]
 
   function changeAsal() {
-    console.log(kelasAsal.value)
-    getDataSiswaKelas
+    getDataSiswaKelas()
+  }
+  function changeTujuan() {
+    getDataSiswaKelasTujuan()
+  }
+
+  function moveStudent() {
+    console.log(selectedStudent.value)
   }
 
 </script>
@@ -138,7 +156,7 @@
               </div>
 
               <div class="position-relative d-flex ">
-                <a href="#" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a @click.prevent="moveStudent" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Pindahkan
                   </span>
@@ -149,10 +167,14 @@
               <ServerSideTable 
                 :totalRows="dataSiswaKelas.totalRows || 0" 
                 :columns="dataSiswaKelas.columns"
-                :rows="dataSiswaFilter" @loadItems="getDataSiswaKelas">
+                :rows="dataSiswaKelas.rows" @loadItems="getDataSiswaKelas">
                 <template #table-row="{column, row}">
                   <div v-if="column.field == 'select'">
-                    <input type="checkbox" name="" id="">
+                    <input 
+                      :value="row.siswa_id"
+                      v-model="selectedStudent" 
+                      type="checkbox" name="student" id="" 
+                    />
                   </div>
                   <div v-if="column.field == 'user_nama'">
                     {{row.user_nama}}
@@ -178,7 +200,7 @@
               <ServerSideTable 
                 :totalRows="dataSiswaKelasTujuan.totalRows || 0" 
                 :columns="dataSiswaKelasTujuan.columns"
-                :rows="dataSiswaTujuanFilter" @loadItems="getDataSiswaKelas">
+                :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelas">
                 <template #table-row="{column, row}">
                   <div v-if="column.field == 'user_nama'">
                     {{row.user_nama}}
