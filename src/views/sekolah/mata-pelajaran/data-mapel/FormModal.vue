@@ -16,9 +16,7 @@ const initialForm = { mapel_nama: null, mapel_status: null }
 const formData = reactive({...initialForm})
 
 function submit () {
-	request.post('mapel/add', qs.stringify(formData), {
-		headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-	}).then(() => {
+	request.post('mapel/add', qs.stringify(formData)).then(() => {
 		Object.assign(formData, initialForm)
 		useToast().success('Data Berhasil Ditambahkan!')
 		emits('submit')
