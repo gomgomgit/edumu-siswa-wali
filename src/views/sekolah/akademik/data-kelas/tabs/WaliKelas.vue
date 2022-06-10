@@ -84,12 +84,12 @@ import { useToast } from "vue-toast-notification";
     },
   ])
 
-  const initialFormData = {guruser_id: '', kelas_id: ''}
+  const initialFormData = {wk_status: '', wk_id: '', thn_ajar: '', user_id: '', kelas_id: ''}
 
   const formData = reactive({...initialFormData})
 
   function addData() {
-    request.post('/add_walikelas', QueryString.stringify(formData))
+    request.post(modalData.value == 'Tambah Data' ? '/add_walikelas' : 'edit_walikelas', QueryString.stringify(formData))
       .then(res => {
         useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
         Object.assign(formData, initialFormData)
@@ -109,9 +109,11 @@ import { useToast } from "vue-toast-notification";
   }
 
   function editData(data) {
-    formData.guru = data.guru
-    formData.tahun_ajar = data.tahun_ajar
-    formData.kelas = data.kelas
+    formData.wk_status = data.wk_status
+    formData.wk_id = data.wk_id
+    formData.thn_ajar = data.thn_ajar
+    formData.user_id = data.user_id
+    formData.kelas_id = data.kelas_id
     modalData.value = 'Edit Data'
   }
 </script>
