@@ -1,9 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
-import { request } from '@/util';
-import { Plus } from '@element-plus/icons-vue'
-import { UploadProps, UploadUserFile } from 'element-plus'  
+import { request } from '@/util'  
+import FileInput from '@/components/file-input'
 
 
 onMounted(() => {
@@ -34,6 +33,8 @@ const foto = ref('')
 const kelasData = ref([])
 const waliData = ref([])
 
+const fileInput = ref([])
+
 function getDataKelas() {
   request.post('kelas', null).then(res => {
     kelasData.value = res.data.data
@@ -45,24 +46,13 @@ function getDataWali() {
   })
 }
 
-
-
-
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
-
 function post() {
   console.log(dialogImageUrl.value)
   console.log(dialogVisible.value)
 }
 
-function handleRemove (uploadFile, uploadFiles) {
-  console.log(uploadFile, uploadFiles)
-}
-
-function handlePictureCardPreview (uploadFile) {
-  dialogImageUrl.value = uploadFile.url
-  dialogVisible.value = true
+function checkTest() {
+  console.log(fileInput.value)
 }
 
 </script>
@@ -257,28 +247,12 @@ function handlePictureCardPreview (uploadFile) {
               </el-select>
             </div>
           </div>
-
-          <div class="">
-            <p class="m-0 fs-4 fw-bold mb-6">File Foto Siswa</p>
-            <div>
-              <el-upload
-                list-type="picture-card"
-                :on-preview="handlePictureCardPreview"
-                :on-remove="handleRemove"
-                :file-list="fileList"
-                :auto-upload="false"
-              >
-                <el-icon><Plus /></el-icon>
-              </el-upload>
-
-              <el-dialog v-model="dialogVisible">
-                <img w-full :src="dialogImageUrl" alt="Preview Image" />
-              </el-dialog>
-            </div>
+          <div>
+            <FileInput v-model:fileInputData="fileInput"></FileInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
-            <a href="#" class="btn btn-primary">Save Changes</a>
+            <a href="#" @click.prevent="checkTest" class="btn btn-primary">Save Changes</a>
           </div>
         </div>
       </div>
