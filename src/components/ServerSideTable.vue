@@ -4,13 +4,19 @@ import { VueGoodTable } from 'vue-good-table-next'
 
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 
+const optionsDefault = {
+	paginationOptions: { enabled: true, perPage: 20 },
+	sortOptions: { enabled: true },
+	searchOptions: { enabled: false }
+}
+
 const props = defineProps({
 	columns: { type: Array, required: true },
 	rows: { type: Array, required: true },
 	totalRows: { type: Number, required: true },
-	paginationOptions: { type: Object, default: () => ({ enabled: true, perPage: 20 }) },
-	sortOptions: { type: Object, default: () => ({ enabled: true }) },
-	searchOptions: { type: Object, default: () => ({ enabled: false }) },
+	paginationOptions: { type: Object, default: () => ({}) },
+	sortOptions: { type: Object, default: () => ({}) },
+	searchOptions: { type: Object, default: () => ({}) },
 })
 
 const emit = defineEmits(['loadItems'])
@@ -22,7 +28,7 @@ const serverParams = ref({
 		type: '',
 	},
 	page: 1,
-	perPage: props.paginationOptions.perPage ?? 10
+	perPage: props.paginationOptions.perPage ?? optionsDefault.paginationOptions.perPage
 })
 
 onMounted(loadItems)
@@ -59,9 +65,9 @@ function onColumnFilter(params) {
 		styleClass="vgt-table"
 		mode="remote"
 		:totalRows="props.totalRows"
-		:pagination-options="props.paginationOptions"
-		:sort-options="props.sortOptions"
-		:search-options="props.searchOptions"
+		:pagination-options="{ ...optionsDefault.paginationOptions,  ...props.paginationOptions}"
+		:sort-options="{ ...optionsDefault.sortOptions,  ...props.sortOptions}"
+		:search-options="{ ...optionsDefault.searchOptions,  ...props.searchOptions}"
 		:rows="props.rows"
 		:columns="props.columns"
 		@page-change="onPageChange"

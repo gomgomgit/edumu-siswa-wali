@@ -125,7 +125,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: "data-mapel",
             name: "sekolah-mata-pelajaran-data-mapel",
-            component: () => import("@/views/sekolah/mata-pelajaran/DataMapel.vue")
+            component: () => import("@/views/sekolah/mata-pelajaran/data-mapel/Index.vue")
           },
           {
             path: "jadwal-pelajaran",
