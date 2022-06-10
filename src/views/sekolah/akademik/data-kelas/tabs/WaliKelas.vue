@@ -6,20 +6,41 @@
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import FilterSelect from '@/components/filter-select'
   import { request } from "@/util";
+import QueryString from "qs";
+import { useToast } from "vue-toast-notification";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Wali Kelas", ['Sekolah', "Akademik"]);
+    getListAddData()
   })
 
   function getWaliKelas (payload) {
     request.post('listwalikelas', null, {
       params: {
-        page: payload.page ?? 1,
-        sortby: payload.sort?.type ?? 'ASC'
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
       waliKelas.rows = res.data.data.data
       waliKelas.totalRows = res.data.data.total
+    })
+  }
+  function getListAddData (payload) {
+    request.post('listwali_kelas', null, {
+      params: {
+        locale: 'id',
+        platfrom: 'web',
+      }
+    }).then(res => {
+      listWK.value = res.data.data
+    })
+    request.post('list_kelas', null, {
+      params: {
+        locale: 'id',
+        platfrom: 'web',
+      }
+    }).then(res => {
+      listKls.value = res.data.data
     })
   }
 
@@ -36,6 +57,9 @@
 
   const semester = ref('')
   const status = ref('')
+
+  const listWK = ref([])
+  const listKls = ref([])
 
   const modalData = ref(false)
 
@@ -60,73 +84,18 @@
     },
   ])
 
-  const tableHeader = ref([
-    {
-      name: "No",
-      key: "no",
-    },
-    {
-      name: "Guru",
-      key: "guru",
-    },
-    {
-      name: "Kelas",
-      key: "kelas",
-    },
-    {
-      name: "Tahun Ajar",
-      key: "tahun_ajar",
-    },
-    {
-      name: "Action",
-      key: "action",
-      sortable: false,
-    },
-  ])
+  const initialFormData = {guruser_id: '', kelas_id: ''}
 
-  const tableData = ref([
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "X IPA",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-    {
-      no : "1",
-      guru : "Faradillah S.Pd",
-      kelas : "Kelas Edumu 2",
-      tahun_ajar : "2021/2022",
-    },
-  ])
-
-  const initialFormData = {guru: '', tahun_ajar: '', kelas: ''}
-
-  const formData = reactive({
-    guru: '',
-    tahun_ajar: '',
-    kelas: '',
-  })
+  const formData = reactive({...initialFormData})
 
   function addData() {
-    alert('tambah data')
+    request.post('/add_walikelas', QueryString.stringify(formData))
+      .then(res => {
+        useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
+        Object.assign(formData, initialFormData)
+        getWaliKelas()
+        modalData.value = null
+      })
   }
 
   function closeModalData() {
@@ -207,14 +176,22 @@
             <div class="row gy-6">
               <div class="col-4 d-flex align-items-center fw-bold fs-4">Guru</div>
               <div class="col-8">
-                <select  v-model="formData.guru" class="form-select form-select-solid" aria-label="Select example">
+                <!-- <select  v-model="formData.guru" class="form-select form-select-solid" aria-label="Select example">
                   <option>Pilih Guru</option>
-                  <template v-for="(guru, guruIndex) in waliKelas" :key="guruIndex">
-                    <option value="1">{{guru.name}}</option>
+                  <template v-for="(guru, guruIndex) in listWK" :key="guru.guru_id">
+                    <option :value="guru.guru_id">{{guru.user_nama}}</option>
                   </template>
-                </select>
+                </select> -->
+                <el-select class="w-100" v-model="formData.user_id" filterable placeholder="Pilih Guru">
+                  <el-option
+                    v-for="guru in listWK"
+                    :key="guru.guru_id"
+                    :label="guru.user_nama"
+                    :value="guru.user_id"
+                  />
+                </el-select>
               </div>
-              <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
+              <!-- <div class="col-4 d-flex align-items-center fw-bold fs-4">Tahun Ajar</div>
               <div class="col-8">
                 <select  v-model="formData.tahun_ajar" class="form-select form-select-solid" aria-label="Select example">
                   <option>Pilih Tahun Ajar</option>
@@ -222,15 +199,23 @@
                     <option value="1">{{tahun.name}}</option>
                   </template>
                 </select>
-              </div>
+              </div> -->
               <div class="col-4 d-flex align-items-center fw-bold fs-4">Kelas</div>
               <div class="col-8">
-                <select  v-model="formData.kelas" class="form-select form-select-solid" aria-label="Select example">
+                <!-- <select  v-model="formData.kelas" class="form-select form-select-solid" aria-label="Select example">
                   <option>Pilih Kelas</option>
                   <template v-for="(kelas, kelasIndex) in kelas" :key="kelasIndex">
                     <option value="1">{{kelas.name}}</option>
                   </template>
-                </select>
+                </select> -->
+                <el-select class="w-100" v-model="formData.kelas_id" filterable placeholder="Pilih Kelas">
+                  <el-option
+                    v-for="kelas in listKls"
+                    :key="kelas.kelas_id"
+                    :label="kelas.kelas_nama"
+                    :value="kelas.kelas_id"
+                  />
+                </el-select>
               </div>
             </div>
           </div>
