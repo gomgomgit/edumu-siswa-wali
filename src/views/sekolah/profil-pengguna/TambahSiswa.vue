@@ -248,6 +248,7 @@ function checkTest() {
             </div>
           </div>
           <div>
+            <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
             <FileInput v-model:fileInputData="fileInput"></FileInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
