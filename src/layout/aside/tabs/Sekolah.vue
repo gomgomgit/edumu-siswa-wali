@@ -308,7 +308,7 @@ export default defineComponent({
           },
           {
             heading: "Media",
-            route: "/pages",
+            route: "/sekolah/media",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

@@ -168,6 +168,16 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: "/sekolah/media",
+        name: "sekolah-media",
+        component: () => import("@/views/sekolah/media/Index.vue"),
+      },
+      {
+        path: "/sekolah/media/album/:id",
+        name: "sekolah-media-album",
+        component: () => import("@/views/sekolah/media/Album.vue"),
+      },
+      {
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),
