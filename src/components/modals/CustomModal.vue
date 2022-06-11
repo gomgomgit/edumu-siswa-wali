@@ -2,7 +2,7 @@
   const props = defineProps({
     show: {type:  String, required: true},
     title: {type: String, required: true},
-    breadcrumb: Array
+    breadcrumb: {type: Array, required: false}
   })
 
   const emits = defineEmits(['closeModal', 'confirm', 'dismiss'])
@@ -21,7 +21,7 @@
               <span>{{props.title}}</span>
             </div>
             <div class="fw-bold fs-4 m-4">
-              <template v-for="bc, index in props.breadcrumb" :key="index">
+              <template v-if="props.breadcrumb" v-for="bc, index in props.breadcrumb" :key="index">
                 <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span> 
                 <span v-else class="text-black-50">
                   <span>{{bc}} / </span>
