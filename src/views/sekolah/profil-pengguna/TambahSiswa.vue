@@ -1,8 +1,11 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util'  
-import FileInput from '@/components/file-input'
+import FileInput from '@/components/file-input/Index.vue'
+import QueryString from 'qs';
+import { useToast } from 'vue-toast-notification';
+import { useRouter } from 'vue-router';
 
 
 onMounted(() => {
@@ -11,24 +14,29 @@ onMounted(() => {
   getDataWali()
 })
 
-const kelas = ref('')
-const wali = ref('')
-const namaLengkap = ref('')
-const nisn = ref('')
-const nis = ref('')
-const tahunAngkatan = ref('')
-const alamat = ref('')
-const provinsi = ref('')
-const kota = ref('')
-const noHp = ref('')
-const jenisKelamin = ref('')
-const tempatLahir = ref('')
-const tanggalLahir = ref('')
-const refIdKartu = ref('')
-const username = ref('')
-const password = ref('')
-const statusAktif = ref('')
-const foto = ref('')
+const router = useRouter()
+
+const formData = reactive({
+  'kelas_id': '',
+  'wali_id': '',
+  'siswa_nama': '',
+  'siswa_nisn': '',
+  'siswa_nis': '',
+  'siswa_tahun': '',
+  'siswa_alamat': '',
+  'siswa_provinsi': '',
+  'siswa_kota': '',
+  'siswa_nohp': '',
+  'siswa_gender': '',
+  'siswa_tempat_lahir': '',
+  'siswa_tanggal_lahir': '',
+  'siswa_refid': '',
+  'siswa_username': '',
+  'siswa_password': '',
+  'siswa_status': '',
+  'siswa_foto': '',
+})
+
 
 const kelasData = ref([])
 const waliData = ref([])
@@ -47,8 +55,35 @@ function getDataWali() {
 }
 
 function post() {
-  console.log(dialogImageUrl.value)
-  console.log(dialogVisible.value)
+  const data = new FormData()
+  data.append('kelas_id', formData.kelas_id)
+  data.append('wali_id', formData.wali_id)
+  data.append('siswa_nama', formData.siswa_nama)
+  data.append('siswa_nisn', formData.siswa_nisn)
+  data.append('siswa_nis', formData.siswa_nis)
+  data.append('siswa_tahun', formData.siswa_tahun)
+  data.append('siswa_alamat', formData.siswa_alamat)
+  data.append('siswa_provinsi', formData.siswa_provinsi)
+  data.append('siswa_kota', formData.siswa_kota)
+  data.append('siswa_nohp', formData.siswa_nohp)
+  data.append('siswa_gender', formData.siswa_gender)
+  data.append('siswa_tempat_lahir', formData.siswa_tempat_lahir)
+  data.append('siswa_tanggal_lahir', formData.siswa_tanggal_lahir)
+  data.append('siswa_refid', formData.siswa_refid)
+  data.append('siswa_username', formData.siswa_username)
+  data.append('siswa_password', formData.siswa_password)
+  data.append('siswa_status', formData.siswa_status)
+  data.append('siswa_foto', formData.siswa_foto)
+  
+  // request.post('siswa/add', QueryString.stringify(formData), {
+  request.post('siswa/add', data, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+  }).then(res => {
+      useToast().success('Data Berhasil Ditambahkan!')
+      router.push('/sekolah/profil-pengguna/siswa')
+    })
 }
 
 function checkTest() {
@@ -72,7 +107,7 @@ function checkTest() {
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <div class="flex-grow-1">
-                <el-select class="w-100" v-model="kelas" filterable placeholder="Select">
+                <el-select class="w-100" v-model="formData.kelas_id" filterable placeholder="Select">
                   <el-option v-for="kls in kelasData" :key="kls.kelas_id" :label="kls.kelas_nama"
                     :value="kls.kelas_id" />
                 </el-select>
@@ -94,7 +129,7 @@ function checkTest() {
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <div class="flex-grow-1">
-                <el-select class="w-100" v-model="wali" filterable placeholder="Select">
+                <el-select class="w-100" v-model="formData.wali_id" filterable placeholder="Select">
                   <el-option v-for="wali in waliData" :key="wali.wali_id" :label="wali.user_nama"
                     :value="wali.wali_id" />
                 </el-select>
@@ -115,7 +150,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Nama Lengkap</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="namaLengkap" placeholder="Nama Lengkap" />
+              <el-input v-model="formData.siswa_nama" placeholder="Nama Lengkap" />
             </div>
           </div>
           <div class="row">
@@ -123,7 +158,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">NISN</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="nisn" placeholder="NISN" />
+              <el-input v-model="formData.siswa_nisn" placeholder="NISN" />
             </div>
           </div>
           <div class="row">
@@ -131,7 +166,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">No.Induk Siswa</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="nis" placeholder="Nomor Induk Siswa" />
+              <el-input v-model="formData.siswa_nis" placeholder="Nomor Induk Siswa" />
             </div>
           </div>
           <div class="row">
@@ -139,7 +174,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Tahun Angkatan</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="tahunAngkatan" placeholder="Tahun Angkatan" />
+              <el-input v-model="formData.siswa_tahun" placeholder="Tahun Angkatan" />
             </div>
           </div>
           <div class="row">
@@ -148,7 +183,7 @@ function checkTest() {
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <el-input
-                v-model="alamat"
+                v-model="formData.siswa_alamat"
                 :rows="3"
                 type="textarea"
                 placeholder="Please input"
@@ -160,7 +195,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Provinsi</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="profinsi" placeholder="Provinsi" />
+              <el-input v-model="formData.siswa_provinsi" placeholder="Provinsi" />
             </div>
           </div>
           <div class="row">
@@ -168,7 +203,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Kota</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="kota" placeholder="Kota" />
+              <el-input v-model="formData.siswa_kota" placeholder="Kota" />
             </div>
           </div>
           <div class="row">
@@ -176,7 +211,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">No Handphone</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="noHp" placeholder="No Handphone" />
+              <el-input v-model="formData.siswa_nohp" placeholder="No Handphone" />
             </div>
           </div>
           <div class="row">
@@ -184,7 +219,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Jenis Kelamin</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-select class="w-100" v-model="jenisKelamin" placeholder="Pilih Jenis Kelamin">
+              <el-select class="w-100" v-model="formData.siswa_gender" placeholder="Pilih Jenis Kelamin">
                 <el-option label="Laki-laki" value="l" />
                 <el-option label="Perempuan" value="p" />
               </el-select>
@@ -195,7 +230,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Tempat Lahir</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="tempatLahir" placeholder="Tempat Lahir" />
+              <el-input v-model="formData.siswa_tempat_lahir" placeholder="Tempat Lahir" />
             </div>
           </div>
           <div class="row">
@@ -204,7 +239,7 @@ function checkTest() {
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <el-date-picker
-                v-model="tanggalLahir"
+                v-model="formData.siswa_tanggal_lahir"
                 class=""
                 type="date"
                 placeholder="Pilih Tanggal Lahir"
@@ -217,7 +252,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">REF ID KARTU</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="refIdKartu" placeholder="Masukkan REF ID KARTU valid" />
+              <el-input v-model="formData.siswa_refid" placeholder="Masukkan REF ID KARTU valid" />
             </div>
           </div>
           <div class="row">
@@ -225,7 +260,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Username</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="username" placeholder="Username" />
+              <el-input v-model="formData.siswa_username" placeholder="Username" />
             </div>
           </div>
           <div class="row">
@@ -233,7 +268,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Password</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input type="password" show-password v-model="password" placeholder="Masukkan Password" />
+              <el-input type="password" show-password v-model="formData.siswa_password" placeholder="Masukkan Password" />
             </div>
           </div>
           <div class="row">
@@ -241,7 +276,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Status Aktif</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-select class="w-100" v-model="statusAktif" placeholder="Pilih Status Aktif">
+              <el-select class="w-100" v-model="formData.siswa_status" placeholder="Pilih Status Aktif">
                 <el-option label="Aktif" value="1" />
                 <el-option label="Non Aktif" value="0" />
               </el-select>
@@ -249,11 +284,11 @@ function checkTest() {
           </div>
           <div>
             <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
-            <FileInput v-model:fileInputData="fileInput"></FileInput>
+            <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
-            <a href="#" @click.prevent="checkTest" class="btn btn-primary">Save Changes</a>
+            <a href="#" @click.prevent="post" class="btn btn-primary">Save Changes</a>
           </div>
         </div>
       </div>
