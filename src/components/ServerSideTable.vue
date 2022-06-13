@@ -21,6 +21,8 @@ const props = defineProps({
 
 const emit = defineEmits(['loadItems'])
 
+defineExpose({ loadItems })
+
 const serverParams = ref({
 	columnFilters: {},
 	sort: {
@@ -36,8 +38,8 @@ onMounted(loadItems)
 function updateParams(newProps) {
 	serverParams.value = Object.assign({}, serverParams.value, newProps)
 }
-function loadItems() {
-	emit('loadItems', serverParams.value)
+function loadItems(additionalParams) {
+	emit('loadItems', { ...serverParams.value, ...additionalParams })
 }
 function onPageChange(params) {
 	updateParams({ page: params.currentPage })
