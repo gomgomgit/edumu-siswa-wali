@@ -77,12 +77,12 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/akademik/tahun-ajar",
         name: "sekolah-akademik-tahun-ajar",
-        component: () => import("@/views/sekolah/akademik/TahunAjar.vue"),
+        component: () => import("@/views/sekolah/akademik/tahun-ajar/Index.vue"),
       },
       {
         path: "/sekolah/akademik/data-kelas",
         name: "sekolah-akademik-data-kelas",
-        component: () => import("@/views/sekolah/akademik/DataKelas.vue"),
+        component: () => import("@/views/sekolah/akademik/data-kelas/Index.vue"),
         children: [
           {
             path: "",
@@ -92,19 +92,19 @@ const routes: Array<RouteRecordRaw> = [
             path: "utama",
             name: "sekolah-akademik-data-kelas-utama",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/Utama.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/Utama.vue"),
           },
           {
             path: "wali-kelas",
             name: "sekolah-akademik-data-kelas-wali-kelas",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/WaliKelas.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/WaliKelas.vue"),
           },
           {
             path: "mutasi-kelas",
             name: "sekolah-akademik-data-kelas-mutasi-kelas",
             component: () =>
-              import("@/views/sekolah/akademik/tabs/MutasiKelas.vue"),
+              import("@/views/sekolah/akademik/data-kelas/tabs/MutasiKelas.vue"),
           },
         ],
       },
@@ -166,6 +166,16 @@ const routes: Array<RouteRecordRaw> = [
               import("@/views/sekolah/informasi/tabs/Kategori.vue"),
           },
         ],
+      },
+      {
+        path: "/sekolah/media",
+        name: "sekolah-media",
+        component: () => import("@/views/sekolah/media/Index.vue"),
+      },
+      {
+        path: "/sekolah/media/album/:id",
+        name: "sekolah-media-album",
+        component: () => import("@/views/sekolah/media/Album.vue"),
       },
       {
         path: "/prototype/api-testing",

@@ -6,6 +6,9 @@
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { Search } from '@element-plus/icons-vue'
+  import QueryString from "qs"
+  import { useToast } from "vue-toast-notification"
+import { object } from "yup";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Kategori", ['Sekolah', "Informasi", "Berita"]);
@@ -14,8 +17,8 @@
   function getKategori (payload) {
       request.post('kategori', null, {
         params: {
-          page: payload.page ?? 1,
-          sortby: payload.sort?.type ?? 'ASC'
+          page: payload?.page ?? 1,
+          sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
         kategori.rows = res.data.data.data
@@ -23,8 +26,12 @@
       })
     }
 
-  const loadingTahunAjar = ref(false)
+  const inputKategori = ref('')
+  const modalEdit = ref()
   
+  const initialKategori = {cat_id: null, cat_name: null}
+  const formData = reactive({...initialKategori})
+
   const kategori = reactive({
     columns: [
       { label: 'Kategori', field: 'cat_name' },
@@ -34,24 +41,39 @@
     totalRows: 0,
   })
 
-  const statusFilter = ref('')
-
-  const modalData = ref(false)
-
-  const statusOption = [
-    {
-      value: 1,
-      label: 'Aktif',
-    },
-    {
-      value: 0,
-      label: 'Non Aktif',
-    },
-  ]
-
-
-  function changeFilter(changed){
-    console.log(changed)
+  function tambahKategori() {
+    request.post('/kategori/add', QueryString.stringify({
+      cat_name: inputKategori.value
+    })).then(res => {
+      inputKategori.value = null
+      getKategori()
+      useToast().success('Data Berhasil Ditambahkan!')
+    })
+  }
+  function showEditKategori(data) {
+    formData.cat_id = data.cat_id
+    formData.cat_name = data.cat_name
+    modalEdit.value = true
+  }
+  function closeModalEdit() {
+    modalEdit.value = false
+    Object.assign(formData, initialKategori)
+  }
+  function editKategori() {
+    request.post('kategori/edit', QueryString.stringify(formData))
+      .then(res => {
+        useToast().success('Data Berhasil Diedit!')
+        modalEdit.value = false
+        Object.assign(formData, initialKategori)
+        getKategori()
+      })
+  }
+  function deleteKategori(id) {
+    request.get('/kategori/delete/' + id)
+    .then(res => {
+      useToast().success('Data Berhasil Dihapus!')
+      getKategori()
+    })
   }
 </script>
 
@@ -70,7 +92,7 @@
             </div>
             <div class="flex-grow-1">
               <el-input
-                v-model="input2"
+                v-model="inputKategori"
                 class="w-100 kategori-input"
                 placeholder="nama kategori"
                 size=""
@@ -78,10 +100,10 @@
             </div>
 
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex align-items-center">
+                <a @click="tambahKategori" class="btn btn-primary d-flex align-items-center">
                   <i class="fas fa-plus fs-5 me-3"></i>
                   <span>
-                    Tambah Pengumuman
+                    Tambah Kategori
                   </span>
                 </a>
               </div>
@@ -92,18 +114,12 @@
             @loadItems="getKategori">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'action'">
-              
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <button @click="showEditKategori(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteKategori(row.cat_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
@@ -114,6 +130,23 @@
         </div>
       </div>
     </div>
+    
+    <Modal
+      title="Edit Kategori"
+      :show="modalEdit"
+      @closeModal="closeModalEdit"
+      @confirm="editKategori()"
+      @dismiss="closeModalEdit"
+    >
+        <div class="">
+          <div class="row gy-6">
+            <div class="col-4 d-flex align-items-center fw-bold fs-4">Nama Kategori</div>
+            <div class="col-8">
+              <input type="text" v-model="formData.cat_name" class="form-control" placeholder="Masukkan Tahun Ajar Cth : 2021/2022"/>
+            </div>
+          </div>
+        </div>
+    </Modal>
   </div>
 </template>
 

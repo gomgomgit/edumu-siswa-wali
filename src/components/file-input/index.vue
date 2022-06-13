@@ -37,11 +37,11 @@ function inputFileDelete() {
       </div>
 
       <div v-if="imagePreviewUrl" class="file-input-icon-wrapper">
-        <div class="file-input-icon" @click="inputFileClick">
-          <i class="text-white fs-1 bi bi-pencil-fill"></i>
+        <div class="file-input-icon file-input-edit" @click="inputFileClick">
+          <i class="icon fs-1 bi bi-pencil-fill"></i>
         </div>
-        <div class="file-input-icon" @click="inputFileDelete">
-          <i class="text-white fs-1 bi bi-trash-fill"></i>
+        <div class="file-input-icon file-input-delete" @click="inputFileDelete">
+          <i class="icon fs-1 bi bi-trash-fill"></i>
         </div>
       </div>
     </div>
@@ -49,10 +49,7 @@ function inputFileDelete() {
   </div>
 </template>
 
-<style>
-
-
-
+<style lang="scss">
 .file-input-image-preview {
   width: 200px;
   height: 200px;
@@ -82,7 +79,7 @@ function inputFileDelete() {
 }
 .file-input-icon-wrapper {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: center;
   align-items: center;
   width: 100%;
@@ -100,10 +97,29 @@ function inputFileDelete() {
   cursor: pointer;
   border-radius: 15px;
   border: 2px solid #fff;
-  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
+  transition: all .15s ease-out;
+}
+.file-input-icon .icon {
+  color: #fff;
+  transition: all .15s ease-out;
+}
+
+.file-input-edit:hover{
+  border: 2px solid #04C8C8;
+  color: #04C8C8;
+}
+.file-input-edit:hover .icon{
+  color: #04C8C8;
+}
+.file-input-delete:hover{
+  border: 2px solid #F1416C;
+  color: #F1416C;
+}
+.file-input-delete:hover .icon{
+  color: #F1416C;
 }
 </style>
