@@ -101,7 +101,7 @@ import QueryString from "qs"
   ])
 
 	function handleClose () {
-		Object.assign(formData, {...initialForm})
+		Object.assign(formData, {...initialFormData})
 		emits('close')
 	}
 
