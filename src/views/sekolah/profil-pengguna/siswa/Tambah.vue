@@ -6,6 +6,7 @@ import FileInput from '@/components/file-input/Index.vue'
 import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
+import FormKelas from './FormKelas'
 
 
 onMounted(() => {
@@ -37,6 +38,7 @@ const formData = reactive({
   'siswa_foto': '',
 })
 
+const formKelasMode = ref('')
 
 const kelasData = ref([])
 const waliData = ref([])
@@ -89,7 +91,13 @@ function post() {
 function checkTest() {
   console.log(fileInput.value)
 }
-
+function handleKelasClose() {
+  formKelasMode.value = false
+}
+function submitAddKelas() {
+  useToast().success('Data Kelas Berhasil Ditambahkan!')
+  getDataKelas()
+}
 </script>
 
 <template>
@@ -113,7 +121,7 @@ function checkTest() {
                 </el-select>
               </div>
               <div>
-                <button to="/sekolah/profil-pengguna/siswa/tambah-data"
+                <button @click="formKelasMode = true"
                   class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
@@ -293,5 +301,11 @@ function checkTest() {
         </div>
       </div>
     </div>
+    
+		<FormKelas
+			:mode="formKelasMode"
+			:activeData="activeData"
+			@close="handleKelasClose"
+			@submit="submitAddKelas()" />
   </div>
 </template>
