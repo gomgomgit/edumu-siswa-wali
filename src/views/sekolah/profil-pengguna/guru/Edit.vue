@@ -9,7 +9,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRoute, useRouter } from 'vue-router';
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Tambah Guru", ['Sekolah', "Profil Pengguna", "Guru"]);
+  setCurrentPageBreadcrumbs("Edit Guru", ['Sekolah', "Profil Pengguna", "Guru"]);
   getDataGuru()
 })
 
@@ -56,7 +56,7 @@ function post() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data Guru</h2>
+          <h2 class="fs-1 fw-bold py-6">Edit Data Guru</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">

@@ -70,6 +70,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/profil-pengguna/wali/Tambah.vue"),
       },
       {
+        path: "/sekolah/profil-pengguna/wali/edit-data/:id",
+        name: "sekolah-profil-pengguna-wali-edit",
+        component: () => import("@/views/sekolah/profil-pengguna/wali/Edit.vue"),
+      },
+      {
         path: "/sekolah/profil-pengguna/guru",
         name: "sekolah-profil-pengguna-guru",
         component: () => import("@/views/sekolah/profil-pengguna/guru/Index.vue"),
