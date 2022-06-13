@@ -55,6 +55,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/profil-pengguna/siswa/Tambah.vue"),
       },
       {
+        path: "/sekolah/profil-pengguna/siswa/edit-data/:id",
+        name: "sekolah-profil-pengguna-siswa-edit",
+        component: () => import("@/views/sekolah/profil-pengguna/siswa/Edit.vue"),
+      },
+      {
         path: "/sekolah/profil-pengguna/wali",
         name: "sekolah-profil-pengguna-wali",
         component: () => import("@/views/sekolah/profil-pengguna/wali/Index.vue"),

@@ -138,11 +138,11 @@
             @loadItems="getSiswa">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'action'">
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="'/sekolah/profil-pengguna/siswa/edit-data/' + row.user_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </button>
+                </router-link>
                 <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />

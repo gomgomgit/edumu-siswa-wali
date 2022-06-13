@@ -5,20 +5,24 @@ import { request } from '@/util'
 import FileInput from '@/components/file-input/Index.vue'
 import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Tambah Siswa", ['Sekolah', "Profil Pengguna", "Siswa"]);
+  setCurrentPageBreadcrumbs("Edit Siswa", ['Sekolah', "Profil Pengguna", "Siswa"]);
   getDataKelas()
   getDataWali()
+  getDataSiswa()
 })
 
 const router = useRouter()
+const route = useRoute()
+const siswaId = route.params.id
 
 const formData = reactive({
   'kelas_id': '',
   'wali_id': '',
+  'siswa_id': '',
   'siswa_nama': '',
   'siswa_nisn': '',
   'siswa_nis': '',
@@ -30,7 +34,7 @@ const formData = reactive({
   'siswa_gender': '',
   'siswa_tempat_lahir': '',
   'siswa_tanggal_lahir': '',
-  'siswa_rfid': '',
+  'siswa_refid': '',
   'siswa_username': '',
   'siswa_password': '',
   'siswa_status': '',
@@ -43,6 +47,42 @@ const waliData = ref([])
 
 const fileInput = ref([])
 
+function getDataSiswa() {
+  request.post('get_siswa', null, {
+    params: {
+      level: 'siswa',
+      user: siswaId
+    }
+  }).then(res => {
+    const result = res.data.data
+    formData.kelas_id = result.kelas_id ?? ''
+    formData.wali_id = result.wali_id ?? ''
+    formData.siswa_id = result.user_id ?? ''
+    formData.siswa_nama = result.user_nama ?? ''
+    formData.siswa_nama = result.user_nama ?? ''
+    formData.siswa_nisn = result.siswa_nisn ?? ''
+    formData.siswa_nis = result.siswa_nis ?? ''
+    formData.siswa_tahun = result.siswa_tahun ?? ''
+    formData.siswa_alamat = result.siswa_alamat ?? ''
+    formData.siswa_provinsi = result.siswa_provinsi ?? ''
+    formData.siswa_kota = result.siswa_kota ?? ''
+    formData.siswa_nohp = result.siswa_nohp ?? ''
+    formData.siswa_gender = result.siswa_gender ?? ''
+    formData.siswa_tempat_lahir = result.siswa_tempat_lahir ?? ''
+    formData.siswa_tanggal_lahir = result.siswa_tanggal_lahir ?? ''
+    formData.siswa_rfid = result.siswa_rfid ?? ''
+    formData.siswa_username = result.user_username ?? ''
+    formData.siswa_status = result.user_status ?? ''
+
+    // getSiswaFoto(result.user_foto)
+  })
+}
+function getSiswaFoto(foto) {
+  request.get('/public/images/siswa/' + foto)
+  .then(res => {
+    console.log(res)
+  })
+}
 function getDataKelas() {
   request.post('kelas', null).then(res => {
     kelasData.value = res.data.data
@@ -58,6 +98,7 @@ function post() {
   const data = new FormData()
   data.append('kelas_id', formData.kelas_id)
   data.append('wali_id', formData.wali_id)
+  data.append('siswa_id', formData.siswa_id)
   data.append('siswa_nama', formData.siswa_nama)
   data.append('siswa_nisn', formData.siswa_nisn)
   data.append('siswa_nis', formData.siswa_nis)
@@ -69,14 +110,14 @@ function post() {
   data.append('siswa_gender', formData.siswa_gender)
   data.append('siswa_tempat_lahir', formData.siswa_tempat_lahir)
   data.append('siswa_tanggal_lahir', formData.siswa_tanggal_lahir)
-  data.append('siswa_rfid', formData.siswa_rfid)
+  data.append('siswa_refid', formData.siswa_refid)
   data.append('siswa_username', formData.siswa_username)
   data.append('siswa_password', formData.siswa_password)
   data.append('siswa_status', formData.siswa_status)
   data.append('siswa_foto', formData.siswa_foto)
   
   // request.post('siswa/add', QueryString.stringify(formData), {
-  request.post('siswa/add', data, {
+  request.post('siswa/edit', data, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
@@ -97,7 +138,7 @@ function checkTest() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data Siswa</h2>
+          <h2 class="fs-1 fw-bold py-6">Edit Data Siswa</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
@@ -268,7 +309,7 @@ function checkTest() {
               <p class="m-0 fs-4 fw-bold">Password</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input type="password" show-password v-model="formData.siswa_password" placeholder="Masukkan Password" />
+              <el-input type="password" show-password v-model="formData.siswa_password" placeholder="Password (Biarkan kosong jika tidak ingin mengganti)" />
             </div>
           </div>
           <div class="row">
@@ -284,6 +325,7 @@ function checkTest() {
           </div>
           <div>
             <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
+            <img src="" alt="">
             <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
