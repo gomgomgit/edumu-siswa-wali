@@ -1,39 +1,34 @@
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util';
 import { Plus } from '@element-plus/icons-vue'
 import { UploadProps, UploadUserFile } from 'element-plus'
-
+import QueryString from 'qs';
+import { useToast } from 'vue-toast-notification';
+import { useRouter } from 'vue-router';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Tambah Guru", ['Sekolah', "Profil Pengguna", "Guru"]);
 })
 
-const namaGuru = ref('')
-const nip = ref('')
-const refIdKartu = ref('')
-const username = ref('')
-const password = ref('')
-const status = ref('')
-const foto = ref('')
+const router = useRouter()
 
-
-const dialogImageUrl = ref('')
-const dialogVisible = ref(false)
+const form = reactive({
+  guru_nama: '',
+  guru_nip: '',
+  guru_rfid: '',
+  guru_username: '',
+  guru_password: '',
+  guru_status: '',
+})
 
 function post() {
-  console.log(dialogImageUrl.value)
-  console.log(dialogVisible.value)
-}
-
-function handleRemove (uploadFile, uploadFiles) {
-  console.log(uploadFile, uploadFiles)
-}
-
-function handlePictureCardPreview (uploadFile) {
-  dialogImageUrl.value = uploadFile.url
-  dialogVisible.value = true
+  request.post('guru/add', QueryString.stringify(form))
+  .then(res => {
+    useToast().success('Data berhasil ditambahkan!')
+    router.push('/sekolah/profil-pengguna/guru')
+  })
 }
 
 </script>
@@ -52,7 +47,7 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">Nama Guru</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="namaGuru" placeholder="Nama Guru" />
+              <el-input v-model="form.guru_nama" placeholder="Nama Guru" />
             </div>
           </div>
           <div class="row">
@@ -60,7 +55,7 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">NIP Guru</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="nip" placeholder="NIP Guru" />
+              <el-input v-model="form.guru_nip" placeholder="NIP Guru" />
             </div>
           </div>
           <div class="row">
@@ -68,7 +63,7 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">REF ID KARTU</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="refIdKartu" placeholder="Masukkan REF ID KARTU valid" />
+              <el-input v-model="form.guru_rfid" placeholder="Masukkan REF ID KARTU valid" />
             </div>
           </div>
           <div class="row">
@@ -76,7 +71,7 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">Username</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="username" placeholder="Username" />
+              <el-input v-model="form.guru_username" placeholder="Username" />
             </div>
           </div>
           <div class="row">
@@ -84,7 +79,7 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">Password</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input type="password" show-password v-model="password" placeholder="Masukkan Password" />
+              <el-input type="password" show-password v-model="form.guru_password" placeholder="Masukkan Password" />
             </div>
           </div>
           <div class="row">
@@ -92,31 +87,15 @@ function handlePictureCardPreview (uploadFile) {
               <p class="m-0 fs-4 fw-bold">Status</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-select class="w-100" v-model="statu" placeholder="Pilih Status">
+              <el-select class="w-100" v-model="form.guru_status" placeholder="Pilih Status">
                 <el-option label="Aktif" value="1" />
                 <el-option label="Non Aktif" value="0" />
               </el-select>
             </div>
           </div>
-
-          <div class="">
-            <p class="m-0 fs-4 fw-bold mb-6">File Foto</p>
-            <div>
-              <el-upload list-type="picture-card" :on-preview="handlePictureCardPreview" :on-remove="handleRemove"
-                :file-list="fileList" :auto-upload="false">
-                <el-icon>
-                  <Plus />
-                </el-icon>
-              </el-upload>
-
-              <el-dialog v-model="dialogVisible">
-                <img w-full :src="dialogImageUrl" alt="Preview Image" />
-              </el-dialog>
-            </div>
-          </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
-            <a href="#" class="btn btn-primary">Save Changes</a>
+            <a @click.prevent="post" class="btn btn-primary">Save Changes</a>
           </div>
         </div>
       </div>
