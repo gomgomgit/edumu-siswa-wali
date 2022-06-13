@@ -58,11 +58,6 @@
     },
   ]
 
-
-  function changeFilter(changed){
-    console.log(changed)
-  }
-
   function deleteData (userId) {
     deleteConfirmation(function() {
        request.post('user/delete/' + userId, QueryString.stringify({

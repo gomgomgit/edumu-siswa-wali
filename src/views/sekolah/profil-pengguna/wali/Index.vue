@@ -6,6 +6,9 @@ import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import ServerSideTable from '@/components/ServerSideTable.vue'
 import FilterSelect from '@/components/filter-select'
 import { Search } from '@element-plus/icons-vue'
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
+import QueryString from "qs";
+import { useToast } from "vue-toast-notification";
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Wali", ['Sekolah', "Profil Pengguna"]);
@@ -16,8 +19,8 @@ function getWali(payload) {
     params: {
       level: 'wali',
       cari: searchWali.value,
-      page: payload.page ?? 1,
-      sortby: payload.sort?.type ?? 'ASC'
+      page: payload?.page ?? 1,
+      sortby: payload?.sort?.type ?? 'ASC'
     }
   }).then(res => {
     wali.rows = res.data.data.data
@@ -33,7 +36,7 @@ const wali = reactive({
     { label: 'Username', field: 'user_username' },
     { label: 'Level', field: 'user_level' },
     { label: 'Status', field: 'user_status' },
-    // { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+    { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
   ],
   rows: [],
   totalRows: 0,
@@ -54,9 +57,16 @@ const statusOption = [
   },
 ]
 
-
-function changeFilter(changed) {
-  console.log(changed)
+function deleteData (userId) {
+  deleteConfirmation(function() {
+      request.post('user/delete/' + userId, QueryString.stringify({
+        user_id: userId
+      }))
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getWali()
+      })
+  })
 }
 </script>
 
@@ -104,15 +114,10 @@ function changeFilter(changed) {
               <div v-if="column.field == 'action'">
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
