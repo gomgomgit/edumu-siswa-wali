@@ -5,8 +5,9 @@
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
   import FilterSelect from '@/components/filter-select'
   import ServerSideTable from '@/components/ServerSideTable.vue'
-import QueryString from "qs";
+  import QueryString from "qs";
   import { useToast } from "vue-toast-notification"
+  import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Data Kelas", ['Sekolah', "Akademik"]);
@@ -181,11 +182,13 @@ import QueryString from "qs";
   }
 
   function deleteData(id) {
-    request.get('/kelas/delete/' + id)
-      .then(res => {
-        useToast().success('Data Berhasil Dihapus!')
-        getKelasData()
-      })
+    deleteConfirmation(function() {
+      request.get('/kelas/delete/' + id)
+        .then(res => {
+          useToast().success('Data Berhasil Dihapus!')
+          getKelasData()
+        })
+    })
   }
 </script>
 

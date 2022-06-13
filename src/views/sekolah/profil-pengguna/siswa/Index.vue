@@ -3,9 +3,12 @@
   import { request } from '@/util'
   import Modal from "@/components/modals/CustomModal.vue";
   import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+  import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { Search } from '@element-plus/icons-vue'
+  import QueryString from 'qs';
+  import { useToast } from 'vue-toast-notification';
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Siswa", ['Sekolah', "Profil Pengguna"]);
@@ -16,8 +19,8 @@
         params: {
           level: 'siswa',
           cari: searchSiswa.value,
-          page: payload.page ?? 1,
-          sortby: payload.sort?.type ?? 'ASC'
+          page: payload?.page ?? 1,
+          sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
         siswa.rows = res.data.data.data
@@ -34,7 +37,7 @@
       { label: 'Username', field: 'user_username' },
       { label: 'NISN', field: 'siswa_nisn' },
       { label: 'NIS', field: 'siswa_nis' },
-      // { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+      { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
     ],
     rows: [],
     totalRows: 0,
@@ -58,6 +61,18 @@
 
   function changeFilter(changed){
     console.log(changed)
+  }
+
+  function deleteData (userId) {
+    deleteConfirmation(function() {
+       request.post('user/delete/' + userId, QueryString.stringify({
+          user_id: userId
+        }))
+        .then(res => {
+          useToast().success('Data Berhasil Dihapus!')
+          getSiswa()
+        })
+    })
   }
 </script>
 
@@ -128,18 +143,12 @@
             @loadItems="getSiswa">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'action'">
-              
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>

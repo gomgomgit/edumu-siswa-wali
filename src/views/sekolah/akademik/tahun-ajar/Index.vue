@@ -7,6 +7,7 @@
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { useToast } from "vue-toast-notification"
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Tahun Ajar", ['Sekolah', "Akademik"]);
@@ -109,10 +110,12 @@
   }
 
   function deleteData(id) {
-    request.get('thn_ajar/delete/' + id)
-    .then(res => {
-      useToast().success('Data Berhasil Dihapus!')
-      getTahunAjar()
+    deleteConfirmation(function() {
+      request.get('thn_ajar/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getTahunAjar()
+      })
     })
   }
 </script>
