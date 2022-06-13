@@ -47,32 +47,32 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/profil-pengguna/siswa",
         name: "sekolah-profil-pengguna-siswa",
-        component: () => import("@/views/sekolah/profil-pengguna/Siswa.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/siswa/Index.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/siswa/tambah-data",
         name: "sekolah-profil-pengguna-siswa-tambah",
-        component: () => import("@/views/sekolah/profil-pengguna/TambahSiswa.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/siswa/Tambah.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/wali",
         name: "sekolah-profil-pengguna-wali",
-        component: () => import("@/views/sekolah/profil-pengguna/Wali.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/wali/Index.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/wali/tambah-data",
         name: "sekolah-profil-pengguna-wali-tambah",
-        component: () => import("@/views/sekolah/profil-pengguna/TambahWali.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/wali/Tambah.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/guru",
         name: "sekolah-profil-pengguna-guru",
-        component: () => import("@/views/sekolah/profil-pengguna/Guru.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/guru/Index.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/guru/tambah-data",
         name: "sekolah-profil-pengguna-guru-tambah",
-        component: () => import("@/views/sekolah/profil-pengguna/TambahGuru.vue"),
+        component: () => import("@/views/sekolah/profil-pengguna/guru/Tambah.vue"),
       },
       {
         path: "/sekolah/akademik/tahun-ajar",
