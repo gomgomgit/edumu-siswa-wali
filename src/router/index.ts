@@ -130,7 +130,7 @@ const routes: Array<RouteRecordRaw> = [
           {
             path: "jadwal-pelajaran",
             name: "sekolah-mata-pelajaran-jadwal-pelajaran",
-            component: () => import("@/views/sekolah/mata-pelajaran/JadwalPelajaran.vue")
+            component: () => import("@/views/sekolah/mata-pelajaran/jadwal-pelajaran/Index.vue")
           },
         ],
       },

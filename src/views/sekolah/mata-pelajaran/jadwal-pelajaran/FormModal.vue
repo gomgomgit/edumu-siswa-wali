@@ -16,20 +16,20 @@ const emits = defineEmits(['close', 'submit'])
 
 const initialForm = { mapel_nama: null, mapel_status: null }
 
-const formData = reactive({...initialForm})
+const formData = reactive({ ...initialForm })
 
 watch(
 	() => props.activeData,
-	activeData => !isEmpty(activeData) && Object.assign(formData, {...activeData}),
+	activeData => !isEmpty(activeData) && Object.assign(formData, { ...activeData }),
 	{ deep: true }
 )
 
-function handleClose () {
-	Object.assign(formData, {...initialForm})
+function handleClose() {
+	Object.assign(formData, { ...initialForm })
 	emits('close')
 }
 
-function handleSubmit () {
+function handleSubmit() {
 	const endpoint = isEmpty(props.activeData) ? 'mapel/add' : 'mapel/edit'
 	request.post(endpoint, qs.stringify(formData)).then(() => {
 		Object.assign(formData, initialForm)

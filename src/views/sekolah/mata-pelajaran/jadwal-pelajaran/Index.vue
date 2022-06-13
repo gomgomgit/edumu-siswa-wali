@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, onMounted, watch } from 'vue'
+import { reactive, onMounted, watch, ref } from 'vue'
 import { request } from '@/util'
 import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
 
@@ -16,6 +16,8 @@ const daysMap = {
 	7: 'Minggu',
 }
 
+const tableRef = ref()
+
 const filterData = reactive({
 	options: {
 		kelas: [], mapel: [], user: []
@@ -25,7 +27,7 @@ const filterData = reactive({
 	}
 })
 
-function getFilterOptions () {
+function getFilterOptions() {
 	Promise.all([
 		request.post('kelas'),
 		request.post('mapel'),
@@ -51,7 +53,7 @@ const tableData = reactive({
 	totalRows: 0,
 })
 
-function getTableData (payload) {
+function getTableData(payload) {
 	request.post('jadwal', null, {
 		params: {
 			page: payload.page ?? 1,
@@ -65,7 +67,7 @@ function getTableData (payload) {
 
 watch(
 	filterData.selected,
-	getTableData,
+	() => tableRef.value.loadItems(),
 	{ deep: true }
 )
 
@@ -86,32 +88,28 @@ onMounted(() => {
 							v-for="kelas in filterData.options.kelas"
 							:key="kelas.kelas_id"
 							:value="kelas.kelas_id"
-							:label="kelas.kelas_nama"
-						/>
+							:label="kelas.kelas_nama" />
 					</FilterSelect>
 					<FilterSelect v-model:filterValue="filterData.selected.mapel" placeholder="Pilih Mapel" class="w-150px">
 						<el-option
 							v-for="mapel in filterData.options.mapel"
 							:key="mapel.mapel_id"
 							:value="mapel.mapel_id"
-							:label="mapel.mapel_nama"
-						/>
+							:label="mapel.mapel_nama" />
 					</FilterSelect>
 					<FilterSelect v-model:filterValue="filterData.selected.user" placeholder="Pilih Guru" class="w-150px">
 						<el-option
 							v-for="user in filterData.options.user"
 							:key="user.user_id"
 							:value="user.user_id"
-							:label="user.user_nama"
-						/>
+							:label="user.user_nama" />
 					</FilterSelect>
 					<FilterSelect v-model:filterValue="filterData.selected.hari" placeholder="Pilih Hari" class="w-150px">
 						<el-option
 							v-for="(day, dayId) in daysMap"
 							:key="dayId"
 							:value="dayId"
-							:label="day"
-						/>
+							:label="day" />
 					</FilterSelect>
 				</section>
 
@@ -128,11 +126,11 @@ onMounted(() => {
 			</section>
 
 			<ServerSideTable
+				ref="tableRef"
 				:totalRows="tableData.totalRows || 0"
 				:columns="tableData.columns"
 				:rows="tableData.rows"
-				@loadItems="getTableData"
-			>
+				@loadItems="getTableData">
 				<template #table-row="{column, row}">
 					<div v-if="column.field == 'action'">
 						<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
@@ -142,7 +140,7 @@ onMounted(() => {
 						</button>
 						<button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
 							<span class="svg-icon svg-icon-3">
-								<inline-svg src="media/icons/duotune/general/gen027.svg"/>
+								<inline-svg src="media/icons/duotune/general/gen027.svg" />
 							</span>
 						</button>
 					</div>
