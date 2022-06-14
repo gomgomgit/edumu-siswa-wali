@@ -18,6 +18,8 @@ const route = useRoute()
 const waliId = route.params.id
 
 const form = reactive({
+  wali_id: '',
+  user_id: '',
   wali_nama: '',
   wali_nohp: '',
   wali_alamat: '',
@@ -36,6 +38,8 @@ function getDataWali() {
   request.get('wali/' + waliId)
     .then(res => {
       const result = res.data.data
+      form.wali_id = result.wali_id
+      form.user_id = result.user_id
       form.wali_nama = result.user_nama
       form.wali_nohp = result.wali_nohp
       form.wali_alamat = result.wali_alamat
@@ -51,6 +55,8 @@ function getDataWali() {
 
 function post() {
   const formData = new FormData()
+  formData.append('wali_id', form.wali_id)
+  formData.append('user_id', form.user_id)
   formData.append('wali_nama', form.wali_nama)
   formData.append('wali_nohp', form.wali_nohp)
   formData.append('wali_alamat', form.wali_alamat)
