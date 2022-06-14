@@ -324,11 +324,11 @@ function checkTest() {
           </div>
           <div class="d-flex gap-6">
             <div>
-              <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
+              <p class="m-0 fs-4 fw-bold mb-6">Foto Siswa</p>
               <img height="200" width="200"  :src="'https://apiedumu.edumu.id/demo/apischool/public/images/siswa/' + oldFoto" alt="">
             </div>
             <div>
-              <p class="m-0 fs-4 fw-bold mb-4">Ganti Foto Siswa</p>
+              <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto Siswa</p>
               <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
             </div>
           </div>

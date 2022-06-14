@@ -17,6 +17,8 @@ const router = useRouter()
 const route = useRoute()
 const waliId = route.params.id
 
+const oldFoto = ref('')
+
 const form = reactive({
   wali_id: '',
   user_id: '',
@@ -50,6 +52,8 @@ function getDataWali() {
       form.wali_tanggal_lahir = result.wali_tanggal_lahir
       form.wali_username = result.user_username
       form.wali_status = result.user_status
+
+      oldFoto.value = result.user_foto
     })
 }
 
@@ -199,9 +203,15 @@ function post() {
             </div>
           </div>
 
-          <div class="">
-            <p class="m-0 fs-4 fw-bold mb-6">File Foto</p>
-            <FileInput v-model:fileInputData="form.siswa_foto"></FileInput>
+          <div class="d-flex gap-6">
+            <div v-if="oldFoto">
+              <p class="m-0 fs-4 fw-bold mb-6">Foto</p>
+              <img height="200" width="200" :src="'https://apiedumu.edumu.id/demo/apischool/public/images/wali/' + oldFoto" alt="">
+            </div>
+            <div class="">
+              <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto</p>
+              <FileInput v-model:fileInputData="form.siswa_foto"></FileInput>
+            </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
