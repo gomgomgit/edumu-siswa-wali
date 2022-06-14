@@ -18,6 +18,7 @@ onMounted(() => {
 const router = useRouter()
 const route = useRoute()
 const siswaId = route.params.id
+const oldFoto = ref('')
 
 const formData = reactive({
   'kelas_id': '',
@@ -75,16 +76,11 @@ function getDataSiswa() {
     formData.siswa_rfid = result.siswa_rfid ?? ''
     formData.siswa_username = result.user_username ?? ''
     formData.siswa_status = result.user_status ?? ''
+    
+    oldFoto.value = result.user_foto 
+  })
+}
 
-    // getSiswaFoto(result.user_foto)
-  })
-}
-function getSiswaFoto(foto) {
-  request.get('/public/images/siswa/' + foto)
-  .then(res => {
-    console.log(res)
-  })
-}
 function getDataKelas() {
   request.post('kelas', null).then(res => {
     kelasData.value = res.data.data
@@ -326,10 +322,15 @@ function checkTest() {
               </el-select>
             </div>
           </div>
-          <div>
-            <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
-            <img src="" alt="">
-            <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
+          <div class="d-flex gap-6">
+            <div>
+              <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
+              <img height="200" width="200"  :src="'https://apiedumu.edumu.id/demo/apischool/public/images/siswa/' + oldFoto" alt="">
+            </div>
+            <div>
+              <p class="m-0 fs-4 fw-bold mb-4">Ganti Foto Siswa</p>
+              <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
+            </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
