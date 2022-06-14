@@ -35,7 +35,7 @@ const formData = reactive({
   'siswa_gender': '',
   'siswa_tempat_lahir': '',
   'siswa_tanggal_lahir': '',
-  'siswa_refid': '',
+  'siswa_rfid': '',
   'siswa_username': '',
   'siswa_password': '',
   'siswa_status': '',
@@ -113,7 +113,7 @@ function post() {
   data.append('siswa_gender', formData.siswa_gender)
   data.append('siswa_tempat_lahir', formData.siswa_tempat_lahir)
   data.append('siswa_tanggal_lahir', formData.siswa_tanggal_lahir)
-  data.append('siswa_refid', formData.siswa_refid)
+  data.append('siswa_rfid', formData.siswa_rfid)
   data.append('siswa_username', formData.siswa_username)
   data.append('siswa_password', formData.siswa_password)
   data.append('siswa_status', formData.siswa_status)
