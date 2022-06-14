@@ -22,6 +22,7 @@ const siswaId = route.params.id
 const formData = reactive({
   'kelas_id': '',
   'wali_id': '',
+  'user_id': '',
   'siswa_id': '',
   'siswa_nama': '',
   'siswa_nisn': '',
@@ -57,7 +58,8 @@ function getDataSiswa() {
     const result = res.data.data
     formData.kelas_id = result.kelas_id ?? ''
     formData.wali_id = result.wali_id ?? ''
-    formData.siswa_id = result.user_id ?? ''
+    formData.user_id = result.user_id ?? ''
+    formData.siswa_id = result.siswa_id ?? ''
     formData.siswa_nama = result.user_nama ?? ''
     formData.siswa_nama = result.user_nama ?? ''
     formData.siswa_nisn = result.siswa_nisn ?? ''
@@ -98,6 +100,7 @@ function post() {
   const data = new FormData()
   data.append('kelas_id', formData.kelas_id)
   data.append('wali_id', formData.wali_id)
+  data.append('user_id', formData.user_id)
   data.append('siswa_id', formData.siswa_id)
   data.append('siswa_nama', formData.siswa_nama)
   data.append('siswa_nisn', formData.siswa_nisn)
@@ -122,7 +125,7 @@ function post() {
         'Content-Type': 'multipart/form-data'
       }
   }).then(res => {
-      useToast().success('Data Berhasil Ditambahkan!')
+      useToast().success('Data Berhasil Diedit!')
       router.push('/sekolah/profil-pengguna/siswa')
     })
 }
