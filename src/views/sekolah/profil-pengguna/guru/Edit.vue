@@ -31,7 +31,7 @@ function getDataGuru() {
   request.get('guru/' + guruId)
   .then(res => {
     const result = res.data.data
-    form.guru_id = result.user.guru_id
+    form.guru_id = result.guru_id
     form.user_id = result.user.user_id
     form.guru_nama = result.user.user_nama
     form.guru_nip = result.guru_nip
@@ -41,7 +41,17 @@ function getDataGuru() {
   })
 }
 function post() {
-  request.post('guru/edit', QueryString.stringify(form))
+  const formData = new FormData()
+  
+  formData.append('guru_id', form.guru_id)
+  formData.append('user_id', form.user_id)
+  formData.append('guru_nama', form.guru_nama)
+  formData.append('guru_nip', form.guru_nip)
+  formData.append('guru_rfid', form.guru_rfid)
+  formData.append('guru_username', form.guru_username)
+  formData.append('guru_password', form.guru_password)
+  formData.append('guru_status', form.guru_status)
+  request.post('guru/edit', formData)
   .then(res => {
     useToast().success('Data berhasil diedit!')
     router.push('/sekolah/profil-pengguna/guru')
