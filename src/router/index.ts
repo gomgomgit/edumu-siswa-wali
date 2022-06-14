@@ -193,6 +193,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/media/Album.vue"),
       },
       {
+        path: "/pengaturan/umum",
+        name: "pengaturan-umum",
+        component: () => import("@/views/pengaturan/umum/Index.vue"),
+      },
+      {
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),

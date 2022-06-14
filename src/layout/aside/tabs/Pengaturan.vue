@@ -187,7 +187,7 @@ export default defineComponent({
           },
           {
             heading: "Umum",
-            route: "/pages",
+            route: "/pengaturan/umum",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
