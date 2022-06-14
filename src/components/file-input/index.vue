@@ -12,7 +12,7 @@ const image = ref('')
 function onFileChange(payload) {
     const file = payload.target.files[0];
     if(file) {
-      emits('update:fileInputData', payload.target.files[0])
+      emits('update:fileInputData', payload.target.files)
       URL.revokeObjectURL(file)
       imagePreviewUrl.value = URL.createObjectURL(file)
     } else {
