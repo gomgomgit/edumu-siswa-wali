@@ -181,7 +181,7 @@ export default defineComponent({
         pages: [
           {
             heading: "Pengguna",
-            route: "/pages",
+            route: "/pengaturan/pengguna",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

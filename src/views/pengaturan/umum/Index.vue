@@ -7,7 +7,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Pengaturan - Umum", []);
+  setCurrentPageBreadcrumbs("Umum", ['Pengaturan']);
   getPengaturan()
 })
 
@@ -79,6 +79,12 @@ function post() {
               <p class="m-0 fs-4 fw-bold">Jam Masuk Sekolah</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
+              <!-- <el-time-picker
+                v-model="form.attendance"
+                arrow-control
+                format="HH:mm"
+                placeholder="Jam Masuk Sekolah"
+              /> -->
               <el-input v-model="form.attendance" placeholder="Jam Masuk Sekolah" />
             </div>
           </div>
@@ -87,6 +93,12 @@ function post() {
               <p class="m-0 fs-4 fw-bold">Jam Pulang Sekolah</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
+              <!-- <el-time-picker
+                v-model="form.pulang"
+                arrow-control
+                format="HH:mm"
+                placeholder="Jam Pulang Sekolah"
+              /> -->
               <el-input v-model="form.pulang" placeholder="Jam Pulang Sekolah" />
             </div>
           </div>
