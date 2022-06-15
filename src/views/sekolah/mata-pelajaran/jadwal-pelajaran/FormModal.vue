@@ -80,7 +80,7 @@ watch(
 	() => props.mode,
 	mode => {
 		if (isEmpty(mode)) return
-		if (Object.values(formOptions.value).some(arrValue => arrValue.length)) return
+		// if (Object.values(formOptions.value).some(arrValue => arrValue.length)) return
 		getOptions()
 	},
 	{ deep: true }
