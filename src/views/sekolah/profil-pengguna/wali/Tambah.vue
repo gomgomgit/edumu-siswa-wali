@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util';
-import FileInput from '@/components/file-input/Index.vue'
+import ImageInput from '@/components/image-input/Index.vue'
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 
@@ -174,7 +174,7 @@ function post() {
 
           <div class="">
             <p class="m-0 fs-4 fw-bold mb-6">File Foto</p>
-            <FileInput v-model:fileInputData="form.siswa_foto"></FileInput>
+            <ImageInput v-model:fileInputData="form.siswa_foto"></ImageInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>

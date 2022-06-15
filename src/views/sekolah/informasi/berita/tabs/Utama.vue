@@ -14,6 +14,7 @@
   function getBerita (payload) {
       request.post('konten', null, {
         params: {
+          cari: seacrhFilter.value,
           page: payload.page ?? 1,
           sortby: payload.sort?.type ?? 'ASC'
         }
@@ -23,8 +24,6 @@
       })
     }
 
-  const loadingTahunAjar = ref(false)
-  
   const berita = reactive({
     columns: [
       { label: 'Judul', field: 'content_name' },
@@ -36,9 +35,8 @@
     totalRows: 0,
   })
 
+  const seacrhFilter = ref('')
   const statusFilter = ref('')
-
-  const modalData = ref(false)
 
   const statusOption = [
     {
@@ -51,10 +49,6 @@
     },
   ]
 
-
-  function changeFilter(changed){
-    console.log(changed)
-  }
 </script>
 
 <template>
@@ -70,7 +64,7 @@
             <div class="d-flex gap-4">
               <div>
                 <el-input
-                  v-model="input2"
+                  v-model="seacrhFilter"
                   class="m-2"
                   placeholder="Please Input"
                   :suffix-icon="Search"
@@ -84,18 +78,21 @@
                   @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/informasi/berita/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
-                    Tambah Pengumuman
+                    Tambah Berita
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
         </div>
         <div class="my-5 mb-xxl-8">
-          <ServerSideTable :totalRows="berita.totalRows || 0" :columns="berita.columns" :rows="berita.rows"
+          <ServerSideTable 
+            :totalRows="berita.totalRows || 0" 
+            :columns="berita.columns" 
+            :rows="berita.rows"
             @loadItems="getBerita">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'content_status'">

@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util';
-import FileInput from '@/components/file-input/Index.vue'
+import ImageInput from '@/components/image-input/Index.vue'
 import { useToast } from 'vue-toast-notification';
 import { useRoute, useRouter } from 'vue-router';
 import QueryString from 'qs';
@@ -212,7 +212,7 @@ function post() {
             </div>
             <div class="">
               <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto</p>
-              <FileInput v-model:fileInputData="form.siswa_foto"></FileInput>
+              <ImageInput v-model:fileInputData="form.siswa_foto"></ImageInput>
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">

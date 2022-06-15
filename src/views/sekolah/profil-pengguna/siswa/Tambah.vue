@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util'  
-import FileInput from '@/components/file-input/Index.vue'
+import ImageInput from '@/components/image-input/Index.vue'
 import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
@@ -292,7 +292,7 @@ function submitAddKelas() {
           </div>
           <div>
             <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
-            <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
+            <ImageInput v-model:fileInputData="formData.siswa_foto"></ImageInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>

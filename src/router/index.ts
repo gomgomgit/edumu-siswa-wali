@@ -152,17 +152,17 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/informasi/pengumuman",
         name: "sekolah-informasi-pengumuman",
-        component: () => import("@/views/sekolah/informasi/Pengumuman.vue"),
+        component: () => import("@/views/sekolah/informasi/pengumuman/Index.vue"),
       },
       {
         path: "/sekolah/informasi/prestasi",
         name: "sekolah-informasi-prestasi",
-        component: () => import("@/views/sekolah/informasi/Prestasi.vue"),
+        component: () => import("@/views/sekolah/informasi/prestasi/Index.vue"),
       },
       {
         path: "/sekolah/informasi/berita",
         name: "sekolah-informasi-berita",
-        component: () => import("@/views/sekolah/informasi/Berita.vue"),
+        component: () => import("@/views/sekolah/informasi/berita/Index.vue"),
         children: [
           {
             path: "",
@@ -172,15 +172,20 @@ const routes: Array<RouteRecordRaw> = [
             path: "utama",
             name: "sekolah-informasi-berita-utama",
             component: () =>
-              import("@/views/sekolah/informasi/tabs/Utama.vue"),
+              import("@/views/sekolah/informasi/berita/tabs/Utama.vue"),
           },
           {
             path: "kategori",
             name: "sekolah-informasi-berita-kategori",
             component: () =>
-              import("@/views/sekolah/informasi/tabs/Kategori.vue"),
+              import("@/views/sekolah/informasi/berita/tabs/Kategori.vue"),
           },
         ],
+      },
+      {
+        path: "/sekolah/informasi/berita/tambah",
+        name: "sekolah-informasi-berita-tambah",
+        component: () => import("@/views/sekolah/informasi/berita/Tambah.vue"),
       },
       {
         path: "/sekolah/media",
