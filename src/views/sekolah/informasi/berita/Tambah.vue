@@ -3,15 +3,17 @@ import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from "@/util";
 import { onMounted, reactive, ref } from "vue";
 import ImageInput from '@/components/image-input/Index.vue'
+import ImageCropper from '@/components/image-cropper/Index.vue'
+import CKEditor from '@/components/ckeditor/Index.vue'
 import { useToast } from "vue-toast-notification";
-import { Cropper } from 'vue-advanced-cropper';
-import 'vue-advanced-cropper/dist/style.css';
-import { computed } from "@vue/reactivity";
+import { useRouter } from "vue-router";
 
 onMounted(() => {
   setCurrentPageBreadcrumbs('Tambah Berita', ['Informasi', 'Berita'])
   getKategori()
 })
+
+const router = useRouter()
 
 const categories = ref()
 const form = reactive({
@@ -21,14 +23,6 @@ const form = reactive({
   'content_desc': '',
   'content_image': '',
   'content_status': '',
-})
-
-const getImageUrl = computed(() => {
-  if (form.content_image) {
-    return URL.createObjectURL(form.content_image)
-  } else {
-    return ''
-  }
 })
 
 function getKategori() {
@@ -43,8 +37,6 @@ function cropImage({ coordinates, canvas }) {
 }
 
 function postBerita() {
-  return console.log(form.content_image)
-
   const formData = new FormData()
   formData.append('cat_id', form.cat_id)
   formData.append('content_name', form.content_name)
@@ -75,7 +67,7 @@ function postBerita() {
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
           <div class="row">
-            <div class="col-3 d-flex align-items-center">
+            <div class="col-3 d-flex">
               <p class="m-0 fs-4 fw-bold">Kategori</p>
             </div>
             <div class="col-9 align-items-center d-flex">
@@ -87,7 +79,7 @@ function postBerita() {
             </div>
           </div>
           <div class="row">
-            <div class="col-3 align-items-center d-flex">
+            <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">Judul Berita</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
@@ -95,25 +87,17 @@ function postBerita() {
             </div>
           </div>
           <div class="row">
-            <div class="col-3 align-items-center d-flex">
+            <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">Gambar</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               
               <ImageInput v-model:fileInputData="form.content_image" />
-              <cropper
-                class="cropper"
-                :src="getImageUrl"
-                :stencil-props="{
-                  aspectRatio: 10/12
-                }"
-                @change="cropImage"
-              />
-
+              <ImageCropper />
             </div>
           </div>
           <div class="row">
-            <div class="col-3 align-items-center d-flex">
+            <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">Deskripsi Singkat</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
@@ -121,15 +105,16 @@ function postBerita() {
             </div>
           </div>
           <div class="row">
-            <div class="col-3 align-items-center d-flex">
+            <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">Deskripsi Lengkap</p>
             </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="form.content_desc" type="textarea" />
+            <div class="col-9 align-items-center">
+              <!-- <el-input v-model="form.content_desc" type="textarea" /> -->
+              <CKEditor width="100%" v-model:editorValue="form.content_desc" />
             </div>
           </div>
           <div class="row">
-            <div class="col-3 align-items-center d-flex">
+            <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">Status Aktif</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
