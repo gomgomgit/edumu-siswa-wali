@@ -45,7 +45,7 @@ function inputFileDelete() {
         </div>
       </div>
     </div>
-    <input class="d-none" id="file-input-real" type="file" @change="onFileChange">
+    <input class="d-none" id="file-input-real" type="file" accept="image/*" @change="onFileChange">
   </div>
 </template>
 

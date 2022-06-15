@@ -15,6 +15,7 @@ import { initApexCharts } from "@/core/plugins/apexcharts";
 import { initInlineSvg } from "@/core/plugins/inline-svg";
 import { initVeeValidate } from "@/core/plugins/vee-validate";
 import VueToast from 'vue-toast-notification';
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 import "@/core/plugins/prismjs";
 import "bootstrap";
@@ -26,6 +27,7 @@ app.use(store);
 app.use(router);
 app.use(ElementPlus);
 app.use(VueToast);
+app.use(CKEditor);
 
 ApiService.init(app);
 initApexCharts(app);

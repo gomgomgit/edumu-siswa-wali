@@ -9,16 +9,17 @@ import { Search } from '@element-plus/icons-vue'
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import QueryString from "qs";
 import { useToast } from "vue-toast-notification";
+import FormModal from "./formModal"
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Wali", ['Sekolah', "Profil Pengguna"]);
+  setCurrentPageBreadcrumbs("Pengguna Umum", ['Pengaturan']);
 })
 
-function getWali(payload) {
+function getPenguna(payload) {
   request.post('user', null, {
     params: {
-      level: 'wali',
-      cari: searchWali.value,
+      level: 'umum',
+      cari: searchPengguna.value,
       page: payload?.page ?? 1,
       sortby: payload?.sort?.type ?? 'ASC'
     }
@@ -28,7 +29,10 @@ function getWali(payload) {
   })
 }
 
-const loadingTahunAjar = ref(false)
+const formMode = ref('')
+const activeData = ref()
+
+const tableRef = ref()
 
 const wali = reactive({
   columns: [
@@ -42,7 +46,7 @@ const wali = reactive({
   totalRows: 0,
 })
 
-const searchWali = ref('')
+const searchPengguna = ref('')
 
 const modalData = ref(false)
 
@@ -57,6 +61,16 @@ const statusOption = [
   },
 ]
 
+function handleFormClose() {
+  activeData.value = null
+  formMode.value = false
+}
+
+function editData(row) {
+  activeData.value = row
+  formMode.value = 'Edit Pengguna'
+}
+
 function deleteData (userId) {
   deleteConfirmation(function() {
       request.post('user/delete/' + userId, QueryString.stringify({
@@ -64,7 +78,7 @@ function deleteData (userId) {
       }))
       .then(res => {
         useToast().success('Data Berhasil Dihapus!')
-        getWali()
+        getPenguna()
       })
   })
 }
@@ -75,13 +89,13 @@ function deleteData (userId) {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Data Wali</h2>
+          <h2 class="fs-1 fw-bold py-6">Data Pengguna</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center gap-4">
             <div class="d-flex w-25 gap-4">
-              <el-input v-model="searchWali" clearable class="m-2" placeholder="Cari Wali">
+              <el-input v-model="searchPengguna" clearable class="m-2" placeholder="Cari Pengguna">
                 <template #append>
                   <el-button aria-disabled="true" class="pe-none" :icon="Search" />
                 </template>
@@ -90,19 +104,25 @@ function deleteData (userId) {
 
             <div class="position-relative d-flex gap-4">
               <div class="d-flex align-items-center">
-                <router-link to="/sekolah/profil-pengguna/wali/tambah-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <button @click="formMode = 'Tambah Pengguna'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
-                    Tambah Wali
+                    Tambah Pengguna Umum
                   </span>
-                </router-link>
+                </button>
               </div>
             </div>
           </div>
         </div>
         <div class="my-5 mb-xxl-8">
-          <ServerSideTable :key="searchWali" :totalRows="wali.totalRows || 0" :columns="wali.columns"
-            :rows="wali.rows" @loadItems="getWali">
+          <ServerSideTable
+            ref="tableRef"
+            :key="searchPengguna"
+            :totalRows="wali.totalRows || 0"
+            :columns="wali.columns"
+            :rows="wali.rows"
+            @loadItems="getPenguna"
+          >
             <template #table-row="{ column, row }">
               <div v-if="column.field == 'user_status'">
                 <span
@@ -112,11 +132,11 @@ function deleteData (userId) {
                 </span>
               </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="'/sekolah/profil-pengguna/wali/edit-data/' + row.user_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </router-link>
+                </button>
                 <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
@@ -128,5 +148,10 @@ function deleteData (userId) {
         </div>
       </div>
     </div>
+		<FormModal
+			:mode="formMode"
+			:activeData="activeData"
+			@close="handleFormClose"
+			@submit="tableRef.loadItems()" />
   </div>
 </template>

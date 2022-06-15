@@ -4,16 +4,26 @@ import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util';
 import ImageInput from '@/components/image-input/Index.vue'
 import { useToast } from 'vue-toast-notification';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import QueryString from 'qs';
 
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Tambah Wali", ['Sekolah', "Profil Pengguna", "Wali"]);
+  setCurrentPageBreadcrumbs("Edit Wali", ['Sekolah', "Profil Pengguna", "Wali"]);
+  getDataWali()
 })
 
 const router = useRouter()
+const route = useRoute()
+const baseUrl = process.env.VUE_APP_API_URL
+
+const waliId = route.params.id
+
+const oldFoto = ref('')
 
 const form = reactive({
+  wali_id: '',
+  user_id: '',
   wali_nama: '',
   wali_nohp: '',
   wali_alamat: '',
@@ -28,9 +38,31 @@ const form = reactive({
   wali_foto: '',
 })
 
+function getDataWali() {
+  request.get('wali/' + waliId)
+    .then(res => {
+      const result = res.data.data
+      form.wali_id = result.wali_id
+      form.user_id = result.user_id
+      form.wali_nama = result.user_nama
+      form.wali_nohp = result.wali_nohp
+      form.wali_alamat = result.wali_alamat
+      form.wali_kota = result.wali_kota
+      form.wali_provinsi = result.wali_provinsi
+      form.wali_gender = result.wali_gender
+      form.wali_tempat_lahir = result.wali_tempat_lahir
+      form.wali_tanggal_lahir = result.wali_tanggal_lahir
+      form.wali_username = result.user_username
+      form.wali_status = result.user_status
+
+      oldFoto.value = result.user_foto
+    })
+}
 
 function post() {
   const formData = new FormData()
+  formData.append('wali_id', form.wali_id)
+  formData.append('user_id', form.user_id)
   formData.append('wali_nama', form.wali_nama)
   formData.append('wali_nohp', form.wali_nohp)
   formData.append('wali_alamat', form.wali_alamat)
@@ -43,14 +75,15 @@ function post() {
   formData.append('wali_password', form.wali_password)
   formData.append('wali_status', form.wali_status)
   formData.append('wali_foto', form.wali_foto)
+  console.log(QueryString.stringify(formData))
   
   // request.post('siswa/add', QueryString.stringify(formData), {
-  request.post('wali/add', formData, {
+  request.post('wali/edit', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       }
   }).then(res => {
-      useToast().success('Data Berhasil Ditambahkan!')
+      useToast().success('Data Berhasil Diedit!')
       router.push('/sekolah/profil-pengguna/wali')
     })
 }
@@ -62,7 +95,7 @@ function post() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data Wali</h2>
+          <h2 class="fs-1 fw-bold py-6">Edit Data Wali</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
@@ -157,7 +190,7 @@ function post() {
               <p class="m-0 fs-4 fw-bold">Password</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input type="password" show-password v-model="form.wali_password" placeholder="Masukkan Password" />
+              <el-input type="password" show-password v-model="form.wali_password" placeholder="Password (Biarkan kosong jika tidak ingin mengganti password)" />
             </div>
           </div>
           <div class="row">
@@ -172,9 +205,15 @@ function post() {
             </div>
           </div>
 
-          <div class="">
-            <p class="m-0 fs-4 fw-bold mb-6">File Foto</p>
-            <ImageInput v-model:fileInputData="form.siswa_foto"></ImageInput>
+          <div class="d-flex gap-6">
+            <div v-if="oldFoto">
+              <p class="m-0 fs-4 fw-bold mb-6">Foto</p>
+              <img height="200" width="200" :src="baseUrl + '/public/images/wali/' + oldFoto" alt="">
+            </div>
+            <div class="">
+              <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto</p>
+              <ImageInput v-model:fileInputData="form.siswa_foto"></ImageInput>
+            </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>

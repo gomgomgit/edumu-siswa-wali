@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from 'vue'
 import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
 import { request } from '@/util'  
-import FileInput from '@/components/file-input/Index.vue'
+import ImageInput from '@/components/image-input/Index.vue'
 import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRoute, useRouter } from 'vue-router';
@@ -17,11 +17,15 @@ onMounted(() => {
 
 const router = useRouter()
 const route = useRoute()
+const baseUrl = process.env.VUE_APP_API_URL
+
 const siswaId = route.params.id
+const oldFoto = ref('')
 
 const formData = reactive({
   'kelas_id': '',
   'wali_id': '',
+  'user_id': '',
   'siswa_id': '',
   'siswa_nama': '',
   'siswa_nisn': '',
@@ -34,7 +38,7 @@ const formData = reactive({
   'siswa_gender': '',
   'siswa_tempat_lahir': '',
   'siswa_tanggal_lahir': '',
-  'siswa_refid': '',
+  'siswa_rfid': '',
   'siswa_username': '',
   'siswa_password': '',
   'siswa_status': '',
@@ -57,7 +61,8 @@ function getDataSiswa() {
     const result = res.data.data
     formData.kelas_id = result.kelas_id ?? ''
     formData.wali_id = result.wali_id ?? ''
-    formData.siswa_id = result.user_id ?? ''
+    formData.user_id = result.user_id ?? ''
+    formData.siswa_id = result.siswa_id ?? ''
     formData.siswa_nama = result.user_nama ?? ''
     formData.siswa_nama = result.user_nama ?? ''
     formData.siswa_nisn = result.siswa_nisn ?? ''
@@ -73,16 +78,11 @@ function getDataSiswa() {
     formData.siswa_rfid = result.siswa_rfid ?? ''
     formData.siswa_username = result.user_username ?? ''
     formData.siswa_status = result.user_status ?? ''
+    
+    oldFoto.value = result.user_foto 
+  })
+}
 
-    // getSiswaFoto(result.user_foto)
-  })
-}
-function getSiswaFoto(foto) {
-  request.get('/public/images/siswa/' + foto)
-  .then(res => {
-    console.log(res)
-  })
-}
 function getDataKelas() {
   request.post('kelas', null).then(res => {
     kelasData.value = res.data.data
@@ -98,6 +98,7 @@ function post() {
   const data = new FormData()
   data.append('kelas_id', formData.kelas_id)
   data.append('wali_id', formData.wali_id)
+  data.append('user_id', formData.user_id)
   data.append('siswa_id', formData.siswa_id)
   data.append('siswa_nama', formData.siswa_nama)
   data.append('siswa_nisn', formData.siswa_nisn)
@@ -110,7 +111,7 @@ function post() {
   data.append('siswa_gender', formData.siswa_gender)
   data.append('siswa_tempat_lahir', formData.siswa_tempat_lahir)
   data.append('siswa_tanggal_lahir', formData.siswa_tanggal_lahir)
-  data.append('siswa_refid', formData.siswa_refid)
+  data.append('siswa_rfid', formData.siswa_rfid)
   data.append('siswa_username', formData.siswa_username)
   data.append('siswa_password', formData.siswa_password)
   data.append('siswa_status', formData.siswa_status)
@@ -122,7 +123,7 @@ function post() {
         'Content-Type': 'multipart/form-data'
       }
   }).then(res => {
-      useToast().success('Data Berhasil Ditambahkan!')
+      useToast().success('Data Berhasil Diedit!')
       router.push('/sekolah/profil-pengguna/siswa')
     })
 }
@@ -323,10 +324,15 @@ function checkTest() {
               </el-select>
             </div>
           </div>
-          <div>
-            <p class="m-0 fs-4 fw-bold mb-4">Foto Siswa</p>
-            <img src="" alt="">
-            <FileInput v-model:fileInputData="formData.siswa_foto"></FileInput>
+          <div class="d-flex gap-6">
+            <div>
+              <p class="m-0 fs-4 fw-bold mb-6">Foto Siswa</p>
+              <img height="200" width="200"  :src="baseUrl + '/public/images/siswa/' + oldFoto" alt="">
+            </div>
+            <div>
+              <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto Siswa</p>
+              <ImageInput v-model:fileInputData="formData.siswa_foto"></ImageInput>
+            </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
             <a href="#" class="btn btn-light">Discard</a>
