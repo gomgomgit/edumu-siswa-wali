@@ -17,6 +17,8 @@ onMounted(() => {
 
 const router = useRouter()
 const route = useRoute()
+const baseUrl = process.env.VUE_APP_API_URL
+
 const siswaId = route.params.id
 const oldFoto = ref('')
 
@@ -325,7 +327,7 @@ function checkTest() {
           <div class="d-flex gap-6">
             <div>
               <p class="m-0 fs-4 fw-bold mb-6">Foto Siswa</p>
-              <img height="200" width="200"  :src="'https://apiedumu.edumu.id/demo/apischool/public/images/siswa/' + oldFoto" alt="">
+              <img height="200" width="200"  :src="baseUrl + '/public/images/siswa/' + oldFoto" alt="">
             </div>
             <div>
               <p class="m-0 fs-4 fw-bold mb-6">Ganti Foto Siswa</p>
