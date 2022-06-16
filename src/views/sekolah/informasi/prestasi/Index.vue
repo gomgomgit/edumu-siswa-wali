@@ -6,6 +6,7 @@
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { Search } from '@element-plus/icons-vue'
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Prestasi", ['Sekolah', "Informasi"]);
@@ -23,8 +24,6 @@
       })
     }
 
-  const loadingTahunAjar = ref(false)
-  
   const prestasi = reactive({
     columns: [
       { label: 'Judul', field: 'content_name' },
@@ -37,9 +36,6 @@
   })
 
   const statusFilter = ref('')
-
-  const modalData = ref(false)
-
   const statusOption = [
     {
       value: 1,
@@ -55,6 +51,15 @@
   function changeFilter(changed){
     console.log(changed)
   }
+  // function deletePrestasi(id){
+  //   deleteConfirmation(() => {
+  //     request.get('prestasi/delete/' + id)
+  //     .then(res => {
+  //       useToast().success('Data Berhasil Dihapus!')
+  //       getPengumuman()
+  //     })
+  //   })
+  // }
 </script>
 
 <template>
@@ -84,12 +89,12 @@
                   @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/informasi/prestasi/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
-                    Tambah Pengumuman
+                    Tambah Prestasi
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
@@ -106,22 +111,16 @@
                   'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-              
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <!-- <button @click="deletePrestasi(row.content_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
-                </button>
+                </button> -->
               </div>
             </template>
           </ServerSideTable>
