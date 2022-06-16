@@ -21,7 +21,7 @@ const form = reactive({
   'content_name': '',
   'content_shortdesc': '',
   'content_desc': '',
-  'content_image': '',
+  'content_image': null,
   'content_status': '',
 })
 
@@ -43,7 +43,7 @@ function postBerita() {
   formData.append('content_type', 'content')
   formData.append('content_shortdesc', form.content_shortdesc)
   formData.append('content_desc', form.content_desc)
-  formData.append('content_image', form.content_image)
+  formData.append('content_image', form.content_image, 'image.jpg')
   formData.append('content_status', form.content_status)
 
   request.post('konten/add', formData, {
