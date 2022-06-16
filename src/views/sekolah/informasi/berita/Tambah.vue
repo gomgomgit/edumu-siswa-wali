@@ -91,9 +91,7 @@ function postBerita() {
               <p class="m-0 fs-4 fw-bold">Gambar</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              
-              <ImageInput v-model:fileInputData="form.content_image" />
-              <ImageCropper />
+              <ImageCropper  v-model:fileInputData="form.content_image" />
             </div>
           </div>
           <div class="row">

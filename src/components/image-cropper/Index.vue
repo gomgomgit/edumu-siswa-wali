@@ -1,19 +1,33 @@
 <script setup>
+import { computed } from '@vue/reactivity';
 import { ref } from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
+
+const porps = defineProps({
+  fileInputData: Array
+})
+
+const emits = defineEmits('update:fileInputData')
 
 const image = ref('')
 const cropperCanvas = ref()
 
 const imageUrl = ref('')
+const imageResult = ref('')
 
+const imagePreview = computed(() => {
+  if (imageResult.value) {
+    return imageResult.value
+  } else {
+    return '/media/illustrations/media/frame-media.png'
+  }
+})
 
 function onImageChange(payload) {
   const file = payload.target.files[0];
   if(file) {
     image.value = payload.target.files[0]
-    URL.revokeObjectURL(file)
     imageUrl.value = URL.createObjectURL(file)
   } else {
     image.value = null
@@ -24,48 +38,42 @@ function onImageChange(payload) {
 function inputFileClick() {
   document.getElementById('file-input-crop').click()
 }
-function cropImage() {
+async function cropImage () {
   const { coordinates, canvas } = cropperCanvas.value.getResult();
-  console.log(cropperCanvas.value.getResult())
-  console.log(coordinates)
 
-  if (canvas) {
-    var blobBin = atob(dataURL.split(',')[1]);
-    var array = [];
-    for(var i = 0; i < blobBin.length; i++) {
-      array.push(blobBin.charCodeAt(i));
-    } 
-
-    var file=new Blob([new Uint8Array(array)], {type: 'image/png'});
-
-    console.log(file)
-  }
-
-  // const newTab = window.open();
-  // // for testing open the result in a new tab
-  // newTab.document.body.innerHTML = `<img src="${result.canvas.toDataURL(
-  //   "image/jpeg"
-  // )}"></img>`;
+  imageResult.value = canvas.toDataURL()
+  const blob = await (await fetch(imageResult.value)).blob(); 
+  const file = new File([blob], 'filecropped.jpg', {type:"image/jpeg", lastModified:new Date()});
+  emits('update:fileInputData', file)
+  imageUrl.value = null
+}
+function deleteImage() {
+  emits('update:fileInputData', null)
+  imageUrl.value = null
+  imageResult.value = null
 }
 </script>
 
 <template>
   <div>
-    <cropper
-      ref="cropperCanvas"
-      class="cropper"
-      id="copper"
-      :src="imageUrl"
-      :stencil-props="{
-        aspectRatio: 10/12
-      }"
-    />
-    <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
+    <div class="">
+      <cropper
+        ref="cropperCanvas"
+        class="cropper"
+        id="copper"
+        v-if="imageUrl"
+        :src="imageUrl"
+        :stencil-props="{
+        }"
+      />
+      <img v-if="!imageUrl" :src="imagePreview" alt="">
+  
+      <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
+    </div>
     <div class="d-flex gap-2">
-      <button class="text-white btn btn-bg-primary" @click="inputFileClick">Pilih Gambar</button>
-      <button class="text-white btn btn-bg-success" @click="cropImage">Potong</button>
-      <button class="text-white btn btn-bg-danger" >Hapus</button>
+      <button class="text-white btn btn-bg-primary" @click="inputFileClick">{{imageUrl ? 'Ganti Gambar' : 'Pilih Gambar'}}</button>
+      <button v-if="imageUrl" class="text-white btn btn-bg-success" @click="cropImage">Potong</button>
+      <button @click="deleteImage" v-if="imageUrl || imageResult" class="text-white btn btn-bg-danger" >Hapus</button>
     </div>
   </div>
-  <img :src="imageUrl" alt="">
 </template>
