@@ -9,7 +9,7 @@ import { useToast } from "vue-toast-notification";
 import { useRouter } from "vue-router";
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs('Tambah Berita', ['Informasi', 'Berita'])
+  setCurrentPageBreadcrumbs('Tambah Pengumuman', ['Informasi', 'Pengumuman'])
   getKategori()
 })
 
@@ -62,7 +62,7 @@ function postBerita() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data Berita</h2>
+          <h2 class="fs-1 fw-bold py-6">Tambah Data Pengumuman</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
@@ -80,7 +80,7 @@ function postBerita() {
           </div>
           <div class="row">
             <div class="col-3 pt-3">
-              <p class="m-0 fs-4 fw-bold">Judul Berita</p>
+              <p class="m-0 fs-4 fw-bold">Judul Pengumuman</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <el-input v-model="form.content_name" placeholder="Judul Berita" />

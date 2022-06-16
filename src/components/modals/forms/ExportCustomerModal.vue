@@ -113,7 +113,7 @@
                 id="kt_customers_export_cancel"
                 class="btn btn-light me-3"
               >
-                Discard
+                Batal
               </button>
 
               <!--begin::Button-->

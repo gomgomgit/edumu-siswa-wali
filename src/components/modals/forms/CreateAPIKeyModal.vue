@@ -216,7 +216,7 @@
               id="kt_modal_create_api_key_cancel"
               class="btn btn-white me-3"
             >
-              Discard
+              Batal
             </button>
             <!--end::Button-->
 

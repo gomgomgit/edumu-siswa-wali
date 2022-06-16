@@ -571,7 +571,7 @@
               id="kt_modal_add_customer_cancel"
               class="btn btn-light me-3"
             >
-              Discard
+              Batal
             </button>
             <!--end::Button-->
 

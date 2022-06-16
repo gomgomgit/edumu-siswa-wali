@@ -1182,7 +1182,7 @@
             type="reset"
             class="btn btn-white btn-active-light-primary me-2"
           >
-            Discard
+            Batal
           </button>
 
           <button
@@ -1191,7 +1191,7 @@
             ref="submitButton1"
             class="btn btn-primary"
           >
-            <span class="indicator-label"> Save Changes </span>
+            <span class="indicator-label"> Simpan </span>
             <span class="indicator-progress">
               Please wait...
               <span
@@ -1620,14 +1620,14 @@
       <!--begin::Card footer-->
       <div class="card-footer d-flex justify-content-end py-6 px-9">
         <button class="btn btn-white btn-active-light-primary me-2">
-          Discard
+          Batal
         </button>
         <button
           ref="submitButton2"
           class="btn btn-primary"
           @click="saveChanges2()"
         >
-          <span class="indicator-label"> Save Changes </span>
+          <span class="indicator-label"> Simpan </span>
           <span class="indicator-progress">
             Please wait...
             <span
@@ -1867,14 +1867,14 @@
         <!--begin::Card footer-->
         <div class="card-footer d-flex justify-content-end py-6 px-9">
           <button class="btn btn-white btn-active-light-primary me-2">
-            Discard
+            Batal
           </button>
           <button
             ref="submitButton3"
             type="submit"
             class="btn btn-primary px-6"
           >
-            <span class="indicator-label"> Save Changes </span>
+            <span class="indicator-label"> Simpan </span>
             <span class="indicator-progress">
               Please wait...
               <span
@@ -2115,14 +2115,14 @@
         <!--begin::Card footer-->
         <div class="card-footer d-flex justify-content-end py-6 px-9">
           <button class="btn btn-white btn-active-light-primary me-2">
-            Discard
+            Batal
           </button>
           <button
             ref="submitButton4"
             type="submit"
             class="btn btn-primary px-6"
           >
-            <span class="indicator-label"> Save Changes </span>
+            <span class="indicator-label"> Simpan </span>
             <span class="indicator-progress">
               Please wait...
               <span

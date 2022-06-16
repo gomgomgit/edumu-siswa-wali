@@ -347,7 +347,7 @@
 
         <!--begin::Card footer-->
         <div class="card-footer border-0 d-flex justify-content-center pt-0">
-          <button class="btn btn-sm btn-light-primary">Save Changes</button>
+          <button class="btn btn-sm btn-light-primary">Simpan</button>
         </div>
         <!--end::Card footer-->
       </div>

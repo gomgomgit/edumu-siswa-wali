@@ -596,7 +596,7 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
                             Cancel
                           </button>
                           <button type="submit" class="btn btn-sm fw-bolder btn-primary">
-                            Save Changes
+                            Simpan
                           </button>
                         </div>
                       </form>

@@ -588,7 +588,7 @@
               id="kt_modal_new_address_cancel"
               class="btn btn-white me-3"
             >
-              Discard
+              Batal
             </button>
             <!--end::Button-->
 

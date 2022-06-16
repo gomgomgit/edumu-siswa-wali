@@ -295,8 +295,8 @@ function submitAddKelas() {
             <ImageInput v-model:fileInputData="formData.siswa_foto"></ImageInput>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a href="#" class="btn btn-light">Discard</a>
-            <a href="#" @click.prevent="post" class="btn btn-primary">Save Changes</a>
+            <a href="#" class="btn btn-light">Batal</a>
+            <a href="#" @click.prevent="post" class="btn btn-primary">Simpan</a>
           </div>
         </div>
       </div>
