@@ -13,7 +13,7 @@
       <transition name="fade">
         <div v-if="props.show" class="modal-overlay" @click="emits('closeModal')"></div>
       </transition>
-      
+
       <transition name="slide-fade">
         <div v-if="props.show" class="modal-container">
           <div class="modal-header d-block border-bottom border-secondary">
@@ -22,7 +22,7 @@
             </div>
             <div class="fw-bold fs-4 m-4">
               <template v-if="props.breadcrumb" v-for="bc, index in props.breadcrumb" :key="index">
-                <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span> 
+                <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span>
                 <span v-else class="text-black-50">
                   <span>{{bc}} / </span>
                 </span>
@@ -31,8 +31,10 @@
           </div>
           <div class="modal-body py-4">
             <slot/>
+            <div class="modal-body-separator"></div>
           </div>
           <div class="modal-footer border-top border-secondary">
+            <div class="modal-footer-fade"></div>
             <div class="d-flex justify-content-end gap-4">
               <button @click="emits('dismiss')" class="btn btn-light">Discard</button>
               <button @click="emits('confirm')" class="btn btn-primary text-white">Save Changes</button>
@@ -44,6 +46,12 @@
 </template>
 
 <style scoped>
+
+
+
+
+
+
 
   .modal-overlay {
     content: '';
@@ -74,6 +82,34 @@
     background: #FFF;
     z-index: 999;
     transform: none;
+  }
+  .modal-body {
+    max-height: 60vh;
+    overflow-x: auto;
+  }
+  .modal-body-separator {
+    height: 30px;
+  }
+  .modal-footer {
+    position: relative;
+  }
+  .modal-footer-fade {
+    background: linear-gradient(rgba(255, 255, 255, .2), #fff) 100% 0;
+    height: 20px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -34px;
+  }
+  .modal-footer-fade::after {
+    content: '';
+    position: absolute;
+    height: 10px;
+    width: 100%;
+    background: white;
+    left: 0;
+    right: 0;
+    bottom: -10px;
   }
 
   .slide-fade-enter-active {

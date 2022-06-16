@@ -18,12 +18,6 @@ const initialForm = { mapel_nama: null, mapel_status: null }
 
 const formData = reactive({...initialForm})
 
-watch(
-	() => props.activeData,
-	activeData => !isEmpty(activeData) && Object.assign(formData, {...activeData}),
-	{ deep: true }
-)
-
 function handleClose () {
 	Object.assign(formData, {...initialForm})
 	emits('close')
@@ -31,13 +25,21 @@ function handleClose () {
 
 function handleSubmit () {
 	const endpoint = isEmpty(props.activeData) ? 'mapel/add' : 'mapel/edit'
+	const message = isEmpty(props.activeData) ? 'Ditambahkan!' : 'Diubah!'
+
 	request.post(endpoint, qs.stringify(formData)).then(() => {
 		Object.assign(formData, initialForm)
-		useToast().success('Data Berhasil Ditambahkan!')
+		useToast().success('Data Berhasil ' + message)
 		emits('submit')
 		emits('close')
 	})
 }
+
+watch(
+	() => props.activeData,
+	activeData => !isEmpty(activeData) && Object.assign(formData, { ...activeData }),
+	{ deep: true }
+)
 </script>
 
 <template>
