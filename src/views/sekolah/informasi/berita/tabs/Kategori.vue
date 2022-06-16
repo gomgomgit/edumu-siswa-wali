@@ -9,6 +9,7 @@
   import QueryString from "qs"
   import { useToast } from "vue-toast-notification"
 import { object } from "yup";
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Kategori", ['Sekolah', "Informasi", "Berita"]);
@@ -69,10 +70,12 @@ import { object } from "yup";
       })
   }
   function deleteKategori(id) {
-    request.get('/kategori/delete/' + id)
-    .then(res => {
-      useToast().success('Data Berhasil Dihapus!')
-      getKategori()
+    deleteConfirmation(function() {
+      request.get('/kategori/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getKategori()
+      })
     })
   }
 </script>
