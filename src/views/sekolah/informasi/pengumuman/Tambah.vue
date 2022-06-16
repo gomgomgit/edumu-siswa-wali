@@ -10,14 +10,14 @@ import { useRouter } from "vue-router";
 
 onMounted(() => {
   setCurrentPageBreadcrumbs('Tambah Pengumuman', ['Informasi', 'Pengumuman'])
-  getKategori()
+  getKelas()
 })
 
 const router = useRouter()
 
-const categories = ref()
+const classes = ref()
 const form = reactive({
-  'cat_id': '',
+  'kelas_id': '',
   'content_name': '',
   'content_shortdesc': '',
   'content_desc': '',
@@ -25,10 +25,10 @@ const form = reactive({
   'content_status': '',
 })
 
-function getKategori() {
-  request.post('kategori')
+function getKelas() {
+  request.post('kelas')
     .then(res => {
-      categories.value = res.data.data
+      classes.value = res.data.data
     })
 }
 
@@ -38,21 +38,22 @@ function cropImage({ coordinates, canvas }) {
 
 function postBerita() {
   const formData = new FormData()
-  formData.append('cat_id', form.cat_id)
+  formData.append('cat_id', '')
+  formData.append('kelas_id', form.kelas_id)
   formData.append('content_name', form.content_name)
-  formData.append('content_type', 'content')
+  formData.append('content_type', 'pengumuman')
   formData.append('content_shortdesc', form.content_shortdesc)
   formData.append('content_desc', form.content_desc)
   formData.append('content_image', form.content_image)
   formData.append('content_status', form.content_status)
 
-  request.post('konten/add', formData, {
+  request.post('pengumuman/add', formData, {
     headers: {
       'Content-Type' : 'multipart/form-data'
     }
   }).then(res => {
       useToast().success('Data Berhasil Ditambahkan!')
-      router.push('/sekolah/informasi/berita')
+      router.push('/sekolah/informasi/pengumuman')
   })
 }
 </script>
@@ -68,14 +69,22 @@ function postBerita() {
         <div class="d-flex flex-column gap-4">
           <div class="row">
             <div class="col-3 d-flex">
-              <p class="m-0 fs-4 fw-bold">Kategori</p>
+              <p class="m-0 fs-4 fw-bold">Kelas</p>
             </div>
             <div class="col-9 align-items-center d-flex">
-              <select v-model="form.cat_id" class="form-select form-select-solid">
-                <template v-for="cat in categories" :key="cat.cat_id">
-                  <option :value="cat.cat_id">{{cat.cat_name}}</option>
-                </template>
-              </select>
+              <el-select
+                v-model="form.kelas_id"
+                multiple
+                placeholder="Pilih Kelas"
+                style="width: 100%"
+              >
+                <el-option
+                  v-for="clas in classes"
+                  :key="clas.kelas_id"
+                  :label="clas.kelas_nama"
+                  :value="clas.kelas_id"
+                />
+              </el-select>
             </div>
           </div>
           <div class="row">
@@ -83,7 +92,7 @@ function postBerita() {
               <p class="m-0 fs-4 fw-bold">Judul Pengumuman</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="form.content_name" placeholder="Judul Berita" />
+              <el-input v-model="form.content_name" placeholder="Judul Pengumuman" />
             </div>
           </div>
           <div class="row">

@@ -6,6 +6,8 @@
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { Search } from '@element-plus/icons-vue'
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
+import { useToast } from "vue-toast-notification";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Pengumuman", ['Sekolah', "Informasi"]);
@@ -14,8 +16,8 @@
   function getPengumuman (payload) {
       request.post('pengumuman', null, {
         params: {
-          page: payload.page ?? 1,
-          sortby: payload.sort?.type ?? 'ASC'
+          page: payload?.page ?? 1,
+          sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
         pengumuman.rows = res.data.data.data
@@ -23,8 +25,6 @@
         pengumuman.perPage = res.data.data.per_page
       })
     }
-
-  const loadingTahunAjar = ref(false)
   
   const pengumuman = reactive({
     columns: [
@@ -39,9 +39,6 @@
   })
 
   const statusFilter = ref('')
-
-  const modalData = ref(false)
-
   const statusOption = [
     {
       value: 1,
@@ -53,9 +50,14 @@
     },
   ]
 
-
-  function changeFilter(changed){
-    console.log(changed)
+  function deletePengumuman(id) {
+    deleteConfirmation(function() {
+      request.get('pengumuman/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getPengumuman()
+      })
+    })
   }
 </script>
 
@@ -86,12 +88,12 @@
                   @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/informasi/pengumuman/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-plus fs-1"></i>
                   <span>
                     Tambah Pengumuman
                   </span>
-                </a>
+                </router-link>
               </div>
             </div>
           </div>
@@ -112,18 +114,12 @@
                   'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-              
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deletePengumuman(row.content_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>

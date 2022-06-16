@@ -66,7 +66,7 @@ function deleteImage() {
         :stencil-props="{
         }"
       />
-      <img v-if="!imageUrl" :src="imagePreview" alt="">
+      <img v-if="!imageUrl" :src="imageResult" alt="">
   
       <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
     </div>

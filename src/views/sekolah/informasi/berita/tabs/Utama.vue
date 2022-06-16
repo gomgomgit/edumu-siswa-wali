@@ -6,6 +6,8 @@
   import ServerSideTable from '@/components/ServerSideTable.vue'
   import FilterSelect from '@/components/filter-select'
   import { Search } from '@element-plus/icons-vue'
+import { useToast } from "vue-toast-notification";
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Berita", ['Sekolah', "Informasi"]);
@@ -15,8 +17,8 @@
       request.post('konten', null, {
         params: {
           cari: seacrhFilter.value,
-          page: payload.page ?? 1,
-          sortby: payload.sort?.type ?? 'ASC'
+          page: payload?.page ?? 1,
+          sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
         berita.rows = res.data.data.data
@@ -48,6 +50,16 @@
       label: 'Non Aktif',
     },
   ]
+  
+  function deleteBerita(id) {
+    deleteConfirmation(function() {
+      request.get('konten/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getBerita()
+      })
+    })
+  }
 
 </script>
 
@@ -100,18 +112,12 @@
                   'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-              
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
-                  <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/files/fil001.svg" />
-                  </span>
-                </button>
                 <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteBerita(row.content_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
