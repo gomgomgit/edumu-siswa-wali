@@ -49,8 +49,6 @@ function getPrestasi() {
       form.content_desc = result.content_desc
       form.content_image = result.content_image
       form.content_status = result.content_status
-
-      oldImage.value = result.content_image
     })
 }
 
@@ -102,7 +100,7 @@ function postBerita() {
               <p class="m-0 fs-4 fw-bold">Gambar</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <ImageCropper v-model:fileInputData="form.content_image" :old="oldImage.value"/>
+              <ImageCropper v-model:fileInputData="form.content_image"/>
             </div>
           </div>
           <div class="row">

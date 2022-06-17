@@ -6,7 +6,8 @@ import 'vue-advanced-cropper/dist/style.css';
 
 const props = defineProps({
   fileInputData: Array,
-  old: String
+  ratio: {String, required: false},
+  cropRequire: {Boolean, default: false},
 })
 
 const emits = defineEmits('update:fileInputData')
@@ -43,9 +44,13 @@ function setDefault() {
 function onImageChange(payload) {
   const file = payload.target.files[0];
   if(file) {
-    image.value = file
-    // imageUrl.value = URL.createObjectURL(file)
-    imageResult.value = URL.createObjectURL(file)
+    if (props.cropRequire) {
+      imageUrl.value = URL.createObjectURL(file)
+    } else {
+      image.value = file
+      // imageUrl.value = URL.createObjectURL(file)
+      imageResult.value = URL.createObjectURL(file)
+    }
     
     emits('update:fileInputData', payload.target.files[0])
   } else {
@@ -89,13 +94,7 @@ function openCrop() {
 function cancelCrop() {
   imageUrl.value = null
 }
-const defaultImage = computed(() => {
-  if (props.old) {
-    return ('https://apiedumu.edumu.id/demo/apischool/public/images/siswa/' + props.old)
-  } else {
-    return imageUrl.value
-  }
-})
+console.log(props)
 </script>
 
 <template>
@@ -133,6 +132,7 @@ const defaultImage = computed(() => {
               class="cropper"
               :src="imageUrl"
               :stencil-props="{
+                aspectRatio: props.ratio
               }"
             />
             <div class="modal-body-separator"></div>
