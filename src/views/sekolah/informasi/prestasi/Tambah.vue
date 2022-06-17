@@ -21,7 +21,7 @@ const form = reactive({
   'content_name': '',
   'content_shortdesc': '',
   'content_desc': '',
-  'content_image': '',
+  'content_image': null,
   'content_status': '',
 })
 

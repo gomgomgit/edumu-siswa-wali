@@ -203,6 +203,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/informasi/berita/Tambah.vue"),
       },
       {
+        path: "/sekolah/informasi/berita/edit/:id",
+        name: "sekolah-informasi-berita-edit",
+        component: () => import("@/views/sekolah/informasi/berita/Edit.vue"),
+      },
+      {
         path: "/sekolah/media",
         name: "sekolah-media",
         component: () => import("@/views/sekolah/media/Index.vue"),

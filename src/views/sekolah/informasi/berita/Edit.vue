@@ -9,16 +9,15 @@ import { useToast } from "vue-toast-notification";
 import { useRoute, useRouter } from "vue-router";
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs('Edit Prestasi', ['Informasi', 'Prestasi'])
+  setCurrentPageBreadcrumbs('Tambah Berita', ['Informasi', 'Berita'])
   getKategori()
-  getPrestasi()
+  getBerita()
 })
 
 const router = useRouter()
 const route = useRoute()
 
-const prestasiId = route.params.id
-const oldImage = ref('')
+const beritaId = route.params.id
 
 const categories = ref()
 const form = reactive({
@@ -27,7 +26,7 @@ const form = reactive({
   'content_name': '',
   'content_shortdesc': '',
   'content_desc': '',
-  'content_image': '',
+  'content_image': null,
   'content_status': '',
 })
 
@@ -37,8 +36,8 @@ function getKategori() {
       categories.value = res.data.data
     })
 }
-function getPrestasi() {
-  request.get('prestasi/' + prestasiId)
+function getBerita() {
+  request.get('konten/' + beritaId)
     .then(res => {
       const result = res.data.data
 
@@ -61,19 +60,19 @@ function postBerita() {
   formData.append('cat_id', form.cat_id)
   formData.append('content_id', form.content_id)
   formData.append('content_name', form.content_name)
-  formData.append('content_type', 'prestasi')
+  formData.append('content_type', 'content')
   formData.append('content_shortdesc', form.content_shortdesc)
   formData.append('content_desc', form.content_desc)
-  formData.append('content_image', form.content_image)
   formData.append('content_status', form.content_status)
+  formData.append('content_image', form.content_image)
 
-  request.post('prestasi/edit', formData, {
+  request.post('konten/edit', formData, {
     headers: {
       'Content-Type' : 'multipart/form-data'
     }
   }).then(res => {
       useToast().success('Data Berhasil Diedit!')
-      router.push('/sekolah/informasi/prestasi')
+      router.push('/sekolah/informasi/berita')
   })
 }
 </script>
@@ -83,16 +82,28 @@ function postBerita() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Edit Data Prestasi</h2>
+          <h2 class="fs-1 fw-bold py-6">Tambah Data Berita</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
           <div class="row">
+            <div class="col-3 d-flex">
+              <p class="m-0 fs-4 fw-bold">Kategori</p>
+            </div>
+            <div class="col-9 align-items-center d-flex">
+              <select v-model="form.cat_id" class="form-select form-select-solid">
+                <template v-for="cat in categories" :key="cat.cat_id">
+                  <option :value="cat.cat_id">{{cat.cat_name}}</option>
+                </template>
+              </select>
+            </div>
+          </div>
+          <div class="row">
             <div class="col-3 pt-3">
-              <p class="m-0 fs-4 fw-bold">Judul Prestasi</p>
+              <p class="m-0 fs-4 fw-bold">Judul Berita</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <el-input v-model="form.content_name" placeholder="Judul Prestasi" />
+              <el-input v-model="form.content_name" placeholder="Judul Berita" />
             </div>
           </div>
           <div class="row">
@@ -100,7 +111,7 @@ function postBerita() {
               <p class="m-0 fs-4 fw-bold">Gambar</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <ImageCropper v-model:fileInputData="form.content_image"/>
+              <ImageCropper  v-model:fileInputData="form.content_image" :ratio="16/9" :cropRequire="true"/>
             </div>
           </div>
           <div class="row">
