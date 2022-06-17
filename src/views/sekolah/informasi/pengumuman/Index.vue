@@ -114,11 +114,11 @@ import { useToast } from "vue-toast-notification";
                   'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-                <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="'/sekolah/informasi/pengumuman/edit/' + row.content_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </button>
+                </router-link>
                 <button @click="deletePengumuman(row.content_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />

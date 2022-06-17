@@ -17,6 +17,7 @@ function drop(e) {
   emits('update:fileInputData', e.dataTransfer.files)
 };
 function selectedFile() {
+  dropzoneFile.value = null
   dropzoneFile.value = document.querySelector(".dropzoneFile").files;
   emits('update:fileInputData', document.querySelector(".dropzoneFile").files)
 };
@@ -42,7 +43,7 @@ function selectedFile() {
   </div>
   <div class="d-flex flex-column gap-2 mt-3">
     <template v-for="file in dropzoneFile">
-      <p class="m-0">File: {{ file.name }} - {{file.size}} bytes</p>
+      <p class="m-0 fs-4">File: {{ file.name }} - {{file.size}} bytes</p>
     </template>
   </div>
 </div>
