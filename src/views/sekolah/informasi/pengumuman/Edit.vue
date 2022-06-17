@@ -9,6 +9,7 @@ import { useToast } from "vue-toast-notification";
 import { useRoute, useRouter } from "vue-router";
 import FileDrop from "@/components/file-dropzone/Index.vue"
 import { file } from "@babel/types";
+import { isEmpty } from "validate.js";
 
 onMounted(() => {
   setCurrentPageBreadcrumbs('Edit Pengumuman', ['Informasi', 'Pengumuman'])
@@ -35,12 +36,6 @@ const fileDatas = ref({})
 
 const oldFiles = ref()
 
-watch(fileDatas.value, (now, prev) => {
-  console.log(now)
-   if (now) {
-    oldFiles.value = null
-   }
-})
 function getKelas() {
   request.post('kelas')
     .then(res => {
@@ -185,7 +180,7 @@ function postBerita() {
             <div class="col-9 align-items-center">
               <ul>
                 <template v-for="file in oldFiles">
-                  <li><a class="fs-4" :href="'https://apiedumu.edumu.id/demo/apischool/public/files/' + file.content_file_nama">{{file.content_file_nama}}</a></li>
+                  <li><a class="fs-4" target="_blank" :href="'https://apiedumu.edumu.id/demo/apischool/public/files/' + file.content_file_nama">{{file.content_file_nama}}</a></li>
                 </template>
               </ul>
               <FileDrop v-model:fileInputData="fileDatas"></FileDrop>
