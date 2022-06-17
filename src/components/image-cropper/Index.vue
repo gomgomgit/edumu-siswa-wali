@@ -5,7 +5,8 @@ import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
 const props = defineProps({
-  fileInputData: Array
+  fileInputData: Array,
+  old: String
 })
 
 const emits = defineEmits('update:fileInputData')
@@ -88,6 +89,13 @@ function openCrop() {
 function cancelCrop() {
   imageUrl.value = null
 }
+const defaultImage = computed(() => {
+  if (props.old) {
+    return ('https://apiedumu.edumu.id/demo/apischool/public/images/siswa/' + props.old)
+  } else {
+    return imageUrl.value
+  }
+})
 </script>
 
 <template>
