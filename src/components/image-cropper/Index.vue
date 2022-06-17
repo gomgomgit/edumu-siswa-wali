@@ -67,13 +67,13 @@ function deleteImage() {
   imageUrl.value = null
   imageResult.value = null
 }
-
 function openCrop() {
   imageUrl.value = imageResult.value
 }
 function cancelCrop() {
   imageUrl.value = null
 }
+
 </script>
 
 <template>
@@ -85,9 +85,9 @@ function cancelCrop() {
     </div>
     <div class="d-flex gap-2">
       <button class="text-white btn btn-bg-primary" @click="inputFileClick">Pilih Gambar</button>
-      <button class="text-white btn btn-bg-success" @click="openCrop()">Potong Gambar</button>
-      <!-- <button class="text-white btn btn-bg-success" @click="cropImage()">Potong</button>
-      <button @click="deleteImage()" class="text-white btn btn-bg-danger" >Hapus</button> -->
+      <button v-if="fileInputData" class="text-white btn btn-bg-success" @click="openCrop()">Potong Gambar</button>
+      <button v-if="fileInputData" @click="deleteImage()" class="text-white btn btn-bg-danger">Hapus</button>
+      <!-- <button class="text-white btn btn-bg-success" @click="cropImage()">Potong</button> -->
     </div>
 
     <!-- Modal -->
