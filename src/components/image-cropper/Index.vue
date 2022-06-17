@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from '@vue/reactivity';
-import { onMounted, ref } from 'vue';
+import { onActivated, onBeforeMount, onBeforeUpdate, onMounted, ref } from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
@@ -14,14 +14,21 @@ const image = ref('')
 const cropperCanvas = ref()
 
 const imageUrl = ref('')
-const imageResult = computed(()=> {
+const imageResult = ref('')
+// const imageResult = computed(()=> {
+//   if (props.fileInputData) {
+//     return ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
+//   } else {
+//     return ''
+//   }
+// })
+const imageDefault = computed(()=> {
   if (props.fileInputData) {
-    return ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
+    return imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
   } else {
     return ''
   }
 })
-
 const imagePreview = computed(() => {
   if (imageResult.value) {
     return imageResult.value
@@ -29,7 +36,9 @@ const imagePreview = computed(() => {
     return '/media/illustrations/media/frame-media.png'
   }
 })
-
+function setDefault() {
+  imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
+}
 function onImageChange(payload) {
   const file = payload.target.files[0];
   if(file) {
@@ -79,7 +88,6 @@ function openCrop() {
 function cancelCrop() {
   imageUrl.value = null
 }
-
 </script>
 
 <template>

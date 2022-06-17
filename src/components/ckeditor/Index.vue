@@ -1,26 +1,24 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-onMounted(()=> {
-  setDefaultValue()
-})
+import { computed } from '@vue/reactivity';
 
 const props = defineProps({
   editorValue: String
 })
 
-const ss = props.editorValue
 const emits = defineEmits(['update:editorValue'])
 
 
 const editor = ClassicEditor
-const editorData = ref('')
+const editorData = ref()
+// const editorData = computed(()=>{
+//   if (props.editorValue) {
+//     return editorData.value = props.editorValue  
+//   }
+// })
 const editorConfig = {
     // The configuration of the editor.
-}
-function setDefaultValue() {
-  editorData.value = 'dfsadfsdaf'
 }
 function updateValue() {
   emits('update:editorValue', editorData.value)
@@ -30,6 +28,5 @@ function updateValue() {
 <template>
 <div>
   <ckeditor class="w-100" :editor="editor" v-model="editorData" :config="editorConfig" v-on:input="updateValue()"></ckeditor>
-  {{props.editorValue}}
 </div>
 </template>
