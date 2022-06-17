@@ -1,10 +1,10 @@
 <script setup>
 import { computed } from '@vue/reactivity';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { Cropper } from 'vue-advanced-cropper';
 import 'vue-advanced-cropper/dist/style.css';
 
-const porps = defineProps({
+const props = defineProps({
   fileInputData: Array
 })
 
@@ -14,7 +14,13 @@ const image = ref('')
 const cropperCanvas = ref()
 
 const imageUrl = ref('')
-const imageResult = ref('')
+const imageResult = computed(()=> {
+  if (props.fileInputData) {
+    return ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
+  } else {
+    return ''
+  }
+})
 
 const imagePreview = computed(() => {
   if (imageResult.value) {
@@ -81,7 +87,7 @@ function cancelCrop() {
     <div class="d-flex w-100">
       <img class="mw-100" :src="imageResult" alt="" style="max-height: 400px;">
       <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
-  
+
     </div>
     <div class="d-flex gap-2">
       <button class="text-white btn btn-bg-primary" @click="inputFileClick">Pilih Gambar</button>
