@@ -7,6 +7,7 @@ import ImageCropper from '@/components/image-cropper/Index.vue'
 import CKEditor from '@/components/ckeditor/Index.vue'
 import { useToast } from "vue-toast-notification";
 import { useRouter } from "vue-router";
+import FileDrop from "@/components/file-dropzone/Index.vue"
 
 onMounted(() => {
   setCurrentPageBreadcrumbs('Tambah Pengumuman', ['Informasi', 'Pengumuman'])
@@ -25,6 +26,8 @@ const form = reactive({
   'content_status': '',
 })
 
+const fileDatas = ref({})
+
 function getKelas() {
   request.post('kelas')
     .then(res => {
@@ -32,11 +35,8 @@ function getKelas() {
     })
 }
 
-function cropImage({ coordinates, canvas }) {
-  console.log(coordinates, canvas)
-}
-
 function postBerita() {
+  // return console.log(fileDatas.value)
   const formData = new FormData()
   formData.append('cat_id', '')
   formData.append('kelas_id', form.kelas_id)
@@ -46,6 +46,11 @@ function postBerita() {
   formData.append('content_desc', form.content_desc)
   formData.append('content_image', form.content_image)
   formData.append('content_status', form.content_status)
+  
+  formData.append('jumlah_file', fileDatas.value.length)
+  Array.from(fileDatas.value).forEach((file, indexFile) => {
+    formData.append('file_' + indexFile, file)
+  });
 
   request.post('pengumuman/add', formData, {
     headers: {
@@ -143,6 +148,14 @@ function postBerita() {
                   :value="0">
                 <label class="form-check-label" for="mapel-status-0">Non Aktif</label>
               </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 pt-3">
+              <p class="m-0 fs-4 fw-bold">File Lampiran</p>
+            </div>
+            <div class="col-9 align-items-center">
+              <FileDrop v-model:fileInputData="fileDatas"></FileDrop>
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
