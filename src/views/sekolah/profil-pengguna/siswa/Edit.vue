@@ -325,7 +325,7 @@ function checkTest() {
             </div>
           </div>
           <div class="d-flex gap-6">
-            <div>
+            <div v-if="oldFoto">
               <p class="m-0 fs-4 fw-bold mb-6">Foto Siswa</p>
               <img height="200" width="200"  :src="baseUrl + '/public/images/siswa/' + oldFoto" alt="">
             </div>
