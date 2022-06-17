@@ -36,6 +36,12 @@ const fileDatas = ref({})
 
 const oldFiles = ref()
 
+watch(fileDatas, (now, prev) => {
+  if (!isEmpty(now)) {
+    oldFiles.value = null
+  }
+}
+)
 function getKelas() {
   request.post('kelas')
     .then(res => {
