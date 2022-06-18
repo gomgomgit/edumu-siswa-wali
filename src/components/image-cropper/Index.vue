@@ -94,7 +94,6 @@ function openCrop() {
 function cancelCrop() {
   imageUrl.value = null
 }
-console.log(props)
 </script>
 
 <template>
