@@ -78,7 +78,7 @@ import { useToast } from "vue-toast-notification";
             </span>
           </router-link>
         </div>
-        <div class="separator border-black-50 border-2 my-6"></div>
+        <div class="separator border-black-50 border-2 my-3"></div>
         <div>
           <!-- <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">

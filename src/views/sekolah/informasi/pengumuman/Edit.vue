@@ -17,6 +17,8 @@ onMounted(() => {
   getPengumuman()
 })
 
+const baseUrl = process.env.VUE_APP_API_URL
+
 const router = useRouter()
 const route = useRoute()
 const pengumumanId = route.params.id
@@ -61,7 +63,7 @@ function getPengumuman() {
       form.content_image = result.content_image
       form.content_status = result.content_status
 
-      oldImage.value = result.content_image
+      oldImage.value = (baseUrl + '/public/images/konten/' + result.content_image)
       oldFiles.value = result.file_content
     })
 }
