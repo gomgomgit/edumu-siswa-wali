@@ -33,10 +33,10 @@
   const siswa = reactive({
     columns: [
       { label: 'Nama Lengkap', field: 'user_nama' },
-      { label: 'Kelas', field: 'kelas_nama' },
-      { label: 'Username', field: 'user_username' },
-      { label: 'NISN', field: 'siswa_nisn' },
-      { label: 'NIS', field: 'siswa_nis' },
+      { label: 'Kelas', field: 'kelas_nama', sortable: false },
+      { label: 'Username', field: 'user_username', sortable: false },
+      { label: 'NISN', field: 'siswa_nisn', sortable: false },
+      { label: 'NIS', field: 'siswa_nis', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
     ],
     rows: [],
