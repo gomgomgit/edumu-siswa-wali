@@ -27,9 +27,9 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const tahunAjar = reactive({
     columns: [
-      { label: 'Tahun Ajar', field: 'thn_ajar_value' },
-      { label: 'Semester', field: 'thn_ajar_semester' },
-      { label: 'Status', field: 'thn_ajar_status' },
+      { label: 'Tahun Ajar', field: 'thn_ajar_value', sortable: false },
+      { label: 'Semester', field: 'thn_ajar_semester', sortable: false },
+      { label: 'Status', field: 'thn_ajar_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -129,12 +129,14 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <div>
+              <h2 class="fs-1 fw-bold py-6">Data Tahun Ajar</h2>
+
+              <!-- <div>
                 <FilterSelect v-model:filterValue="semesterFilter" :options="semesterOption" @changeFilter="changeFilter('semester')" placeholder="Pilih Semester" />
               </div>
               <div>
                 <FilterSelect v-model:filterValue="statusFilter" :options="statusOption" @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
-              </div>
+              </div> -->
             </div>
 
             <div class="position-relative d-flex ">
