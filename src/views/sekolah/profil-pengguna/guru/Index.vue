@@ -163,6 +163,5 @@ function handlePasswordClose() {
 			:passwordData="passwordData"
 			@close="handlePasswordClose"
 			@submit="handlePasswordClose" />
-    />
   </div>
 </template>
