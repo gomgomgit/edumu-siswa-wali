@@ -6,6 +6,7 @@ import 'vue-advanced-cropper/dist/style.css';
 
 const props = defineProps({
   fileInputData: Array,
+  oldImage: String,
   ratio: {String, required: false},
   cropRequire: {Boolean, default: false},
 })
@@ -16,31 +17,12 @@ const image = ref('')
 const cropperCanvas = ref()
 
 const imageUrl = ref('')
-const imageResult = ref('')
-// const imageResult = computed(()=> {
-//   if (props.fileInputData) {
-//     return ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-//   } else {
-//     return ''
-//   }
-// })
-const imageDefault = computed(()=> {
-  if (props.fileInputData) {
-    return imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-  } else {
-    return ''
-  }
+
+const imageSrc = ref('')
+const imageResult = computed({
+  get: () => props.oldImage && !imageSrc.value ? ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.oldImage) : imageSrc.value,
+  set: (val) => imageSrc.value = val
 })
-const imagePreview = computed(() => {
-  if (imageResult.value) {
-    return imageResult.value
-  } else {
-    return '/media/illustrations/media/frame-media.png'
-  }
-})
-function setDefault() {
-  imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-}
 function onImageChange(payload) {
   const file = payload.target.files[0];
   if(file) {
@@ -48,6 +30,7 @@ function onImageChange(payload) {
       imageUrl.value = URL.createObjectURL(file)
     } else {
       image.value = file
+
       // imageUrl.value = URL.createObjectURL(file)
       imageResult.value = URL.createObjectURL(file)
     }
@@ -66,10 +49,6 @@ async function cropImage () {
   const { coordinates, canvas } = cropperCanvas.value.getResult();
 
   imageResult.value = canvas.toDataURL()
-
-  // const blob = await (await fetch(imageResult.value)).blob(); 
-  // const file = new File([blob], 'filecropped.jpg', {type:"image/jpeg", lastModified:new Date()});
-  // emits('update:fileInputData', file)
 
   const blob = dataURLtoBlob(imageResult.value)
   emits('update:fileInputData', blob)

@@ -13,6 +13,8 @@ import { useToast } from "vue-toast-notification";
     setCurrentPageBreadcrumbs("Pengumuman", ['Sekolah', "Informasi"]);
   })
 
+  const baseUrl = process.env.VUE_APP_API_URL
+
   function getPengumuman (payload) {
       request.post('pengumuman', null, {
         params: {
@@ -28,9 +30,10 @@ import { useToast } from "vue-toast-notification";
   
   const pengumuman = reactive({
     columns: [
-      { label: 'Judul', field: 'content_name' },
-      { label: 'Deskripsi', field: 'content_shortdesc' },
-      { label: 'Status', field: 'content_status' },
+      { label: 'Gambar', field: 'content_image', sortable: false },
+      { label: 'Judul', field: 'content_name', sortable: false },
+      { label: 'Deskripsi', field: 'content_shortdesc', sortable: false },
+      { label: 'Status', field: 'content_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -65,12 +68,19 @@ import { useToast } from "vue-toast-notification";
   <div>
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
-        <div>
-          <h2 class="fs-1 fw-bold py-6">Data Pengumuman</h2>
+        <div class="py-6 d-flex justify-content-between align-items-center">
+          <h2 class="fs-1 fw-bold">Data Pengumuman</h2>
+          
+          <router-link to="/sekolah/informasi/pengumuman/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <i class="bi bi-plus fs-1"></i>
+            <span>
+              Tambah Pengumuman
+            </span>
+          </router-link>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
-          <div class="d-flex flex-wrap justify-content-between align-items-center">
+          <!-- <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
               <div>
                 <el-input
@@ -96,7 +106,7 @@ import { useToast } from "vue-toast-notification";
                 </router-link>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
@@ -106,8 +116,10 @@ import { useToast } from "vue-toast-notification";
             :paginationOptions="{enabled: true, perPage: pengumuman.perPage}"
             @loadItems="getPengumuman">
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'thn_ajar_semester'">
-                {{row.thn_ajar_semester[0].toUpperCase() + row.thn_ajar_semester.substring(1)}}
+              <div v-if="column.field == 'content_image'">
+                <div class="p-2 bg-secondary d-inline-block">
+                  <img class="image-thumbnail"  :src="baseUrl + '/public/images/konten/' + row.content_image" alt="">
+                </div>
               </div>
               <div v-if="column.field == 'content_status'">
                 <span :class="'badge badge-light-' + (row.content_status == '1' ? 'success' : 'danger')">{{row.content_status == '1' ?
@@ -132,3 +144,10 @@ import { useToast } from "vue-toast-notification";
     </div>
   </div>
 </template>
+
+<style>
+.image-thumbnail{
+  max-width: 80px;
+  max-height: 60px;
+}
+</style>
