@@ -81,7 +81,7 @@
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center gap-4">
-            <div class="d-flex w-25 gap-4">
+            <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
                 <el-input
                   v-model="searchSiswa"
                   clearable
@@ -94,16 +94,16 @@
                 </el-input>
             </div>
 
-            <div class="position-relative d-flex gap-4">
+            <div class="position-relative d-flex flex-wrap gap-4 w-100 w-xl-auto justify-content-end">
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Siswa Absen GPS
                   </span>
                 </a>
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Export Data
                   </span>
@@ -111,7 +111,7 @@
                 </a>
               </div>
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Import Data
                   </span>

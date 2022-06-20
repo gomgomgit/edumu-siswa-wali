@@ -109,47 +109,51 @@ function submitAddKelas() {
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-3 align-items-center d-flex">
               <p class="m-0 fs-4 fw-bold">Kelas</p>
             </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <div class="flex-grow-1">
-                <el-select class="w-100" v-model="formData.kelas_id" filterable placeholder="Select">
-                  <el-option v-for="kls in kelasData" :key="kls.kelas_id" :label="kls.kelas_nama"
-                    :value="kls.kelas_id" />
-                </el-select>
-              </div>
-              <div>
-                <button @click="formKelasMode = true"
-                  class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                  <i class="bi bi-plus fs-1"></i>
-                  <span>
-                    Tambah Kelas
-                  </span>
-                </button>
+            <div class="col-9 align-items-center">
+              <div class="row g-4">
+                <div class="col-9">
+                  <el-select class="w-100" v-model="formData.kelas_id" filterable placeholder="Select">
+                    <el-option v-for="kls in kelasData" :key="kls.kelas_id" :label="kls.kelas_nama"
+                      :value="kls.kelas_id" />
+                  </el-select>
+                </div>
+                <div class="col-3">
+                  <button @click="formKelasMode = true"
+                    class="btn btn-primary d-flex gap-3 align-items-center w-auto w-lg-100">
+                    <i class="bi bi-plus fs-1 p-0"></i>
+                    <span class="d-none d-lg-inline">
+                      Tambah Kelas
+                    </span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row align-items-center">
             <div class="col-3 align-items-center d-flex">
               <p class="m-0 fs-4 fw-bold">Wali</p>
             </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <div class="flex-grow-1">
-                <el-select class="w-100" v-model="formData.wali_id" filterable placeholder="Select">
-                  <el-option v-for="wali in waliData" :key="wali.wali_id" :label="wali.user_nama"
-                    :value="wali.wali_id" />
-                </el-select>
-              </div>
-              <div>
-                <button to="/sekolah/profil-pengguna/siswa/tambah-data"
-                  class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                  <i class="bi bi-plus fs-1"></i>
-                  <span>
-                    Tambah Wali
-                  </span>
-                </button>
+            <div class="col-9 align-items-center">
+              <div class="row g-4">
+                <div class="col-9">
+                  <el-select class="w-100" v-model="formData.wali_id" filterable placeholder="Select">
+                    <el-option v-for="wali in waliData" :key="wali.wali_id" :label="wali.user_nama"
+                      :value="wali.wali_id" />
+                  </el-select>
+                </div>
+                <div class="col-3">
+                  <router-link to="/sekolah/profil-pengguna/wali/tambah-data"
+                    class="btn btn-primary d-flex gap-3 align-items-center w-auto w-lg-100">
+                    <i class="bi bi-plus fs-1 p-0"></i>
+                    <span class="d-none d-lg-inline">
+                      Tambah Wali
+                    </span>
+                  </router-link>
+                </div>
               </div>
             </div>
           </div>
