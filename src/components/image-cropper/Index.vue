@@ -33,9 +33,9 @@ function onImageChange(payload) {
 
       // imageUrl.value = URL.createObjectURL(file)
       imageResult.value = URL.createObjectURL(file)
+      emits('update:fileInputData', payload.target.files[0])
     }
     
-    emits('update:fileInputData', payload.target.files[0])
   } else {
     image.value = null
     imageUrl.value = null

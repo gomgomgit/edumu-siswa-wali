@@ -13,6 +13,7 @@ onMounted(() => {
   getKategori()
   getBerita()
 })
+const baseUrl = process.env.VUE_APP_API_URL
 
 const router = useRouter()
 const route = useRoute()
@@ -29,6 +30,8 @@ const form = reactive({
   'content_image': null,
   'content_status': '',
 })
+
+const oldImage = ref('')
 
 function getKategori() {
   request.post('kategori')
@@ -48,6 +51,8 @@ function getBerita() {
       form.content_desc = result.content_desc
       form.content_image = result.content_image
       form.content_status = result.content_status
+      
+      oldImage.value = (baseUrl + '/public/images/konten/' + result.content_image)
     })
 }
 
@@ -111,7 +116,7 @@ function postBerita() {
               <p class="m-0 fs-4 fw-bold">Gambar</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
-              <ImageCropper  v-model:fileInputData="form.content_image" :ratio="16/9" :cropRequire="true"/>
+              <ImageCropper  v-model:fileInputData="form.content_image" :ratio="16/9" :cropRequire="true" :oldImage="oldImage"/>
             </div>
           </div>
           <div class="row">
@@ -157,7 +162,7 @@ function postBerita() {
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.go(-1)" class="btn btn-light">Batal</a>
             <a @click.prevent="postBerita" class="btn btn-primary">Simpan</a>
           </div>
         </div>

@@ -12,6 +12,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   onMounted(() => {
     setCurrentPageBreadcrumbs("Berita", ['Sekolah', "Informasi"]);
   })
+  const baseUrl = process.env.VUE_APP_API_URL
 
   function getBerita (payload) {
       request.post('konten', null, {
@@ -28,6 +29,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const berita = reactive({
     columns: [
+      { label: 'Gambar', field: 'content_image' },
       { label: 'Judul', field: 'content_name' },
       { label: 'Deskripsi', field: 'content_shortdesc' },
       { label: 'Status', field: 'content_status' },
@@ -67,11 +69,20 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   <div>
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
-        <div>
-          <h2 class="fs-1 fw-bold py-6">Data Berita</h2>
+        <div class="py-6 d-flex justify-content-between align-items-center">
+          <h2 class="fs-1 fw-bold">Data Berita</h2>
+          
+          <div class="d-flex align-items-center">
+            <router-link to="/sekolah/informasi/berita/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+              <i class="bi bi-plus fs-1"></i>
+              <span>
+                Tambah Berita
+              </span>
+            </router-link>
+          </div>
         </div>
-        <div class="separator border-black-50 border-2 my-6"></div>
-        <div>
+        <div class="separator border-black-50 border-2 my-3"></div>
+        <!-- <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
               <div>
@@ -99,7 +110,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
             :totalRows="berita.totalRows || 0" 
@@ -107,6 +118,11 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
             :rows="berita.rows"
             @loadItems="getBerita">
             <template #table-row="{column, row}">
+              <div v-if="column.field == 'content_image'">
+                <div class="p-2 bg-secondary d-inline-block">
+                  <img class="image-thumbnail"  :src="baseUrl + '/public/images/konten/' + row.content_image" alt="">
+                </div>
+              </div>
               <div v-if="column.field == 'content_status'">
                 <span :class="'badge badge-light-' + (row.content_status == '1' ? 'success' : 'danger')">{{row.content_status == '1' ?
                   'Aktif' : 'Non Aktif'}}</span>
@@ -130,3 +146,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
     </div>
   </div>
 </template>
+
+<style>
+.image-thumbnail{
+  max-width: 80px;
+  max-height: 60px;
+}
+</style>

@@ -159,7 +159,7 @@ function postBerita() {
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.go(-1)" href="#" class="btn btn-light">Batal</a>
             <a @click.prevent="postBerita" class="btn btn-primary">Simpan</a>
           </div>
         </div>
