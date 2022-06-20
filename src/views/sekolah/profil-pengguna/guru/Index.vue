@@ -9,6 +9,7 @@ import { Search } from '@element-plus/icons-vue'
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import QueryString from "qs";
 import { useToast } from "vue-toast-notification";
+import ChangePassword from '@/components/change-password/Index.vue'
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Guru", ['Sekolah', "Profil Pengguna"]);
@@ -36,7 +37,7 @@ const guru = reactive({
     { label: 'Username', field: 'user_username', sortable: false },
     { label: 'Level', field: 'user_level', sortable: false },
     { label: 'Status', field: 'user_status', sortable: false },
-    { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
+    { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
   ],
   rows: [],
   totalRows: 0,
@@ -44,7 +45,8 @@ const guru = reactive({
 
 const searchGuru = ref('')
 
-const modalData = ref(false)
+const passwordModal = ref(false)
+const passwordData = ref([])
 
 const statusOption = [
   {
@@ -67,6 +69,15 @@ function deleteData (userId) {
         getGuru()
       })
   })
+}
+function handlePasswordOpen(data) {
+  console.log('buka')
+  passwordModal.value = true
+  passwordData.value = data
+}
+function handlePasswordClose() {
+  passwordModal.value = false
+  passwordData.value = []
 }
 </script>
 
@@ -131,7 +142,12 @@ function deleteData (userId) {
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </router-link>
-                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="handlePasswordOpen(row)" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-2">
+                  <span class="svg-icon svg-icon-3">
+                    <i class="bi bi-key-fill fs-2"></i>
+                  </span>
+                </button>
+                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
@@ -142,5 +158,11 @@ function deleteData (userId) {
         </div>
       </div>
     </div>
+    <ChangePassword 
+			:passwordModal="passwordModal"
+			:passwordData="passwordData"
+			@close="handlePasswordClose"
+			@submit="handlePasswordClose" />
+    />
   </div>
 </template>
