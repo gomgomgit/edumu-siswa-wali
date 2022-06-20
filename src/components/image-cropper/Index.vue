@@ -20,7 +20,7 @@ const imageUrl = ref('')
 
 const imageSrc = ref('')
 const imageResult = computed({
-  get: () => props.oldImage && !imageSrc.value ? props.oldImage : imageSrc.value,
+  get: () => props.oldImage && props.fileInputData && !imageSrc.value ? props.oldImage : imageSrc.value,
   set: (val) => imageSrc.value = val
 })
 function onImageChange(payload) {
