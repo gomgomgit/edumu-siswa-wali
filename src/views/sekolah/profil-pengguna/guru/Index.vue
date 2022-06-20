@@ -33,9 +33,9 @@ const loadingTahunAjar = ref(false)
 const guru = reactive({
   columns: [
     { label: 'Nama Lengkap', field: 'user_nama' },
-    { label: 'Username', field: 'user_username' },
-    { label: 'Level', field: 'user_level' },
-    { label: 'Status', field: 'user_status' },
+    { label: 'Username', field: 'user_username', sortable: false },
+    { label: 'Level', field: 'user_level', sortable: false },
+    { label: 'Status', field: 'user_status', sortable: false },
     { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
   ],
   rows: [],
