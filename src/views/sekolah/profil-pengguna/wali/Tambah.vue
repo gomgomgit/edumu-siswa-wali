@@ -51,7 +51,7 @@ function post() {
       }
   }).then(res => {
       useToast().success('Data Berhasil Ditambahkan!')
-      router.push('/sekolah/profil-pengguna/wali')
+      router.go(-1)
     })
 }
 
