@@ -144,7 +144,7 @@ import { useToast } from "vue-toast-notification";
 
 <template>
   <div class="row g-8">
-    <div class="col-7">
+    <div class="col-12 col-lg-12 col-xl-7">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
           <div>
@@ -153,7 +153,7 @@ import { useToast } from "vue-toast-notification";
           </div>
           <div class="separator border-black-50 border-3 my-4"></div>
           <div class="page-content">
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-4">
               <div class="d-flex gap-4">
                 <div>
                   <FilterSelect v-model:filterValue="kelasAsal" @changeFilter="changeAsal"
@@ -202,7 +202,7 @@ import { useToast } from "vue-toast-notification";
         </div>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-12 col-lg-12 col-xl-5">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
 

@@ -129,7 +129,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <h2 class="fs-1 fw-bold py-6">Data Tahun Ajar</h2>
+              <h2 class="fs-1 fw-bold py-6 m-0">Data Tahun Ajar</h2>
 
               <!-- <div>
                 <FilterSelect v-model:filterValue="semesterFilter" :options="semesterOption" @changeFilter="changeFilter('semester')" placeholder="Pilih Semester" />
@@ -148,6 +148,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
               </a>
             </div>
           </div>
+          <div class="separator border-black-50 border-2 my-3"></div>
         </div>
       </div>
       <div class="mb-5 mb-xxl-8 px-12">
