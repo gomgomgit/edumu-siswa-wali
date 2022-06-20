@@ -143,10 +143,10 @@
 
   const kelasData = reactive({
     columns: [
-      { label: 'Kelas', field: 'kelas_nama' },
-      { label: 'Jam Masuk', field: 'shift' },
-      { label: 'Tingkat Kelas', field: 'kelas_level' },
-      { label: 'Status', field: 'kelas_status' },
+      { label: 'Kelas', field: 'kelas_nama', sortable: false },
+      { label: 'Jam Masuk', field: 'shift', sortable: false },
+      { label: 'Tingkat Kelas', field: 'kelas_level', sortable: false },
+      { label: 'Status', field: 'kelas_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -198,7 +198,9 @@
       <div class="page-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
-            <div>
+            <h2 class="fs-1 fw-bold py-6">Data Kelas</h2>
+
+            <!-- <div>
               <FilterSelect v-model:filterValue="tingkatKelas" placeholder="Pilih Kelas">
                 <el-option
                   v-for="item, index in options"
@@ -217,7 +219,7 @@
                   :value="item.value"
                 />
               </FilterSelect>
-            </div>
+            </div> -->
           </div>
 
           <div class="position-relative d-flex ">
@@ -274,7 +276,7 @@
                 <div class="col-8">
                   <input type="text" v-model="formData.kelas_nama" class="form-control" placeholder="X IPA , IX IPS , DST"/>
                 </div>
-                <div class="col-4 d-flex align-items-center fw-bold fs-4">Wali Kelas</div>
+                <!-- <div class="col-4 d-flex align-items-center fw-bold fs-4">Wali Kelas</div>
                 <div class="col-8">
                   <select  v-model="formData.guru" class="form-select form-select-solid" aria-label="Select example">
                     <option>Pilih Guru</option>
@@ -282,7 +284,7 @@
                       <option value="1">{{guru.name}}</option>
                     </template>
                   </select>
-                </div>
+                </div> -->
                 <div class="col-4 d-flex align-items-center fw-bold fs-4">Tingkat Kelas</div>
                 <div class="col-8">
                   <select  v-model="formData.kelas_level" class="form-select form-select-solid" aria-label="Select example">

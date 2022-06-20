@@ -9,7 +9,8 @@ import { useToast } from "vue-toast-notification";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
-
+    getDataSiswaKelas()
+    getDataSiswaKelasTujuan()
     getKelas()
   })
 
@@ -44,6 +45,8 @@ import { useToast } from "vue-toast-notification";
     }).then(res => {
       dataSiswaKelasTujuan.rows = res.data.data.data
       dataSiswaKelasTujuan.totalRows = res.data.data.total
+
+      tahunAjar.value = res.data.tahun_ajar.thn_ajar_value
     })
   }
   
@@ -86,7 +89,7 @@ import { useToast } from "vue-toast-notification";
     totalRows: 0,
   })
 
-  const tahunAjar = ref('test 1312')
+  const tahunAjar = ref('')
   const kelas = ref([])
   const kelasAsal = ref('')
   const kelasTujuan = ref('')
