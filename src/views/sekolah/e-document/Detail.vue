@@ -8,37 +8,43 @@
   import { Search } from '@element-plus/icons-vue'
 import { useToast } from "vue-toast-notification";
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
+import { useRoute } from "vue-router";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Dokumen", ['Sekolah', "E-Document"]);
-    getClass()
+    setCurrentPageBreadcrumbs("Detail", ['Sekolah', "E-Document"]);
+    getCatList()
   })
+  const route = useRoute()
+  const siswaId = route.params.id
+  const siswaName = route.params.name
 
   function getSiswa (payload) {
-      request.post('arsip/siswa', null, {
+      request.post('arsip/detail', null, {
         params: {
+          user_id: siswaId,
           cari: searchFilter.value,
-          participant_id: classFilter.value,
+          arsip_cat_id: catFilter.value,
           page: payload?.page ?? 1,
           sortby: payload?.sort?.type ?? 'ASC'
         }
       }).then(res => {
-        siswa.rows = res.data.data.data
-        siswa.totalRows = res.data.data.total
+        dokumen.rows = res.data.data.data
+        dokumen.totalRows = res.data.data.total
       })
     }
-  function getClass (payload) {
-      request.post('kelas')
+  function getCatList (payload) {
+      request.post('arsip/catlist')
       .then(res => {
-        classOption.value = res.data.data
+        catlistOption.value = res.data.data
       })
     }
 
 
-  const siswa = reactive({
+  const dokumen = reactive({
     columns: [
       { label: 'Nama Siswa', field: 'user_nama', sortable: false },
-      { label: 'E-Document', field: 'arsipFile', sortable: false },
+      { label: 'Nama File', field: 'file_name', sortable: false },
+      { label: 'Tipe', field: 'arsip_cat_name', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -46,8 +52,20 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   })
 
   const searchFilter = ref('')
-  const classFilter = ref('')
-  const classOption = ref([])
+  const catFilter = ref('')
+  const catlistOption = ref([])
+
+  
+  function deleteData(id) {
+    deleteConfirmation(function() {
+      request.get('thn_ajar/delete/' + id)
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getTahunAjar()
+      })
+    })
+  }
+
 </script>
 
 <template>
@@ -55,7 +73,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div class="py-6 d-flex justify-content-between align-items-center">
-          <h2 class="fs-1 fw-bold">Data E-Document</h2>
+          <h2 class="fs-1 fw-bold">Detail Dokumen - {{siswaName}}</h2>
           
         </div>
         <div class="separator border-black-50 border-2 my-3"></div>
@@ -63,10 +81,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="position-relative d-flex gap-4">
               <div>
-                <FilterSelect v-model:filterValue="classFilter"
+                <FilterSelect v-model:filterValue="catFilter"
                   @changeFilter="getSiswa()"
-                  placeholder="Pilih Kelas">
-                  <el-option v-for="kelas in classOption" :value="kelas.kelas_id" :label="kelas.kelas_nama">
+                  placeholder="Pilih Kategori">
+                  <el-option v-for="cat in catlistOption" :value="cat.arsip_cat_id" :label="cat.arsip_cat_name">
                   </el-option>
                 </FilterSelect>
               </div>
@@ -87,29 +105,23 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
             :key="searchFilter"
-            :totalRows="siswa.totalRows || 0" 
-            :columns="siswa.columns" 
-            :rows="siswa.rows"
+            :totalRows="dokumen.totalRows || 0" 
+            :columns="dokumen.columns" 
+            :rows="dokumen.rows"
             @loadItems="getSiswa">
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'arsipFile'">
-                <span v-if="!row.arsipFile[0]" class="badge badge-light-danger">
-                  File Kosong
-                </span>
-                <template v-if="row.arsipFile[0]" v-for="arsip in row.arsipFile">
-                  <div>
-                    <span class="badge badge-light-success">
-                      {{arsip.arsip_cat_name}}
-                    </span>
-                  </div>
-                </template>
-              </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="'/sekolah/e-document/detail/' + row.user_id + '/' + row.user_nama" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <a :href="row.file_url" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
-                    <i class="bi bi-eye-fill fs-3"></i>
+                    <i class="bi bi-cloud-arrow-down-fill fs-3"></i>
                   </span>
-                </router-link>
+                </a>
+                
+                <button @click="deleteData(row.thn_ajar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/general/gen027.svg"/>
+                  </span>
+                </button>
               </div>
             </template>
           </ServerSideTable>
