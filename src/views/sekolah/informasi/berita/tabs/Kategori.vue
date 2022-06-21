@@ -35,7 +35,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const kategori = reactive({
     columns: [
-      { label: 'Kategori', field: 'cat_name' },
+      { label: 'Kategori', field: 'cat_name', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
