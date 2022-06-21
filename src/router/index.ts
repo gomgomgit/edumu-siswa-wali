@@ -265,6 +265,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),
       },
+      {
+        path: "/account/profile",
+        name: "account-profile",
+        component: () => import("@/views/account/profile/Index.vue"),
+      },
     ],
   },
   {
