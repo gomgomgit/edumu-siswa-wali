@@ -280,7 +280,7 @@ export default defineComponent({
           },
           {
             heading: "E Dokumen",
-            route: "/pages",
+            route: "/sekolah/e-document",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

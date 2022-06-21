@@ -213,6 +213,29 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/informasi/berita/Edit.vue"),
       },
       {
+        path: "/sekolah/e-document",
+        name: "sekolah-e-document",
+        component: () => import("@/views/sekolah/e-document/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/e-document/dokumen",
+          },
+          {
+            path: "dokumen",
+            name: "sekolah-e-document-dokumen",
+            component: () =>
+              import("@/views/sekolah/e-document/tabs/Dokumen.vue"),
+          },
+          {
+            path: "kategori",
+            name: "sekolah-e-document-kategori",
+            component: () =>
+              import("@/views/sekolah/e-document/tabs/Kategori.vue"),
+          },
+        ],
+      },
+      {
         path: "/sekolah/media",
         name: "sekolah-media",
         component: () => import("@/views/sekolah/media/Index.vue"),

@@ -29,10 +29,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const berita = reactive({
     columns: [
-      { label: 'Gambar', field: 'content_image' },
-      { label: 'Judul', field: 'content_name' },
-      { label: 'Deskripsi', field: 'content_shortdesc' },
-      { label: 'Status', field: 'content_status' },
+      { label: 'Gambar', field: 'content_image', sortable: false },
+      { label: 'Judul', field: 'content_name', sortable: false },
+      { label: 'Deskripsi', field: 'content_shortdesc', sortable: false },
+      { label: 'Status', field: 'content_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
