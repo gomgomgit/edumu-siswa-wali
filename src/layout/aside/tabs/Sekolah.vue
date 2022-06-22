@@ -292,7 +292,7 @@ export default defineComponent({
             sub: [
               {
                 heading: "User Online",
-                route: "/profile",
+                route: "/sekolah/laporan/user-online",
               },
               {
                 heading: "Kartu Aktifitas",
