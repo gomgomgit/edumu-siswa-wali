@@ -120,7 +120,12 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
             <template #table-row="{column, row}">
               <div v-if="column.field == 'content_image'">
                 <div class="p-2 bg-secondary d-inline-block">
-                  <img class="image-thumbnail"  :src="baseUrl + '/public/images/konten/' + row.content_image" alt="">
+                  <template v-if="row.content_image">
+                    <img class="image-thumbnail"  :src="baseUrl + '/public/images/konten/' + row.content_image" alt="">
+                  </template>
+                  <template v-if="!row.content_image">
+                    <span class="fw-bold fs-6 mx-2">NO IMAGE</span>
+                  </template>
                 </div>
               </div>
               <div v-if="column.field == 'content_status'">
