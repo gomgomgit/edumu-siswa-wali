@@ -302,7 +302,7 @@ export default defineComponent({
           },
           {
             heading: "Akreditasi",
-            route: "/pages",
+            route: "/sekolah/akreditasi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
