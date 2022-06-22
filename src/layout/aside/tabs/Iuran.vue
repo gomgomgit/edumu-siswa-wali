@@ -181,7 +181,7 @@ export default defineComponent({
         pages: [
           {
             heading: "Jenis Iuran",
-            route: "/pages",
+            route: "/iuran/jenis-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

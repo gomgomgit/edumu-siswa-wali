@@ -292,6 +292,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/media/Album.vue"),
       },
       {
+        path: "/iuran/jenis-iuran",
+        name: "iuran-jenis-iuran",
+        component: () => import("@/views/iuran/jenis-iuran/Index.vue"),
+      },
+      {
         path: "/pengaturan/umum",
         name: "pengaturan-umum",
         component: () => import("@/views/pengaturan/umum/Index.vue"),
