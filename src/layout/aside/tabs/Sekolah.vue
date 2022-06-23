@@ -217,10 +217,6 @@ export default defineComponent({
                 heading: "Guru",
                 route: "/sekolah/profil-pengguna/guru",
               },
-              {
-                heading: "Pegawai",
-                route: "/profile",
-              },
             ],
           },
           {
