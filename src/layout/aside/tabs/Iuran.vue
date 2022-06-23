@@ -193,7 +193,7 @@ export default defineComponent({
           },
           {
             heading: "Master Iuran",
-            route: "/pages",
+            route: "/iuran/master-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
