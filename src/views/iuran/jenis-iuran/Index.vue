@@ -6,12 +6,14 @@ import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
 import ServerSideTable from '@/components/ServerSideTable.vue'
 // import FilterSelect from '@/components/filter-select/index.vue'
 import FormModal from './FormModal.vue'
+import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
+import { useToast } from 'vue-toast-notification';
 
 const tableRef = ref()
 const formMode = ref('')
 const activeData = ref({})
 
-const tableData = reactive({
+const jenisIuranData = reactive({
 	columns: [
 		{ label: 'Jenis Iuran', field: 'tipe_nama', sortable: false },
 		{ label: 'Deskripsi', field: 'tipe_desc', sortable: false },
@@ -21,15 +23,15 @@ const tableData = reactive({
 	totalRows: 0,
 })
 
-function getTableData (payload) {
+function getJenisIuran (payload) {
 	request.get('iuran/tipe', null, {
 		params: {
 			page: payload?.page ?? 1,
 			sortby: payload?.sort?.type
 		}
 	}).then(res => {
-		tableData.rows = res.data.data
-		tableData.totalRows = res.data.total
+		jenisIuranData.rows = res.data.data
+		jenisIuranData.totalRows = res.data.total
 	})
 }
 
@@ -41,6 +43,16 @@ function handleEdit (row) {
 function handleFormClose (row) {
 	activeData.value = {}
 	formMode.value = ''
+}
+
+function deleteData(id) {
+	deleteConfirmation(function() {
+		request.get('iuran/tipe/delete/' + id)
+		.then(res => {
+			useToast().success('Data Berhasil Dihapus!')
+			getJenisIuran()
+		})
+	})
 }
 
 onMounted(() => {
@@ -78,10 +90,10 @@ onMounted(() => {
         </div>
 				<ServerSideTable
 					ref="tableRef"
-					:totalRows="tableData.totalRows || 0"
-					:columns="tableData.columns"
-					:rows="tableData.rows"
-					@loadItems="getTableData">
+					:totalRows="jenisIuranData.totalRows || 0"
+					:columns="jenisIuranData.columns"
+					:rows="jenisIuranData.rows"
+					@loadItems="getJenisIuran">
 					<template #table-row="{column, row}">
 						<div v-if="column.field == 'mapel_status'">
 							<span :class="'badge badge-light-' + (row.mapel_status == 1 ? 'success' : 'danger')">
@@ -96,11 +108,11 @@ onMounted(() => {
 									<inline-svg src="media/icons/duotune/art/art005.svg" />
 								</span>
 							</button>
-							<!-- <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+							<button @click="deleteData(row.tipe_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
 								<span class="svg-icon svg-icon-3">
-									<inline-svg src="media/icons/duotune/general/gen027.svg" />
+									<inline-svg src="media/icons/duotune/general/gen027.svg"/>
 								</span>
-							</button> -->
+							</button>
 						</div>
 					</template>
 				</ServerSideTable>

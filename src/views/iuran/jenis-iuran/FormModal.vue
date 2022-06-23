@@ -12,9 +12,11 @@ const props = defineProps({
 	activeData: { type: Object, required: true },
 })
 
+const userId = 255
+
 const emits = defineEmits(['close', 'submit'])
 
-const initialForm = { mapel_nama: null, mapel_status: null }
+const initialForm = { created_by: null, tipe_nama: null, tipe_desc: null }
 
 const formData = reactive({...initialForm})
 
@@ -24,8 +26,9 @@ function handleClose () {
 }
 
 function handleSubmit () {
-	const endpoint = isEmpty(props.activeData) ? 'iuran/tipe/add' : 'iuran/tipe/edit'
+	const endpoint = isEmpty(props.activeData) ? 'iuran/tipe/add' : 'iuran/tipe/update'
 	const message = isEmpty(props.activeData) ? 'Ditambahkan!' : 'Diubah!'
+	isEmpty(props.activeData) ? formData.created_by = userId : formData.modified_by = userId
 
 	request.post(endpoint, qs.stringify(formData)).then(() => {
 		Object.assign(formData, initialForm)
