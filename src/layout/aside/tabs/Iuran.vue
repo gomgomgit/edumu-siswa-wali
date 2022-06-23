@@ -199,7 +199,7 @@ export default defineComponent({
           },
           {
             heading: "Iuran Siswa",
-            route: "/pages",
+            route: "/iuran/iuran-siswa",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
