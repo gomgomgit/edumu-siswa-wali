@@ -16,7 +16,7 @@ const userId = 255
 
 const emits = defineEmits(['close', 'submit'])
 
-const initialForm = { created_by: null, tipe_nama: null, tipe_desc: null }
+const initialForm = { created_by: null, group_nama: null, group_desc: null }
 
 const formData = reactive({...initialForm})
 
@@ -26,7 +26,7 @@ function handleClose () {
 }
 
 function handleSubmit () {
-	const endpoint = isEmpty(props.activeData) ? 'iuran/tipe/add' : 'iuran/tipe/update'
+	const endpoint = isEmpty(props.activeData) ? 'iuran/group/add' : 'iuran/group/update'
 	const message = isEmpty(props.activeData) ? 'Ditambahkan!' : 'Diubah!'
 	isEmpty(props.activeData) ? formData.created_by = userId : formData.modified_by = userId
 
@@ -49,7 +49,7 @@ watch(
 	<Modal
 		:title="props.mode"
 		:show="props.mode"
-		:breadcrumb="Array('Iuran', 'Jenis Iuran', props.mode)"
+		:breadcrumb="Array('Iuran', 'Grup Iuran', props.mode)"
 		@closeModal="handleClose"
 		@confirm="handleSubmit"
 		@dismiss="handleClose">
@@ -57,14 +57,14 @@ watch(
 			<div class="col-4 d-flex align-items-center fw-bold fs-4">Jenis Iuran</div>
 			<div class="col-8">
 				<input
-					v-model="formData.tipe_nama"
+					v-model="formData.group_nama"
 					type="text"
 					class="form-control" />
 			</div>
 			<div class="col-4 d-flex align-items-center fw-bold fs-4">Deskripsi</div>
 			<div class="col-8">
 				<input
-					v-model="formData.tipe_desc"
+					v-model="formData.group_desc"
 					type="text"
 					class="form-control" />
 			</div>

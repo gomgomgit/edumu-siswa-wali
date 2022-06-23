@@ -297,6 +297,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/iuran/jenis-iuran/Index.vue"),
       },
       {
+        path: "/iuran/grup-iuran",
+        name: "iuran-grup-iuran",
+        component: () => import("@/views/iuran/grup-iuran/Index.vue"),
+      },
+      {
         path: "/pengaturan/umum",
         name: "pengaturan-umum",
         component: () => import("@/views/pengaturan/umum/Index.vue"),

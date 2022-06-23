@@ -187,7 +187,7 @@ export default defineComponent({
           },
           {
             heading: "Grup Iuran",
-            route: "/pages",
+            route: "/iuran/grup-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
