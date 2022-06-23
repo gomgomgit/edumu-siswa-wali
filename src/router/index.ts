@@ -126,7 +126,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/akademik/kalender-akademik",
         name: "sekolah-akademik-kalender-akademik",
-        component: () => import("@/views/sekolah/akademik/KalenderAkademik.vue"),
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/Index.vue"),
       },
       {
         path: "/sekolah/mata-pelajaran",

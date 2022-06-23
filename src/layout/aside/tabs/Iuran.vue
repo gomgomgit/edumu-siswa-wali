@@ -180,8 +180,8 @@ export default defineComponent({
       {
         pages: [
           {
-            heading: "Jenis Iuran",
-            route: "/iuran/jenis-iuran",
+            heading: "Iuran Siswa",
+            route: "/iuran/iuran-siswa",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
@@ -192,14 +192,14 @@ export default defineComponent({
             fontIcon: "bi-archive",
           },
           {
-            heading: "Master Iuran",
-            route: "/iuran/master-iuran",
+            heading: "Jenis Iuran",
+            route: "/iuran/jenis-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
           {
-            heading: "Iuran Siswa",
-            route: "/iuran/iuran-siswa",
+            heading: "Master Iuran",
+            route: "/iuran/master-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
