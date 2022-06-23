@@ -8,10 +8,14 @@ import ServerSideTable from '@/components/ServerSideTable.vue'
 import FormModal from './FormModal.vue'
 import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
 import { useToast } from 'vue-toast-notification';
+import FilterSelect from '@/components/filter-select/index.vue';
 
 const tableRef = ref()
 const formMode = ref('')
 const activeData = ref({})
+
+const grupIuran = ref({})
+const filterGrup = ref('')
 
 const masterIuranData = reactive({
 	columns: [
@@ -26,14 +30,21 @@ const masterIuranData = reactive({
 })
 
 function getMasterIuran (payload) {
-	request.get('iuran/master', null, {
+	request.get('iuran/master', {
 		params: {
+			group_id: filterGrup.value,
 			page: payload?.page ?? 1,
 			sortby: payload?.sort?.type
 		}
 	}).then(res => {
-		masterIuranData.rows = res.data.data
-		masterIuranData.totalRows = res.data.total
+		masterIuranData.rows = res.data.data.data
+		masterIuranData.totalRows = res.data.data.total
+	})
+}
+function getGrupIuran (payload) {
+	request.get('iuran/group', null, {
+	}).then(res => {
+		grupIuran.value = res.data.data
 	})
 }
 
@@ -56,9 +67,14 @@ function deleteData(id) {
 		})
 	})
 }
+function changeGroup() {
+	tableRef.value.loadItems()
+	console.log(filterGrup.value)
+}
 
 onMounted(() => {
 	setCurrentPageBreadcrumbs("Master Iuran", ['Iuran']);
+	getGrupIuran()
 })
 </script>
 
@@ -79,16 +95,39 @@ onMounted(() => {
               </div> -->
             </div>
 
-            <div class="position-relative d-flex ">
+            <!-- <div class="position-relative d-flex ">
               <a @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                 <i class="bi bi-plus fs-1"></i>
                 <span>
                   Tambah Master Iuran
                 </span>
               </a>
-            </div>
+            </div> -->
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>
+					
+					<div class="mb-4">
+						<div class="d-flex flex-wrap justify-content-between align-items-center">
+								<div>
+									<FilterSelect 
+										v-model:filterValue="filterGrup"
+										@changeFilter="changeGroup"
+										placeholder="Pilih Grup">
+										<template v-for="grup in grupIuran">
+											<el-option :value="grup.group_id" :label="grup.group_nama"></el-option>
+										</template>
+									</FilterSelect>
+								</div>
+								<div class="position-relative d-flex ">
+									<a @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+										<i class="bi bi-plus fs-1"></i>
+										<span>
+											Tambah Master Iuran
+										</span>
+									</a>
+								</div>
+						</div>
+					</div>
         </div>
 				<ServerSideTable
 					ref="tableRef"
