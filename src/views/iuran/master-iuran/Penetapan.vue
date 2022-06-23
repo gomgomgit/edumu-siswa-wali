@@ -110,25 +110,24 @@ import { useRoute } from "vue-router";
     <div class="col-12">
       <div class="card">
         <div class="card-body pt-5 pb-5">
-          <div class="d-flex gap-6">
-            <div class="w-100px">
-              <h2 class="fs-3">Nama Grup  </h2>
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h2 class="fs-2">Penetapan Iuran</h2>
+              <div class="d-flex gap-6">
+                <div class="w-100px">
+                  <h2 class="fs-4">Nama Grup </h2>
+                </div>
+                <div class="">
+                  <h2 class="fs-4">: {{groupName}} </h2>
+                </div>
+              </div>
             </div>
-            <div class="">
-              <h2 class="fs-3">: {{groupName}} </h2>
-            </div>
-          </div>
-          <div class="d-flex gap-6 align-items-center">
-            <div class="w-100px">
-              <h4 class="fs-3">Kelas </h4>
-            </div>
-            <div class="d-flex align-items-center">
-              <h4 class="fs-3 me-2">: </h4>
-              <FilterSelect v-model:filterValue="kelasTetapan" @changeFilter="changeKelas"
-                placeholder="Pilih Kelas Asal">
-                <el-option v-for="item, index in kelas" :key="index" :label="item.kelas_nama"
-                  :value="item.kelas_id" />
-              </FilterSelect>
+            <div class="d-flex gap-6 align-items-center">
+                <FilterSelect v-model:filterValue="kelasTetapan" @changeFilter="changeKelas"
+                  placeholder="Filter Kelas">
+                  <el-option v-for="item, index in kelas" :key="index" :label="item.kelas_nama"
+                    :value="item.kelas_id" />
+                </FilterSelect>
             </div>
           </div>
         </div>
