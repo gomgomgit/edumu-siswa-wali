@@ -216,7 +216,7 @@ import { useToast } from "vue-toast-notification";
               <ServerSideTable 
                 :totalRows="dataSiswaKelasTujuan.totalRows || 0" 
                 :columns="dataSiswaKelasTujuan.columns"
-                :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelas">
+                :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelasTujuan">
                 <template #table-row="{column, row}">
                   <div v-if="column.field == 'user_nama'">
                     <span class="fw-bold">{{row.user_nama}}</span> - {{row.kelas_nama}}

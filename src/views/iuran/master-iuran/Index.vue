@@ -149,11 +149,16 @@ onMounted(() => {
 									<inline-svg src="media/icons/duotune/art/art005.svg" />
 								</span>
 							</button>
-							<button @click="deleteData(row.master_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+							<button @click="deleteData(row.master_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm me-2">
 								<span class="svg-icon svg-icon-3">
 									<inline-svg src="media/icons/duotune/general/gen027.svg"/>
 								</span>
 							</button>
+							<router-link :to="`/iuran/master-iuran/penetapan/${row.master_id}/${row.group_nama}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm">
+								<span class="svg-icon svg-icon-3">
+									<i class="bi bi-three-dots-vertical fs-3"></i>
+								</span>
+							</router-link>
 						</div>
 					</template>
 				</ServerSideTable>

@@ -307,6 +307,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/iuran/master-iuran/Index.vue"),
       },
       {
+        path: "/iuran/master-iuran/penetapan/:id/:group",
+        name: "iuran-master-iuran-penetapan",
+        component: () => import("@/views/iuran/master-iuran/Penetapan.vue"),
+      },
+      {
         path: "/pengaturan/umum",
         name: "pengaturan-umum",
         component: () => import("@/views/pengaturan/umum/Index.vue"),
