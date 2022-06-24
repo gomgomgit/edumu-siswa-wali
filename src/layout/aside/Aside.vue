@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref } from "vue";
+import { ref } from "vue";
 import KTAsidePrimary from "@/layout/aside/AsidePrimary.vue";
 import KTAsideSecondary from "@/layout/aside/AsideSecondary.vue";
 
@@ -47,7 +47,7 @@ function openSubMenu(menuId) {
   for (let index = 0; index < submenus.length; index++) {
     submenus[index].classList.remove('active', 'show');
   }
-  
+
   document.getElementById(menuId).classList.add('active', 'show')
 }
 
@@ -65,12 +65,12 @@ function openSubMenu(menuId) {
     data-kt-drawer-direction="start"
     data-kt-drawer-toggle="#kt_aside_toggle"
   >
-    <KTAsidePrimary 
+    <KTAsidePrimary
       @mouseenter="openAside"
       @mouseleave="closeAside"
       @openSubMenu="openSubMenu"
     ></KTAsidePrimary>
-    <KTAsideSecondary 
+    <KTAsideSecondary
       @openAside="openAside"
       @closeAside="closeAside"
       @togglePin="togglePin"

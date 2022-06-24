@@ -1,4 +1,4 @@
-<template>  
+<template>
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
@@ -199,7 +199,7 @@ export default defineComponent({
           },
           {
             heading: "Waktu Absensi",
-            route: "/pages",
+            route: "/absensi/waktu-absensi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

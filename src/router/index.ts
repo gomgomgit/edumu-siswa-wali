@@ -255,7 +255,7 @@ const routes: Array<RouteRecordRaw> = [
         name: "sekolah-laporan-user-online",
         component: () => import("@/views/sekolah/laporan/user-online/Index.vue"),
       },
-      
+
       {
         path: "/sekolah/akreditasi",
         name: "sekolah-informasi-berita",
@@ -325,6 +325,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/iuran/iuran-siswa",
         name: "iuran-iuran-siswa",
         component: () => import("@/views/iuran/iuran-siswa/Index.vue"),
+      },
+      {
+        path: "/absensi/waktu-absensi",
+        name: "absensi-waktu-absensi",
+        component: () => import("@/views/absensi/waktu-absensi/Index.vue"),
       },
       {
         path: "/pengaturan/umum",
