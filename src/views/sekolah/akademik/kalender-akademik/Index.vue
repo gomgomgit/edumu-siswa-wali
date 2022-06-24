@@ -10,7 +10,7 @@
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Kalneder Akademik", ['Sekolah', "Akademik"]);
+    setCurrentPageBreadcrumbs("Kalender Akademik", ['Sekolah', "Akademik"]);
   })
 
   function getKalender (payload) {

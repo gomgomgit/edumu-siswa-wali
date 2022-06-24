@@ -1,5 +1,6 @@
 <script setup>
 import { request } from '@/util';
+import { includes } from 'lodash';
 import QueryString from 'qs';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
@@ -50,9 +51,17 @@ import { useToast } from 'vue-toast-notification';
   }
 
   function postKalender() {  
+    let selectedClass = ''
+    if (form.kelas_id.includes('all')) {
+      selectedClass = kelas.value.map(function (obj) {
+        return obj.kelas_id
+      })
+    } else {
+      selectedClass = form.kelas_id
+    }
     const formData = new FormData()
     formData.append('libur_id', form.libur_id)
-    formData.append('kelas_id', form.kelas_id)
+    formData.append('kelas_id', selectedClass)
     formData.append('libur_desc', form.libur_desc)
     if (liburId) {
       formData.append('libur_tanggal', liburTanggal.value)
@@ -96,7 +105,9 @@ import { useToast } from 'vue-toast-notification';
               multiple
               placeholder="Pilih Kelas"
               style="width: 100%"
+              filterable
             >
+              <el-option label="Pilih Semua" value="all"/>
               <el-option
                 v-for="clas in kelas"
                 :key="clas.kelas_id"
