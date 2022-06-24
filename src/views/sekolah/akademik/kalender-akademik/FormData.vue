@@ -59,6 +59,7 @@ import { useToast } from 'vue-toast-notification';
     } else {
       selectedClass = form.kelas_id
     }
+    
     const formData = new FormData()
     formData.append('libur_id', form.libur_id)
     formData.append('kelas_id', selectedClass)
