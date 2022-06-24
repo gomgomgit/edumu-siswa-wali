@@ -36,10 +36,18 @@ function getKelas() {
 }
 
 function postBerita() {
-  // return console.log(fileDatas.value)
+  let selectedClass = ''
+  if (form.kelas_id.includes('all')) {
+    selectedClass = classes.value.map(function (obj) {
+      return obj.kelas_id
+    })
+  } else {
+    selectedClass = form.kelas_id
+  }
+  
   const formData = new FormData()
   formData.append('cat_id', '')
-  formData.append('kelas_id', form.kelas_id)
+  formData.append('kelas_id', selectedClass)
   formData.append('content_name', form.content_name)
   formData.append('content_type', 'pengumuman')
   formData.append('content_shortdesc', form.content_shortdesc)
@@ -83,6 +91,8 @@ function postBerita() {
                 placeholder="Pilih Kelas"
                 style="width: 100%"
               >
+                <el-option label="Pilih Semua" value="all"
+                />
                 <el-option
                   v-for="clas in classes"
                   :key="clas.kelas_id"
@@ -159,7 +169,7 @@ function postBerita() {
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.go(-1)" href="#" class="btn btn-light">Batal</a>
             <a @click.prevent="postBerita" class="btn btn-primary">Simpan</a>
           </div>
         </div>

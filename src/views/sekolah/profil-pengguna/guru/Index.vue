@@ -9,6 +9,7 @@ import { Search } from '@element-plus/icons-vue'
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import QueryString from "qs";
 import { useToast } from "vue-toast-notification";
+import ChangePassword from '@/components/change-password/Index.vue'
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Guru", ['Sekolah', "Profil Pengguna"]);
@@ -33,10 +34,10 @@ const loadingTahunAjar = ref(false)
 const guru = reactive({
   columns: [
     { label: 'Nama Lengkap', field: 'user_nama' },
-    { label: 'Username', field: 'user_username' },
-    { label: 'Level', field: 'user_level' },
-    { label: 'Status', field: 'user_status' },
-    { label: 'ACTION', field: 'action', sortable: false, width: '150px' },
+    { label: 'Username', field: 'user_username', sortable: false },
+    { label: 'Level', field: 'user_level', sortable: false },
+    { label: 'Status', field: 'user_status', sortable: false },
+    { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
   ],
   rows: [],
   totalRows: 0,
@@ -44,7 +45,8 @@ const guru = reactive({
 
 const searchGuru = ref('')
 
-const modalData = ref(false)
+const passwordModal = ref(false)
+const passwordData = ref([])
 
 const statusOption = [
   {
@@ -68,6 +70,15 @@ function deleteData (userId) {
       })
   })
 }
+function handlePasswordOpen(data) {
+  console.log('buka')
+  passwordModal.value = true
+  passwordData.value = data
+}
+function handlePasswordClose() {
+  passwordModal.value = false
+  passwordData.value = []
+}
 </script>
 
 <template>
@@ -79,8 +90,8 @@ function deleteData (userId) {
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div>
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-4">
-            <div class="d-flex w-25 gap-4">
+          <div class="d-flex flex-wrap justify-content-between align-items-center g-4">
+            <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
               <el-input v-model="searchGuru" clearable class="m-2" placeholder="Cari Guru">
                 <template #append>
                   <el-button aria-disabled="true" class="pe-none" :icon="Search" />
@@ -88,7 +99,7 @@ function deleteData (userId) {
               </el-input>
             </div>
 
-            <div class="position-relative d-flex gap-4">
+            <div class="position-relative d-flex w-100 w-lg-50 w-xl-auto gap-4 justify-content-end">
               <div class="d-flex align-items-center">
                 <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
@@ -131,7 +142,12 @@ function deleteData (userId) {
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </router-link>
-                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="handlePasswordOpen(row)" class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-2">
+                  <span class="svg-icon svg-icon-3">
+                    <i class="bi bi-key-fill fs-2"></i>
+                  </span>
+                </button>
+                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
@@ -142,5 +158,10 @@ function deleteData (userId) {
         </div>
       </div>
     </div>
+    <ChangePassword 
+			:passwordModal="passwordModal"
+			:passwordData="passwordData"
+			@close="handlePasswordClose"
+			@submit="handlePasswordClose" />
   </div>
 </template>

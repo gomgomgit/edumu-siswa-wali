@@ -217,10 +217,6 @@ export default defineComponent({
                 heading: "Guru",
                 route: "/sekolah/profil-pengguna/guru",
               },
-              {
-                heading: "Pegawai",
-                route: "/profile",
-              },
             ],
           },
           {
@@ -280,7 +276,7 @@ export default defineComponent({
           },
           {
             heading: "E Dokumen",
-            route: "/pages",
+            route: "/sekolah/e-document",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
@@ -292,7 +288,7 @@ export default defineComponent({
             sub: [
               {
                 heading: "User Online",
-                route: "/profile",
+                route: "/sekolah/laporan/user-online",
               },
               {
                 heading: "Kartu Aktifitas",
@@ -302,7 +298,7 @@ export default defineComponent({
           },
           {
             heading: "Akreditasi",
-            route: "/pages",
+            route: "/sekolah/akreditasi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

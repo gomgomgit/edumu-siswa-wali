@@ -27,9 +27,9 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const tahunAjar = reactive({
     columns: [
-      { label: 'Tahun Ajar', field: 'thn_ajar_value' },
-      { label: 'Semester', field: 'thn_ajar_semester' },
-      { label: 'Status', field: 'thn_ajar_status' },
+      { label: 'Tahun Ajar', field: 'thn_ajar_value', sortable: false },
+      { label: 'Semester', field: 'thn_ajar_semester', sortable: false },
+      { label: 'Status', field: 'thn_ajar_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -129,12 +129,14 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <div>
+              <h2 class="fs-1 fw-bold py-6 m-0">Data Tahun Ajar</h2>
+
+              <!-- <div>
                 <FilterSelect v-model:filterValue="semesterFilter" :options="semesterOption" @changeFilter="changeFilter('semester')" placeholder="Pilih Semester" />
               </div>
               <div>
                 <FilterSelect v-model:filterValue="statusFilter" :options="statusOption" @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
-              </div>
+              </div> -->
             </div>
 
             <div class="position-relative d-flex ">
@@ -146,6 +148,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
               </a>
             </div>
           </div>
+          <div class="separator border-black-50 border-2 my-3"></div>
         </div>
       </div>
       <div class="mb-5 mb-xxl-8 px-12">
@@ -168,7 +171,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button @click="deleteData(row.thn_ajar_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <button @click="deleteData(row.thn_ajar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>

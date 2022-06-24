@@ -138,15 +138,6 @@ import QueryString from "qs"
 					<div class="col-8">
 						<input type="text" v-model="formData.kelas_nama" class="form-control" placeholder="X IPA , IX IPS , DST"/>
 					</div>
-					<div class="col-4 d-flex align-items-center fw-bold fs-4">Wali Kelas</div>
-					<div class="col-8">
-						<select  v-model="formData.guru" class="form-select form-select-solid" aria-label="Select example">
-							<option>Pilih Guru</option>
-							<template v-for="(guru, guruIndex) in waliKelas" :key="guruIndex">
-								<option value="1">{{guru.name}}</option>
-							</template>
-						</select>
-					</div>
 					<div class="col-4 d-flex align-items-center fw-bold fs-4">Tingkat Kelas</div>
 					<div class="col-8">
 						<select  v-model="formData.kelas_level" class="form-select form-select-solid" aria-label="Select example">

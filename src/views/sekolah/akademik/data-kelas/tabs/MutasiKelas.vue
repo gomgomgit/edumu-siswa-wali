@@ -9,7 +9,8 @@ import { useToast } from "vue-toast-notification";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mutasi Kelas", ['Sekolah', "Akademik"]);
-
+    getDataSiswaKelas()
+    getDataSiswaKelasTujuan()
     getKelas()
   })
 
@@ -44,6 +45,8 @@ import { useToast } from "vue-toast-notification";
     }).then(res => {
       dataSiswaKelasTujuan.rows = res.data.data.data
       dataSiswaKelasTujuan.totalRows = res.data.data.total
+
+      tahunAjar.value = res.data.tahun_ajar.thn_ajar_value
     })
   }
   
@@ -86,7 +89,7 @@ import { useToast } from "vue-toast-notification";
     totalRows: 0,
   })
 
-  const tahunAjar = ref('test 1312')
+  const tahunAjar = ref('')
   const kelas = ref([])
   const kelasAsal = ref('')
   const kelasTujuan = ref('')
@@ -141,7 +144,7 @@ import { useToast } from "vue-toast-notification";
 
 <template>
   <div class="row g-8">
-    <div class="col-7">
+    <div class="col-12 col-lg-12 col-xl-7">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
           <div>
@@ -150,7 +153,7 @@ import { useToast } from "vue-toast-notification";
           </div>
           <div class="separator border-black-50 border-3 my-4"></div>
           <div class="page-content">
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-4">
               <div class="d-flex gap-4">
                 <div>
                   <FilterSelect v-model:filterValue="kelasAsal" @changeFilter="changeAsal"
@@ -199,7 +202,7 @@ import { useToast } from "vue-toast-notification";
         </div>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-12 col-lg-12 col-xl-5">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
 
@@ -213,7 +216,7 @@ import { useToast } from "vue-toast-notification";
               <ServerSideTable 
                 :totalRows="dataSiswaKelasTujuan.totalRows || 0" 
                 :columns="dataSiswaKelasTujuan.columns"
-                :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelas">
+                :rows="dataSiswaKelasTujuan.rows" @loadItems="getDataSiswaKelasTujuan">
                 <template #table-row="{column, row}">
                   <div v-if="column.field == 'user_nama'">
                     <span class="fw-bold">{{row.user_nama}}</span> - {{row.kelas_nama}}

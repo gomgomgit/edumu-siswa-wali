@@ -126,7 +126,17 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/sekolah/akademik/kalender-akademik",
         name: "sekolah-akademik-kalender-akademik",
-        component: () => import("@/views/sekolah/akademik/KalenderAkademik.vue"),
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/Index.vue"),
+      },
+      {
+        path: "/sekolah/akademik/kalender-akademik/tambah",
+        name: "sekolah-akademik-kalender-akademik-tambah",
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/FormData.vue"),
+      },
+      {
+        path: "/sekolah/akademik/kalender-akademik/edit/:id",
+        name: "sekolah-akademik-kalender-akademik-edit",
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/FormData.vue"),
       },
       {
         path: "/sekolah/mata-pelajaran",
@@ -213,6 +223,75 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/informasi/berita/Edit.vue"),
       },
       {
+        path: "/sekolah/e-document",
+        name: "sekolah-e-document",
+        component: () => import("@/views/sekolah/e-document/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/e-document/dokumen",
+          },
+          {
+            path: "dokumen",
+            name: "sekolah-e-document-dokumen",
+            component: () =>
+              import("@/views/sekolah/e-document/tabs/Dokumen.vue"),
+          },
+          {
+            path: "kategori",
+            name: "sekolah-e-document-kategori",
+            component: () =>
+              import("@/views/sekolah/e-document/tabs/Kategori.vue"),
+          },
+        ],
+      },
+      {
+        path: "/sekolah/e-document/detail/:id/:name",
+        name: "sekolah-e-document-detail",
+        component: () => import("@/views/sekolah/e-document/Detail.vue"),
+      },
+      {
+        path: "/sekolah/laporan/user-online",
+        name: "sekolah-laporan-user-online",
+        component: () => import("@/views/sekolah/laporan/user-online/Index.vue"),
+      },
+      
+      {
+        path: "/sekolah/akreditasi",
+        name: "sekolah-informasi-berita",
+        component: () => import("@/views/sekolah/akreditasi/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/akreditasi/akreditasi",
+          },
+          {
+            path: "akreditasi",
+            name: "sekolah-akreditasi-akreditasi",
+            component: () =>
+              import("@/views/sekolah/akreditasi/tabs/Akreditasi.vue"),
+          },
+          {
+            path: "website",
+            name: "sekolah-akreditasi-website",
+            component: () =>
+              import("@/views/sekolah/akreditasi/tabs/Website.vue"),
+          },
+          {
+            path: "unduh-pdf",
+            name: "sekolah-akreditasi-unduh-pdf",
+            component: () =>
+              import("@/views/sekolah/akreditasi/tabs/UnduhPdf.vue"),
+          },
+          {
+            path: "video",
+            name: "sekolah-akreditasi-video",
+            component: () =>
+              import("@/views/sekolah/akreditasi/tabs/Video.vue"),
+          },
+        ],
+      },
+      {
         path: "/sekolah/media",
         name: "sekolah-media",
         component: () => import("@/views/sekolah/media/Index.vue"),
@@ -221,6 +300,31 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sekolah/media/album/:id",
         name: "sekolah-media-album",
         component: () => import("@/views/sekolah/media/Album.vue"),
+      },
+      {
+        path: "/iuran/jenis-iuran",
+        name: "iuran-jenis-iuran",
+        component: () => import("@/views/iuran/jenis-iuran/Index.vue"),
+      },
+      {
+        path: "/iuran/grup-iuran",
+        name: "iuran-grup-iuran",
+        component: () => import("@/views/iuran/grup-iuran/Index.vue"),
+      },
+      {
+        path: "/iuran/master-iuran",
+        name: "iuran-master-iuran",
+        component: () => import("@/views/iuran/master-iuran/Index.vue"),
+      },
+      {
+        path: "/iuran/master-iuran/penetapan/:id/:group",
+        name: "iuran-master-iuran-penetapan",
+        component: () => import("@/views/iuran/master-iuran/Penetapan.vue"),
+      },
+      {
+        path: "/iuran/iuran-siswa",
+        name: "iuran-iuran-siswa",
+        component: () => import("@/views/iuran/iuran-siswa/Index.vue"),
       },
       {
         path: "/pengaturan/umum",
@@ -236,6 +340,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/prototype/api-testing",
         name: "prototype-api-testing",
         component: () => import("@/views/prototype/ApiTesting.vue"),
+      },
+      {
+        path: "/account/profile",
+        name: "account-profile",
+        component: () => import("@/views/account/profile/Index.vue"),
       },
     ],
   },

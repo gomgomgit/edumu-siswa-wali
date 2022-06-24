@@ -47,12 +47,6 @@
 
 <style scoped>
 
-
-
-
-
-
-
   .modal-overlay {
     content: '';
     position: absolute;

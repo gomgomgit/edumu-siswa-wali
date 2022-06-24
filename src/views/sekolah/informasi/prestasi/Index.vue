@@ -11,6 +11,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   onMounted(() => {
     setCurrentPageBreadcrumbs("Prestasi", ['Sekolah', "Informasi"]);
   })
+  const baseUrl = process.env.VUE_APP_API_URL
 
   function getPrestasi (payload) {
       request.post('prestasi', null, {
@@ -26,9 +27,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   const prestasi = reactive({
     columns: [
-      { label: 'Judul', field: 'content_name' },
-      { label: 'Deskripsi', field: 'content_shortdesc' },
-      { label: 'Status', field: 'content_status' },
+      { label: 'Gampar', field: 'content_image', sortable: false },
+      { label: 'Judul', field: 'content_name', sortable: false },
+      { label: 'Deskripsi', field: 'content_shortdesc', sortable: false },
+      { label: 'Status', field: 'content_status', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -66,11 +68,18 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
   <div>
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
-        <div>
-          <h2 class="fs-1 fw-bold py-6">Data Prestasi</h2>
+        <div class="py-6 d-flex justify-content-between align-items-center">
+          <h2 class="fs-1 fw-bold">Data Prestasi</h2>
+          
+          <router-link to="/sekolah/informasi/prestasi/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <i class="bi bi-plus fs-1"></i>
+            <span>
+              Tambah Prestasi
+            </span>
+          </router-link>
         </div>
-        <div class="separator border-black-50 border-2 my-6"></div>
-        <div>
+        <div class="separator border-black-50 border-2 my-3"></div>
+        <!-- <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
               <div>
@@ -98,13 +107,20 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="my-5 mb-xxl-8">
           <ServerSideTable :totalRows="prestasi.totalRows || 0" :columns="prestasi.columns" :rows="prestasi.rows"
             @loadItems="getPrestasi">
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'thn_ajar_semester'">
-                {{row.thn_ajar_semester[0].toUpperCase() + row.thn_ajar_semester.substring(1)}}
+              <div v-if="column.field == 'content_image'">
+                <div class="p-2 bg-secondary d-inline-block">
+                  <template v-if="row.content_image">
+                    <img class="image-thumbnail"  :src="baseUrl + '/public/images/konten/' + row.content_image" alt="">
+                  </template>
+                  <template v-if="!row.content_image">
+                    <span class="fw-bold fs-6 mx-2">NO IMAGE</span>
+                  </template>
+                </div>
               </div>
               <div v-if="column.field == 'content_status'">
                 <span :class="'badge badge-light-' + (row.content_status == '1' ? 'success' : 'danger')">{{row.content_status == '1' ?
@@ -129,3 +145,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
     </div>
   </div>
 </template>
+
+<style>
+.image-thumbnail{
+  max-width: 80px;
+  max-height: 60px;
+}
+</style>

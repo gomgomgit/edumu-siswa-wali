@@ -46,9 +46,9 @@ import { useToast } from "vue-toast-notification";
 
   const waliKelas = reactive({
     columns: [
-      {label: 'Guru', field: 'user_nama'},
-      {label: 'Kelas', field: 'kelas_nama'},
-      {label: 'Tahun Ajar', field: 'thn_ajar'},
+      {label: 'Guru', field: 'user_nama', sortable: false},
+      {label: 'Kelas', field: 'kelas_nama', sortable: false},
+      {label: 'Tahun Ajar', field: 'thn_ajar', sortable: false},
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -124,12 +124,13 @@ import { useToast } from "vue-toast-notification";
     <div class="page-content">
       <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
         <div class="d-flex gap-4">
-          <div>
+          <h2 class="fs-1 fw-bold py-6">Data Wali Kelas</h2>
+          <!-- <div>
             <FilterSelect v-model:filterValue="semester" :options="semesterOption" placeholder="Pilih Semester"></FilterSelect>
           </div>
           <div>
             <FilterSelect v-model:filterValue="status" :options="statusOption" placeholder="Pilih Status"></FilterSelect>
-          </div>
+          </div> -->
         </div>
 
         <div class="position-relative d-flex ">

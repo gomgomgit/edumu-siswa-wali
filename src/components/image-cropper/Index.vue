@@ -6,6 +6,7 @@ import 'vue-advanced-cropper/dist/style.css';
 
 const props = defineProps({
   fileInputData: Array,
+  oldImage: String,
   ratio: {String, required: false},
   cropRequire: {Boolean, default: false},
 })
@@ -16,31 +17,12 @@ const image = ref('')
 const cropperCanvas = ref()
 
 const imageUrl = ref('')
-const imageResult = ref('')
-// const imageResult = computed(()=> {
-//   if (props.fileInputData) {
-//     return ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-//   } else {
-//     return ''
-//   }
-// })
-const imageDefault = computed(()=> {
-  if (props.fileInputData) {
-    return imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-  } else {
-    return ''
-  }
+
+const imageSrc = ref('')
+const imageResult = computed({
+  get: () => props.oldImage && props.fileInputData && !imageSrc.value ? props.oldImage : imageSrc.value,
+  set: (val) => imageSrc.value = val
 })
-const imagePreview = computed(() => {
-  if (imageResult.value) {
-    return imageResult.value
-  } else {
-    return '/media/illustrations/media/frame-media.png'
-  }
-})
-function setDefault() {
-  imageResult.value = ('https://apiedumu.edumu.id/demo/apischool/public/images/konten/' + props.fileInputData)
-}
 function onImageChange(payload) {
   const file = payload.target.files[0];
   if(file) {
@@ -48,11 +30,12 @@ function onImageChange(payload) {
       imageUrl.value = URL.createObjectURL(file)
     } else {
       image.value = file
+
       // imageUrl.value = URL.createObjectURL(file)
       imageResult.value = URL.createObjectURL(file)
+      emits('update:fileInputData', payload.target.files[0])
     }
     
-    emits('update:fileInputData', payload.target.files[0])
   } else {
     image.value = null
     imageUrl.value = null
@@ -66,10 +49,6 @@ async function cropImage () {
   const { coordinates, canvas } = cropperCanvas.value.getResult();
 
   imageResult.value = canvas.toDataURL()
-
-  // const blob = await (await fetch(imageResult.value)).blob(); 
-  // const file = new File([blob], 'filecropped.jpg', {type:"image/jpeg", lastModified:new Date()});
-  // emits('update:fileInputData', file)
 
   const blob = dataURLtoBlob(imageResult.value)
   emits('update:fileInputData', blob)
@@ -94,17 +73,17 @@ function openCrop() {
 function cancelCrop() {
   imageUrl.value = null
 }
-console.log(props)
 </script>
 
 <template>
   <div class="w-100">
-    <div class="d-flex w-100">
-      <img class="mw-100" :src="imageResult" alt="" style="max-height: 400px;">
-      <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
-
+    <div class="d-flex w-100 mb-4" v-if="imageResult">
+      <div class="d-ib bg-secondary p-4">
+        <img class="mw-100" :src="imageResult" alt="" style="max-height: 400px;">
+      </div>
     </div>
     <div class="d-flex gap-2">
+      <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
       <button class="text-white btn btn-bg-primary" @click="inputFileClick">Pilih Gambar</button>
       <button v-if="fileInputData" class="text-white btn btn-bg-success" @click="openCrop()">Potong Gambar</button>
       <button v-if="fileInputData" @click="deleteImage()" class="text-white btn btn-bg-danger">Hapus</button>

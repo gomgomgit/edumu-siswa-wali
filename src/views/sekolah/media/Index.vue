@@ -26,7 +26,7 @@
 
   const kelasMedia = reactive({
     columns: [
-      { label: 'Kelas', field: 'kelas_nama' },
+      { label: 'Kelas', field: 'kelas_nama', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
