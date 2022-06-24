@@ -45,19 +45,19 @@ function getData() {
 }
 
 function getTransaksi (payload) {
-	request.get('siswa/transaksi', {
-		params: {
-			user_nama: searchFilter.value,
-			jenis: '',
-			tahun: '',
-			id: userId,
-			page: payload?.page ?? 1,
-			sortby: payload?.sort?.type
-		}
-	}).then(res => {
-		transaksiData.rows = res.data.data
-		transaksiData.totalRows = res.data.total
-	})
+	// request.get('siswa/transaksi', {
+	// 	params: {
+	// 		user_nama: searchFilter.value,
+	// 		jenis: '',
+	// 		tahun: '',
+	// 		id: userId,
+	// 		page: payload?.page ?? 1,
+	// 		sortby: payload?.sort?.type
+	// 	}
+	// }).then(res => {
+	// 	transaksiData.rows = res.data.data
+	// 	transaksiData.totalRows = res.data.total
+	// })
 }
 
 onMounted(() => {

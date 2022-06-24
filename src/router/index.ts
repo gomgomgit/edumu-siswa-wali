@@ -129,6 +129,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/akademik/kalender-akademik/Index.vue"),
       },
       {
+        path: "/sekolah/akademik/kalender-akademik/tambah",
+        name: "sekolah-akademik-kalender-akademik-tambah",
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/FormData.vue"),
+      },
+      {
+        path: "/sekolah/akademik/kalender-akademik/edit/:id",
+        name: "sekolah-akademik-kalender-akademik-edit",
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/FormData.vue"),
+      },
+      {
         path: "/sekolah/mata-pelajaran",
         name: "sekolah-mata-pelajaran",
         component: () => import("@/views/sekolah/mata-pelajaran/Index.vue"),
