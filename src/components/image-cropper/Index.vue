@@ -77,12 +77,13 @@ function cancelCrop() {
 
 <template>
   <div class="w-100">
-    <div class="d-flex w-100">
-      <img class="mw-100" :src="imageResult" alt="" style="max-height: 400px;">
-      <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
-
+    <div class="d-flex w-100 mb-4" v-if="imageResult">
+      <div class="d-ib bg-secondary p-4">
+        <img class="mw-100" :src="imageResult" alt="" style="max-height: 400px;">
+      </div>
     </div>
     <div class="d-flex gap-2">
+      <input class="d-none" id="file-input-crop" type="file" accept="image/*" @change="onImageChange">
       <button class="text-white btn btn-bg-primary" @click="inputFileClick">Pilih Gambar</button>
       <button v-if="fileInputData" class="text-white btn btn-bg-success" @click="openCrop()">Potong Gambar</button>
       <button v-if="fileInputData" @click="deleteImage()" class="text-white btn btn-bg-danger">Hapus</button>
