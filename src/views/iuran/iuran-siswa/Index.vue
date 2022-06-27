@@ -11,12 +11,14 @@ import { Search } from '@element-plus/icons-vue'
 
 import { Doughnut } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, Plugin } from 'chart.js'
-
+import { computed } from '@vue/reactivity';
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 
 const userId = 255
 const tableRef = ref()
 const formMode = ref('')
+
+const tableTab = ref('transaksi')
 
 const kelasData = ref([])
 const tahunAjarData = ref([])
@@ -24,13 +26,27 @@ const tipeData = ref([])
 
 const kelasFilter = ref('')
 const tipeFilter = ref('')
+const tahunAjarFilter = ref('')
 const searchFilter = ref('')
 const periodeFilter = ref('')
 
 const transaksiData = reactive({
 	columns: [
+		{ label: 'Siswa', field: 'user_nama', sortable: false },
+		{ label: 'Nominal', field: 'payment_nominal', sortable: false },
+		{ label: 'Status', field: 'status', sortable: false, width: '200px' },
+		{ label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+	],
+	rows: [],
+	totalRows: 0,
+})
+const iuranData = reactive({
+	columns: [
+		{ label: 'Kelas', field: 'kelas_nama', sortable: false },
+		{ label: 'Siswa', field: 'user_nama', sortable: false },
+		{ label: 'Nominal', field: 'payment_nominal', sortable: false },
 		{ label: 'Jenis Iuran', field: 'tipe_nama', sortable: false },
-		{ label: 'Deskripsi', field: 'tipe_desc', sortable: false },
+		{ label: 'Status', field: 'status', sortable: false, width: '200px' },
 		{ label: 'ACTION', field: 'action', sortable: false, width: '200px' },
 	],
 	rows: [],
@@ -38,20 +54,25 @@ const transaksiData = reactive({
 })
 
 
-const chartData = {
-	labels: [
-		'Lunas',
-		'Belum Lunas',
-	],
-	datasets: [{
-			backgroundColor: ['#6464FF', '#FF5C5C'],
-			data: [10, 20]
-	}],
-}
+const chartData = computed(() => {
+	return {
+		labels: [
+			'Lunas',
+			'Belum Lunas',
+		],
+		datasets: [{
+				backgroundColor: ['#6464FF', '#FF5C5C'],
+				data: chartDataData.value
+		}],
+	}
+})
+const chartDataData = ref([12,12])
+const totalChart = ref(0)
+
 const chartOptions = {
 	responsive: true,
 	borderRadius: 6,
-	borderWidth: 6,       
+	borderWidth: 2,       
 	cutout: 140,
 	plugins: {
 		legend: {
@@ -74,7 +95,7 @@ const plugins = [{
       ctx.font = fontSize + "em sans-serif";
       ctx.textBaseline = "middle";
 
-			let text = ['Total', '140.000.00']
+			let text = ['Total', totalChart.value]
 			let	text0X = Math.round((width - ctx.measureText(text[0]).width) / 2)
 			let	text0Y = (height / 2) - 45
 			let	text1X = Math.round((width - ctx.measureText(text[1]).width) / 2)
@@ -102,24 +123,56 @@ function getData() {
 }
 
 function getTransaksi (payload) {
-	// request.get('siswa/transaksi', {
-	// 	params: {
-	// 		user_nama: searchFilter.value,
-	// 		jenis: '',
-	// 		tahun: '',
-	// 		id: userId,
-	// 		page: payload?.page ?? 1,
-	// 		sortby: payload?.sort?.type
-	// 	}
-	// }).then(res => {
-	// 	transaksiData.rows = res.data.data
-	// 	transaksiData.totalRows = res.data.total
-	// })
+	request.get('iuran/transaksi', {
+		params: {
+			user_nama: searchFilter.value,
+			kelas_id: kelasFilter.value,
+			jenis: tipeFilter.value,
+			tahun: tahunAjarFilter.value,
+			id: userId,
+			page: payload?.page ?? 1,
+			sortby: payload?.sort?.type
+		}
+	}).then(res => {
+		transaksiData.rows = res.data.data.data
+		transaksiData.totalRows = res.data.data.total
+	})
+}
+function getIuran (payload) {
+	request.get('siswa/finance', {
+		params: {
+			user_nama: searchFilter.value,
+			kelas_id: kelasFilter.value,
+			jenis: tipeFilter.value,
+			tahun: tahunAjarFilter.value,
+			id: userId,
+			page: payload?.page ?? 1,
+			sortby: payload?.sort?.type
+		}
+	}).then(res => {
+		iuranData.rows = res.data.data.siswa.data
+		iuranData.totalRows = res.data.data.siswa.total
+
+		updateChart([res.data.data.totSukses, res.data.data.totKurang], res.data.data.totBayar)
+	})
+}
+function updateChart(val, tot) {
+	chartDataData.value = val
+	totalChart.value = tot
+}
+
+function changeTableTab(val) {
+	tableTab.value = val
+}
+function changeFilter() {
+	getIuran()
+	getTransaksi()
 }
 
 onMounted(() => {
 	setCurrentPageBreadcrumbs("Iuran Siswa", ['Iuran']);
 	getData()
+	getIuran()
 })
 </script>
 
@@ -161,7 +214,8 @@ onMounted(() => {
 						
             <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
                 <el-input
-                  v-model="searchSiswa"
+                  v-model="searchFilter"
+									@change="changeFilter('search')"
                   clearable
                   class="m-2"
                   placeholder="Cari Siswa"
@@ -190,7 +244,7 @@ onMounted(() => {
             <div class="d-flex align-items-center">
 							<a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
 								<span>
-									Siswa Absen GPS
+									Laporan
 								</span>
 								<i class="bi bi-printer-fill fs-2"></i>
 							</a>
@@ -203,11 +257,7 @@ onMounted(() => {
 									<Doughnut
 										:chart-options="chartOptions"
 										:chart-data="chartData"
-										:chart-id="chartId"
-										:dataset-id-key="datasetIdKey"
 										:plugins="plugins"
-										:css-classes="cssClasses"
-										:styles="styles"
 									/>
 								</div>
 							</div>
@@ -225,7 +275,71 @@ onMounted(() => {
 				</div>
 			</div>
 		</div>
-		<div class="card mb-5 mb-xxl-8">
+
+		<div class="d-flex w-100 justify-content-between pb-8 pt-4 px-10">
+			<div class="d-flex w-100 gap-4 w-sm-auto">
+				<ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bolder flex-nowrap">
+						<li class="nav-item">
+							<a
+								@click="changeTableTab('transaksi')"
+								:class="`nav-link me-6 ${tableTab == 'transaksi' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" 
+							> 
+								<span>Transaksi</span>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a
+								@click="changeTableTab('iuran')"
+								:class="`nav-link me-6 ${tableTab == 'iuran' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" 
+							> 
+								<span>Iuran	</span>
+							</a>
+						</li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="card mb-5 mb-xxl-8" v-if="tableTab == 'transaksi'">
+			<div class="card-body">
+        <div class="page-content">
+          <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex gap-4">
+              <h2 class="fs-1 fw-bold py-6 m-0">Transaksi</h2>
+            </div>
+          </div>
+          <div class="separator border-black-50 border-2 my-3"></div>
+        </div>
+				<ServerSideTable
+					ref="tableRef"
+					:totalRows="transaksiData.totalRows || 0"
+					:columns="transaksiData.columns"
+					:rows="transaksiData.rows"
+					@loadItems="getTransaksi">
+					<template #table-row="{column, row}">
+						<div v-if="column.field == 'status'">
+							<span :class="'badge badge-light-' + (row.payment_status == 'Berhasil' ? 'success' : 'danger')">
+								{{row.payment_status}}
+							</span>
+						</div>
+						<div v-if="column.field == 'action'">
+							<button
+								class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
+								@click="handleEdit(row)">
+								<span class="svg-icon svg-icon-3">
+									<inline-svg src="media/icons/duotune/art/art005.svg" />
+								</span>
+							</button>
+							<button @click="deleteData(row.tipe_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+								<span class="svg-icon svg-icon-3">
+									<inline-svg src="media/icons/duotune/general/gen027.svg"/>
+								</span>
+							</button>
+						</div>
+					</template>
+				</ServerSideTable>
+			</div>
+		</div>
+		<div class="card mb-5 mb-xxl-8" v-if="tableTab == 'iuran'">
 			<div class="card-body">
         <div class="page-content">
           <div class="d-flex flex-wrap justify-content-between align-items-center">
@@ -253,14 +367,14 @@ onMounted(() => {
         </div>
 				<ServerSideTable
 					ref="tableRef"
-					:totalRows="transaksiData.totalRows || 0"
-					:columns="transaksiData.columns"
-					:rows="transaksiData.rows"
-					@loadItems="getTransaksi">
+					:totalRows="iuranData.totalRows || 0"
+					:columns="iuranData.columns"
+					:rows="iuranData.rows"
+					@loadItems="getIuran">
 					<template #table-row="{column, row}">
-						<div v-if="column.field == 'mapel_status'">
-							<span :class="'badge badge-light-' + (row.mapel_status == 1 ? 'success' : 'danger')">
-								{{row.mapel_status == 1 ? 'Aktif' : 'Non Aktif'}}
+						<div v-if="column.field == 'status'">
+							<span :class="'badge badge-light-' + (row.status == 'Berhasil' ? 'success' : 'danger')">
+								{{row.status}}
 							</span>
 						</div>
 						<div v-if="column.field == 'action'">
