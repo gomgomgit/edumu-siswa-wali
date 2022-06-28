@@ -268,7 +268,7 @@ onMounted(() => {
 						</div>
 					</div>
 					<div class="pt-7 my-7">
-						<div class="row align-items-center">
+						<div class="row align-items-center gap-6">
 							<div class="col-12 col-lg-7">
 								<div class="mw-500px m-auto">
 									<Doughnut
@@ -278,7 +278,7 @@ onMounted(() => {
 									/>
 								</div>
 							</div>
-							<div class="col-5">
+							<div class="col-12 col-lg-5">
 								<h2 class="fs-2">Keterangan</h2>
 								<div class="d-flex align-items-center mt-3 gap-3">
 									<span class="keterangan-block blue"></span> <span class="fs-4 fw-bold">Lunas</span>
