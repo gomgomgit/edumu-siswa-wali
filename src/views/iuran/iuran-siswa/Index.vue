@@ -32,6 +32,7 @@ const periodeFilter = ref('')
 
 const transaksiData = reactive({
 	columns: [
+		{ label: 'Kode Transaksi', field: 'payment_code', sortable: false },
 		{ label: 'Siswa', field: 'user_nama', sortable: false },
 		{ label: 'Nominal', field: 'payment_nominal', sortable: false },
 		{ label: 'Status', field: 'status', sortable: false, width: '200px' },
@@ -167,6 +168,10 @@ function changeTableTab(val) {
 function changeFilter() {
 	getIuran()
 	getTransaksi()
+}
+
+function printInvoice(id) {
+	request.get(`iuran/transaksi/invoice/${id}`)
 }
 
 onMounted(() => {
@@ -316,6 +321,9 @@ onMounted(() => {
 					:rows="transaksiData.rows"
 					@loadItems="getTransaksi">
 					<template #table-row="{column, row}">
+						<div v-if="column.field == 'payment_code'">
+								#{{row.payment_code}}
+						</div>
 						<div v-if="column.field == 'status'">
 							<span :class="'badge badge-light-' + (row.payment_status == 'Berhasil' ? 'success' : 'danger')">
 								{{row.payment_status}}
@@ -324,16 +332,14 @@ onMounted(() => {
 						<div v-if="column.field == 'action'">
 							<button
 								class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
-								@click="handleEdit(row)">
-								<span class="svg-icon svg-icon-3">
-									<inline-svg src="media/icons/duotune/art/art005.svg" />
-								</span>
+								@click="printInvoice(row.payment_id)">
+								<i class="bi bi-printer-fill fs-3"></i>
 							</button>
-							<button @click="deleteData(row.tipe_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+							<router-link :to="`/iuran/iuran-siswa/konfirmasi/${row.payment_id}`" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm">
 								<span class="svg-icon svg-icon-3">
-									<inline-svg src="media/icons/duotune/general/gen027.svg"/>
+									<inline-svg src="media/icons/duotune/files/fil001.svg"/>
 								</span>
-							</button>
+							</router-link>
 						</div>
 					</template>
 				</ServerSideTable>
@@ -345,22 +351,6 @@ onMounted(() => {
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
               <h2 class="fs-1 fw-bold py-6 m-0">Iuran</h2>
-
-              <!-- <div>
-                <FilterSelect v-model:filterValue="semesterFilter" :options="semesterOption" @changeFilter="changeFilter('semester')" placeholder="Pilih Semester" />
-              </div>
-              <div>
-                <FilterSelect v-model:filterValue="statusFilter" :options="statusOption" @changeFilter="changeFilter('status')" placeholder="Pilih Status" />
-              </div> -->
-            </div>
-
-            <div class="position-relative d-flex ">
-              <a @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-                <i class="bi bi-plus fs-1"></i>
-                <span>
-                  Tambah Jenis Iuran
-                </span>
-              </a>
             </div>
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>

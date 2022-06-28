@@ -327,6 +327,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/iuran/iuran-siswa/Index.vue"),
       },
       {
+        path: "/iuran/iuran-siswa/konfirmasi/:id",
+        name: "iuran-iuran-siswa-konfirmasi",
+        component: () => import("@/views/iuran/iuran-siswa/Konfirmasi.vue"),
+      },
+      {
         path: "/absensi/waktu-absensi",
         name: "absensi-waktu-absensi",
         component: () => import("@/views/absensi/waktu-absensi/Index.vue"),
