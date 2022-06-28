@@ -8,25 +8,25 @@
   import QueryString from "qs";
   import { useToast } from "vue-toast-notification"
   import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
+import { computed } from "@vue/reactivity";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Ujian & Tugas Online", ['LMS', "Laporan Nilai"]);
+    setCurrentPageBreadcrumbs("Tugas Offline", ['LMS', "Laporan Nilai"]);
     getData()
   })
 
   function getUjianData (payload) {
-    request.post('ujian', null, {
+    request.post('tugas/all', null, {
       params: {
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC',
         mapel: mapelFilter.value,
         user: guruFilter.value,
-        tglMulai: startFilter.value ?? '',
-        tglEnd: endFilter.value ?? '',
+        kelas: kelasFilter.value,
       }
     }).then(res => {
-      ujianData.rows = res.data.data.data 
-      ujianData.totalRows = res.data.data.total
+      ujianData.rows = res.data.data.tugas.data 
+      ujianData.totalRows = res.data.data.tugas.total
     }).catch(err => {
       ujianData.rows = []
     })
@@ -43,66 +43,36 @@
     .then(res => {
       mapelOption.value = res.data.data
     })
+    request.post('kelas', null)
+    .then(res => {
+      kelasOption.value = res.data.data
+    })
   }
 
   const guruFilter = ref()
+  const kelasFilter = ref()
   const mapelFilter = ref()
-  const startFilter = ref('')
-  const endFilter = ref('')
 
   const guruOption = ref([])
+  const kelasOption = ref([])
   const mapelOption = ref([])
 
   const ujianData = reactive({
     columns: [
-      { label: 'Tugas/Ujian', field: 'exam_cat_type', sortable: false },
+      { label: 'Kelas', field: 'kelas_nama', sortable: false },
       { label: 'Guru', field: 'user_nama', sortable: false },
-      { label: 'Nama Ujian/Tugas', field: 'exam_title', sortable: false },
       { label: 'Mata Pelajaran', field: 'mapel_nama', sortable: false },
-      { label: 'Status Ujian', field: 'exam_status', sortable: false },
+      { label: 'Judul Tugas', field: 'tugas_judul', sortable: false },
       { label: 'Opsi', field: 'option', sortable: false, width: '200px' },
     ],
     rows: [],
     totalRows: 0,
   })
 
-  const initialFormData = {kelas_nama: '', wali: '', kelas_level: '', shift_id: '', kelas_status: ''}
+function arrayKelas (arr) {
+  return arr.split(',')
+}
 
-  const formData = reactive({...initialFormData})
-
-  function closeModalData() {
-    modalData.value = '',
-    Object.assign(formData, initialFormData)
-  }
-
-  function submitData(event) {
-    request.post('/kelas/'  + (modalData.value == 'Tambah Data' ? 'add' : 'edit'), QueryString.stringify(formData))
-      .then(res => {
-        useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
-        Object.assign(formData, initialFormData)
-        getUjianData()
-        modalData.value = null
-      })
-  }
-
-  function editData(data) {
-    formData.kelas_id = data.kelas_id,
-    formData.kelas_nama = data.kelas_nama,
-    formData.shift_id = data.shift_id,
-    formData.kelas_level = data.kelas_level,
-    formData.kelas_status = data.kelas_status,
-    modalData.value = 'Edit Data'
-  }
-
-  function deleteData(id) {
-    deleteConfirmation(function() {
-      request.get('/kelas/delete/' + id)
-        .then(res => {
-          useToast().success('Data Berhasil Dihapus!')
-          getUjianData()
-        })
-    })
-  }
 </script>
 
 <template>
@@ -110,7 +80,7 @@
     <div class="card-body pt-5 pb-5">
       <div class="page-content">
         <div class="mb-4">
-          <h2 class="fs-1 fw-bold py-6">Data Kelas</h2>
+          <h2 class="fs-1 fw-bold py-6">Data Tugas Offline</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
@@ -126,6 +96,16 @@
               </FilterSelect>
             </div>
             <div>
+              <FilterSelect v-model:filterValue="kelasFilter" placeholder="Pilih Kelas" @changeFilter="getUjianData()">
+                <el-option
+                  v-for="kelas, index in kelasOption"
+                  :key="kelas.kelas_id"
+                  :label="kelas.kelas_nama"
+                  :value="kelas.kelas_id"
+                />
+              </FilterSelect>
+            </div>
+            <div>
               <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getUjianData()">
                 <el-option
                   v-for="mapel, index in mapelOption"
@@ -134,26 +114,6 @@
                   :value="mapel.mapel_id"
                 />
               </FilterSelect>
-            </div>
-            <div class="d-flex align-items-center">
-              <el-date-picker
-                v-model="startFilter"
-                type="date"
-                placeholder="Mulai"
-                size="large"
-                value-format="YYYY-MM-DD"
-                @change="getUjianData()"
-              />
-            </div>
-            <div class="d-flex align-items-center">
-              <el-date-picker
-                v-model="endFilter"
-                type="date"
-                placeholder="Selesai"
-                size="large"
-                value-format="YYYY-MM-DD"
-                @change="getUjianData()"
-              />
             </div>
           </div>
         </div>
@@ -165,8 +125,10 @@
             @loadItems="getUjianData"
           >
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'exam_cat_type'">
-                <span>{{row.exam_cat_type.toUpperCase()}}</span>
+              <div v-if="column.field == 'kelas_nama'">
+                <template v-for="kelas in arrayKelas(row.kelas_nama)">
+                  <p class="d-block">{{kelas}}</p>
+                </template>
               </div>
               <div v-if="column.field == 'exam_status'">
                 <span :class="'badge badge-light-' + (row.exam_status == 1 ? 'success' : 'danger')">{{row.exam_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
