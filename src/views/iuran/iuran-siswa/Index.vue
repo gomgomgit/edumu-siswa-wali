@@ -8,13 +8,13 @@ import FilterSelect from '@/components/filter-select/index.vue'
 import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
 import { useToast } from 'vue-toast-notification';
 import { Search } from '@element-plus/icons-vue'
+import PembayaranIuran from './PembayaranIuran.vue';
 
 import { Doughnut } from 'vue-chartjs'
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, Plugin } from 'chart.js'
 import { computed } from '@vue/reactivity';
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale)
 
-const userId = 255
 const tableRef = ref()
 const formMode = ref('')
 
@@ -29,6 +29,8 @@ const tipeFilter = ref('')
 const tahunAjarFilter = ref('')
 const searchFilter = ref('')
 const periodeFilter = ref('')
+
+const dataPembayaran = ref()
 
 const transaksiData = reactive({
 	columns: [
@@ -48,7 +50,7 @@ const iuranData = reactive({
 		{ label: 'Nominal', field: 'payment_nominal', sortable: false },
 		{ label: 'Jenis Iuran', field: 'tipe_nama', sortable: false },
 		{ label: 'Status', field: 'status', sortable: false, width: '200px' },
-		{ label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+		{ label: 'Opsi', field: 'option', sortable: false, width: '200px' },
 	],
 	rows: [],
 	totalRows: 0,
@@ -130,7 +132,6 @@ function getTransaksi (payload) {
 			kelas_id: kelasFilter.value,
 			jenis: tipeFilter.value,
 			tahun: tahunAjarFilter.value,
-			id: userId,
 			page: payload?.page ?? 1,
 			sortby: payload?.sort?.type
 		}
@@ -146,7 +147,6 @@ function getIuran (payload) {
 			kelas_id: kelasFilter.value,
 			jenis: tipeFilter.value,
 			tahun: tahunAjarFilter.value,
-			id: userId,
 			page: payload?.page ?? 1,
 			sortby: payload?.sort?.type
 		}
@@ -160,6 +160,18 @@ function getIuran (payload) {
 function updateChart(val, tot) {
 	chartDataData.value = val
 	totalChart.value = tot
+}
+
+
+function getLaporan () {
+	request.get('siswa/financereport', {
+		params: {
+			user_nama: searchFilter.value,
+			kelas_id: kelasFilter.value,
+			jenis: tipeFilter.value,
+			tahun: tahunAjarFilter.value,
+		}
+	})
 }
 
 function changeTableTab(val) {
@@ -247,7 +259,7 @@ onMounted(() => {
             </div>
 						
             <div class="d-flex align-items-center">
-							<a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+							<a @click="getLaporan()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
 								<span>
 									Laporan
 								</span>
@@ -367,17 +379,12 @@ onMounted(() => {
 								{{row.status}}
 							</span>
 						</div>
-						<div v-if="column.field == 'action'">
+						<div v-if="column.field == 'option'">
 							<button
 								class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2"
-								@click="handleEdit(row)">
+								@click="dataPembayaran = row">
 								<span class="svg-icon svg-icon-3">
-									<inline-svg src="media/icons/duotune/art/art005.svg" />
-								</span>
-							</button>
-							<button @click="deleteData(row.tipe_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
-								<span class="svg-icon svg-icon-3">
-									<inline-svg src="media/icons/duotune/general/gen027.svg"/>
+									<i class="bi bi-receipt"></i>
 								</span>
 							</button>
 						</div>
@@ -385,6 +392,11 @@ onMounted(() => {
 				</ServerSideTable>
 			</div>
 		</div>
+
+		<PembayaranIuran 
+		 :activeData="dataPembayaran"
+		 @close="dataPembayaran = null"
+		/>
 	</div>
 </template>
 
