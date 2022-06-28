@@ -43,6 +43,30 @@ const routes: Array<RouteRecordRaw> = [
           },
         ]
       },
+      
+      {
+        path: "/lms/laporan-nilai",
+        name: "lms-laporan-nilai",
+        component: () => import("@/views/lms/laporan-nilai/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/lms/laporan-nilai/tugas-online",
+          },
+          {
+            path: "tugas-online",
+            name: "lms-laporan-nilai-tugas-online",
+            component: () =>
+              import("@/views/lms/laporan-nilai/tabs/TugasOnline.vue"),
+          },
+          {
+            path: "tugas-offline",
+            name: "lms-laporan-nilai-tugas-offline",
+            component: () =>
+              import("@/views/lms/laporan-nilai/tabs/TugasOffline.vue"),
+          },
+        ],
+      },
 
       {
         path: "/sekolah/profil-pengguna/siswa",

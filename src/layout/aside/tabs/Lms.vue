@@ -91,7 +91,7 @@ export default defineComponent({
         color: "info",
         title: "Laporan Nilai",
         description: "Rekap nilai tugas dan ujian",
-        route: "/lms"
+        route: "/lms/laporan-nilai"
       },
     ];
 

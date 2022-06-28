@@ -7,6 +7,7 @@ import { ref } from "@vue/reactivity"
     placeholder: {type: String, default: 'Pilih'},
     multiple: {type: Boolean, default: false},
     noData: {type: String, default: 'No Data'},
+    filterable: {type: Boolean, default: true},
     class: {type: String, default: ''},
   })
 
@@ -26,6 +27,7 @@ import { ref } from "@vue/reactivity"
     :no-data-text="props.noData" :multiple="props.multiple"
     :placeholder="props.placeholder"
     @change="updateValue" clearable
+    :filterable="props.filterable"
     size="large"
   >
     <slot/>
