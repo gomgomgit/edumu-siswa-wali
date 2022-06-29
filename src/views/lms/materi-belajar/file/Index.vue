@@ -72,12 +72,18 @@ import moment from "moment";
     totalRows: 0,
   })
 
-  const initialFormData = {kelas_nama: '', wali: '', kelas_level: '', shift_id: '', kelas_status: ''}
-
-  const formData = reactive({...initialFormData})
-
   function dateFormating(date) {
     return moment(date).format('DD/MM/Y')
+  }
+
+  function deleteData(id) {
+    deleteConfirmation(function() {
+      request.post('materi/delete', QueryString.stringify({materi_id: id}))
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getMateriData()
+      })
+    })
   }
 </script>
 
@@ -85,8 +91,19 @@ import moment from "moment";
   <div class="card mb-5 mb-xxl-8">
     <div class="card-body pt-5 pb-5">
       <div class="page-content">
-        <div class="mb-4">
-          <h2 class="fs-1 fw-bold py-6">File Materi Belajar</h2>
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+          <div class="d-flex gap-4">
+            <h2 class="fs-1 fw-bold py-6">File Materi Belajar</h2>
+          </div>
+
+          <div class="position-relative d-flex ">
+            <router-link to="/lms/materi-belajar/file/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+              <i class="bi bi-plus fs-1"></i>
+              <span>
+                Tambah File
+              </span>
+            </router-link>
+          </div>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
@@ -138,12 +155,12 @@ import moment from "moment";
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="`/lms/materi-belajar/file/edit/${row.materi_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </button>
-                <button @click="deleteData(row.thn_ajar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                </router-link>
+                <button @click="deleteData(row.materi_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>

@@ -2,7 +2,8 @@
 import { ref } from "vue";
 
 const props = defineProps({
-  fileInputData: Array
+  fileInputData: Array,
+  multiple: {Boolean, default: false}
 })
 const emits = defineEmits('update:fileInputData')
 
@@ -13,13 +14,24 @@ function toggleActive () {
   active.value = !active.value;
 };
 function drop(e) {
-  dropzoneFile.value = e.dataTransfer.files;
-  emits('update:fileInputData', e.dataTransfer.files)
+  if (props.multiple) {
+    dropzoneFile.value = e.dataTransfer.files;
+    emits('update:fileInputData', e.dataTransfer.files)
+  } else {
+    dropzoneFile.value = e.dataTransfer.files[0];
+    emits('update:fileInputData', e.dataTransfer.files[0])
+  }
 };
 function selectedFile() {
-  dropzoneFile.value = null
-  dropzoneFile.value = document.querySelector(".dropzoneFile").files;
-  emits('update:fileInputData', document.querySelector(".dropzoneFile").files)
+  if (props.multiple) {
+    dropzoneFile.value = null
+    dropzoneFile.value = document.querySelector(".dropzoneFile").files;
+    emits('update:fileInputData', document.querySelector(".dropzoneFile").files)
+  } else {
+    dropzoneFile.value = null
+    dropzoneFile.value = document.querySelector(".dropzoneFile").files[0];
+    emits('update:fileInputData', document.querySelector(".dropzoneFile").files[0])
+  }
 };
 </script>
 
@@ -38,12 +50,15 @@ function selectedFile() {
       <span class="fs-4">Drag & Drop file disini</span>
       <span>atau</span>
       <label class="btn btn-light-primary" for="dropzoneFile">Pilih File</label>
-      <input @change="selectedFile" type="file" multiple id="dropzoneFile" class="dropzoneFile" />
+      <input @change="selectedFile" type="file" :multiple="props.multiple" id="dropzoneFile" class="dropzoneFile" />
     </div>
   </div>
   <div class="d-flex flex-column gap-2 mt-3">
-    <template v-for="file in dropzoneFile">
+    <template v-if="multiple" v-for="file in dropzoneFile">
       <p class="m-0 fs-4">File: {{ file.name }} - {{file.size}} bytes</p>
+    </template>
+    <template v-if="!multiple">
+      <p class="m-0 fs-4">File: {{ dropzoneFile.name }} - {{dropzoneFile.size}} bytes</p>
     </template>
   </div>
 </div>

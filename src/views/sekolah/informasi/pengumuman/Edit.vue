@@ -190,7 +190,7 @@ function postBerita() {
             <div class="col-9 align-items-center">
               <ul>
                 <template v-for="file in oldFiles">
-                  <li><a class="fs-4" target="_blank" :href="'https://apiedumu.edumu.id/demo/apischool/public/files/' + file.content_file_nama">{{file.content_file_nama}}</a></li>
+                  <li><a class="fs-4" target="_blank" :href="baseUrl + '/public/files/' + file.content_file_nama">{{file.content_file_nama}}</a></li>
                 </template>
               </ul>
               <FileDrop v-model:fileInputData="fileDatas"></FileDrop>

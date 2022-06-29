@@ -163,9 +163,15 @@ function postBerita() {
           <div class="row">
             <div class="col-3 pt-3">
               <p class="m-0 fs-4 fw-bold">File Lampiran</p>
+              
+              <div class="mt-3">
+                <p class="m-0 fs-4 fw-bold text-black-50">Note :</p>
+                <p class="m-0 fs-4 fw-medium text-black-50">*Format yang di dukung : .doc .docx .xls .xlsx .ppt .pptx .pdf .jpg .jpeg .png</p>
+                <p class="m-0 fs-4 fw-medium text-black-50">*Maksimal ukuran file 2MB</p>
+              </div>
             </div>
             <div class="col-9 align-items-center">
-              <FileDrop v-model:fileInputData="fileDatas"></FileDrop>
+              <FileDrop :multiple="true" v-model:fileInputData="fileDatas"></FileDrop>
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">
