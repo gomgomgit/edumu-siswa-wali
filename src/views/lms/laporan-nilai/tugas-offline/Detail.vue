@@ -52,7 +52,7 @@ function getData() {
 
 function formatingDate(date) {
   return {
-    date: moment(date).format('L'),
+    date: moment(date).format('DD/MM/Y'),
     time: moment(date).format('LT')
   }
 }
