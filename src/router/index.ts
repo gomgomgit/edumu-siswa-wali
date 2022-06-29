@@ -45,6 +45,39 @@ const routes: Array<RouteRecordRaw> = [
       },
       
       {
+        path: "/lms/materi-belajar",
+        name: "lms-materi-belajar",
+        component: () => import("@/views/lms/materi-belajar/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/lms/materi-belajar/video",
+          },
+          {
+            path: "video",
+            name: "lms-materi-belajar-video",
+            component: () =>
+              import("@/views/lms/materi-belajar/video/Index.vue"),
+          },
+          {
+            path: "file",
+            name: "lms-materi-belajar-file",
+            component: () =>
+              import("@/views/lms/materi-belajar/file/Index.vue"),
+          },
+        ],
+      },
+      // {
+      //   path: "/lms/materi-belajar/video/detail/:id",
+      //   name: "lms-materi-belajar-video-detail",
+      //   component: () => import("@/views/lms/materi-belajar/video/Detail.vue"),
+      // },
+      // {
+      //   path: "/lms/materi-belajar/file/detail/:id",
+      //   name: "lms-materi-belajar-file-detail",
+      //   component: () => import("@/views/lms/materi-belajar/file/Detail.vue"),
+      // },
+      {
         path: "/lms/laporan-nilai",
         name: "lms-laporan-nilai",
         component: () => import("@/views/lms/laporan-nilai/Index.vue"),

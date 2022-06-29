@@ -84,7 +84,7 @@ export default defineComponent({
         color: "danger",
         title: "Materi Belajar",
         description: "Kumpulan materi pembelajaran",
-        route: "/lms"
+        route: "/lms/materi-belajar"
       },
       {
         icon: "media/icons/duotune/general/gen049.svg",
