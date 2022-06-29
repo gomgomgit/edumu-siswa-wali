@@ -1,14 +1,147 @@
+<script setup>
+import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
+import { request } from '@/util';
+import moment from 'moment';
+import { onMounted, ref } from 'vue';
+import { useRoute } from 'vue-router';
+import FilterSelect from '@/components/filter-select/index.vue';
+import { Search } from '@element-plus/icons-vue'
 
+onMounted(() => {
+  getData()
+  setCurrentPageBreadcrumbs('Detail Nilai', ['LMS', 'Laporan Nilai', 'Ujian Online'])
+  getSiswaNilai()
+})
+
+const route = useRoute()
+const ujianId = route.params.id
+const detailData = ref([])
+const kelasFilter = ref()
+const kelasOption = ref([])
+const searchSiswa = ref('')
+
+function getData() {
+  request.post(`ujian/${ujianId}`, null, {
+    params: {
+      exam_id: ujianId
+    }
+  }).then(res => {
+    console.log(res)
+    detailData.value = res.data.data
+    kelasOption.value = res.data.part
+  })
+}
+
+
+function getSiswaNilai() {
+  request.post('ujian/siswanilai', null, {
+    params: {
+      exam_id: ujianId,
+      participant_id: kelasFilter.value,
+      cari: searchSiswa.value
+    }
+  })
+}
+function formatingDate(date) {
+  return {
+    date: moment(date).format('L'),
+    time: moment(date).format('LT')
+  }
+}
+</script>
 <template>
   <div class="card mb-5 mb-xxl-8">
     <div class="card-body pt-5 pb-5">
       <div class="page-content">
         <div class="mb-4">
-          <h2 class="fs-1 fw-bold py-6">Data Ujian/Tugas Online</h2>
+          <h2 class="fs-1 fw-bold py-6">Detail Laporan Nilai</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
-        <div>
-          
+        <div class="d-flex flex-column gap-8 py-4">
+          <div class="row">
+            <div class="col-2"><h4 class="text-black-50">Guru</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: {{detailData.user_nama}}</h4></div>
+          </div>
+          <div class="row">
+            <div class="col-2"><h4 class="text-black-50">Mata Pelajaran</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: {{detailData.mapel_nama}}</h4></div>
+          </div>
+          <div class="row">
+            <div class="col-2"><h4 class="text-black-50">Tanggal Ujian</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: 
+              <span class="badge badge-primary fs-5 p-3 me-4">{{formatingDate(detailData.exam_start_date).date}} <i class="ms-3 bi bi-calendar2 text-white"></i></span>
+              <span class="badge badge-primary fs-5 p-3 me-4">{{formatingDate(detailData.exam_start_date).time}} <i class="ms-3 bi bi-clock text-white"></i></span>
+            </h4></div>
+          </div>
+          <div class="row">
+            <div class="col-2"><h4 class="text-black-50">Waktu Ujian</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: {{detailData.exam_time_limit}} menit</h4></div>
+          </div>
+          <div class="row">
+            <div class="col-2"><h4 class="text-black-50">Rata rata nilai</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: {{detailData.exam_time_limit}} menit</h4></div>
+          </div>
+        </div>
+        <div class="separator border-black-50 border-2 my-6"></div>
+        <div class="d-flex justify-content-between">
+          <div>
+            <FilterSelect v-model:filterValue="kelasFilter" placeholder="Pilih Kelas" @changeFilter="getSiswaNilai()">
+              <el-option
+                v-for="kelas, index in kelasOption"
+                :key="kelas.participant_id"
+                :label="kelas.kelas_nama"
+                :value="kelas.participant_id"
+              />
+            </FilterSelect>
+          </div>
+          <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
+            <el-input
+              v-model="searchSiswa"
+              clearable
+              class="m-2"
+              placeholder="Cari Siswa"
+              @input="getSiswaNilai"
+            >
+              <template #append>
+                <el-button aria-disabled="true" class="pe-none" :icon="Search" />
+              </template>
+            </el-input>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card mb-5 mb-xxl-8">
+    <div class="card-body pt-5 pb-5">
+      <div class="page-content">
+        <div class="mb-4">
+          <div class="d-flex justify-content-between">
+            <h2 class="fs-1 fw-bold py-6">Data Siswa Ujian</h2>
+
+            <div class='d-flex gap-4'>
+              <div class="d-flex align-items-center">
+                <a @click="getSiswaNilai" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <i class="bi bi-arrow-repeat fs-1"></i>
+                  <span>
+                    Refresh Data
+                  </span>
+                </a>
+              </div>
+              <div class="d-flex align-items-center">
+                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <i class="bi bi-cloud-arrow-up fs-1"></i>
+                  <span>
+                    Export Soal
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="separator border-black-50 border-2 my-6"></div>
+        <div v-if="!kelasFilter">
+          <h4 class="text-center text-danger">Harap Pilih Kelas!</h4>
         </div>
       </div>
     </div>

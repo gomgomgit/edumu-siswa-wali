@@ -69,40 +69,6 @@
   const initialFormData = {kelas_nama: '', wali: '', kelas_level: '', shift_id: '', kelas_status: ''}
 
   const formData = reactive({...initialFormData})
-
-  function closeModalData() {
-    modalData.value = '',
-    Object.assign(formData, initialFormData)
-  }
-
-  function submitData(event) {
-    request.post('/kelas/'  + (modalData.value == 'Tambah Data' ? 'add' : 'edit'), QueryString.stringify(formData))
-      .then(res => {
-        useToast().success(modalData.value == 'Tambah Data' ? 'Data Berhasil Ditambahkan!' : 'Data Berhasil Diperbaharui!')
-        Object.assign(formData, initialFormData)
-        getUjianData()
-        modalData.value = null
-      })
-  }
-
-  function editData(data) {
-    formData.kelas_id = data.kelas_id,
-    formData.kelas_nama = data.kelas_nama,
-    formData.shift_id = data.shift_id,
-    formData.kelas_level = data.kelas_level,
-    formData.kelas_status = data.kelas_status,
-    modalData.value = 'Edit Data'
-  }
-
-  function deleteData(id) {
-    deleteConfirmation(function() {
-      request.get('/kelas/delete/' + id)
-        .then(res => {
-          useToast().success('Data Berhasil Dihapus!')
-          getUjianData()
-        })
-    })
-  }
 </script>
 
 <template>
@@ -172,9 +138,9 @@
                 <span :class="'badge badge-light-' + (row.exam_status == 1 ? 'success' : 'danger')">{{row.exam_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'option'">
-                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm px-2">
+                <router-link :to="`/lms/laporan-nilai/tugas-online/detail/${row.exam_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm px-2">
                   <i class="bi bi-ui-checks fs-3"></i>
-                </button>
+                </router-link>
               </div>
             </template>
           </ServerSideTable>

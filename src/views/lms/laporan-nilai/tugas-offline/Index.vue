@@ -134,9 +134,9 @@ function arrayKelas (arr) {
                 <span :class="'badge badge-light-' + (row.exam_status == 1 ? 'success' : 'danger')">{{row.exam_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'option'">
-                <button @click="editData(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm px-2">
+                <router-link :to="`/lms/laporan-nilai/tugas-offline/detail/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm px-2">
                   <i class="bi bi-ui-checks fs-3"></i>
-                </button>
+                </router-link>
               </div>
             </template>
           </ServerSideTable>

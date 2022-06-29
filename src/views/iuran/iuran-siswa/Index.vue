@@ -232,7 +232,7 @@ onMounted(() => {
             <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
                 <el-input
                   v-model="searchFilter"
-									@change="changeFilter('search')"
+									@input="changeFilter('search')"
                   clearable
                   class="m-2"
                   placeholder="Cari Siswa"
