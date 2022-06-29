@@ -18,7 +18,7 @@ const baseUrl = process.env.VUE_APP_API_URL
 const router = useRouter()
 const route = useRoute()
 
-const materiId = route.params.id ?? null
+const videoId = route.params.id ?? null
 const pageType = route.params.type
 
 const guruOption = ref([])
@@ -38,8 +38,8 @@ const form = reactive({
 })
 
 function getData () {
-  if (pageType == 'edit' && materiId) {
-    request.get(`materi/${materiId}`)
+  if (pageType == 'edit' && videoId) {
+    request.get(`video/${videoId}`)
     .then(res => {
       const result = res.data.data
 
@@ -49,18 +49,9 @@ function getData () {
       form.user_id = result.user_id
       form.materi_judul = result.materi_judul
       form.materi_status = result.materi_status
-      // form.materi_file = result.materi_file
-      oldFiles.value = result.materi_file
+      form.materi_file = 'https://www.youtube.com/watch?v='+result.materi_file
     })
   }
-
-  request.post('user', null, {
-    params: {
-      level: 'guru'
-    }
-  }).then(res => {
-    guruOption.value = res.data.data
-  })
   request.post('kelas', null)
   .then(res => {
     kelasOption.value = res.data.data
@@ -84,23 +75,20 @@ function post() {
   formData.append('materi_id', form.materi_id)
   formData.append('kelas_id', selectedClass)
   formData.append('mapel_id', form.mapel_id)
-  formData.append('user_id', form.user_id)
   formData.append('materi_judul', form.materi_judul)
   formData.append('materi_status', form.materi_status)
   formData.append('materi_file', form.materi_file)
-  if (pageType == 'edit' && materiId) {
-    formData.append('materi_tipe', oldFiles.value.split('.').pop())
-  }
+  formData.append('materi_tipe', 'video')
 
-  const endpoint = pageType == 'edit' && materiId ? 'materi/edit' : 'materi/add'
-  const message = pageType == 'edit' && materiId ? 'Data Berhasil Diedit!' : 'Data Berhasil Ditambahkan!'
+  const endpoint = pageType == 'edit' && videoId ? 'video/edit' : 'video/add'
+  const message = pageType == 'edit' && videoId ? 'Data Berhasil Diedit!' : 'Data Berhasil Ditambahkan!'
   request.post(endpoint, formData, {
     headers: {
       'Content-Type' : 'multipart/form-data'
     }
   }).then(res => {
       useToast().success(message)
-      router.push('/lms/materi-belajar/file')
+      router.push('/lms/materi-belajar/video')
   })
 }
 
@@ -111,7 +99,7 @@ function post() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">{{pageType == 'edit' && materiId ? 'Edit' : 'Tambah'}} Materi File</h2>
+          <h2 class="fs-1 fw-bold py-6">Tambah Materi File</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">
@@ -159,31 +147,19 @@ function post() {
             </div>
           </div>
           <div class="row">
-            <div class="col-3 d-flex">
-              <p class="m-0 fs-4 fw-bold">Guru</p>
-            </div>
-            <div class="col-9 align-items-center d-flex">
-              <el-select
-                v-model="form.user_id"
-                placeholder="Pilih Guru"
-                style="width: 100%"
-                filterable
-              >
-                <el-option
-                  v-for="guru in guruOption"
-                  :key="guru.user_id"
-                  :label="guru.user_nama"
-                  :value="guru.user_id"
-                />
-              </el-select>
-            </div>
-          </div>
-          <div class="row">
             <div class="col-3 align-items-center d-flex">
               <p class="m-0 fs-4 fw-bold">Judul Materi</p>
             </div>
             <div class="col-9 align-items-center d-flex gap-4">
               <el-input v-model="form.materi_judul" placeholder="Judul Materi" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-3 align-items-center d-flex">
+              <p class="m-0 fs-4 fw-bold">URL Youtube</p>
+            </div>
+            <div class="col-9 align-items-center d-flex gap-4">
+              <el-input v-model="form.materi_file" placeholder="Link Materi Youtube" />
             </div>
           </div>
           <div class="row">
@@ -195,23 +171,6 @@ function post() {
                 <el-option label="Aktif" value="1" />
                 <el-option label="Non Aktif" value="0" />
               </el-select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-3 pt-3">
-              <p class="m-0 fs-4 fw-bold">File Materi</p>
-              <div class="mt-3">
-                <p class="m-0 fs-4 fw-bold text-black-50">Note :</p>
-                <p class="m-0 fs-4 fw-medium text-black-50">*Format yang di dukung : .doc .docx .xls .xlsx .ppt .pptx .pdf .jpg .jpeg .png</p>
-                <p class="m-0 fs-4 fw-medium text-black-50">*Maksimal ukuran file 2MB</p>
-              </div>
-            </div>
-            <div class="col-9 align-items-center">
-              
-              <ul v-if="oldFiles">
-                <li><a class="fs-4" target="_blank" :href="baseUrl + '/public/files/' + oldFiles">{{oldFiles}}</a></li>
-              </ul>
-              <FileDrop v-model:fileInputData="form.materi_file"></FileDrop>
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">

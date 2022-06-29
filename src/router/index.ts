@@ -67,11 +67,11 @@ const routes: Array<RouteRecordRaw> = [
           },
         ],
       },
-      // {
-      //   path: "/lms/materi-belajar/video/detail/:id",
-      //   name: "lms-materi-belajar-video-detail",
-      //   component: () => import("@/views/lms/materi-belajar/video/Detail.vue"),
-      // },
+      {
+        path: "/lms/materi-belajar/video/:type/:id?",
+        name: "lms-materi-belajar-video-data",
+        component: () => import("@/views/lms/materi-belajar/video/Data.vue"),
+      },
       {
         path: "/lms/materi-belajar/file/:type/:id?",
         name: "lms-materi-belajar-file-data",
