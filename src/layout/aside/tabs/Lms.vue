@@ -17,8 +17,7 @@
         :to="item.route"
       >
         <div
-          :class="{ 'mb-7': items.length - 1 !== index }"
-          class="d-flex align-items-center"
+          class="mb-7 d-flex align-items-center"
         >
           <!--begin::Symbol-->
           <div class="symbol symbol-50px me-5">
