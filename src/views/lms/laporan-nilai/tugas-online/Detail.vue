@@ -2,10 +2,11 @@
 import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
 import { request } from '@/util';
 import moment from 'moment';
-import { onMounted, ref } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import FilterSelect from '@/components/filter-select/index.vue';
 import { Search } from '@element-plus/icons-vue'
+import ServerSideTable from '@/components/ServerSideTable.vue';
 
 onMounted(() => {
   getData()
@@ -19,6 +20,19 @@ const detailData = ref([])
 const kelasFilter = ref()
 const kelasOption = ref([])
 const searchSiswa = ref('')
+
+
+const nilaiData = reactive({
+  columns: [
+    { label: 'Nama Siswa', field: 'user_nama', sortable: false },
+    { label: 'Total Soal', field: 'en_tot_soal', sortable: false },
+    { label: 'Total Jawab', field: 'en_tot_jawab', sortable: false },
+    { label: 'Total Nilai', field: 'en_tot_nilai', sortable: false },
+    { label: 'Nilai Siswa', field: 'en_nilai', sortable: false },
+    { label: 'Status', field: 'en_desc', sortable: false },
+  ],
+  rows: [],
+})
 
 function getData() {
   request.post(`ujian/${ujianId}`, null, {
@@ -40,6 +54,9 @@ function getSiswaNilai() {
       participant_id: kelasFilter.value,
       cari: searchSiswa.value
     }
+  }).then(res => {
+    nilaiData.rows = res.data.data[0].nilai
+    console.log(nilaiData)
   })
 }
 function formatingDate(date) {
@@ -131,7 +148,7 @@ function formatingDate(date) {
                 <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <i class="bi bi-cloud-arrow-up fs-1"></i>
                   <span>
-                    Export Soal
+                    Export Nilai
                   </span>
                 </a>
               </div>
@@ -143,6 +160,22 @@ function formatingDate(date) {
         <div v-if="!kelasFilter">
           <h4 class="text-center text-danger">Harap Pilih Kelas!</h4>
         </div>
+        <ServerSideTable
+          v-if="kelasFilter"
+          :totalRows="nilaiData.totalRows || 0"
+          :columns="nilaiData.columns"
+          :rows="nilaiData.rows"
+          @loadItems="getSiswaNilai"
+          :pagination-options="{
+            enabled: false,
+          }"
+        >
+          <template #table-row="{column, row}">
+            <div v-if="column.field == 'exam_status'">
+              <span :class="'badge badge-light-' + (row.exam_status == 1 ? 'success' : 'danger')">{{row.exam_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
+            </div>
+          </template>
+        </ServerSideTable>
       </div>
     </div>
   </div>
