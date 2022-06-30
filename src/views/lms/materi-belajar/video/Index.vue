@@ -57,7 +57,7 @@ import moment from "moment";
   const videoData = reactive({
     columns: [
       // { label: 'Kelas', field: 'kelas.kelas_nama' },
-      { label: 'Mapel', field: 'mapel.mapel_nama' },
+      { label: 'Mapel', field: 'mapel.mapel_nama', sortable: false },
       { label: 'Judul', field: 'materi_judul', sortable: false },
       { label: 'Link', field: 'materi_file', sortable: false },
       { label: 'Tgl Upload', field: 'materi_create_date', sortable: false },

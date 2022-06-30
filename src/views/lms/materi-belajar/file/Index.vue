@@ -20,6 +20,8 @@ import moment from "moment";
       params: {
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC',
+        sortName: payload.sort.type == 'none' ? 'materi_id' : payload?.sort?.field,
+        sortOrder: payload.sort.type == 'none' ? 'desc'  : payload.sort.type,
         mapel: mapelFilter.value,
         kelas: kelasFilter.value,
         user: guruFilter.value
@@ -60,12 +62,12 @@ import moment from "moment";
   const materiData = reactive({
     columns: [
       { label: 'Kelas', field: 'kelas_nama' },
-      { label: 'Mapel', field: 'mapel_nama' },
+      { label: 'Mapel', field: 'mapel_id' },
       { label: 'Guru', field: 'user_nama', sortable: false },
       { label: 'Judul', field: 'materi_judul', sortable: false },
       { label: 'File', field: 'materi_file', sortable: false },
-      { label: 'Tgl Upload', field: 'materi_create_date', sortable: false },
-      { label: 'Status', field: 'materi_status', sortable: false },
+      { label: 'Tgl Upload', field: 'materi_create_date' },
+      { label: 'Status', field: 'materi_status' },
       { label: 'Action', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -145,9 +147,16 @@ import moment from "moment";
             :totalRows="materiData.totalRows || 0"
             :columns="materiData.columns"
             :rows="materiData.rows"
+            :sort-options="{
+              enabled: true,
+              initialSortBy: {field: 'materi_id', type: 'desc'}
+            }"
             @loadItems="getMateriData"
           >
             <template #table-row="{column, row}">
+              <div v-if="column.field == 'mapel_id'">
+                {{row.mapel_nama}}
+              </div>
               <div v-if="column.field == 'materi_status'">
                 <span :class="'badge badge-light-' + (row.materi_status == 1 ? 'success' : 'danger')">{{row.materi_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
