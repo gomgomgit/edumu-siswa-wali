@@ -25,6 +25,16 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/lms/tugas-offline/Data.vue"),
       },
       {
+        path: "/lms/tugas-offline/detail/:id?",
+        name: "lms-tugas-offline-detail",
+        component: () => import("@/views/lms/tugas-offline/Detail.vue"),
+      },
+      {
+        path: "/lms/tugas-offline/detail/answer/:id?",
+        name: "lms-tugas-offline-detail-answer",
+        component: () => import("@/views/lms/tugas-offline/Answer.vue"),
+      },
+      {
         path: "/ujian-online",
         name: "ujian-online",
         component: () => import("@/views/pages/ujian-online/UjianOnline.vue"),

@@ -173,7 +173,7 @@ import moment from "moment";
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="`/lms/tugas-offline/edit/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
+                <router-link :to="`/lms/tugas-offline/detail/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/files/fil001.svg" />
                   </span>
