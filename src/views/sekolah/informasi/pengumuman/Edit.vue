@@ -193,7 +193,7 @@ function postBerita() {
                   <li><a class="fs-4" target="_blank" :href="baseUrl + '/public/files/' + file.content_file_nama">{{file.content_file_nama}}</a></li>
                 </template>
               </ul>
-              <FileDrop v-model:fileInputData="fileDatas"></FileDrop>
+              <FileDrop :multiple="true" v-model:fileInputData="fileDatas"></FileDrop>
             </div>
           </div>
           <div class="d-flex justify-content-end gap-4">

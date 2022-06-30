@@ -10,7 +10,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRoute, useRouter } from 'vue-router';
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Tambah Materi File", ['LMS', 'Materi Belajar', 'Materi File']);
+  setCurrentPageBreadcrumbs(`${pageType == 'edit' && materiId ? 'Edit' : 'Tambah'} Materi Video`, ['LMS', 'Materi Belajar', 'Materi Video']);
   getData()
 })
 
@@ -99,7 +99,7 @@ function post() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Materi File</h2>
+          <h2 class="fs-1 fw-bold py-6">{{pageType == 'edit' && materiId ? 'Edit' : 'Tambah' }} Materi Video</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-column gap-4">

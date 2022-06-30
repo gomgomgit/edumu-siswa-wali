@@ -20,8 +20,8 @@ import moment from "moment";
       params: {
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC',
-        sortName: payload.sort.type == 'none' ? 'materi_id' : payload?.sort?.field,
-        sortOrder: payload.sort.type == 'none' ? 'desc'  : payload.sort.type,
+        sortName: payload?.sort?.type == 'none' ? 'materi_id' : payload?.sort?.field,
+        sortOrder: payload?.sort?.type == 'none' ? 'desc'  : payload?.sort?.type,
         mapel: mapelFilter.value,
         kelas: kelasFilter.value,
         user: guruFilter.value

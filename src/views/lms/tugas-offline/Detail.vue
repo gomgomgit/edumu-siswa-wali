@@ -10,7 +10,7 @@ import ServerSideTable from '@/components/ServerSideTable.vue';
 
 onMounted(() => {
   getData()
-  setCurrentPageBreadcrumbs('Detail Nilai', ['LMS', 'Laporan Nilai', 'Tugas Offline'])
+  setCurrentPageBreadcrumbs('Detail Nilai', ['LMS', 'Laporan Nilai', 'Ujian Online'])
 })
 
 const route = useRoute()
