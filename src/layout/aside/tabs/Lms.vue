@@ -63,7 +63,7 @@ export default defineComponent({
         color: "success",
         title: "Tugas Offline",
         description: "Pengerjaan tugas secara offline",
-        route: "/lms"
+        route: "/lms/tugas-offline"
       },
       {
         icon: "media/icons/duotune/electronics/elc001.svg",
