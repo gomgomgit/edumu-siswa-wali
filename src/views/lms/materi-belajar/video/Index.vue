@@ -11,7 +11,7 @@
 import moment from "moment";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Video Materi", ['LMS', "Materi Belajar"]);
+    setCurrentPageBreadcrumbs("Materi Video", ['LMS', "Materi Belajar"]);
     // getData()
   })
 
