@@ -9,6 +9,7 @@
   import { useToast } from "vue-toast-notification"
   import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import moment from "moment";
+import FormModal from "./FormModal";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Materi File", ['LMS', "Materi Belajar"]);
@@ -58,6 +59,10 @@ import moment from "moment";
   const guruOption = ref([])
   const kelasOption = ref([])
   const mapelOption = ref([])
+  
+  const tableRef = ref()
+  const formMode = ref()
+  const activeData = ref()
 
   const materiData = reactive({
     columns: [
@@ -87,9 +92,19 @@ import moment from "moment";
       })
     })
   }
+  
+  function handleEdit (row) {
+    activeData.value = row
+    formMode.value = 'Edit Data'
+  }
+  function handleFormClose (row) {
+    activeData.value = {}
+    formMode.value = ''
+  }
 </script>
 
 <template>
+<div>
   <div class="card mb-5 mb-xxl-8">
     <div class="card-body pt-5 pb-5">
       <div class="page-content">
@@ -99,12 +114,18 @@ import moment from "moment";
           </div>
 
           <div class="position-relative d-flex ">
-            <router-link to="/lms/materi-belajar/file/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <button @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <i class="bi bi-plus fs-1"></i>
               <span>
                 Tambah File
               </span>
-            </router-link>
+            </button>
+            <!-- <router-link to="/lms/materi-belajar/file/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+              <i class="bi bi-plus fs-1"></i>
+              <span>
+                Tambah File
+              </span>
+            </router-link> -->
           </div>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
@@ -144,6 +165,7 @@ import moment from "moment";
         </div>
         <div class="mb-5 mb-xxl-8">
           <ServerSideTable
+            ref="tableRef"
             :totalRows="materiData.totalRows || 0"
             :columns="materiData.columns"
             :rows="materiData.rows"
@@ -164,11 +186,16 @@ import moment from "moment";
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="`/lms/materi-belajar/file/edit/${row.materi_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <button @click="handleEdit(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </router-link>
+                </button>
+                <!-- <router-link :to="`/lms/materi-belajar/file/edit/${row.materi_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/art/art005.svg" />
+                  </span>
+                </router-link> -->
                 <button @click="deleteData(row.materi_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
@@ -181,4 +208,12 @@ import moment from "moment";
       </div>
     </div>
   </div>
+  
+  <FormModal 
+    :mode="formMode"
+    :activeData="activeData"
+    :dataOption="{guruOption: guruOption, kelasOption: kelasOption, mapelOption: mapelOption}"
+    @close="handleFormClose"
+    @submit="tableRef.loadItems()" />
+</div>
 </template>
