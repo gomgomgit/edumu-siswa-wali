@@ -28,19 +28,16 @@ const form = reactive({
 function getPengaturan() {
   request.post('setting')
   .then(res => {
-    console.log(res.data.data)
-
     res.data.data.forEach(set => {
       form[set.setting_name] = set.setting_value
     });
   })
 }
 function post() {
-  // request.post('guru/add', QueryString.stringify(form))
-  // .then(res => {
-  //   useToast().success('Data berhasil ditambahkan!')
-  //   router.push('/sekolah/profil-pengguna/guru')
-  // })
+  request.post('setting/edit', QueryString.stringify(form))
+  .then(res => {
+    useToast().success('Data berhasil diedit!')
+  })
 }
 
 </script>
