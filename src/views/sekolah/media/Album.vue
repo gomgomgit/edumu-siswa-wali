@@ -15,6 +15,7 @@ import { useRoute, useRouter } from "vue-router";
   })
   const route = useRoute()
   const kelas_id = route.params.id
+  const baseUrl = process.env.VUE_APP_API_URL
 
   function getKelasMedia () {
       request.post('kelas/media', null, {
@@ -62,7 +63,9 @@ import { useRoute, useRouter } from "vue-router";
         <div class="row gy-6">
           <template v-for="image in album" :key="image.user_id">
             <div class="col-3">
-              <img class="image-album" src="/media/illustrations/media/frame-media.png" alt="">
+              <div>
+                <img class="image-album" :src="image.user_foto_id ? `${baseUrl}/public/images/identity/siswa/${image.user_foto_id}` : '/media/illustrations/media/frame-media.png'" alt="">
+              </div>
             </div>
           </template>
         </div>
