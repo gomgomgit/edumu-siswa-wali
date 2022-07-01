@@ -4,6 +4,10 @@ import { ref } from 'vue'
 
 const tabs = [
   {
+    to: '/sekolah/e-document/rapor',
+    title: 'Rapor'
+  },
+  {
     to: '/sekolah/e-document/dokumen',
     title: 'Dokumen'
   },

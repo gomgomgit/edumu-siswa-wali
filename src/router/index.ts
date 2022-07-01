@@ -316,7 +316,13 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "",
-            redirect: "/sekolah/e-document/dokumen",
+            redirect: "/sekolah/e-document/rapor",
+          },
+          {
+            path: "rapor",
+            name: "sekolah-e-document-rapor",
+            component: () =>
+              import("@/views/sekolah/e-document/tabs/Rapor.vue"),
           },
           {
             path: "dokumen",

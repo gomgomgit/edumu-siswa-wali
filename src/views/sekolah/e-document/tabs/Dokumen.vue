@@ -75,6 +75,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
             <div class="d-flex gap-4">
               <div>
                 <el-input
+                  @input="getSiswa"
                   v-model="searchFilter"
                   class="m-2"
                   placeholder="Cari Nama"
@@ -86,7 +87,6 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
         </div>
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
-            :key="searchFilter"
             :totalRows="siswa.totalRows || 0" 
             :columns="siswa.columns" 
             :rows="siswa.rows"
