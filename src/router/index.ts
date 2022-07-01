@@ -388,6 +388,8 @@ const routes: Array<RouteRecordRaw> = [
         name: "sekolah-media-album",
         component: () => import("@/views/sekolah/media/Album.vue"),
       },
+
+      //Iuran
       {
         path: "/iuran/jenis-iuran",
         name: "iuran-jenis-iuran",
@@ -417,6 +419,37 @@ const routes: Array<RouteRecordRaw> = [
         path: "/iuran/iuran-siswa/konfirmasi/:id",
         name: "iuran-iuran-siswa-konfirmasi",
         component: () => import("@/views/iuran/iuran-siswa/Konfirmasi.vue"),
+      },
+
+      // Absensi
+      {
+        path: "/absensi/rekapitulasi",
+        name: "absensi-rekapitulasi",
+        component: () => import("@/views/absensi/rekapitulasi/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/absensi/rekapitulasi/siswa",
+          },
+          {
+            path: "siswa",
+            name: "absensi-rekapitulasi-siswa",
+            component: () =>
+              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+          },
+          {
+            path: "guru",
+            name: "absensi-rekapitulasi-guru",
+            component: () =>
+              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+          },
+          {
+            path: "mapel",
+            name: "absensi-rekapitulasi-mapel",
+            component: () =>
+              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+          },
+        ],
       },
       {
         path: "/absensi/waktu-absensi",

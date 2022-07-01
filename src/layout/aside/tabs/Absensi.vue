@@ -187,7 +187,7 @@ export default defineComponent({
           },
           {
             heading: "Rekapitulasi",
-            route: "/pages",
+            route: "/absensi/rekapitulasi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
