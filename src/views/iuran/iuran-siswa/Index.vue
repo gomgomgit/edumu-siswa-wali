@@ -268,7 +268,7 @@ onMounted(() => {
 						</div>
 					</div>
 					<div class="pt-7 my-7">
-						<div class="row align-items-center gap-6">
+						<div class="row align-items-center">
 							<div class="col-12 col-lg-7">
 								<div class="mw-500px m-auto">
 									<Doughnut
@@ -299,15 +299,15 @@ onMounted(() => {
 						<li class="nav-item">
 							<a
 								@click="changeTableTab('transaksi')"
-								:class="`nav-link me-6 ${tableTab == 'transaksi' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" 
+								:class="`cursor-ponter nav-link me-6 ${tableTab == 'transaksi' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" style="cursor: pointer;"
 							> 
 								<span>Transaksi</span>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a
-								@click="changeTableTab('iuran')"
-								:class="`nav-link me-6 ${tableTab == 'iuran' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" 
+								@click.prevent="changeTableTab('iuran')"
+								:class="`cursor-ponter nav-link me-6 ${tableTab == 'iuran' ? 'active router-link-exact-active text-active-primary' : 'text-black-50'}`" style="cursor: pointer;"
 							> 
 								<span>Iuran	</span>
 							</a>
