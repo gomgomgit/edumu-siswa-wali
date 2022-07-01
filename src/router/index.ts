@@ -441,7 +441,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "guru",
             name: "absensi-rekapitulasi-guru",
             component: () =>
-              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+              import("@/views/absensi/rekapitulasi/guru/Index.vue"),
           },
           {
             path: "mapel",

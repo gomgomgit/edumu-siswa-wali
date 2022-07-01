@@ -13,14 +13,13 @@
 import moment from "moment";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Siswa", ["Absensi", "Rekapitulasi"]);
+    setCurrentPageBreadcrumbs("Guru", ["Absensi", "Rekapitulasi"]);
     getData()
   })
   
-  const reportSiswa = reactive({
+  const reportGuru = reactive({
     columns: [
       { label: 'Nama Lengkap', field: 'user_nama', sortable: false },
-      { label: 'Kelas', field: 'kelas_nama', sortable: false },
       { label: 'Hadir', field: 'tot.hadir', sortable: false },
       { label: 'Telat', field: 'tot.telat', sortable: false },
       { label: 'Izin', field: 'tot.izin', sortable: false },
@@ -31,34 +30,35 @@ import moment from "moment";
     totalRows: 0,
   })
 
-  const kelasOption = ref([])
+  const userOption = ref([])
 
-  const searchSiswa = ref('')
-  const kelasFilter = ref('')
+  const userFilter = ref('')
   const dateRangeStart = ref(moment().format('YYYY-MM-DD'))
   const dateRangeEnd = ref(moment().format('YYYY-MM-DD'))
   
-  function getReportSiswa (payload) {
-    request.post('reportsiswa', null, {
+  function getReportGuru (payload) {
+    request.post('reportguru', null, {
       params: {
-        level: 'siswa',
-        cari: searchSiswa.value,
-        kelas: kelasFilter.value,
-        dateStart: dateRangeStart.value,
-        dateEnd: dateRangeEnd.value,
+        user: userFilter.value,
+        tglMulai: dateRangeStart.value,
+        tglEnd: dateRangeEnd.value,
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
-      reportSiswa.rows = res.data.data.data
-      reportSiswa.totalRows = res.data.data.total
+      reportGuru.rows = res.data.data.data
+      reportGuru.totalRows = res.data.data.total
     })
   }
 
   function getData() {
-    request.post('kelas', null)
+    request.post('user', null, {
+      params: {
+        level: 'guru'
+      }
+    })
     .then(res => {
-      kelasOption.value = res.data.data
+      userOption.value = res.data.data
     })
   }
 </script>
@@ -70,7 +70,7 @@ import moment from "moment";
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <h2 class="fs-1 fw-bold py-6">Data Absensi Siswa</h2>
+              <h2 class="fs-1 fw-bold py-6">Data Absensi Guru</h2>
             </div>
 
             <div class="position-relative d-flex gap-4">
@@ -83,7 +83,7 @@ import moment from "moment";
                 </a>
               </div>
               <div class="d-flex align-items-center">
-                <a @click="getReportSiswa" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a @click="getReportGuru" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Sync
                   </span>
@@ -103,7 +103,7 @@ import moment from "moment";
                 placeholder="Range Tanggal awal"
                 size="large"
                 value-format="YYYY-MM-DD"
-                @change="getReportSiswa"
+                @change="getReportGuru"
               />
               <el-date-picker
                 v-model="dateRangeEnd"
@@ -111,31 +111,17 @@ import moment from "moment";
                 placeholder="Range Tanggal akhir"
                 size="large"
                 value-format="YYYY-MM-DD"
-                @change="getReportSiswa"
+                @change="getReportGuru"
               />
-            </div>
-            
-            <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
-                <el-input
-                  v-model="searchSiswa"
-                  @input="getReportSiswa"
-                  clearable
-                  class="m-2"
-                  placeholder="Cari Siswa"
-                >
-                  <template #append>
-                    <el-button aria-disabled="true" class="pe-none" :icon="Search" />
-                  </template>
-                </el-input>
             </div>
 
             <div class="d-flex align-items-center">
-              <FilterSelect v-model:filterValue="kelasFilter" placeholder="Pilih Kelas" @changeFilter="getReportSiswa()">
+              <FilterSelect v-model:filterValue="userFilter" placeholder="Pilih Guru" @changeFilter="getReportGuru()">
                 <el-option
-                  v-for="kelas, index in kelasOption"
-                  :key="kelas.kelas_id"
-                  :label="kelas.kelas_nama"
-                  :value="kelas.kelas_id"
+                  v-for="user, index in userOption"
+                  :key="user.user_id"
+                  :label="user.user_nama"
+                  :value="user.user_id"
                 />
               </FilterSelect>
             </div>
@@ -144,10 +130,10 @@ import moment from "moment";
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
             :key="searchSiswa"
-            :totalRows="reportSiswa.totalRows || 0" 
-            :columns="reportSiswa.columns" 
-            :rows="reportSiswa.rows"
-            @loadItems="getReportSiswa">
+            :totalRows="reportGuru.totalRows || 0" 
+            :columns="reportGuru.columns" 
+            :rows="reportGuru.rows"
+            @loadItems="getReportGuru">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'action'">
                 <router-link :to="'/sekolah/profil-pengguna/siswa/edit-data/' + row.user_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
