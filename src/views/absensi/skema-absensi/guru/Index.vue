@@ -8,161 +8,187 @@
   import { Search } from '@element-plus/icons-vue'
 import { useToast } from "vue-toast-notification";
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
+import QueryString from "qs";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Rapor", ['Sekolah', "E-Document"]);
-    getClass()
+    setCurrentPageBreadcrumbs("Skema Absensi", ["Absensi"]);
   })
 
-  function getRapor (payload) {
-      request.post('arsip', null, {
-        params: {
-          arsipType: 'rapor',
-          cari: searchFilter.value,
-          participant_id: classFilter.value,
-          page: payload?.page ?? 1,
-          sortby: payload?.sort?.type ?? 'ASC'
-        }
-      }).then(res => {
-        console.log(res.data.data)
-        rapor.rows = res.data.data.arsip.data
-        rapor.totalRows = res.data.data.arsip.total
+  function getGuruGps (payload) {
+    request.post('guru_gps', null, {
+      params: {
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      guruGps.rows = res.data.data.data
+      guruGps.totalRows = res.data.data.total
+    })
+  }
+  function getGuruNonGps (payload) {
+    request.post('guru_non_gps', null, {
+      params: {
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      guruNonGps.rows = res.data.data.data
+      guruNonGps.totalRows = res.data.data.total
+    })
+  }
 
-        notRapor.rows = res.data.data.notArsip
-      })
-    }
-  function getClass (payload) {
-      request.post('kelas')
-      .then(res => {
-        classOption.value = res.data.data
-      })
-    }
 
-
-  const rapor = reactive({
+  const guruGps = reactive({
     columns: [
-      { label: 'Nama Siswa', field: 'user_nama', sortable: false },
-      { label: 'Nama File', field: 'file_name', sortable: false },
-      { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
+      { label: 'Guru', field: 'user_nama', sortable: false },
+      { label: 'NIP', field: 'guru_nip', sortable: false },
+      { label: 'Status', field: 'def_loc', sortable: false },
     ],
     rows: [],
     totalRows: 0,
   })
-  const notRapor = reactive({
+  const guruNonGps = reactive({
     columns: [
-      { label: 'Nama Siswa', field: 'user_nama', sortable: false }
+      { label: 'Guru', field: 'user_nama', sortable: false },
+      { label: 'NIP', field: 'guru_nip', sortable: false },
     ],
     rows: [],
     totalRows: 0,
   })
 
-  const searchFilter = ref('')
-  const classFilter = ref('')
-  const classOption = ref([])
+  const selectedGps = ref([])
+  const selectedNonGps = ref([])
 
-  function deleteRapor(id) {
-    deleteConfirmation(function() {
-      request.get('arsip/delete/' + id)
-      .then(res => {
-        useToast().success('Rapor Berhasil Dihapus!')
-        getTableData()
-      })
+  function selectionChangedNonGps(params) {
+    var finalArray = params.selectedRows.map(function (obj) {
+      return obj.guru_id;
+    });
+    console.log(finalArray)
+    selectedNonGps.value = finalArray
+  }
+  function selectionChangedGps(params) {
+    var finalArray = params.selectedRows.map(function (obj) {
+      return obj.guru_id;
+    });
+    console.log(finalArray)
+    selectedGps.value = finalArray
+  }
+
+  function setGps(gps, del = '', rand = '') {
+    request.post('guru/gps', QueryString.stringify({
+      guru_pgs:	gps ? selectedGps.value : null,
+      guru_non_gps:	gps ? null : selectedNonGps.value,
+      opsi:	gps ? "1" : "0",
+      resetloc:	del,
+      setloc:	rand,
+    })).then(res => {
+      useToast().success('Data Berhasil diubah!')
+      getGuruGps()
+      getGuruNonGps()
     })
   }
 </script>
 
 <template>
   <div class="row">
-    <div class="col-7">
+    <div class="col-5">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
-            <h2 class="fs-1 fw-bold">Sudah Upload</h2>
+            <h2 class="fs-1 fw-bold">Skema Absensi - Absensi Non GPS</h2>
             
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>
           <div>
             <div class="d-flex flex-wrap justify-content-between align-items-center">
               <div class="position-relative d-flex gap-4">
-                <div>
-                  <FilterSelect v-model:filterValue="classFilter"
-                    @changeFilter="getRapor()"
-                    placeholder="Pilih Kelas">
-                    <el-option v-for="kelas in classOption" :value="kelas.kelas_id" :label="kelas.kelas_nama">
-                    </el-option>
-                  </FilterSelect>
-                </div>
               </div>
   
               <div class="d-flex gap-4">
-                <div>
-                  <el-input
-                    @input="getRapor"
-                    v-model="searchFilter"
-                    class="m-2"
-                    placeholder="Cari Nama"
-                    :suffix-icon="Search"
-                  />
-                </div>
+                <a @click="setGps(0)" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Set Absen GPS
+                  </span>
+                </a>
               </div>
             </div>
           </div>
           <div class="my-5 mb-xxl-8">
             <ServerSideTable 
-              :totalRows="rapor.totalRows || 0" 
-              :columns="rapor.columns" 
-              :rows="rapor.rows"
-              @loadItems="getRapor">
-              <template #table-row="{column, row}">
-                <div v-if="column.field == 'arsipFile'">
-                  <span v-if="!row.arsipFile[0]" class="badge badge-light-danger">
-                    File Kosong
-                  </span>
-                  <template v-if="row.arsipFile[0]" v-for="arsip in row.arsipFile">
-                    <div>
-                      <span class="badge badge-light-success">
-                        {{arsip.arsip_cat_name}}
-                      </span>
-                    </div>
-                  </template>
-                </div>
-                <div v-if="column.field == 'action'">
-                  <div class="d-flex gap-2">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                      <span class="svg-icon svg-icon-3">
-                        <i class="bi bi-cloud-arrow-down-fill fs-3"></i>
-                      </span>
-                    </button>
-                    <button @click="deleteRapor(row.id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
-                      <span class="svg-icon svg-icon-3">
-                        <inline-svg src="media/icons/duotune/general/gen027.svg" />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </template>
+              @selected-rows-change="selectionChangedNonGps"
+              :totalRows="guruNonGps.totalRows || 0" 
+              :columns="guruNonGps.columns" 
+              :rows="guruNonGps.rows"
+              :select-options="{
+                enabled: true,
+                selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+                selectionInfoClass: 'custom-class',
+                selectionText: 'rows selected',
+                clearSelectionText: 'clear',
+                disableSelectInfo: true, // disable the select info panel on top
+                selectAllByGroup: true, 
+              }"
+              @loadItems="getGuruNonGps">
             </ServerSideTable>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-5">
+    <div class="col-7">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
-            <h2 class="fs-1 fw-bold">Belum Upload</h2>
-            
+            <h2 class="fs-1 fw-bold">Skema Absensi - Absensi GPS</h2>
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>
+          <div>
+            <div class="d-flex flex-wrap justify-content-between align-items-center">
+              <div class="position-relative d-flex gap-4">
+              </div>
+  
+              <div class="d-flex gap-4">
+                <a @click="setGps(1, 1, 1)" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Lokasi Acak
+                  </span>
+                </a>
+                <a @click="setGps(1, 1)" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Hapus Lokasi
+                  </span>
+                </a>
+                <a @click="setGps(1)" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                  <span>
+                    Set Absen Non GPS
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
           <div class="my-5 mb-xxl-8">
             <ServerSideTable 
-              :totalRows="notRapor.totalRows || 0" 
-              :columns="notRapor.columns" 
-              :rows="notRapor.rows"
+              @selected-rows-change="selectionChangedGps"
+              :totalRows="guruGps.totalRows || 0" 
+              :columns="guruGps.columns" 
+              :rows="guruGps.rows"
               :pagination-options="{
                 enabled: false,
               }"
-              @loadItems="getRapor">
+              :select-options="{
+                enabled: true,
+                selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+                selectionInfoClass: 'custom-class',
+                selectionText: 'rows selected',
+                clearSelectionText: 'clear',
+                disableSelectInfo: true, // disable the select info panel on top
+                selectAllByGroup: true, 
+              }"
+              @loadItems="getGuruGps">
+              <template #table-row="{column, row}">
+                <div v-if="column.field == 'def_loc'">
+                  {{row.def_loc ? 'Lokasi Acak' : 'Lokasi Tetap'}}
+                </div>
+              </template>
             </ServerSideTable>
           </div>
         </div>

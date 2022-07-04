@@ -35,7 +35,6 @@ import QueryString from "qs";
         sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
-      console.log(res.data.data)
       siswaNonGps.rows = res.data.data.data
       siswaNonGps.totalRows = res.data.data.total
     })
@@ -117,7 +116,7 @@ import QueryString from "qs";
             <div class="d-flex flex-wrap justify-content-between align-items-center">
               <div class="position-relative d-flex gap-4">
                 <div>
-                  <FilterSelect v-model:filterValue="filterSiswa"
+                  <FilterSelect v-model:filterValue="filterSiswaNon"
                     @changeFilter="getSiswaNonGps()"
                     placeholder="Pilih Kelas">
                     <el-option v-for="kelas in classOption" :value="kelas.kelas_id" :label="kelas.kelas_nama">
