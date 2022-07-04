@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, watch } from "vue"
+import { onMounted, reactive, ref, watch } from "vue"
 import qs from 'qs'
 import { useToast } from "vue-toast-notification"
 import { isEmpty } from "validate.js"
@@ -13,10 +13,11 @@ const props = defineProps({
 })
 
 const userId = 255
+const grupIuran = ref([])
 
 const emits = defineEmits(['close', 'submit'])
 
-const initialForm = { created_by: null, tipe_nama: null, tipe_desc: null }
+const initialForm = { created_by: null, group_id: null, tipe_nama: null, tipe_desc: null }
 
 const formData = reactive({...initialForm})
 
@@ -38,11 +39,21 @@ function handleSubmit () {
 	})
 }
 
+function getGrupIuran (payload) {
+	request.get('iuran/group', null, {
+	}).then(res => {
+		grupIuran.value = res.data.data
+	})
+}
+
 watch(
 	() => props.activeData,
 	activeData => !isEmpty(activeData) && Object.assign(formData, { ...activeData }),
 	{ deep: true }
 )
+onMounted(() => {
+	getGrupIuran()
+})
 </script>
 
 <template>
@@ -54,7 +65,15 @@ watch(
 		@confirm="handleSubmit"
 		@dismiss="handleClose">
 		<div class="row gy-6">
-			<div class="col-4 d-flex align-items-center fw-bold fs-4">Jenis Iuran</div>
+			<div class="col-4 d-flex align-items-center fw-bold fs-4">Grup Iuran</div>
+			<div class="col-8">
+				<el-select filterable v-model="formData.group_id" class="w-100">
+					<template v-for="grup in grupIuran">
+						<el-option :value="grup.group_id" :label="grup.group_nama"></el-option>
+					</template>
+				</el-select>
+			</div>
+			<div class="col-4 d-flex align-items-center fw-bold fs-4">Nama Jenis Iuran</div>
 			<div class="col-8">
 				<input
 					v-model="formData.tipe_nama"

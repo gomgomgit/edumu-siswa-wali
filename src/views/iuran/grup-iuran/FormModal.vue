@@ -54,7 +54,7 @@ watch(
 		@confirm="handleSubmit"
 		@dismiss="handleClose">
 		<div class="row gy-6">
-			<div class="col-4 d-flex align-items-center fw-bold fs-4">Jenis Iuran</div>
+			<div class="col-4 d-flex align-items-center fw-bold fs-4">Nama Grup Iuran</div>
 			<div class="col-8">
 				<input
 					v-model="formData.group_nama"
