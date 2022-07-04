@@ -62,11 +62,11 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   function deleteRapor(id) {
     deleteConfirmation(function() {
-      // request.get('shift/delete/' + id)
-      // .then(res => {
-      //   useToast().success('Rapor Berhasil Dihapus!')
-      //   getTableData()
-      // })
+      request.get('arsip/delete/' + id)
+      .then(res => {
+        useToast().success('Rapor Berhasil Dihapus!')
+        getTableData()
+      })
     })
   }
 </script>
@@ -77,7 +77,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
-            <h2 class="fs-1 fw-bold">Data Rapor</h2>
+            <h2 class="fs-1 fw-bold">Sudah Upload</h2>
             
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>
@@ -150,36 +150,10 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
-            <h2 class="fs-1 fw-bold">Data Rapor</h2>
+            <h2 class="fs-1 fw-bold">Belum Upload</h2>
             
           </div>
           <div class="separator border-black-50 border-2 my-3"></div>
-          <div>
-            <div class="d-flex flex-wrap justify-content-between align-items-center">
-              <div class="position-relative d-flex gap-4">
-                <div>
-                  <FilterSelect v-model:filterValue="classFilter"
-                    @changeFilter="getRapor()"
-                    placeholder="Pilih Kelas">
-                    <el-option v-for="kelas in classOption" :value="kelas.kelas_id" :label="kelas.kelas_nama">
-                    </el-option>
-                  </FilterSelect>
-                </div>
-              </div>
-  
-              <div class="d-flex gap-4">
-                <div>
-                  <el-input
-                    @input="getRapor"
-                    v-model="searchFilter"
-                    class="m-2"
-                    placeholder="Cari Nama"
-                    :suffix-icon="Search"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="my-5 mb-xxl-8">
             <ServerSideTable 
               :totalRows="notRapor.totalRows || 0" 
