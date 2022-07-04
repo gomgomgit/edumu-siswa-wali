@@ -176,7 +176,6 @@ watch(
           <div class="mt-3">
             <p class="m-0 fs-4 fw-bold text-black-50">Note :</p>
             <p class="m-0 fs-4 fw-medium text-black-50">*Format yang di dukung : .doc .docx .xls .xlsx .ppt .pptx .pdf .jpg .jpeg .png</p>
-            <p class="m-0 fs-4 fw-medium text-black-50">*Maksimal ukuran file 2MB</p>
           </div>
         </div>
         <div class="col-9 align-items-center">
