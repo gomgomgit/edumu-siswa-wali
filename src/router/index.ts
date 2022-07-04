@@ -339,6 +339,11 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: "/sekolah/e-document/tambah",
+        name: "sekolah-e-document-tambah",
+        component: () => import("@/views/sekolah/e-document/Tambah.vue"),
+      },
+      {
         path: "/sekolah/e-document/detail/:id/:name",
         name: "sekolah-e-document-detail",
         component: () => import("@/views/sekolah/e-document/Detail.vue"),
