@@ -429,6 +429,29 @@ const routes: Array<RouteRecordRaw> = [
 
       // Absensi
       {
+        path: "/absensi/skema-absensi",
+        name: "absensi-skema-absensi",
+        component: () => import("@/views/absensi/skema-absensi/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/absensi/skema-absensi/siswa",
+          },
+          {
+            path: "siswa",
+            name: "absensi-skema-absensi-siswa",
+            component: () =>
+              import("@/views/absensi/skema-absensi/siswa/Index.vue"),
+          },
+          {
+            path: "guru",
+            name: "absensi-skema-absensi-guru",
+            component: () =>
+              import("@/views/absensi/skema-absensi/guru/Index.vue"),
+          },
+        ],
+      },
+      {
         path: "/absensi/rekapitulasi",
         name: "absensi-rekapitulasi",
         component: () => import("@/views/absensi/rekapitulasi/Index.vue"),

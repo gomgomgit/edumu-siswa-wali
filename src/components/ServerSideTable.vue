@@ -111,11 +111,16 @@ table.vgt-table thead th {
 	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
-table.vgt-table td {
+table.vgt-table td, table.vgt-table th {
 	border-bottom: 1px dashed #A1ABC055;
 	font-size: 1.15rem;
 	padding: 1.25rem 1.75rem;
 	vertical-align: middle;
+}
+.vgt-table tbody th.vgt-checkbox-col {
+	background: none;
+	padding: 1.25rem 1.75rem;
+	border-right: none;
 }
 .vgt-table th.sortable button:before {
 	border-top: 5px solid #A1ABC0;

@@ -181,7 +181,7 @@ export default defineComponent({
         pages: [
           {
             heading: "Skema Absensi",
-            route: "/pages",
+            route: "/absensi/skema-absensi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
