@@ -23,6 +23,7 @@ const masterIuranData = reactive({
 		{ label: 'Jenis Iuran', field: 'tipe_nama', sortable: false },
 		{ label: 'Nominal', field: 'master_nominal', sortable: false },
 		{ label: 'Jatuh Tempo', field: 'master_tgl_jatuh_tempo', sortable: false },
+		{ label: 'Total', field: 'total', sortable: false },
 		{ label: 'ACTION', field: 'action', sortable: false, width: '200px' },
 	],
 	rows: [],
@@ -136,9 +137,9 @@ onMounted(() => {
 					:rows="masterIuranData.rows"
 					@loadItems="getMasterIuran">
 					<template #table-row="{column, row}">
-						<div v-if="column.field == 'mapel_status'">
-							<span :class="'badge badge-light-' + (row.mapel_status == 1 ? 'success' : 'danger')">
-								{{row.mapel_status == 1 ? 'Aktif' : 'Non Aktif'}}
+						<div v-if="column.field == 'total'">
+							<span :class="row.totFin < row.totSiswa ? 'text-danger' : 'text-primary'">
+								{{row.totFin}}/{{row.totSiswa}}
 							</span>
 						</div>
 						<div v-if="column.field == 'action'">

@@ -49,7 +49,6 @@ import { useRoute } from "vue-router";
   
   const dataSiswaBelum = reactive({
     columns: [
-      { label: 'Select', field: 'select', sortable: false },
       { label: 'Siswa', field: 'user_nama', sortable: false },
     ],
     rows: [],
@@ -61,7 +60,6 @@ import { useRoute } from "vue-router";
 
   const dataSiswaSudah = reactive({
     columns: [
-      { label: 'Select', field: 'select', sortable: false },
       { label: 'Siswa', field: 'user_nama', sortable: false },
     ],
     rows: [],
@@ -102,6 +100,18 @@ import { useRoute } from "vue-router";
         getDataTetapan()
       })
   }
+  function selectionChangedSiswaBelum(params) {
+    var finalArray = params.selectedRows.map(obj => {
+      return obj.siswa_id
+    })
+    selectedBelum.value = finalArray
+  }
+  function selectionChangedSiswaSudah(params) {
+    var finalArray = params.selectedRows.map(obj => {
+      return obj.siswa_id
+    })
+    selectedSudah.value = finalArray
+  }
 
 </script>
 
@@ -112,7 +122,7 @@ import { useRoute } from "vue-router";
         <div class="card-body pt-5 pb-5">
           <div class="d-flex justify-content-between align-items-center">
             <div>
-              <h2 class="fs-2">Penetapan Iuran</h2>
+              <h2 class="fs-2">Master Iuran</h2>
               <div class="d-flex gap-6">
                 <div class="w-100px">
                   <h2 class="fs-4">Nama Grup </h2>
@@ -154,18 +164,21 @@ import { useRoute } from "vue-router";
           <div class="page-content">
             <div class="mb-5 mb-xxl-8">
               <ServerSideTable 
+                @selected-rows-change="selectionChangedSiswaBelum"
                 :paginationOptions="{enabled: false}"
                 :totalRows="dataSiswaBelum.totalRows || 0" 
                 :columns="dataSiswaBelum.columns"
+                :select-options="{
+                  enabled: true,
+                  selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+                  selectionInfoClass: 'custom-class',
+                  selectionText: 'rows selected',
+                  clearSelectionText: 'clear',
+                  disableSelectInfo: true, // disable the select info panel on top
+                  selectAllByGroup: true, 
+                }"
                 :rows="dataSiswaBelum.rows" @loadItems="getDataTetapan">
                 <template #table-row="{column, row}">
-                  <div v-if="column.field == 'select'">
-                    <input 
-                      :value="row.siswa_id"
-                      v-model="selectedBelum" 
-                      type="checkbox" name="studentBelum" id="" 
-                    />
-                  </div>
                   <div v-if="column.field == 'user_nama'">
                     <span class="fw-bold">{{row.user_nama}}</span>
                   </div>
@@ -197,18 +210,21 @@ import { useRoute } from "vue-router";
           <div class="page-content">
             <div class="mb-5 mb-xxl-8">
               <ServerSideTable 
+                @selected-rows-change="selectionChangedSiswaSudah"
                 :paginationOptions="{enabled: false}"
                 :totalRows="dataSiswaSudah.totalRows || 0" 
                 :columns="dataSiswaSudah.columns"
+                :select-options="{
+                  enabled: true,
+                  selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+                  selectionInfoClass: 'custom-class',
+                  selectionText: 'rows selected',
+                  clearSelectionText: 'clear',
+                  disableSelectInfo: true, // disable the select info panel on top
+                  selectAllByGroup: true, 
+                }"
                 :rows="dataSiswaSudah.rows" @loadItems="getDataTetapan">
                 <template #table-row="{column, row}">
-                  <div v-if="column.field == 'select'">
-                    <input 
-                      :value="row.siswa_id"
-                      v-model="selectedSudah" 
-                      type="checkbox" name="studentSudah" id="" 
-                    />
-                  </div>
                   <div v-if="column.field == 'user_nama'">
                     <span class="fw-bold">{{row.user_nama}}</span>
                   </div>
