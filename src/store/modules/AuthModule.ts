@@ -1,14 +1,17 @@
 import ApiService from "@/core/services/ApiService";
+import CurrentUserService from "@/core/services/CurrentUserService";
 import JwtService from "@/core/services/JwtService";
 import { Actions, Mutations } from "@/store/enums/StoreEnums";
+import axios from "axios";
 import { Module, Action, Mutation, VuexModule } from "vuex-module-decorators";
 
 export interface User {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  api_token: string;
+  user_status: String,
+  user_username: String,
+  user_id: Number,
+  user_level: String,
+  user_nama: String,
+  password: String,
 }
 
 export interface UserAuthInfo {
@@ -21,13 +24,13 @@ export interface UserAuthInfo {
 export default class AuthModule extends VuexModule implements UserAuthInfo {
   errors = {};
   user = {} as User;
-  isAuthenticated = !!JwtService.getToken();
+  isAuthenticated = JwtService.getToken() ? true : false;
 
   /**
    * Get current user object
    * @returns User
    */
-  get currentUser(): User {
+  get currentUser(): Object {
     return this.user;
   }
 
@@ -54,10 +57,12 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Mutation
   [Mutations.SET_AUTH](user) {
+    console.log('mutations', user)
     this.isAuthenticated = true;
     this.user = user;
     this.errors = {};
-    JwtService.saveToken(user.api_token);
+    CurrentUserService.saveUser(user);
+    JwtService.saveToken(user.user_id);
   }
 
   @Mutation
@@ -75,18 +80,21 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
     this.isAuthenticated = false;
     this.user = {} as User;
     this.errors = [];
+    CurrentUserService.destroyUser();
     JwtService.destroyToken();
   }
 
   @Action
   [Actions.LOGIN](credentials) {
-    return ApiService.post("login", credentials)
-      .then(({ data }) => {
-        this.context.commit(Mutations.SET_AUTH, data);
-      })
-      .catch(({ response }) => {
-        this.context.commit(Mutations.SET_ERROR, response.data.errors);
-      });
+    this.context.commit(Mutations.SET_AUTH, credentials);
+    // return ApiService.post("login", credentials)
+    //   .then(({ data }) => {
+    //     console.log(data)
+        // this.context.commit(Mutations.SET_AUTH, data);
+      // })
+      // .catch(({ response }) => {
+      //   this.context.commit(Mutations.SET_ERROR, response.data.errors);
+      // });
   }
 
   @Action

@@ -82,6 +82,7 @@ import MixedWidget5 from "@/components/widgets/mixed/Widget5.vue";
 import MixedWidget7 from "@/components/widgets/mixed/Widget7.vue";
 import MixedWidget10 from "@/components/widgets/mixed/Widget10.vue";
 import { setCurrentPageTitle, setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+import { useStore } from "vuex";
 
 export default defineComponent({
   name: "dashboard-main",
