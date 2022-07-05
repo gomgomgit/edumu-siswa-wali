@@ -5,10 +5,10 @@ const CurrentUser = "current_user" as string;
  */
 export const getUser = (): object | null => {
   var user = {
-    user_id: window.localStorage.removeItem('user_id'),
-    user_level: window.localStorage.removeItem('user_level'),
-    user_nama: window.localStorage.removeItem('user_nama'),
-    user_username: window.localStorage.removeItem('user_username'),
+    user_id: window.localStorage.getItem('user_id'),
+    user_level: window.localStorage.getItem('user_level'),
+    user_nama: window.localStorage.getItem('user_nama'),
+    user_username: window.localStorage.getItem('user_username'),
   };
   return user;
 };
