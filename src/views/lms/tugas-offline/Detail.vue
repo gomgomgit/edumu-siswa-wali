@@ -15,6 +15,7 @@ onMounted(() => {
   setCurrentPageBreadcrumbs('Detail Tugas', ['LMS', 'Tugas Offline'])
 })
 
+const storageUrl = process.env.VUE_APP_STORAGE_URL
 const route = useRoute()
 const tugasId = route.params.id
 const kelasOption = ref([])
@@ -31,10 +32,10 @@ const dataFile = reactive({
 
 const dataHasil = reactive({
   columns: [
-    { label: 'Nama', field: 'user_nama' },
+    { label: 'Nama', field: 'user_nama', sortable: false },
     { label: 'Nilai', field: 'ta_nilai', sortable: false },
-    { label: 'Di Jawab', field: 'ta_create_date' },
-    { label: 'Status', field: 'ta_status' },
+    { label: 'Di Jawab', field: 'ta_create_date', sortable: false },
+    { label: 'Status', field: 'ta_status', sortable: false },
     { label: 'Detail', field: 'detail', sortable: false },
   ],
   rows: [],
@@ -172,11 +173,18 @@ function formatingDate(date) {
             :totalRows="dataFile.totalRows || 0"
             :columns="dataFile.columns"
             :rows="dataFile.rows"
+            :pagination-options="{
+              enabled: false
+            }"
             @loadItems="getData"
           >
             <template #table-row="{column, row}">
               <div v-if="column.field == 'download'">
-                <span class='badge badge-light-success'>Sudah Upload Tugas</span>
+                <a target="_blank" :href="`${storageUrl}/public/files/${row.tugas_file_nama}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                  <span class="svg-icon svg-icon-3">
+                    <i class="bi bi-cloud-arrow-down-fill fs-3"></i>
+                  </span>
+                </a>
               </div>
             </template>
           </ServerSideTable>
