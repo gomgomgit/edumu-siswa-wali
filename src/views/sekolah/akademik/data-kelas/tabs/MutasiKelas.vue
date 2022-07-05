@@ -52,9 +52,8 @@ import { useToast } from "vue-toast-notification";
   
   const dataSiswaKelas = reactive({
     columns: [
-      { label: 'Select', field: 'select', sortable: false },
-      { label: 'NISN', field: 'siswa_nisn' },
-      { label: 'Siswa', field: 'user_nama' },
+      { label: 'NISN', field: 'siswa_nisn', sortable: false },
+      { label: 'Siswa', field: 'user_nama', sortable: false },
     ],
     rows: [],
     totalRows: 0,
@@ -82,8 +81,8 @@ import { useToast } from "vue-toast-notification";
 
   const dataSiswaKelasTujuan = reactive({
     columns: [
-      { label: 'NISN', field: 'siswa_nisn' },
-      { label: 'Siswa', field: 'user_nama' },
+      { label: 'NISN', field: 'siswa_nisn', sortable: false },
+      { label: 'Siswa', field: 'user_nama', sortable: false },
     ],
     rows: [],
     totalRows: 0,
@@ -139,7 +138,12 @@ import { useToast } from "vue-toast-notification";
         getDataSiswaKelasTujuan()
       })
   }
-
+  function selectionChangedSiswa(params) {
+    var finalArray = params.selectedRows.map((obj) => {
+      return obj.siswa_id
+    })
+    selectedStudent.value = finalArray
+  }
 </script>
 
 <template>
@@ -181,17 +185,20 @@ import { useToast } from "vue-toast-notification";
             </div>
             <div class="mb-5 mb-xxl-8">
               <ServerSideTable 
+                @selected-rows-change="selectionChangedSiswa"
                 :totalRows="dataSiswaKelas.totalRows || 0" 
                 :columns="dataSiswaKelas.columns"
+                :select-options="{
+                  enabled: true,
+                  selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+                  selectionInfoClass: 'custom-class',
+                  selectionText: 'rows selected',
+                  clearSelectionText: 'clear',
+                  disableSelectInfo: true, // disable the select info panel on top
+                  selectAllByGroup: true, 
+                }"
                 :rows="dataSiswaKelas.rows" @loadItems="getDataSiswaKelas">
                 <template #table-row="{column, row}">
-                  <div v-if="column.field == 'select'">
-                    <input 
-                      :value="row.siswa_id"
-                      v-model="selectedStudent" 
-                      type="checkbox" name="student" id="" 
-                    />
-                  </div>
                   <div v-if="column.field == 'user_nama'">
                     <span class="fw-bold">{{row.user_nama}}</span> - {{row.kelas_nama}}
                   </div>
