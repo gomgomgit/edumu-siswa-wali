@@ -35,35 +35,32 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/lms/tugas-offline/Answer.vue"),
       },
       {
-        path: "/ujian-online",
-        name: "ujian-online",
-        component: () => import("@/views/pages/ujian-online/UjianOnline.vue"),
+        path: "/lms/ujian-online",
+        name: "lms-ujian-online",
+        component: () => import("@/views/lms/ujian-online/Index.vue"),
         children: [
           {
             path: "",
-            redirect: "/ujian-online/peserta-ujian",
+            redirect: "/lms/ujian-online/utama",
           },
           {
-            path: "peserta-ujian",
-            name: "ujian-online-peserta-ujian",
-            component: () =>
-              import("@/views/pages/ujian-online/tabs/peserta-ujian.vue"),
+            path: "utama",
+            name: "lms-ujian-online-utama",
+            component: () => import("@/views/lms/ujian-online/utama/Index.vue"),
           },
           {
             path: "pantau-ujian",
-            name: "ujian-online-pantau-ujian",
-            component: () =>
-              import("@/views/pages/ujian-online/tabs/pantau-ujian.vue"),
+            name: "lms-ujian-online-pantau-ujian",
+            component: () => import("@/views/lms/ujian-online/pantau-ujian/Index.vue"),
           },
           {
             path: "kategori",
-            name: "ujian-online-kategori",
-            component: () =>
-              import("@/views/pages/ujian-online/tabs/kategori.vue"),
+            name: "lms-ujian-online-kategori",
+            component: () => import("@/views/lms/ujian-online/kategori/Index.vue"),
           },
         ]
       },
-      
+
       {
         path: "/lms/materi-belajar",
         name: "lms-materi-belajar",
