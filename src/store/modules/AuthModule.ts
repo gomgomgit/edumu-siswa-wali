@@ -31,7 +31,7 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
    * @returns User
    */
   get currentUser(): Object {
-    return this.user;
+    return CurrentUserService.getUser();
   }
 
   /**
@@ -57,7 +57,6 @@ export default class AuthModule extends VuexModule implements UserAuthInfo {
 
   @Mutation
   [Mutations.SET_AUTH](user) {
-    console.log('mutations', user)
     this.isAuthenticated = true;
     this.user = user;
     this.errors = {};

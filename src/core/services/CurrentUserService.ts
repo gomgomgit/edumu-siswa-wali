@@ -3,7 +3,7 @@ const CurrentUser = "current_user" as string;
 /**
  * @description get token form localStorage
  */
-export const getUser = (): object | null => {
+export const getUser = () => {
   var user = {
     user_id: window.localStorage.getItem('user_id'),
     user_level: window.localStorage.getItem('user_level'),
