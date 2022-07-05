@@ -108,11 +108,11 @@
 
             <div class="position-relative d-flex flex-wrap gap-4 w-100 w-xl-auto justify-content-end">
               <div class="d-flex align-items-center">
-                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/absensi/skema-absensi/siswa" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Siswa Absen GPS
                   </span>
-                </a>
+                </router-link>
               </div>
               <div class="d-flex align-items-center">
                 <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">

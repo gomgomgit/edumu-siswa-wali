@@ -19,6 +19,8 @@ const kategoriOption = ref()
 
 const searchSiswa = ref()
 
+const selectedSiswa = ref([])
+
 const form = reactive({
   arsip_cat_id: '',
   kelas_id: '',
@@ -26,7 +28,7 @@ const form = reactive({
 
 const siswa = reactive({
   columns: [
-    { label: 'Siswa', field: 'user_nama' },
+    { label: 'Siswa', field: 'user_nama', sortable: false },
     { label: 'NISN', field: 'siswa_nisn', sortable: false },
     { label: 'Kelas', field: 'kelas_nama', sortable: false }
   ],
@@ -64,6 +66,13 @@ function post() {
     useToast().success('Data berhasil diedit!')
     router.push('/account/profile')
   })
+}
+
+function selectionChangedSiswa(params) {
+  var finalArray = params.selectedRows.map((obj) => {
+    return obj.siswa_id
+  })
+  selectedSiswa.value = finalArray
 }
 
 </script>
@@ -125,9 +134,19 @@ function post() {
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
+            @selected-rows-change="selectionChangedSiswa"
             :totalRows="siswa.totalRows || 0" 
             :columns="siswa.columns" 
             :rows="siswa.rows"
+            :select-options="{
+              enabled: true,
+              selectOnCheckboxOnly: false, // only select when checkbox is clicked instead of the row
+              selectionInfoClass: 'custom-class',
+              selectionText: 'rows selected',
+              clearSelectionText: 'clear',
+              disableSelectInfo: true, // disable the select info panel on top
+              selectAllByGroup: true, 
+            }"
             @loadItems="getSiswa">
           </ServerSideTable>
         </div>

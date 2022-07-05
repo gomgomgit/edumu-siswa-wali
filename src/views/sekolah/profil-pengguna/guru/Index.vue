@@ -101,11 +101,11 @@ function handlePasswordClose() {
 
             <div class="position-relative d-flex w-100 w-lg-50 w-xl-auto gap-4 justify-content-end">
               <div class="d-flex align-items-center">
-                <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/absensi/skema-absensi/guru" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
-                    Siswa Absen GPS
+                    Guru Absen GPS
                   </span>
-                </a>
+                </router-link>
               </div>
               <div class="d-flex align-items-center">
                 <a @click="modalData = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
