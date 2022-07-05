@@ -6,13 +6,16 @@ import { isEmpty } from "validate.js"
 
 import Modal from "@/components/modals/CustomModal.vue"
 import { request } from "@/util";
+import { useStore } from "vuex"
 
 const props = defineProps({
 	mode: { type: String, required: true },
 	activeData: { type: Object, required: true },
 })
 
-const userId = 255
+const store = useStore()
+
+const userId = store.getters.currentUser.user_id 
 
 const emits = defineEmits(['close', 'submit'])
 

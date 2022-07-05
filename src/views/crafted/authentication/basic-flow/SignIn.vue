@@ -212,7 +212,6 @@ function postLogin(data, sekolah) {
   axios.post('https://apiedumu.edumu.id/demo/apischool/login', QueryString.stringify(formData))
   .then(res => {
     if (res.data.success) {
-      console.log(res.data.data)
       store.dispatch(Actions.LOGIN, res.data.data)
 
       Swal.fire({
@@ -225,7 +224,6 @@ function postLogin(data, sekolah) {
       },
       }).then(function () {
         // Go to page after successfully login
-        console.log('success')
         router.push({ name: "dashboard" });
       });
         
