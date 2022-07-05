@@ -61,6 +61,9 @@ function getTransaksi (payload) {
         :totalRows="transaksiDetail.totalRows || 0"
         :columns="transaksiDetail.columns"
         :rows="transaksiDetail.rows"
+        :pagination-options="{
+          enabled: false
+        }"
         @loadItems="getTransaksi">
         <template #table-row="{column, row}">
           <div v-if="column.field == 'payment_code'">
@@ -75,10 +78,10 @@ function getTransaksi (payload) {
       </ServerSideTable>
       <div>
         <div>
-          <span>Total Bayar : </span><span>{{transaksiData.payment_nominal}}</span>
+          <span class="fw-bold fs-4">Total Bayar : </span><span>{{transaksiData.payment_nominal}}</span>
         </div>
         <div>
-          <span>Status : </span><span>{{transaksiData.payment_status}}</span>
+          <span class="fw-bold fs-4">Status : </span><span>{{transaksiData.payment_status}}</span>
         </div>
       </div>
     </div>
@@ -98,6 +101,9 @@ function getTransaksi (payload) {
         :totalRows="transaksiConfirm.totalRows || 0"
         :columns="transaksiConfirm.columns"
         :rows="transaksiConfirm.rows"
+        :pagination-options="{
+          enabled: false
+        }"
         @loadItems="getTransaksi">
         <template #table-row="{column, row}">
           <div v-if="column.field == 'option'">
