@@ -483,6 +483,11 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: "/absensi/absensi-manual",
+        name: "absensi-absensi-manual",
+        component: () => import("@/views/absensi/absensi-manual/Index.vue"),
+      },
+      {
         path: "/absensi/waktu-absensi",
         name: "absensi-waktu-absensi",
         component: () => import("@/views/absensi/waktu-absensi/Index.vue"),

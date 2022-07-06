@@ -193,7 +193,7 @@ export default defineComponent({
           },
           {
             heading: "Absensi Manual",
-            route: "/pages",
+            route: "/absensi/absensi-manual",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
