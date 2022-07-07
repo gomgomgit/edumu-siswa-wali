@@ -366,7 +366,7 @@ const routes: Array<RouteRecordRaw> = [
 
       {
         path: "/sekolah/akreditasi",
-        name: "sekolah-informasi-berita",
+        name: "sekolah-informasi-akreditasi",
         component: () => import("@/views/sekolah/akreditasi/Index.vue"),
         children: [
           {
