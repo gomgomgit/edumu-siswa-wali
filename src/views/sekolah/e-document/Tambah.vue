@@ -8,11 +8,15 @@ import { useRouter } from 'vue-router';
 import { Search } from '@element-plus/icons-vue'
 import ServerSideTable from '@/components/ServerSideTable.vue'
 import FileDrop from '@/components/file-dropzone/Index.vue';
+import { useStore } from 'vuex';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Tambah Dokumen", ['Sekolah', 'E Dokumen']);
   getData()
 })
+
+const store = useStore()
+const userId = store.getters.currentUser.user_id 
 
 const router = useRouter()
 const kelasOption = ref()
@@ -65,7 +69,7 @@ function postData() {
   const formData = new FormData()
   formData.append('arsip_cat_id', form.arsip_cat_id)
   formData.append('siswaSelect', selectedSiswa.value)
-  formData.append('user_id', 255)
+  formData.append('user_id', userId)
   formData.append('file', form.file)
 
   request.post('arsip/upload', formData, {

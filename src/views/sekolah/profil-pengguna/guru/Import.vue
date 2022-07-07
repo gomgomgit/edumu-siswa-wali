@@ -6,17 +6,36 @@ import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
+import { useStore } from 'vuex';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Data Guru", ['Sekolah', 'Profil Pengguna', 'Guru']);
 })
 
+const store = useStore()
+const userId = store.getters.currentUser.user_id 
+
 const router = useRouter()
 
-const kelasOption = ref()
-
 const form = reactive({
+  status_import_guru: '',
+  file: null
 })
+
+function postData() {
+  const formData = new FormData()
+  formData.append('status_import_guru', form.status_import)
+  formData.append('user_id', userId)
+  formData.append('file', form.file)
+
+  request.post('data/import_guru', formData, {
+    headers: {
+      'Content-Type' : 'multipart/form-data'
+    }
+  }).then(res => {
+    router.push('/sekolah/profil-pengguna/guru')
+  })
+}
 </script>
 
 <template>
@@ -65,7 +84,7 @@ const form = reactive({
             <FileDrop v-model:fileInputData="form.file"></FileDrop>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a @click.prevent="router.go(-1)" href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.push('/sekolah/profil-pengguna/guru')" href="#" class="btn btn-light">Batal</a>
             <a @click.prevent="postData" class="btn btn-primary">Simpan</a>
           </div>
         </div>

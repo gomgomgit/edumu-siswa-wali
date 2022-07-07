@@ -6,23 +6,45 @@ import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
+import { useStore } from 'vuex';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Data Siswa", ['Sekolah', 'Profil Pengguna', 'Siswa']);
   getData()
 })
 
+const store = useStore()
+const userId = store.getters.currentUser.user_id 
+
 const router = useRouter()
 
 const kelasOption = ref()
 
 const form = reactive({
+  status_import: '',
   kelas_id: '',
+  file: null,
 })
 
 function getData() {
   request.post('kelas', null).then(res => {
     kelasOption.value = res.data.data
+  })
+}
+
+function postData() {
+  const formData = new FormData()
+  formData.append('status_import_guru', form.status_import)
+  formData.append('kelas_id', form.kelas_id)
+  formData.append('user_id', userId)
+  formData.append('file', form.file)
+
+  request.post('data/import', formData, {
+    headers: {
+      'Content-Type' : 'multipart/form-data'
+    }
+  }).then(res => {
+    router.push('/sekolah/profil-pengguna/siswa')
   })
 }
 </script>
@@ -84,7 +106,7 @@ function getData() {
             <FileDrop v-model:fileInputData="form.file"></FileDrop>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a @click.prevent="router.go(-1)" href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.push('/sekolah/profil-pengguna/siswa')" href="#" class="btn btn-light">Batal</a>
             <a @click.prevent="postData" class="btn btn-primary">Simpan</a>
           </div>
         </div>
