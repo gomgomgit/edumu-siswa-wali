@@ -9,6 +9,8 @@
 import { useToast } from "vue-toast-notification";
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import QueryString from "qs";
+import moment from "moment";
+import FormModal from'./FormModal'
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Absensi Manual", ["Absensi"]);
@@ -21,14 +23,17 @@ import QueryString from "qs";
         level: 'siswa',
         siswa: filterSiswa.value,
         kelas: filterKelasSiswa.value,
-        dateStart: '2022-07-06',
-        dateEnd: '2022-07-06',
+        dateStart: filterDateSiswaStart.value,
+        dateEnd: filterDateSiswaEnd.value,
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
-      manualSiswa.rows = res.data.data.data
-      manualSiswa.totalRows = res.data.total
+        manualSiswa.rows = res.data.data.data
+        manualSiswa.totalRows = res.data.data.total
+    }).catch(err => {
+        manualSiswa.rows = []
+        manualSiswa.tot = 0
     })
   }
   function getManualGuru (payload) {
@@ -36,14 +41,17 @@ import QueryString from "qs";
       params: {
         level: 'guru',
         guru: filterGuru.value,
-        dateStart: '2022-07-06',
-        dateEnd: '2022-07-06',
+        dateStart: filterDateGuruStart.value,
+        dateEnd: filterDateGuruEnd.value,
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC'
       }
     }).then(res => {
       manualGuru.rows = res.data.data.data
       manualGuru.totalRows = res.data.data.total
+    }).catch(err => {
+      manualGuru.rows = []
+      manualGuru.totalRows = 0
     })
   }
   function getClass (payload) {
@@ -74,15 +82,42 @@ import QueryString from "qs";
     rows: [],
     totalRows: 0,
   })
+
+  const activeData = ref()
+  const formMode = ref()
+
   const filterSiswa = ref('')
   const filterKelasSiswa = ref('')
   const filterGuru = ref('')
   const classOption = ref([])
+
+  const filterDateSiswaStart = ref(moment().format('YYYY-MM-DD'))
+  const filterDateSiswaEnd = ref(moment().format('YYYY-MM-DD'))
+  const filterDateGuruStart = ref(moment().format('YYYY-MM-DD'))
+  const filterDateGuruEnd = ref(moment().format('YYYY-MM-DD'))
+
+  function handleSubmit() {
+    getManualSiswa()
+    getManualGuru()
+    activeData.value = {}
+    formMode.value = ''
+  }
+  
+  function handleEdit (row) {
+    console.log(row)
+    activeData.value = row
+    formMode.value = 'Edit Data'
+  }
+  function handleFormClose (row) {
+    activeData.value = {}
+    formMode.value = ''
+  }
 </script>
 
 <template>
+<div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
@@ -112,20 +147,26 @@ import QueryString from "qs";
                   </el-input>
               </div>
               
-              <div class="d-flex gap-4">
+              <div class="d-flex w-100 justify-content-end gap-4">
                 <el-date-picker
-                  v-model="periodeFilter"
+                  v-model="filterDateSiswaStart"
                   type="date"
                   start-placeholder="Start date"
                   end-placeholder="End date"
+                  value-format="YYYY-MM-DD"
                   :default-time="defaultTime"
+                  :clearable="false"
+                  @change="getManualSiswa()"
                 />
                 <el-date-picker
-                  v-model="periodeFilter"
+                  v-model="filterDateSiswaEnd"
                   type="date"
                   start-placeholder="Start date"
                   end-placeholder="End date"
+                  value-format="YYYY-MM-DD"
                   :default-time="defaultTime"
+                  :clearable="false"
+                  @change="getManualSiswa()"
                 />
               </div>
             </div>
@@ -142,7 +183,7 @@ import QueryString from "qs";
                   <span :class="`badge badge-light-${row.type == 'in' ? 'success' : 'danger'}`">{{row.type}}</span>
                 </div>
                 <div v-if="column.field == 'action'">
-                  <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                  <a @click="handleEdit(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                     <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                     </span>
@@ -154,7 +195,7 @@ import QueryString from "qs";
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-12 col-lg-6">
       <div class="card mb-5 mb-xxl-8">
         <div class="card-body py-6">
           <div class="py-6 d-flex justify-content-between align-items-center">
@@ -178,20 +219,26 @@ import QueryString from "qs";
                   </el-input>
               </div>
               
-              <div class="d-flex gap-4">
+              <div class="d-flex w-100 justify-content-end gap-4">
                 <el-date-picker
-                  v-model="periodeFilter"
+                  v-model="filterDateGuruStart"
                   type="date"
                   start-placeholder="Start date"
                   end-placeholder="End date"
+                  value-format="YYYY-MM-DD"
                   :default-time="defaultTime"
+                  :clearable="false"
+                  @change="getManualGuru()"
                 />
                 <el-date-picker
-                  v-model="periodeFilter"
+                  v-model="filterDateGuruEnd"
                   type="date"
                   start-placeholder="Start date"
                   end-placeholder="End date"
+                  value-format="YYYY-MM-DD"
                   :default-time="defaultTime"
+                  :clearable="false"
+                  @change="getManualGuru()"
                 />
               </div>
             </div>
@@ -207,7 +254,7 @@ import QueryString from "qs";
                   <span :class="`badge badge-light-${row.type == 'in' ? 'success' : 'danger'}`">{{row.type}}</span>
                 </div>
                 <div v-if="column.field == 'action'">
-                  <a class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                  <a @click="handleEdit(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                     <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                     </span>
@@ -220,4 +267,12 @@ import QueryString from "qs";
       </div>
     </div>
   </div>
+  
+  <FormModal 
+    :mode="formMode"
+    :activeData="activeData"
+    :dataOption="{guruOption: guruOption, kelasOption: kelasOption, mapelOption: mapelOption}"
+    @close="handleFormClose"
+    @submit="handleSubmit()" />
+</div>
 </template>
