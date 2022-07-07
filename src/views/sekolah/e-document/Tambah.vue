@@ -7,6 +7,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import { Search } from '@element-plus/icons-vue'
 import ServerSideTable from '@/components/ServerSideTable.vue'
+import FileDrop from '@/components/file-dropzone/Index.vue';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Tambah Dokumen", ['Sekolah', 'E Dokumen']);
@@ -60,11 +61,20 @@ function getSiswa(payload) {
   })
 }
 
-function post() {
-  request.post('user/edit', QueryString.stringify(form))
-  .then(res => {
+function postData() {
+  const formData = new FormData()
+  formData.append('arsip_cat_id', form.arsip_cat_id)
+  formData.append('siswaSelect', selectedSiswa.value)
+  formData.append('user_id', 255)
+  formData.append('file', form.file)
+
+  request.post('arsip/upload', formData, {
+    headers: {
+      'Content-Type' : 'multipart/form-data'
+    }
+  }).then(res => {
     useToast().success('Data berhasil diedit!')
-    router.push('/account/profile')
+    router.push('/sekolah/e-document/dokumen')
   })
 }
 
@@ -79,49 +89,94 @@ function selectionChangedSiswa(params) {
 
 <template>
   <div>
-    <div class="card mb-5 mb-xxl-8">
-      <div class="card-body py-6">
-        <div>
-          <h2 class="fs-1 fw-bold py-6">Tambah Data</h2>
-        </div>
-        <div class="separator border-black-50 border-2 my-6"></div>
-        <div class="d-flex flex-column gap-4">
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Pilih Kategori</p>
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        <div class="card mb-5 mb-xxl-8">
+          <div class="card-body py-6">
+            <div>
+              <h2 class="fs-1 fw-bold py-6 m-0">Tambah Data</h2>
             </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-select class="w-100" v-model="form.arsip_cat_id" filterable placeholder="Select">
-                <el-option v-for="kategori in kategoriOption" :key="kategori.arsip_cat_id" :label="kategori.arsip_cat_name"
-                  :value="kategori.arsip_cat_id" />
-              </el-select>
+            <div class="separator border-black-50 border-2 my-6"></div>
+            <div class="d-flex flex-column gap-4">
+              <div class="row">
+                <div class="col-3 align-items-center d-flex">
+                  <p class="m-0 fs-4 fw-bold">Pilih Kategori</p>
+                </div>
+                <div class="col-9 align-items-center d-flex gap-4">
+                  <el-select class="w-100" v-model="form.arsip_cat_id" filterable clearable placeholder="Select">
+                    <el-option v-for="kategori in kategoriOption" :key="kategori.arsip_cat_id" :label="kategori.arsip_cat_name"
+                      :value="kategori.arsip_cat_id" />
+                  </el-select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-3 align-items-center d-flex">
+                  <p class="m-0 fs-4 fw-bold">Pilih Kelas</p>
+                </div>
+                <div class="col-9 align-items-center d-flex gap-4">
+                  <el-select @change="getSiswa()" class="w-100" v-model="form.kelas_id" filterable clearable placeholder="Select">
+                    <el-option v-for="kelas in kelasOption" :key="kelas.kelas_id" :label="kelas.kelas_nama"
+                      :value="kelas.kelas_id" />
+                  </el-select>
+                </div>
+              </div>
+            </div>
+            
+            <div class="w-100 my-4">
+              <el-input
+                v-model="searchSiswa"
+                clearable
+                class=""
+                placeholder="Nama Siswa"
+                @input="getSiswa()"
+              >
+                <template #append>
+                  <el-button aria-disabled="true" class="pe-none" :icon="Search" />
+                </template>
+              </el-input>
             </div>
           </div>
-          <div class="row">
-            <div class="col-3 align-items-center d-flex">
-              <p class="m-0 fs-4 fw-bold">Pilih Kelas</p>
+        </div>
+      </div>
+      <div class="col-12 col-lg-6">
+        <div class="card mb-5 mb-xxl-8">
+          <div class="card-body py-6">
+            <div>
+              <h2 class="fs-1 fw-bold py-6 m-0">Upload Data</h2>
             </div>
-            <div class="col-9 align-items-center d-flex gap-4">
-              <el-select @change="getSiswa()" class="w-100" v-model="form.kelas_id" filterable placeholder="Select">
-                <el-option v-for="kelas in kelasOption" :key="kelas.kelas_id" :label="kelas.kelas_nama"
-                  :value="kelas.kelas_id" />
-              </el-select>
+            <div class="separator border-black-50 border-2 my-6"></div>
+            <div class="">
+              <div class="mb-3">
+                <p class="m-0 fs-7">
+                  *Cara upload per siswa:
+                </p>
+                <p class="m-0 fs-7">
+                  -Pastikan nama file menggunakan nama NISN.pdf (contoh: 001234.pdf)
+                </p>
+                <p class="m-0 fs-7">
+                  -Pastikan memilih siswa terlebih dahulu dan tidak perlu di zip
+                </p>
+                <p class="m-0 fs-7">
+                  *Cara upload banyak siswa:
+                </p>
+                <p class="m-0 fs-7">
+                  -Pastikan nama file menggunakan nama NISN.pdf (contoh: 001234.pdf)
+                </p>
+                <p class="m-0 fs-7">
+                  -Silahkan zip file dengan cara select file lalu zip dengan zip tool
+                </p>
+              </div>
+
+              <div class="">
+                <FileDrop v-model:fileInputData="form.file"></FileDrop>
+              </div>
+              <div class="separator border-black-50 border-2 my-6"></div>
+              <div class="d-flex justify-content-end gap-4">
+                <a @click.prevent="router.go(-1)" href="#" class="btn btn-light">Batal</a>
+                <a @click.prevent="postData" class="btn btn-primary">Simpan</a>
+              </div>
             </div>
           </div>
-        </div>
-        
-        <div class="w-100 my-4">
-          <el-input
-            v-model="searchSiswa"
-            clearable
-            class=""
-            placeholder="Nama Siswa"
-            @input="getSiswa()"
-          >
-            <template #append>
-              <el-button aria-disabled="true" class="pe-none" :icon="Search" />
-            </template>
-          </el-input>
         </div>
       </div>
     </div>
@@ -129,7 +184,7 @@ function selectionChangedSiswa(params) {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6">Siswa</h2>
+          <h2 class="fs-1 fw-bold py-6 m-0">Siswa</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="my-5 mb-xxl-8">

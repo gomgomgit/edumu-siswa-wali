@@ -58,7 +58,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
           <h2 class="fs-1 fw-bold">Data E-Document</h2>
           
           <div>
-            <router-link to="/sekolah/e-dokumen/tambah"
+            <router-link to="/sekolah/e-document/tambah"
               class="btn btn-primary d-flex gap-3 align-items-center w-auto w-lg-100">
               <i class="bi bi-plus fs-1 p-0"></i>
               <span class="d-none d-lg-inline">
