@@ -35,10 +35,9 @@ $warning-active:    								if(isDarkMode(), #EE9D01, #F1BC00);
 $warning-light:    									if(isDarkMode(), #392F28, #FFF8DD);
 $warning-inverse:  									#ffffff;
 
-// Card Box Shadow                                  
+// Card Box Shadow
 $card-box-shadow:                                   if(isDarkMode(), none, 0px 10px 35px 0px rgba(56,71,109,0.075));
 $card-border-radius:                                0.85rem;
 
 // Font family
 $font-family-sans-serif:                            'Roboto', sans-serif;
-
