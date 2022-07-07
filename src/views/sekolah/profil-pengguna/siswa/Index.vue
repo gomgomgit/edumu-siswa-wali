@@ -123,12 +123,12 @@
                 </a>
               </div>
               <div class="d-flex align-items-center">
-                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link to="/sekolah/profil-pengguna/siswa/import-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Import Data
                   </span>
                   <i class="bi bi-cloud-arrow-down fs-1"></i>
-                </a>
+                </router-link>
               </div>
               <div class="d-flex align-items-center">
                 <router-link to="/sekolah/profil-pengguna/siswa/tambah-data" class="btn btn-primary d-flex gap-3 align-items-center w-auto">

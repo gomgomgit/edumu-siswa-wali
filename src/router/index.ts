@@ -128,10 +128,18 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/lms/laporan-nilai/tugas-offline/Detail.vue"),
       },
 
+      //Sekolah
+
+      //Profil Pengguna
       {
         path: "/sekolah/profil-pengguna/siswa",
         name: "sekolah-profil-pengguna-siswa",
         component: () => import("@/views/sekolah/profil-pengguna/siswa/Index.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/siswa/import-data",
+        name: "sekolah-profil-pengguna-siswa-import",
+        component: () => import("@/views/sekolah/profil-pengguna/siswa/Import.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/siswa/tambah-data",
@@ -162,6 +170,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/sekolah/profil-pengguna/guru",
         name: "sekolah-profil-pengguna-guru",
         component: () => import("@/views/sekolah/profil-pengguna/guru/Index.vue"),
+      },
+      {
+        path: "/sekolah/profil-pengguna/guru/import-data",
+        name: "sekolah-profil-pengguna-guru-import",
+        component: () => import("@/views/sekolah/profil-pengguna/guru/Import.vue"),
       },
       {
         path: "/sekolah/profil-pengguna/guru/tambah-data",
