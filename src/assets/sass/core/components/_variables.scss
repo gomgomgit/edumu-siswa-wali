@@ -116,6 +116,11 @@ $white:    											$white !default; // Bootstrap variable
 $white-active:    									$gray-100 !default; // Custom variable
 $white-inverse:    									$gray-600 !default; // Custom variable
 
+// azure
+$azure:                                             if(isDarkMode(), #1200DC, #0046dc);
+$azure-active:                                      if(isDarkMode(), #1100c9, #0041cc);
+$azure-light:                                       if(isDarkMode(), #242330, #e4edff);
+$azure-inverse:                                    #ffffff;
 
 // Theme colors
 $theme-colors: (
@@ -127,6 +132,7 @@ $theme-colors: (
     "info":       $info,
     "warning":    $warning,
     "danger":     $danger,
+    "azure":     $azure,
     "dark":       $dark
 ) !default;
 
@@ -140,6 +146,7 @@ $theme-active-colors: (
     "info":       $info-active,
     "warning":    $warning-active,
     "danger":     $danger-active,
+    "azure":     $azure-active,
     "dark":       $dark-active
 ) !default;  // Custom variable
 
@@ -153,6 +160,7 @@ $theme-inverse-colors: (
     "info":       $info-inverse,
     "warning":    $warning-inverse,
     "danger":     $danger-inverse,
+    "azure":     $azure-inverse,
     "dark":       $dark-inverse
 ) !default;  // Custom variable
 
@@ -163,6 +171,7 @@ $theme-light-colors: (
     "info":       $info-light,
     "warning":    $warning-light,
     "danger":     $danger-light,
+    "azure":     $azure-light,
     "dark":       $dark-light
 ) !default;  // Custom variable
 
@@ -176,6 +185,7 @@ $theme-text-colors: (
     "info":       $info,
     "warning":    $warning,
     "danger":     $danger,
+    "azure":     $azure,
     "dark":       $dark,
     "muted":      $text-muted,
     "gray-100":   $gray-100,
@@ -463,7 +473,7 @@ $font-sizes: (
     4qx: $font-size-base * 4.25,    // 55.25px
     4hx: $font-size-base * 4.5,     // 58.5px
     4tx: $font-size-base * 4.75,    // 61.75px
-    
+
     5x: $font-size-base * 5,        // 65px
     5qx: $font-size-base * 5.25,    // 68.25px
     5hx: $font-size-base * 5.5,     // 71.5px
@@ -573,7 +583,7 @@ $form-label-color:                                  $gray-800 !default;
 $form-text-margin-top:                              .5rem !default;
 $form-text-font-size:                               $font-size-sm !default;
 $form-text-color:                                   $text-muted !default;
- 
+
 
 $input-padding-y:                                   $input-btn-padding-y !default;
 $input-padding-x:                                   $input-btn-padding-x !default;

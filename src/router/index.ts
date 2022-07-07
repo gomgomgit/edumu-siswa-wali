@@ -49,6 +49,32 @@ const routes: Array<RouteRecordRaw> = [
             component: () => import("@/views/lms/ujian-online/utama/Index.vue"),
           },
           {
+            path: "utama/form",
+            name: "lms-ujian-online-utama-form",
+            component: () => import("@/views/lms/ujian-online/utama/Form.vue"),
+            children: [
+              {
+                path: "",
+                redirect: "/lms/ujian-online/utama/form/pengaturan"
+              },
+              {
+                path: "pengaturan/:id?",
+                name: "lms-ujian-online-utama-form-pengaturan",
+                component: () => import("@/views/lms/ujian-online/utama/form/Pengaturan.vue"),
+              },
+              {
+                path: "soal-ujian/:id?",
+                name: "lms-ujian-online-utama-form-soal-ujian",
+                component: () => import("@/views/lms/ujian-online/utama/form/SoalUjian.vue"),
+              },
+              {
+                path: "pratinjau/:id?",
+                name: "lms-ujian-online-utama-form-pratinjau",
+                component: () => import("@/views/lms/ujian-online/utama/form/Pratinjau.vue"),
+              },
+            ]
+          },
+          {
             path: "pantau-ujian",
             name: "lms-ujian-online-pantau-ujian",
             component: () => import("@/views/lms/ujian-online/pantau-ujian/Index.vue"),
