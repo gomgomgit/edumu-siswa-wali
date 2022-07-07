@@ -16,14 +16,10 @@
         <!--begin::Username-->
         <div class="d-flex flex-column">
           <div class="fw-bolder d-flex align-items-center fs-5">
-            Max Smith
-            <span
-              class="badge badge-light-success fw-bolder fs-8 px-2 py-1 ms-2"
-              >Pro</span
-            >
+            {{userData.user_nama}}
           </div>
           <a href="#" class="fw-bold text-muted text-hover-primary fs-7"
-            >max@kt.com</a
+            >{{userData.user_level}}</a
           >
         </div>
         <!--end::Username-->
@@ -313,6 +309,8 @@ export default defineComponent({
     const i18n = useI18n();
     const store = useStore();
 
+    const userData = store.getters.currentUser
+
     i18n.locale.value = localStorage.getItem("lang")
       ? (localStorage.getItem("lang") as string)
       : "en";
@@ -365,6 +363,7 @@ export default defineComponent({
       currentLanguage,
       currentLangugeLocale,
       countries,
+      userData
     };
   },
 });

@@ -5,6 +5,7 @@ import { request } from '@/util';
 import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("My Profile", ['Account']);
@@ -12,7 +13,9 @@ onMounted(() => {
 })
 
 const router = useRouter()
-const userId = 255
+
+const store = useStore()
+const userId = store.getters.currentUser.user_id 
 
 const form = reactive({
   user_id: '',

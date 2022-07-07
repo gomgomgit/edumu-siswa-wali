@@ -66,7 +66,6 @@ function handleSubmit () {
   }).then(res => {
       useToast().success(message)
       Object.assign(form, initialForm)
-      useToast().success(message)
       emits('submit')
       emits('close')
   })

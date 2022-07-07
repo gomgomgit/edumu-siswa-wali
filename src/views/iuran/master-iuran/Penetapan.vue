@@ -7,6 +7,7 @@
 import QueryString from "qs";
 import { useToast } from "vue-toast-notification";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Penetapan Iuran", ['Iuran', 'Master Iuran']);
@@ -14,7 +15,9 @@ import { useRoute } from "vue-router";
     getKelas()
   })
   const route = useRoute()
-  const userId = 255
+
+  const store = useStore()
+  const userId = store.getters.currentUser.user_id 
   const masterId = route.params.id
   const groupName = route.params.group
 
