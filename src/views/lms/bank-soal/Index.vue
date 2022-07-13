@@ -161,11 +161,11 @@ function getSoal(payload) {
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </router-link>
-                <button @click="deleteData(row.user_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <router-link :to="'/lms/bank-soal/detail/' + (row.question_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/files/fil001.svg" />
                   </span>
-                </button>
+                </router-link>
               </div>
             </template>
           </ServerSideTable>

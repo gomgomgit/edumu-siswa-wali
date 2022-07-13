@@ -97,6 +97,11 @@ const routes: Array<RouteRecordRaw> = [
         name: "lms-bank-soal-data",
         component: () => import("@/views/lms/bank-soal/Data.vue")
       },
+      {
+        path: "/lms/bank-soal/detail/:id?",
+        name: "lms-bank-soal-detail",
+        component: () => import("@/views/lms/bank-soal/Detail.vue")
+      },
 
       {
         path: "/lms/materi-belajar",
