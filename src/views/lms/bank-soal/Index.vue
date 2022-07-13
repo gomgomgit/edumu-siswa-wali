@@ -86,7 +86,7 @@ function getSoal(payload) {
         </div>
         <div class="separator border-2 border-black-50 my-6"></div>
 
-        <div class="row g-4">
+        <!-- <div class="row g-4 mb-6">
           <div class="col-4">
             <div class="p-5 bg-primary rounded">
               <p class="fs-1 text-white">Soal Ditambahkan</p>
@@ -105,8 +105,9 @@ function getSoal(payload) {
               <p class="display-5 text-white bg-light-primary d-inline-block p-3 rounded text-primary">90</p>
             </div>
           </div>
-        </div>
-        <div class="py-6 my-6 d-flex justify-content-between align-items-center">
+        </div> -->
+
+        <div class="d-flex justify-content-between align-items-center">
           <div class="d-flex gap-4">
             <div>
               <FilterSelect v-model:filterValue="guruFilter" placeholder="Pilih Guru" @change="getSoal">
@@ -127,7 +128,7 @@ function getSoal(payload) {
           </div>
 
           <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
-            <el-input
+            <!-- <el-input
               v-model="searchSoal"
               clearable
               class="p-2"
@@ -136,7 +137,7 @@ function getSoal(payload) {
               <template #append>
                 <el-button aria-disabled="true" class="pe-none" :icon="Search" />
               </template>
-            </el-input>
+            </el-input> -->
           </div>
         </div>
 
