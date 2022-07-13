@@ -76,7 +76,7 @@ export default defineComponent({
         color: "primary",
         title: "Bank Soal",
         description: "Kumpulan soal-soal pembelajaran",
-        route: "/lms"
+        route: "/lms/bank-soal"
       },
       {
         icon: "media/icons/duotune/coding/cod008.svg",
