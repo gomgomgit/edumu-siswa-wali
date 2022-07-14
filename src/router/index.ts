@@ -474,6 +474,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/iuran/master-iuran/Index.vue"),
       },
       {
+        path: "/iuran/master-iuran/tambah",
+        name: "iuran-master-iuran-tambah",
+        component: () => import("@/views/iuran/master-iuran/Tambah.vue"),
+      },
+      {
         path: "/iuran/master-iuran/penetapan/:id/:group",
         name: "iuran-master-iuran-penetapan",
         component: () => import("@/views/iuran/master-iuran/Penetapan.vue"),

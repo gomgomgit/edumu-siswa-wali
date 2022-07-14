@@ -1,11 +1,11 @@
 <script setup>
-  import { ref, onMounted, reactive } from "vue";
-  import { request } from '@/util'
-  import Modal from "@/components/modals/CustomModal.vue";
-  import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
-  import ServerSideTable from '@/components/ServerSideTable.vue'
-  import FilterSelect from '@/components/filter-select'
-  import { Search } from '@element-plus/icons-vue'
+import { ref, onMounted, reactive } from "vue";
+import { request } from '@/util'
+import Modal from "@/components/modals/CustomModal.vue";
+import { setCurrentPageBreadcrumbs } from "@/core/helpers/breadcrumb";
+import ServerSideTable from '@/components/ServerSideTable.vue'
+import FilterSelect from '@/components/filter-select'
+import { Search } from '@element-plus/icons-vue'
 import { useToast } from "vue-toast-notification";
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import QueryString from "qs";

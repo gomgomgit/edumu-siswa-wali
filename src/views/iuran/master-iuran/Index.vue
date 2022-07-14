@@ -120,12 +120,12 @@ onMounted(() => {
 									</FilterSelect>
 								</div>
 								<div class="position-relative d-flex ">
-									<a @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+									<router-link to="/iuran/master-iuran/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
 										<i class="bi bi-plus fs-1"></i>
 										<span>
 											Tambah Master Iuran
 										</span>
-									</a>
+									</router-link>
 								</div>
 						</div>
 					</div>
