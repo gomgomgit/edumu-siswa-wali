@@ -76,12 +76,12 @@ function getSoal(payload) {
                 Tambah Soal
               </span>
             </router-link>
-            <button class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <router-link to="/lms/bank-soal/import" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <i class="bi bi-cloud-arrow-down fs-1"></i>
               <span>
                 Import Soal
               </span>
-            </button>
+            </router-link>
           </div>
         </div>
         <div class="separator border-2 border-black-50 my-6"></div>
