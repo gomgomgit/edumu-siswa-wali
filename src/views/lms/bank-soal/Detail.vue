@@ -5,6 +5,7 @@ import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import ServerSideTable from '@/components/ServerSideTable.vue';
 import FormModal from './FormModal'
+import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
 
 onMounted(() => {
   getData()
@@ -55,6 +56,16 @@ function handleSubmitForm() {
 function editData(data) {
   activeData.value = data
   mode.value = 'Edit'
+}
+function deleteData(id) {
+  deleteConfirmation(() => {
+    request.get('delete_jawaban_soal/' + id)
+		.then(res => {
+			useToast().success('Data Berhasil Dihapus!')
+			getData()
+		})
+    
+  })
 }
 </script>
 <template>
