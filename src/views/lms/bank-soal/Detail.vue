@@ -6,6 +6,7 @@ import { useRoute } from 'vue-router';
 import ServerSideTable from '@/components/ServerSideTable.vue';
 import FormModal from './FormModal'
 import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
+import { useToast } from 'vue-toast-notification';
 
 onMounted(() => {
   getData()
@@ -59,7 +60,11 @@ function editData(data) {
 }
 function deleteData(id) {
   deleteConfirmation(() => {
-    request.get('delete_jawaban_soal/' + id)
+    request.post('hapus_jawaban_soal', null, {
+      params: {
+        option_id: id
+      }
+    })
 		.then(res => {
 			useToast().success('Data Berhasil Dihapus!')
 			getData()

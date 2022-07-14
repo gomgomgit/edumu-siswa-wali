@@ -35,8 +35,8 @@ function handleSubmit () {
   formData.append('question_id', props.questionId)
   formData.append('option_id', form.option_id)
   formData.append('option_text', form.option_text)
-  formData.append('score', form.score)
-  formData.append('option_pict', form.option_pict)
+  formData.append('checkbox', form.score)
+  formData.append('event_foto', form.option_pict)
 
   const endpoint = props.activeData ? 'edit_post_jawaban_soal' : 'tambah_jawaban_soal'
   const message = props.activeData ? 'Data Berhasil Diedit!' : 'Data Berhasil Ditambahkan!'
