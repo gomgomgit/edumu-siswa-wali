@@ -128,11 +128,11 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
                 </div>
                 <div v-if="column.field == 'action'">
                   <div class="d-flex gap-2">
-                    <button class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                    <a :href="row.file_url" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                       <span class="svg-icon svg-icon-3">
                         <i class="bi bi-cloud-arrow-down-fill fs-3"></i>
                       </span>
-                    </button>
+                    </a>
                     <button @click="deleteRapor(row.id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                       <span class="svg-icon svg-icon-3">
                         <inline-svg src="media/icons/duotune/general/gen027.svg" />
