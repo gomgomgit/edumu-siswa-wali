@@ -8,6 +8,8 @@ import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
 import { useStore } from 'vuex';
 
+import * as XLSX from 'xlsx';
+
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Data Siswa", ['Sekolah', 'Profil Pengguna', 'Siswa']);
   getData()
@@ -34,7 +36,7 @@ function getData() {
 
 function postData() {
   const formData = new FormData()
-  formData.append('status_import_guru', form.status_import)
+  formData.append('status_import', form.status_import)
   formData.append('kelas_id', form.kelas_id)
   formData.append('user_id', userId)
   formData.append('file', form.file)
@@ -46,6 +48,20 @@ function postData() {
   }).then(res => {
     router.push('/sekolah/profil-pengguna/siswa')
   })
+}
+
+function generate() {
+    var namaKelas = kelasOption.value.find(kls => kls.kelas_id == form.kelas_id).kelas_nama
+    var dataItems = [{siswa_nisn: '',	siswa_nama: '',	siswa_username: '',	siswa_password: '',	kelas_nama: namaKelas }]
+    var rfidItems = [{No: '',	siswa_id: '',	user_nama: '',	siswa_nisn: '',	kelas_nama: namaKelas,	user_status: '',	siswa_rfid: ''}]
+
+    if (form.status_import == 'import_rfid') var items = rfidItems; var name = 'Format Import RFID Siswa.xlsx'
+    if (form.status_import == 'import_data') var items = dataItems; var name = 'Format Import Data Siswa.xlsx'
+
+    const data = XLSX.utils.json_to_sheet(items)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, data, 'kelas')
+    XLSX.writeFile(wb, name)
 }
 </script>
 
@@ -81,9 +97,9 @@ function postData() {
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-end mt-4">
+        <div v-if="form.kelas_id && form.status_import" class="d-flex justify-content-end mt-4">
           <div>
-            <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <a @click="generate" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <span>
                 Generate Excel Format
               </span>
@@ -91,7 +107,7 @@ function postData() {
           </div>
         </div>
         
-        <div class="mt-4">
+        <div class="mt-4" v-if="form.kelas_id && form.status_import">
 
           <div class="mt-4" v-if="form.status_import">
             <p class="mb-2 fs-4 fw-bold">File Import</p>
