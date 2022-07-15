@@ -7,6 +7,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
 import { useStore } from 'vuex';
+import * as XLSX from 'xlsx';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Data Guru", ['Sekolah', 'Profil Pengguna', 'Guru']);
@@ -36,6 +37,19 @@ function postData() {
     router.push('/sekolah/profil-pengguna/guru')
   })
 }
+
+function generate() {
+    var dataItems = [{guru_nip: '',	guru_nama: '',	guru_username: '',	guru_password: ''}]
+    var rfidItems = [{No: '1',	guru_id: '58',	user_nama: 'Hikmatul Fitri, S.Pd',	guru_nip: '1070077',	user_status: 'Aktif',	guru_rfid: ''}]
+
+    if (form.status_import == 'import_rfid') var items = rfidItems; var name = 'Format Import RFID Guru.xlsx'
+    if (form.status_import == 'import_data') var items = dataItems; var name = 'Format Import Data Guru.xlsx'
+
+    const data = XLSX.utils.json_to_sheet(items)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, data, 'guru')
+    XLSX.writeFile(wb, name)
+}
 </script>
 
 <template>
@@ -59,9 +73,9 @@ function postData() {
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-end mt-4">
+        <div class="d-flex justify-content-end mt-4" v-if="form.status_import">
           <div>
-            <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <a @click="generate" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <span>
                 Generate Excel Format
               </span>
