@@ -10,11 +10,26 @@
   import QueryString from 'qs';
   import { useToast } from 'vue-toast-notification';
   import ChangePassword from "@/components/change-password/Index.vue";
+import * as XLSX from 'xlsx';
+import moment from "moment";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Siswa", ['Sekolah', "Profil Pengguna"]);
+    getDataExportSiswa()
   })
 
+  function getDataExportSiswa (payload) {
+    request.post('exportsiswa', null, {
+      params: {
+        level: 'siswa',
+        page: payload?.page ?? 1,
+        sortby: payload?.sort?.type ?? 'ASC'
+      }
+    }).then(res => {
+      dataExport.value = res.data.data
+    })
+  }
+  
   function getSiswa (payload) {
       request.post('user', null, {
         params: {
@@ -28,9 +43,8 @@
         siswa.totalRows = res.data.data.total
       })
     }
-
-  const loadingTahunAjar = ref(false)
   
+  const dataExport = ref([])
   const siswa = reactive({
     columns: [
       { label: 'Nama Lengkap', field: 'user_nama' },
@@ -81,6 +95,30 @@
     passwordModal.value = false
     passwordData.value = []
   }
+
+  function exportSiswa() {
+    let row = [["No","Nama Siswa","NISN", "RFID", "Kelas", "Level", "Status", "Nama Wali", "User Wali", "Password Wali"]]
+
+    dataExport.value.map((item,i) => {
+      row.push([
+        i+1, 
+        item.nama_siswa,
+        item.siswa_nisn,  
+        item.siswa_rfid, 
+        item.kelas_nama,
+        item.user_level, 
+        item.user_status === "1" ? "Aktif" : "Non Aktif", 
+        item.nama_wali,
+        item.user_name_wali,
+        item.pass_wali
+      ])
+		})
+
+    const data = XLSX.utils.json_to_sheet(row)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, data, 'kelas')
+    XLSX.writeFile(wb, "Rekap Data Siswa Aktif-"+ moment().format("DD-MMMM-YYYY") +".xlsx")
+  }
 </script>
 
 <template>
@@ -115,7 +153,7 @@
                 </router-link>
               </div>
               <div class="d-flex align-items-center">
-                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a @click="exportSiswa" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Export Data
                   </span>
