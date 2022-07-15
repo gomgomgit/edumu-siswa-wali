@@ -5,6 +5,7 @@ import { request } from '@/util';
 import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
+import * as XLSX from 'xlsx';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Soal", ['LMS', 'Bank Soal']);
@@ -53,6 +54,49 @@ function postData() {
   }).then(res => {
     useToast().success('Data Berhasil dikirim')
   })
+}
+
+function generate() {
+  if (form.question_type === '') {
+			useToast().error("Type soal wajib dipilih!");return false;
+		}
+
+		if (form.mapel_id === '') {
+			useToast().error("Mapel wajib dipilih!");return false;
+		}
+
+		if (form.question_type !== 'essay' && form.option_count === '') {
+			useToast().error("Jumlah opsi harus diisi!");return false;
+		}
+
+		if (form.question_type == 'single') {
+			let row = ["mapel", "soal", "jmlOpsi"];
+			for (var i = 1; i <= form.option_count; i++) {
+				row.push(i);
+			}
+
+			row.push('jwbBenar');
+			row.push('keteranganSoal');
+
+	        let single = [row]
+
+	        single.push([form.mapel_id,"", form.option_count])
+	        const wb = XLSX.utils.book_new()
+	        const wsAll = XLSX.utils.aoa_to_sheet(single)
+	            XLSX.utils.book_append_sheet(wb, wsAll, form.question_type)
+	            XLSX.writeFile(wb, "Format Import Soal "+ form.question_type +".xlsx");
+		}
+
+		if (form.question_type == 'essay') {
+			let row = ["mapel", "soal","keteranganSoal"];
+	        let essay = [row]
+
+	        essay.push([form.mapel_id,""])
+	        const wb = XLSX.utils.book_new()
+	        const wsAll = XLSX.utils.aoa_to_sheet(essay)
+	            XLSX.utils.book_append_sheet(wb, wsAll, form.question_type)
+	            XLSX.writeFile(wb, "Format Import Soal "+ form.question_type +".xlsx");
+		}
 }
 </script>
 
@@ -112,7 +156,7 @@ function postData() {
         </div>
         <div class="d-flex justify-content-end mt-4">
           <div>
-            <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <a @click="generate" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <span>
                 Generate Excel Format
               </span>
