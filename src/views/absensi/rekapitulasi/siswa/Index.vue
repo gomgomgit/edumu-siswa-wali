@@ -75,12 +75,19 @@ import moment from "moment";
 
             <div class="position-relative d-flex gap-4">
               <div class="d-flex align-items-center">
-                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <router-link 
+                  :to="{
+                    path: '/absensi/rekapitulasi/siswa/export', 
+                    query: {
+                      cari: searchSiswa, kelas:kelasFilter, dateStart:dateRangeStart, dateEnd: dateRangeEnd
+                    }
+                  }" 
+                  class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Export
                   </span>
                   <i class="bi bi-cloud-arrow-up fs-1"></i>
-                </a>
+                </router-link>
               </div>
               <div class="d-flex align-items-center">
                 <a @click="getReportSiswa" class="btn btn-primary d-flex gap-3 align-items-center w-auto">

@@ -548,6 +548,12 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: "/absensi/rekapitulasi/siswa/export",
+        name: "absensi-rekapitulasi-siswa-export",
+        component: () => import("@/views/absensi/rekapitulasi/siswa/Export.vue"),
+      },
+
+      {
         path: "/absensi/absensi-manual",
         name: "absensi-absensi-manual",
         component: () => import("@/views/absensi/absensi-manual/Index.vue"),
