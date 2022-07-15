@@ -543,7 +543,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "mapel",
             name: "absensi-rekapitulasi-mapel",
             component: () =>
-              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+              import("@/views/absensi/rekapitulasi/mapel/Index.vue"),
           },
         ],
       },
