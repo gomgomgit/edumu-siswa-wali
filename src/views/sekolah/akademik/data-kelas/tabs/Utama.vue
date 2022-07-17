@@ -251,11 +251,11 @@
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button @click="deleteData(row.kelas_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <!-- <button @click="deleteData(row.kelas_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/general/gen027.svg"/>
                   </span>
-                </button>
+                </button> -->
               </div>
             </template>
           </ServerSideTable>

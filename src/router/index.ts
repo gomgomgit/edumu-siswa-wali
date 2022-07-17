@@ -95,6 +95,27 @@ const routes: Array<RouteRecordRaw> = [
       },
 
       {
+        path: "/lms/bank-soal",
+        name: "lms-bank-soal",
+        component: () => import("@/views/lms/bank-soal/Index.vue")
+      },
+      {
+        path: "/lms/bank-soal/import",
+        name: "lms-bank-soal-import",
+        component: () => import("@/views/lms/bank-soal/Import.vue")
+      },
+      {
+        path: "/lms/bank-soal/:type/:id?",
+        name: "lms-bank-soal-data",
+        component: () => import("@/views/lms/bank-soal/Data.vue")
+      },
+      {
+        path: "/lms/bank-soal/detail/:id?",
+        name: "lms-bank-soal-detail",
+        component: () => import("@/views/lms/bank-soal/Detail.vue")
+      },
+
+      {
         path: "/lms/materi-belajar",
         name: "lms-materi-belajar",
         component: () => import("@/views/lms/materi-belajar/Index.vue"),
@@ -460,6 +481,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/iuran/master-iuran/Index.vue"),
       },
       {
+        path: "/iuran/master-iuran/tambah",
+        name: "iuran-master-iuran-tambah",
+        component: () => import("@/views/iuran/master-iuran/Tambah.vue"),
+      },
+      {
         path: "/iuran/master-iuran/penetapan/:id/:group",
         name: "iuran-master-iuran-penetapan",
         component: () => import("@/views/iuran/master-iuran/Penetapan.vue"),
@@ -524,10 +550,16 @@ const routes: Array<RouteRecordRaw> = [
             path: "mapel",
             name: "absensi-rekapitulasi-mapel",
             component: () =>
-              import("@/views/absensi/rekapitulasi/siswa/Index.vue"),
+              import("@/views/absensi/rekapitulasi/mapel/Index.vue"),
           },
         ],
       },
+      {
+        path: "/absensi/rekapitulasi/siswa/export",
+        name: "absensi-rekapitulasi-siswa-export",
+        component: () => import("@/views/absensi/rekapitulasi/siswa/Export.vue"),
+      },
+
       {
         path: "/absensi/absensi-manual",
         name: "absensi-absensi-manual",

@@ -2,8 +2,12 @@
 import { defineComponent } from "vue";
 import KTQuickLinksMenu from "@/layout/header/partials/QuickLinksMenu.vue";
 import KTUserMenu from "@/layout/header/partials/UserMenu.vue";
+import { useStore } from "vuex";
 
 const emit = defineEmits(['openSubMenu', 'closeSubMenu'])
+
+const store = useStore()
+const userData = store.getters.currentUser
 
 function openSubMenu(menu) {
   emit('openSubMenu', menu)
@@ -294,7 +298,7 @@ function openSubMenu(menu) {
           data-bs-dismiss="click"
           title="User profile"
         >
-          <img src="media/avatars/300-1.jpg" alt="metronic" />
+          <img :src="userData.sekolah_foto" alt="metronic" />
         </div>
         <KTUserMenu></KTUserMenu>
       </div>

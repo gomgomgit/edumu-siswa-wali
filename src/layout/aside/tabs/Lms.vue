@@ -72,14 +72,14 @@ export default defineComponent({
         route: "/lms/ujian-online"
       },
       {
-        icon: "media/icons/duotune/communication/com012.svg",
+        icon: "media/icons/duotune/files/fil019.svg",
         color: "primary",
         title: "Bank Soal",
         description: "Kumpulan soal-soal pembelajaran",
-        route: "/lms"
+        route: "/lms/bank-soal"
       },
       {
-        icon: "media/icons/duotune/coding/cod008.svg",
+        icon: "media/icons/duotune/general/gen005.svg",
         color: "danger",
         title: "Materi Belajar",
         description: "Kumpulan materi pembelajaran",

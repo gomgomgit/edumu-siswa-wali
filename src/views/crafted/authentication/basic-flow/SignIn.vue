@@ -147,7 +147,7 @@ const onSubmitLogin = async (values) => {
   axios.post('https://apisekolah.edumu.id/v1prod/sekolah', QueryString.stringify({code: values.kode}))
     .then(res => {
       if (res.data.status) {
-        postLogin(values, res.data.data.sekolahs[0].sekolah_nama)
+        postLogin(values, res.data.data.sekolahs[0])
       } else {
         useToast().error(res.data.text)
       }
@@ -207,12 +207,12 @@ function postLogin(data, sekolah) {
     user_username: data.username,
     user_kunci: data.password,
     user_kodesekolah: data.kode,
-    user_namasekolah: sekolah,
+    user_namasekolah: sekolah.sekolah_nama,
   }
   axios.post('https://apiedumu.edumu.id/demo/apischool/login', QueryString.stringify(formData))
   .then(res => {
     if (res.data.success) {
-      store.dispatch(Actions.LOGIN, res.data.data)
+      store.dispatch(Actions.LOGIN, {...res.data.data, ...sekolah})
 
       Swal.fire({
       text: "You have successfully logged in!",
@@ -223,7 +223,6 @@ function postLogin(data, sekolah) {
         confirmButton: "btn fw-bold btn-light-primary",
       },
       }).then(function () {
-        // Go to page after successfully login
         router.push({ name: "dashboard" });
       });
         

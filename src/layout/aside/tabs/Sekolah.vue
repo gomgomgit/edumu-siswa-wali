@@ -290,10 +290,10 @@ export default defineComponent({
                 heading: "User Online",
                 route: "/sekolah/laporan/user-online",
               },
-              {
-                heading: "Kartu Aktifitas",
-                route: "/profile",
-              },
+              // {
+              //   heading: "Kartu Aktifitas",
+              //   route: "/profile",
+              // },
             ]
           },
           {
