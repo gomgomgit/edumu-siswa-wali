@@ -10,10 +10,11 @@ import ServerSideTable from '@/components/ServerSideTable.vue';
 import { computed } from '@vue/reactivity';
 import { useStore } from 'vuex';
 import { deleteConfirmation } from '@/core/helpers/deleteconfirmation';
+import ResetModal from './ModalReset.vue'
 
 onMounted(() => {
   getData()
-  setCurrentPageBreadcrumbs('Detail Tugas', ['LMS', 'Tugas Offline'])
+  setCurrentPageBreadcrumbs('Detail', ['LMS', 'Tugas Online', 'Pantau Ujian'])
 })
 
 const store = useStore()
@@ -27,7 +28,7 @@ const searchSiswa = ref()
 const kelasFilter = ref()
 const kelasOption = ref([])
 
-const detailData = ref([])
+const resetMode = ref()
 
 const dataPeserta = reactive({
   columns: [
@@ -142,7 +143,7 @@ function getDataPeserta() {
                 {{row.totJawab}}/{{row.totSoal}}
               </div>
               <div v-if="column.field == 'action'">
-                <button class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                <button @click="resetMode = 'Reset'" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <i class="bi bi-x-circle-fill fs-3 me-1"></i>
                     Reset
@@ -183,5 +184,10 @@ function getDataPeserta() {
       </div>
     </div>
   </div>
+  
+  <ResetModal
+    :mode="resetMode"
+    @close="resetMode = ''"
+    @submit="getDataPeserta()" />
 </div>
 </template>
