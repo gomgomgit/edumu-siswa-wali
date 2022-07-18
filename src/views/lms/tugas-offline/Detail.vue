@@ -8,6 +8,7 @@ import FilterSelect from '@/components/filter-select/index.vue';
 import { Search } from '@element-plus/icons-vue'
 import ServerSideTable from '@/components/ServerSideTable.vue';
 import { computed } from '@vue/reactivity';
+import { useStore } from 'vuex';
 
 onMounted(() => {
   getData()
@@ -15,7 +16,10 @@ onMounted(() => {
   setCurrentPageBreadcrumbs('Detail Tugas', ['LMS', 'Tugas Offline'])
 })
 
-const storageUrl = process.env.VUE_APP_STORAGE_URL
+const store = useStore()
+const currentUser = store.getters.currentUser
+
+const storageUrl = `${process.env.VUE_APP_STORAGE_URL}/${currentUser.sekolah_kode}/apischool`
 const route = useRoute()
 const tugasId = route.params.id
 const kelasOption = ref([])

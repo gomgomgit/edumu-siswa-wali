@@ -2,15 +2,15 @@ import axios from 'axios'
 import { useToast } from 'vue-toast-notification';
 import store from '../store';
 
-const request = axios.create({
-	baseURL: process.env.VUE_APP_API_URL,
-})
+const currentUser = store.getters.currentUser
 
-const userId = store.getters.currentUser.user_id
+const request = axios.create({
+	baseURL: `${process.env.VUE_APP_API_URL}/${currentUser.sekolah_kode}/apischool`,
+})
 
 request.interceptors.request.use((config) => {
 	config.params = config.params || {};
-	config.params['id'] = userId ?? 0;
+	config.params['id'] = currentUser.user_id ?? 0;
 	return config;
 });
 

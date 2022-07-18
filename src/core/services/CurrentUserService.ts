@@ -10,6 +10,8 @@ export const getUser = () => {
     user_nama: window.localStorage.getItem('user_nama'),
     user_username: window.localStorage.getItem('user_username'),
 
+    sekolah_id: window.localStorage.getItem('sekolah_id'),
+    sekolah_kode: window.localStorage.getItem('sekolah_kode'),
     sekolah_nama: window.localStorage.getItem('sekolah_nama'),
     sekolah_foto: window.localStorage.getItem('sekolah_foto'),
   };
@@ -26,6 +28,8 @@ export const saveUser = (user): void => {
   window.localStorage.setItem('user_nama', user.user_nama);
   window.localStorage.setItem('user_username', user.user_username);
 
+  window.localStorage.setItem('sekolah_id', user.sekolah_id);
+  window.localStorage.setItem('sekolah_kode', user.sekolah_kode);
   window.localStorage.setItem('sekolah_nama', user.sekolah_nama);
   window.localStorage.setItem('sekolah_foto', user.sekolah_foto);
 };
@@ -39,6 +43,8 @@ export const destroyUser = (): void => {
   window.localStorage.removeItem('user_nama');
   window.localStorage.removeItem('user_username');
 
+  window.localStorage.removeItem('sekolah_id');
+  window.localStorage.removeItem('sekolah_kode');
   window.localStorage.removeItem('sekolah_nama');
   window.localStorage.removeItem('sekolah_foto');
 };
