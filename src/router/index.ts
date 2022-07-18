@@ -93,6 +93,11 @@ const routes: Array<RouteRecordRaw> = [
           },
         ]
       },
+      {
+        path: "/lms/ujian-online/pantau-ujian/detail/:id",
+        name: "lms-ujian-online-pantau-ujian-detail",
+        component: () => import("@/views/lms/ujian-online/pantau-ujian/Detail.vue"),
+      },
 
       {
         path: "/lms/bank-soal",
