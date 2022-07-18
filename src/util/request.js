@@ -1,13 +1,16 @@
 import axios from 'axios'
 import { useToast } from 'vue-toast-notification';
+import store from '../store';
 
 const request = axios.create({
 	baseURL: process.env.VUE_APP_API_URL,
 })
 
+const userId = store.getters.currentUser.user_id
+
 request.interceptors.request.use((config) => {
 	config.params = config.params || {};
-	config.params['id'] = 255;
+	config.params['id'] = userId ?? 0;
 	return config;
 });
 

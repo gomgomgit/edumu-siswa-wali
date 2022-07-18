@@ -27,7 +27,6 @@ function togglePin() {
     pinAside()
   }
   pinned.value = !pinned.value
-  console.log(pinned)
 }
 
 function openAside () {
