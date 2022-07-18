@@ -72,11 +72,19 @@ const chartData = computed(() => {
 const chartDataData = ref([12,12])
 const totalChart = ref(0)
 
+const isMobile = () => {
+	if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+		return true
+	} else {
+		return false
+	}
+}
+
 const chartOptions = {
 	responsive: true,
 	borderRadius: 6,
 	borderWidth: 2,       
-	cutout: 140,
+	cutout: isMobile() ? 110 : 200,
 	plugins: {
 		legend: {
 			display: false,
