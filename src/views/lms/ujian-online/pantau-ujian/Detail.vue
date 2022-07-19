@@ -136,6 +136,9 @@ function getDataPeserta() {
             @loadItems="getDataPeserta"
           >
             <template #table-row="{column, row}">
+              <div v-if="column.field == 'entry_status'">
+                <span :class="`badge badge-${row.entry_status == 'finish' ? 'success' : 'primary'}`">{{row.entry_status}}</span>
+              </div>
               <div v-if="column.field == 'nilai'">
                 {{row.nilai}}/{{row.scoreMax}}
               </div>

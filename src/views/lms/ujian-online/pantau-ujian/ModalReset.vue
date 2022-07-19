@@ -61,7 +61,6 @@ watch(
 			<div class="col-8">
         <el-select
           v-model="formData.tipe"
-          multiple
           placeholder="Pilih Tipe"
           class="w-100"
         >
