@@ -29,6 +29,7 @@ const kelasFilter = ref()
 const kelasOption = ref([])
 
 const resetMode = ref()
+const activeData = ref()
 
 const dataPeserta = reactive({
   columns: [
@@ -74,6 +75,10 @@ function getDataPeserta() {
     }
 
   })
+}
+function resetEntry(data) {
+  activeData.value = data
+  resetMode.value = 'Reset'
 }
 </script>
 <template>
@@ -146,7 +151,7 @@ function getDataPeserta() {
                 {{row.totJawab}}/{{row.totSoal}}
               </div>
               <div v-if="column.field == 'action'">
-                <button @click="resetMode = 'Reset'" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                <button @click="resetEntry(row)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <i class="bi bi-x-circle-fill fs-3 me-1"></i>
                     Reset
@@ -190,6 +195,7 @@ function getDataPeserta() {
   
   <ResetModal
     :mode="resetMode"
+    :activeData='activeData'
     @close="resetMode = ''"
     @submit="getDataPeserta()" />
 </div>

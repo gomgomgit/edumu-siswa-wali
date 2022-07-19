@@ -19,7 +19,7 @@ const userId = store.getters.currentUser.user_id
 
 const emits = defineEmits(['close', 'submit'])
 
-const initialForm = { created_by: null, group_nama: null, group_desc: null }
+const initialForm = { entry_id: null, user_id: userId, tipe_reset_name: null }
 
 const formData = reactive({...initialForm})
 
@@ -29,13 +29,9 @@ function handleClose () {
 }
 
 function handleSubmit () {
-	const endpoint = isEmpty(props.activeData) ? 'iuran/group/add' : 'iuran/group/update'
-	const message = isEmpty(props.activeData) ? 'Ditambahkan!' : 'Diubah!'
-	isEmpty(props.activeData) ? formData.created_by = userId : formData.modified_by = userId
-
-	request.post(endpoint, qs.stringify(formData)).then(() => {
+	request.post('ujian/reset', qs.stringify(formData)).then(() => {
 		Object.assign(formData, initialForm)
-		useToast().success('Data Berhasil ' + message)
+		useToast().success('Berhasil Reset')
 		emits('submit')
 		emits('close')
 	})
@@ -60,7 +56,7 @@ watch(
 			<div class="col-4 d-flex align-items-center fw-bold fs-4">Pilih Tipe Reset</div>
 			<div class="col-8">
         <el-select
-          v-model="formData.tipe"
+          v-model="formData.tipe_reset_name"
           placeholder="Pilih Tipe"
           class="w-100"
         >
