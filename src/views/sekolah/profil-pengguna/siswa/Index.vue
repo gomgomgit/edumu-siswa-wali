@@ -215,6 +215,5 @@ import moment from "moment";
 			:passwordData="passwordData"
 			@close="handlePasswordClose"
 			@submit="handlePasswordClose" />
-    />
   </div>
 </template>
