@@ -3,10 +3,18 @@ import { reactive, ref } from "vue"
 import { useRoute } from "vue-router"
 import ServerSideTable from "@/components/ServerSideTable.vue";
 import { request } from "@/util";
+import { useStore } from "vuex";
+import ModalKonfirmasi from "./ModalKonfirmasi.vue"
 
 
 const route = useRoute()
 const transaksiId = route.params.id
+
+const store = useStore()
+const currentUser = store.getters.currentUser;
+const imageLink = `https://apistaging.edumu.id/${currentUser.sekolah_kode}/apischool/public`;
+
+const dataKonfirmasi = ref(null)
 
 const transaksiDetail = reactive({
   columns: [
@@ -20,7 +28,7 @@ const transaksiDetail = reactive({
 })
 const transaksiConfirm = reactive({
   columns: [
-    { label: 'Bukti', field: 'ptc_image', sortable: false },
+    { label: 'Bukti', field: 'image', sortable: false },
     { label: 'Nominal', field: 'ptc_nominal', sortable: false },
     { label: 'Tanggal', field: 'ptc_created_date', sortable: false },
     { label: 'Opsi', field: 'option', sortable: false, width: '200px' },
@@ -36,7 +44,7 @@ const transaksiData = reactive({
 function getTransaksi (payload) {
 	request.get(`iuran/transaksi/${transaksiId}`)
   .then(res => {
-    transaksiData = res.data.data
+    transaksiData.value = res.data.data
     
     transaksiDetail.rows = res.data.data.detail
     transaksiConfirm.rows = res.data.data.confirm
@@ -106,8 +114,11 @@ function getTransaksi (payload) {
         }"
         @loadItems="getTransaksi">
         <template #table-row="{column, row}">
+          <div v-if="column.field == 'image'">
+            <img :src="imageLink + '/images/payment/' + row.ptc_image" alt="bukti" style="max-width: 200px">
+          </div>
           <div v-if="column.field == 'option'">
-            <button @click="validate(row.tipe_id)" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm">
+            <button @click="dataKonfirmasi = row" class="btn btn-icon btn-bg-light btn-active-color-info btn-sm">
               <span class="svg-icon svg-icon-3">
                 <i class="bi bi-clipboard-check-fill"></i>
               </span>
@@ -117,5 +128,11 @@ function getTransaksi (payload) {
       </ServerSideTable>
     </div>
   </div>
+
+  <ModalKonfirmasi 
+    :imageLink="imageLink"
+		 :activeData="dataKonfirmasi"
+		 @close="dataKonfirmasi = null"
+  />
 </div>
 </template>
