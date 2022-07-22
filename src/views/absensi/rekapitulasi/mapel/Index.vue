@@ -19,12 +19,12 @@ import moment from "moment";
   
   const reportMapel = reactive({
     columns: [
-      { label: 'Nama Lengkap', field: 'user_nama', sortable: false },
+      { label: 'Nama Guru', field: 'user_nama', sortable: false },
       { label: 'Kelas', field: 'kelas_nama', sortable: false },
-      { label: 'Hadir', field: 'tot.hadir', sortable: false },
-      { label: 'Telat', field: 'tot.telat', sortable: false },
-      { label: 'Izin', field: 'tot.izin', sortable: false },
-      { label: 'Alpha', field: 'tot.alpha', sortable: false },
+      { label: 'Mapel', field: 'mapel_nama', sortable: false },
+      { label: 'Siswa Hadir', field: 'siswa_hadir', sortable: false },
+      { label: 'Siswa Tdk Hadir', field: 'siswa_off', sortable: false },
+      { label: 'Tgl Mengajar', field: 'pg_create_date', sortable: false },
       { label: 'ACTION', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -46,8 +46,8 @@ import moment from "moment";
         cari: searchMapel.value,
         mapel: mapelFilter.value,
         kelas: kelasFilter.value,
-        dateStart: dateRangeStart.value,
-        dateEnd: dateRangeEnd.value,
+        tglMulai: dateRangeStart.value,
+        tglEnd: dateRangeEnd.value,
         page: payload?.page ?? 1,
         sortby: payload?.sort?.type ?? 'ASC'
       }
@@ -143,6 +143,7 @@ import moment from "moment";
             </div>
             
             <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
+              <div>
                 <el-input
                   v-model="searchMapel"
                   @input="getReportMapel"
@@ -154,6 +155,7 @@ import moment from "moment";
                     <el-button aria-disabled="true" class="pe-none" :icon="Search" />
                   </template>
                 </el-input>
+              </div>
             </div>
           </div>
         </div>
@@ -166,7 +168,7 @@ import moment from "moment";
             @loadItems="getReportMapel">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'action'">
-                <router-link :to="'/sekolah/profil-pengguna/siswa/edit-data/' + row.user_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="'/absensi/rekapitulasi/mapel/detail/' + row.pg_id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/files/fil001.svg" />
                   </span>
