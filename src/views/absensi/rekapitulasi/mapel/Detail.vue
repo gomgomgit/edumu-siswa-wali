@@ -78,7 +78,7 @@ function dateFormating(date) {
       <div class="page-content">
         <div class="mb-4">
           <div class="d-flex justify-content-between">
-            <h2 class="fs-1 fw-bold py-6">Data Siswa Ujian</h2>
+            <h2 class="fs-1 fw-bold py-6">Data Presensi Mapel</h2>
           </div>
 
         </div>
