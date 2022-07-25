@@ -15,11 +15,11 @@ onMounted(() => {
 })
 
 const route = useRoute()
-const siswaId = route.params.id
+const guruId = route.params.id
 const startDate = route.params.start
 const endDate = route.params.end
 
-const siswaData = ref([])
+const guruData = ref([])
 
 const formMode = ref()
 const activeData = ref()
@@ -42,12 +42,12 @@ function getData() {
   request.post(`reportgurudetail`, null, {
     params: {
       status: 'all',
-      user_id: siswaId,
+      user_id: guruId,
       start: startDate,
       end: endDate,
     }
   }).then(res => {
-    siswaData.value = res.data.data.siswa
+    guruData.value = res.data.data.guru
 
     absenData.rows = res.data.data.presensis.data
     absenData.total = res.data.data.presensis.total
@@ -81,7 +81,7 @@ function handleSubmit() {
         <div class="d-flex flex-column gap-8 py-4">
           <div class="row">
             <div class="col-2"><h4 class="text-black-50">Guru</h4></div>
-            <div class="col-10"><h4 class="fw-bold">: {{siswaData.user ? siswaData.user.user_nama : ''}}</h4></div>
+            <div class="col-10"><h4 class="fw-bold">: {{guruData.user ? guruData.user.user_nama : ''}}</h4></div>
           </div>
           <div class="row">
             <div class="col-2"><h4 class="text-black-50">Periode</h4></div>
