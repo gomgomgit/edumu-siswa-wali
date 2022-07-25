@@ -48,7 +48,8 @@ const transaksiData = reactive({
 function getTransaksi (payload) {
 	request.get(`iuran/transaksi/${transaksiId}`)
   .then(res => {
-    transaksiData.value = res.data.data
+    transaksiData.payment_nominal = res.data.data.payment_nominal
+    transaksiData.payment_status = res.data.data.payment_status
     
     transaksiDetail.rows = res.data.data.detail
     transaksiConfirm.rows = res.data.data.confirm
@@ -95,12 +96,12 @@ function handleFormClose() {
           </div>
         </template>
       </ServerSideTable>
-      <div>
+      <div class="mt-3 fs-3 ">
         <div>
-          <span class="fw-bold fs-4">Total Bayar : </span><span>{{transaksiData.payment_nominal}}</span>
+          <span class="fw-bold">Total Bayar : </span><span>{{transaksiData.payment_nominal}}</span>
         </div>
         <div>
-          <span class="fw-bold fs-4">Status : </span><span>{{transaksiData.payment_status}}</span>
+          <span class="fw-bold">Status : </span><span :class="`badge badge-${transaksiData.payment_status == 'Berhasil' ? 'success' : 'danger'}`">{{transaksiData.payment_status}}</span>
         </div>
       </div>
     </div>
