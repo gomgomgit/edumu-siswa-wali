@@ -182,6 +182,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/lms/laporan-nilai/tugas-online/Detail.vue"),
       },
       {
+        path: "/lms/laporan-nilai/tugas-online/export/:id/:kelas",
+        name: "lms-laporan-nilai-tugas-online-export",
+        component: () => import("@/views/lms/laporan-nilai/tugas-online/Export.vue"),
+      },
+      {
         path: "/lms/laporan-nilai/tugas-offline/detail/:id",
         name: "lms-laporan-nilai-tugas-offline-detail",
         component: () => import("@/views/lms/laporan-nilai/tugas-offline/Detail.vue"),
