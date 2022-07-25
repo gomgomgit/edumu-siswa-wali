@@ -69,11 +69,11 @@ function generate() {
     // return console.log(items)
 
     // var items = resReport.value; 
-    var name = 'Format Import RFID Siswa.xlsx'
+    var name = `Rekap Nilai-${resReport.value.kelas.kelas_nama}-${resReport.value.exam_title}`
 
     const data = XLSX.utils.json_to_sheet(items)
     const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, data, 'kelas')
+    XLSX.utils.book_append_sheet(wb, data, 'nilai')
     XLSX.writeFile(wb, name)
 }
 </script>
