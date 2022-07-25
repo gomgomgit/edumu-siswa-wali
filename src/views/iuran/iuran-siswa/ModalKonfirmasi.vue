@@ -9,7 +9,8 @@ import { request } from "@/util";
 
 const props = defineProps({
 	imageLink: {type: String, required: true},
-	activeData: { type: Object, required: true },
+	formMode: { type: String, required: true },
+	activeData: { type: Object },
 })
 
 const emits = defineEmits(['close'])
@@ -43,7 +44,7 @@ function handleSubmit () {
 <template>
 	<Modal
 		title="Pembayaran"
-		:show="props.activeData"
+		:show="props.formMode"
 		:breadcrumb="Array('Iuran', 'Iuran Siswa', 'Detail Transaksi', 'Konfirmasi')"
 		@closeModal="handleClose"
 		@confirm="handleSubmit"
