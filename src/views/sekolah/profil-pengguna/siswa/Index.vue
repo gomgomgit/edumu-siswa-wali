@@ -131,7 +131,7 @@ import Swal from "sweetalert2";
       ])
 		})
 
-    const data = XLSX.utils.json_to_sheet(row)
+    const data = XLSX.utils.aoa_to_sheet(row)
     const wb = XLSX.utils.book_new()
     XLSX.utils.book_append_sheet(wb, data, 'Data Siswa Aktif')
 

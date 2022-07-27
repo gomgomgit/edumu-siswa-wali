@@ -290,6 +290,11 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/akademik/kalender-akademik/Index.vue"),
       },
       {
+        path: "/sekolah/akademik/kalender-akademik/import",
+        name: "sekolah-akademik-kalender-akademik-import",
+        component: () => import("@/views/sekolah/akademik/kalender-akademik/Import.vue"),
+      },
+      {
         path: "/sekolah/akademik/kalender-akademik/tambah",
         name: "sekolah-akademik-kalender-akademik-tambah",
         component: () => import("@/views/sekolah/akademik/kalender-akademik/FormData.vue"),
