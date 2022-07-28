@@ -6,6 +6,7 @@ import QueryString from 'qs';
 import { useToast } from 'vue-toast-notification';
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import Loading from 'vue3-loading-overlay'
 
 import * as XLSX from 'xlsx';
 
@@ -25,7 +26,9 @@ const kelasOption = ref()
 const reportQueue = ref()
 
 const exportData = ref([])
-const exportDate = ref()
+const exportDate = ref('')
+
+const loading = ref(true)
 
 const form = reactive({
   status_import: '',
@@ -34,7 +37,7 @@ const form = reactive({
 })
 
 function getQueue() {
-  console.log(route.query)
+  loading.value = true
   request.post('reportsiswanew', null, {
     params: {
       level: 'siswa',
@@ -79,39 +82,80 @@ function getDownloadData() {
     }
   }).then(res => {
     if (res.data.success == true) {
-      exportData.value = res.data.data.data
-      exportDate.value = res.data.data.created_at
-    }
-  })
-}
+      exportData.value = res.data.data
+      exportDate.value = res.data.created_at
 
-function postData() {
-  const formData = new FormData()
-  formData.append('status_import', form.status_import)
-  formData.append('kelas_id', form.kelas_id)
-  formData.append('user_id', userId)
-  formData.append('file', form.file)
-
-  request.post('data/import', formData, {
-    headers: {
-      'Content-Type' : 'multipart/form-data'
+      loading.value = false
     }
-  }).then(res => {
-    router.push('/sekolah/profil-pengguna/siswa')
   })
 }
 
 function generate() {
-    var namaKelas = kelasOption.value.find(kls => kls.kelas_id == form.kelas_id).kelas_nama
-    var dataItems = [{siswa_nisn: '',	siswa_nama: '',	siswa_username: '',	siswa_password: '',	kelas_nama: namaKelas }]
-    var rfidItems = [{No: '',	siswa_id: '',	user_nama: '',	siswa_nisn: '',	kelas_nama: namaKelas,	user_status: '',	siswa_rfid: ''}]
+    const ws_data = [
+      ['Rekap Presensi'],
+      ['Kelas :' + 'Semua'],
+      ['Periode :' + '20321'],
+      [''],
+      ['No', 'Nama', 'Kelas', 'In/Out', 'Rekap', 'Rekap', 'Rekap', 'Rekap', 'Total Hadir'],
+      ['No', 'Nama', 'Kelas', 'In/Out', 'Telat', 'Izin', 'Sakit', 'Alpha', 'Keterangan'],
+    ]
+// return console.log(exportData.value[0].pre[0])
+    var presenceDates = exportData.value[0].pre.map((val) => {
+      return val.tanggal
+    })
+    var tglFormat = exportData.value[0].pre.map((val) => {
+      return 'Tanggal'
+    })
+// return console.log(presenceDates)
+    ws_data[4].splice(4, 0, ...tglFormat);
+    ws_data[5].splice(4, 0, ...presenceDates)
+    
+    const merges = [
+      {s: {r: 0, c: 0}, e: {r: 0, c: 10}},
+      {s: {r: 1, c: 0},e: {r: 1, c: 10}},
+      {s: {r: 2, c: 0},e: {r: 2, c: 10}},
+      {s: {r: 3, c: 0},e: {r: 3, c: 10}},
+      {s: {r: 4, c: 0},e: {r: 5, c: 0}},
+      {s: {r: 4, c: 1},e: {r: 5, c: 1}},
+      {s: {r: 4, c: 2},e: {r: 5, c: 2}},
+      {s: {r: 4, c: 3},e: {r: 5, c: 3}},
+      {s: {r: 4, c: 4},e: {r: 4, c: 3 + presenceDates.length}},
+      {s: {r: 4, c: 4 + presenceDates.length},e: {r: 4, c: 7 + presenceDates.length}},
+      {s: {r: 4, c: 8 + presenceDates.length},e: {r: 5, c: 8 + presenceDates.length}},
+    ];
+    
+    function getKeyByValue(object, value) {
+      return Object.keys(object).find(key => object[key] === value);
+    }
 
-    if (form.status_import == 'import_rfid') var items = rfidItems; var name = 'Format Import RFID Siswa.xlsx'
-    if (form.status_import == 'import_data') var items = dataItems; var name = 'Format Import Data Siswa.xlsx'
+    exportData.value.forEach((report, index) => {
+      let data = [
+        index+1,
+        report.user_nama,
+        report.kelas_nama,
+        'In/Out',
+        report.tot.telat,
+        report.tot.izin,
+        report.tot.sakit,
+        report.tot.alpha,
+        report.tot.hadir,
+      ]
+      let onDays = report.pre.map((val) => {
+        return getKeyByValue(val, '1')
+      })
+      data.splice(4, 0, ...onDays)
+      ws_data.push(data)
+    })
 
-    const data = XLSX.utils.json_to_sheet(items)
-    const wb = XLSX.utils.book_new()
-    XLSX.utils.book_append_sheet(wb, data, 'kelas')
+    const wb = XLSX.utils.book_new();
+
+    const ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+    XLSX.utils.book_append_sheet(wb, ws, "report presensi");
+
+    ws["!merges"] = merges;
+
+    var name = `Report Presensi.xlsx`
     XLSX.writeFile(wb, name)
 }
 </script>
@@ -124,11 +168,20 @@ function generate() {
           <h2 class="fs-1 fw-bold py-6 m-0">Export Absensi Siswa</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
-        <div class="d-flex flex-column bg-light-primary align-items-center rounded p-6">
+        <div class="bg-light-primary rounded p-6">
+          <div v-if="loading" class="d-flex flex-column align-items-center">
+              <Loading 
+                :active="loading" 
+                color="#41B883"
+                :is-full-page="false">
+              </Loading>
+              <p class="m-0 m-auto mt-3 fs-5 text-black-50 fw-bold">Harap Tuggu, Data sedang diproses</p>
+          </div>
+          <div v-if="!loading" class="d-flex flex-column align-items-center">
             <p class="m-0 m-auto fs-5 text-black-50">Report Excel siap di Unduh, Klik tombol bawah untuk unduh laporan presensi</p>
-            <p class="m-0 m-auto fs-5 text-black-50">File Dibuat pada July 15 2022 10:28:57.</p>
+            <p class="m-0 m-auto fs-5 text-black-50">{{exportDate}}</p>
             <div class="my-3">
-              <a @click="" class="btn btn-danger d-flex gap-3 align-items-center w-auto">
+              <a @click="getQueue()" class="btn btn-danger d-flex gap-3 align-items-center w-auto">
                 <span>
                   Generate ulang
                 </span>
@@ -136,13 +189,14 @@ function generate() {
               </a>
             </div>
             <div class="my-3">
-              <a @click="" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+              <a @click="generate()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                 <span>
                   Download File
                 </span>
                 <i class="bi bi-cloud-arrow-down fs-1"></i>
               </a>
             </div>
+          </div>
         </div>
       </div>
     </div>
