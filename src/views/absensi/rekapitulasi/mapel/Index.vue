@@ -10,6 +10,7 @@
   import QueryString from 'qs';
   import { useToast } from 'vue-toast-notification';
   import ChangePassword from "@/components/change-password/Index.vue";
+import * as XLSX from 'xlsx';
 import moment from "moment";
 import Swal from "sweetalert2";
 
@@ -34,10 +35,12 @@ import Swal from "sweetalert2";
 
   const kelasOption = ref([])
   const mapelOption = ref([])
+  const guruOption = ref([])
 
   const searchMapel = ref('')
   const kelasFilter = ref('')
   const mapelFilter = ref('')
+  const guruFilter = ref('')
   const dateRangeStart = ref(moment().format('YYYY-MM-DD'))
   const dateRangeEnd = ref(moment().format('YYYY-MM-DD'))
   
@@ -45,6 +48,7 @@ import Swal from "sweetalert2";
     request.post('reportmapel', null, {
       params: {
         cari: searchMapel.value,
+        user: guruFilter.value,
         mapel: mapelFilter.value,
         kelas: kelasFilter.value,
         tglMulai: dateRangeStart.value,
@@ -59,6 +63,10 @@ import Swal from "sweetalert2";
   }
 
   function getData() {
+    request.post('user', null, {params: {level: 'guru'}})
+    .then(res => {
+      guruOption.value = res.data.data
+    })
     request.post('kelas', null)
     .then(res => {
       kelasOption.value = res.data.data
@@ -138,9 +146,17 @@ import Swal from "sweetalert2";
           <div class="d-flex flex-wrap justify-content-between gap-4">
             <div class="d-flex flex-column gap-4">
               <div class="d-flex align-items-center gap-4">
+                <FilterSelect v-model:filterValue="guruFilter" placeholder="Pilih Guru" @changeFilter="getReportMapel()">
+                  <el-option
+                    v-for="guru in guruOption"
+                    :key="guru.user_id"
+                    :label="guru.user_nama"
+                    :value="guru.user_id"
+                  />
+                </FilterSelect>
                 <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getReportMapel()">
                   <el-option
-                    v-for="mapel, index in mapelOption"
+                    v-for="mapel in mapelOption"
                     :key="mapel.mapel_id"
                     :label="mapel.mapel_nama"
                     :value="mapel.mapel_id"
@@ -148,7 +164,7 @@ import Swal from "sweetalert2";
                 </FilterSelect>
                 <FilterSelect v-model:filterValue="kelasFilter" placeholder="Pilih Kelas" @changeFilter="getReportMapel()">
                   <el-option
-                    v-for="kelas, index in kelasOption"
+                    v-for="kelas in kelasOption"
                     :key="kelas.kelas_id"
                     :label="kelas.kelas_nama"
                     :value="kelas.kelas_id"
