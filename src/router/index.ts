@@ -587,6 +587,11 @@ const routes: Array<RouteRecordRaw> = [
           import("@/views/absensi/rekapitulasi/guru/Detail.vue"),
       },
       {
+        path: "/absensi/rekapitulasi/guru/export",
+        name: "absensi-rekapitulasi-guru-export",
+        component: () => import("@/views/absensi/rekapitulasi/guru/Export.vue"),
+      },
+      {
         path: "/absensi/rekapitulasi/mapel/detail/:id",
         name: "absensi-rekapitulasi-mapel-detail",
         component: () =>

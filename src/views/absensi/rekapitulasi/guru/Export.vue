@@ -11,7 +11,7 @@ import Loading from 'vue3-loading-overlay'
 import * as XLSX from 'xlsx';
 
 onMounted(() => {
-  setCurrentPageBreadcrumbs("Export Presensi", ['Absensi', 'Rekapitulasi', 'Siswa']);
+  setCurrentPageBreadcrumbs("Export Presensi", ['Absensi', 'Rekapitulasi', 'Guru']);
   getQueue()
 })
 
@@ -27,7 +27,6 @@ const reportQueue = ref()
 
 const exportData = ref([])
 const exportDate = ref('')
-const exportKelas = ref('')
 
 const loading = ref(true)
 
@@ -85,7 +84,6 @@ function getDownloadData() {
     if (res.data.success == true) {
       exportData.value = res.data.data
       exportDate.value = res.data.created_at
-      exportKelas.value = res.data.kelas.kelas_nama
 
       loading.value = false
     }
@@ -95,8 +93,8 @@ function getDownloadData() {
 function generate() {
     const ws_data = [
       ['Rekap Presensi'],
-      ['Kelas : ' + (exportKelas.value ?? 'Semua')],
-      ['Periode : ' + route.query.dateStart + ' sampai ' + route.query.dateEnd],
+      ['Kelas :' + 'Semua'],
+      ['Periode :' + '20321'],
       [''],
       ['No', 'Nama', 'Kelas', 'In/Out', 'Rekap', 'Rekap', 'Rekap', 'Rekap', 'Total Hadir'],
       ['No', 'Nama', 'Kelas', 'In/Out', 'Telat', 'Izin', 'Sakit', 'Alpha', 'Keterangan'],
@@ -167,7 +165,7 @@ function generate() {
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div>
-          <h2 class="fs-1 fw-bold py-6 m-0">Export Absensi Siswa</h2>
+          <h2 class="fs-1 fw-bold py-6 m-0">Export Absensi Guru</h2>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="bg-light-primary rounded p-6">
