@@ -11,6 +11,7 @@
   import { useToast } from 'vue-toast-notification';
   import ChangePassword from "@/components/change-password/Index.vue";
 import moment from "moment";
+import Swal from "sweetalert2";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Mapel", ["Absensi", "Rekapitulasi"]);
@@ -67,6 +68,39 @@ import moment from "moment";
       mapelOption.value = res.data.data
     })
   }
+
+  function exportData() {
+    if (reportMapel.rows.length > 0) {
+      generateExcel()
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tidak ada data!'
+      })
+    }
+  }
+
+  function generateExcel() {
+    let row = [["Nama Guru","Kelas","Mapel", "Siswa Hadir", "Siswa tidak hadir", "Tanggal"]]
+
+    reportMapel.rows.map((item,i) => {
+      row.push([
+          item.user_nama,
+          item.kelas_nama,
+          item.mapel_nama,
+          item.siswa_hadir,
+          item.siswa_off,
+          item.pg_create_date,
+      ])
+		})
+
+    const data = XLSX.utils.aoa_to_sheet(row)
+    const wb = XLSX.utils.book_new()
+    XLSX.utils.book_append_sheet(wb, data, 'Report')
+
+    var fileName = 'Rekap Data Presensi Mapel per ' 
+    XLSX.writeFile(wb, fileName + moment().format("DD-MMMM-YYYY") +".xlsx")
+  }
 </script>
 
 <template>
@@ -81,7 +115,7 @@ import moment from "moment";
 
             <div class="position-relative d-flex gap-4">
               <div class="d-flex align-items-center">
-                <a class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <a @click="exportData()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                   <span>
                     Export
                   </span>
