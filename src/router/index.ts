@@ -326,6 +326,12 @@ const routes: Array<RouteRecordRaw> = [
         ],
       },
       {
+        path: "sekolah/mata-pelajaran/jadwal-pelajaran/import",
+        name: "sekolah-mata-pelajaran-jadwal-pelajaran-import",
+        component: () => import("@/views/sekolah/mata-pelajaran/jadwal-pelajaran/Import.vue")
+      },
+      
+      {
         path: "/sekolah/informasi/pengumuman",
         name: "sekolah-informasi-pengumuman",
         component: () => import("@/views/sekolah/informasi/pengumuman/Index.vue"),
