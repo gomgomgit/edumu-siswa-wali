@@ -60,7 +60,7 @@ function handleSubmit () {
 }
 
 function dateFormating(date, time) {
-  return moment(date + ' ' + time).format('YYYY-MM-DD h:i:s')
+  return moment(date + ' ' + time).format('YYYY-MM-DD h:mm:ss')
 }
 
 watch(

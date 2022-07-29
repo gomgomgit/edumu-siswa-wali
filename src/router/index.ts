@@ -356,6 +356,21 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/informasi/prestasi/Edit.vue"),
       },
       {
+        path: "/sekolah/informasi/event",
+        name: "sekolah-informasi-event",
+        component: () => import("@/views/sekolah/informasi/event/Index.vue"),
+      },
+      {
+        path: "/sekolah/informasi/event/tambah",
+        name: "sekolah-informasi-event-tambah",
+        component: () => import("@/views/sekolah/informasi/event/Tambah.vue"),
+      },
+      {
+        path: "/sekolah/informasi/event/edit/:id",
+        name: "sekolah-informasi-event-edit",
+        component: () => import("@/views/sekolah/informasi/event/Edit.vue"),
+      },
+      {
         path: "/sekolah/informasi/berita",
         name: "sekolah-informasi-berita",
         component: () => import("@/views/sekolah/informasi/berita/Index.vue"),
