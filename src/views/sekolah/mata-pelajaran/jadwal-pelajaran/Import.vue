@@ -6,6 +6,7 @@ import { useToast } from 'vue-toast-notification';
 import { useRouter } from 'vue-router';
 import FileDrop from '@/components/file-dropzone/Index.vue';
 import * as XLSX from 'xlsx';
+import Swal from 'sweetalert2';
 
 onMounted(() => {
   setCurrentPageBreadcrumbs("Import Soal", ['LMS', 'Bank Soal']);
@@ -16,12 +17,9 @@ const router = useRouter()
 
 const guruOption = ref(null)
 const mapelOption = ref(null)
+const kelasOption = ref(null)
 
 const form = reactive({
-  user_id: '',
-  mapel_id: '',
-  question_type: '',
-  option_count: '',
   file: '',
 })
 
@@ -34,9 +32,13 @@ function getData() {
     guruOption.value = res.data.data
   })
   request.post('mapel')
-    .then(res => {
-      mapelOption.value = res.data.data
-    })
+  .then(res => {
+    mapelOption.value = res.data.data
+  })
+  request.post('kelas')
+  .then(res => {
+    kelasOption.value = res.data.data
+  })
 }
 
 function postData() {
@@ -47,56 +49,66 @@ function postData() {
   formData.append('option_count', form.option_count)
   formData.append('file', form.file)
 
-  request.post('soal/import', formData, {
+  request.post('jadwal/importjadwal', formData, {
     headers: {
       'Content-Type' : 'multipart/form-data'
     }
   }).then(res => {
     useToast().success('Data Berhasil dikirim')
+    router.push('/sekolah/mata-pelajaran/jadwal-pelajaran')
   })
 }
 
 function generate() {
-  if (form.question_type === '') {
-			useToast().error("Type soal wajib dipilih!");return false;
-		}
+    if (!kelasOption.value || !mapelOption.value || !guruOption.value ) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Data sedang diproses, tunggu sebentar, dan coba kembali'
+      })
+    }
+    let rowKelas = [["No", "Id Kelas","Nama Kelas"]];
+    kelasOption.value.forEach((kelas, index) => {
+      rowKelas.push([index + 1, kelas.kelas_id, kelas.kelas_nama])
+    });
 
-		if (form.mapel_id === '') {
-			useToast().error("Mapel wajib dipilih!");return false;
-		}
+    let rowMapel = [["No", "Id Mapel","Nama Mapel"]];
+    mapelOption.value.forEach((mapel, index) => {
+      rowMapel.push([index + 1, mapel.mapel_id, mapel.mapel_nama])
+    });
 
-		if (form.question_type !== 'essay' && form.option_count === '') {
-			useToast().error("Jumlah opsi harus diisi!");return false;
-		}
+    let rowGuru = [["No", "Id Guru","Nama Guru"]];
+    guruOption.value.forEach((guru, index) => {
+      rowGuru.push([index + 1, guru.user_id, guru.user_nama])
+    });
 
-		if (form.question_type == 'single') {
-			let row = ["mapel", "soal", "jmlOpsi"];
-			for (var i = 1; i <= form.option_count; i++) {
-				row.push(i);
-			}
+    let rowHari = [
+      ["No", "Id Hari","Nama Hari"],
+      [1, 1,"Senin"],
+      [2, 2,"Selasa"],
+      [3, 3,"Rabu"],
+      [4, 4,"Kamis"],
+      [5, 5,"Jum'at"],
+      [6, 6,"Sabtu"],
+      [7, 7,"Minggu"],
+    ];
 
-			row.push('jwbBenar');
-			row.push('keteranganSoal');
+    let rowFormat = [["No", "Kelas Id","Mapel Id", "User Id", "Hari", "Jam Mulai", "Jam Selesai"]];
 
-	        let single = [row]
+    var wsKelas = XLSX.utils.aoa_to_sheet(rowKelas);
+    var wsMapel = XLSX.utils.aoa_to_sheet(rowMapel);
+    var wsGuru = XLSX.utils.aoa_to_sheet(rowGuru);
+    var wsHari = XLSX.utils.aoa_to_sheet(rowHari);
+    var wsFormat = XLSX.utils.aoa_to_sheet(rowFormat);
 
-	        single.push([form.mapel_id,"", form.option_count])
-	        const wb = XLSX.utils.book_new()
-	        const wsAll = XLSX.utils.aoa_to_sheet(single)
-	            XLSX.utils.book_append_sheet(wb, wsAll, form.question_type)
-	            XLSX.writeFile(wb, "Format Import Soal "+ form.question_type +".xlsx");
-		}
+    var wb = XLSX.utils.book_new();
 
-		if (form.question_type == 'essay') {
-			let row = ["mapel", "soal","keteranganSoal"];
-      let essay = [row]
+    XLSX.utils.book_append_sheet(wb, wsMapel, "Data Mapel");
+    XLSX.utils.book_append_sheet(wb, wsKelas, "Data Kelas");
+    XLSX.utils.book_append_sheet(wb, wsGuru, "Data Guru");
+    XLSX.utils.book_append_sheet(wb, wsHari, "Data Hari");
+    XLSX.utils.book_append_sheet(wb, wsFormat, "Format Import Jadwal");
 
-      essay.push([form.mapel_id,""])
-      const wb = XLSX.utils.book_new()
-      const wsAll = XLSX.utils.aoa_to_sheet(essay)
-      XLSX.utils.book_append_sheet(wb, wsAll, form.question_type)
-      XLSX.writeFile(wb, "Format Import Soal "+ form.question_type +".xlsx");
-		}
+    XLSX.writeFile(wb, "Format Import Jadwal.xlsx");
 }
 </script>
 
@@ -128,7 +140,7 @@ function generate() {
             <FileDrop v-model:fileInputData="form.file"></FileDrop>
           </div>
           <div class="d-flex justify-content-end gap-4">
-            <a @click.prevent="router.push('/sekolah/profil-pengguna/guru')" href="#" class="btn btn-light">Batal</a>
+            <a @click.prevent="router.push('/sekolah/mata-pelajaran')" href="#" class="btn btn-light">Batal</a>
             <a @click.prevent="postData" class="btn btn-primary">Simpan</a>
           </div>
         </div>
