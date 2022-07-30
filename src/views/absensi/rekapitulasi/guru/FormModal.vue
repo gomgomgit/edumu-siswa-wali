@@ -19,7 +19,7 @@ const emits = defineEmits(['close', 'submit'])
 const baseUrl = process.env.VUE_APP_API_URL
 
 const initialForm = { 
-  siswa_id: '',
+  guru_id: '',
   guru_id: '',
   status: '',
   status_izin: '',
@@ -38,14 +38,16 @@ function handleClose () {
 
 function handleSubmit () {
   const formData = new FormData()
-  formData.append('siswa_id', form.siswa_id)
+  formData.append('guru_id', form.guru_id)
   formData.append('presensi_id', form.presensi_id)
+  formData.append('type', form.presensi_tipe == 'Tap in' ? 'in ' : 'out')
   formData.append('status', form.status)
   formData.append('status_izin', form.status_izin)
-  formData.append('event_mulai', form.event_mulai)
+  formData.append('event_mulai', form.presensi_create_date)
   formData.append('keterangan', form.keterangan)
+  formData.append('izin_file', form.izin_file)
 
-  var endpoint = 'edit_presensi_siswa'
+  var endpoint = 'edit_presensi_guru'
   const message = 'Data Berhasil Diedit!'
   request.post(endpoint, formData, {
     headers: {
@@ -59,13 +61,9 @@ function handleSubmit () {
   })
 }
 
-function dateFormating(date, time) {
-  return moment(date + ' ' + time).format('YYYY-MM-DD h:mm:ss')
-}
-
 watch(
 	() => props.activeData,
-	activeData => !isEmpty(activeData) && Object.assign(form, { ...activeData, event_mulai: dateFormating(activeData.presensi_create_date, activeData.presensi_create_time)}),
+	activeData => !isEmpty(activeData) && Object.assign(form, { ...activeData}),
 	{ deep: true }
 )
 </script>
@@ -74,25 +72,25 @@ watch(
 	<Modal
 		:title="props.mode"
 		:show="props.mode"
-		:breadcrumb="Array('LMS', 'Materi Belajar', 'Materi File', props.mode)"
+		:breadcrumb="Array('Absensi', 'Rekapitulasi', 'Guru', props.mode)"
 		@closeModal="handleClose"
 		@confirm="handleSubmit"
 		@dismiss="handleClose">
     <div class="d-flex flex-column gap-4">
-      <div class="row" v-if="form.kelas_id">
-        <div class="col-3 d-flex">
-          <p class="m-0 fs-4 fw-bold">Kelas</p>
+      <div class="row">
+        <div class="col-3 align-items-center d-flex">
+          <p class="m-0 fs-4 fw-bold">Nama Guru</p>
         </div>
         <div class="col-9 align-items-center d-flex gap-4">
-          <el-input disabled v-model="form.kelas_nama" placeholder="Nama Kelas" />
+          <el-input disabled v-model="form.user_nama" placeholder="Nama Guru" />
         </div>
       </div>
       <div class="row">
         <div class="col-3 align-items-center d-flex">
-          <p class="m-0 fs-4 fw-bold">Nama Siswa</p>
+          <p class="m-0 fs-4 fw-bold">Tipe Absen</p>
         </div>
         <div class="col-9 align-items-center d-flex gap-4">
-          <el-input disabled v-model="form.user_nama" placeholder="Nama Siswa" />
+          <el-input disabled v-model="form.presensi_tipe" placeholder="Tipe" />
         </div>
       </div>
       <div class="row">
@@ -136,7 +134,7 @@ watch(
           <el-input type="textarea" v-model="form.keterangan" placeholder="" />
         </div>
       </div>
-      <!-- <div class="row">
+      <div class="row">
         <div class="col-3 pt-3">
           <p class="m-0 fs-4 fw-bold">File Bukti</p>
           <div class="mt-3">
@@ -147,7 +145,7 @@ watch(
         <div class="col-9 align-items-center">
           <FileDrop v-model:fileInputData="form.izin_file"></FileDrop>
         </div>
-      </div> -->
+      </div>
     </div>
 	</Modal>
 </template>

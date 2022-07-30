@@ -29,8 +29,7 @@ const absenData = reactive({
     { label: 'Foto', field: 'presensi_foto', sortable: false },
     { label: 'Nama', field: 'user_nama', sortable: false },
     { label: 'Tanggal', field: 'tanggal', sortable: false },
-    { label: 'Status Izin', field: 'pgd_status', sortable: false },
-    { label: 'Keterangan', field: 'keterangan', sortable: false },
+    { label: 'Kehadiran', field: 'presensi_status', sortable: false },
     { label: 'Type', field: 'presensi_tipe', sortable: false },
     { label: 'Action', field: 'action', sortable: false },
   ],
@@ -96,7 +95,7 @@ function handleSubmit() {
       <div class="page-content">
         <div class="mb-4">
           <div class="d-flex justify-content-between">
-            <h2 class="fs-1 fw-bold py-6">Data Siswa Ujian</h2>
+            <h2 class="fs-1 fw-bold py-6">Data Presensi</h2>
           </div>
 
         </div>
@@ -113,7 +112,7 @@ function handleSubmit() {
           <template #table-row="{column, row}">
             <div v-if="column.field == 'presensi_foto'">
               <p class="bg-secondary p-2 d-inline-block">
-                <img :src="row.presensi_foto" alt="" style="max-width: 150px">
+                <img :src="'https://hilobox01.oss-ap-southeast-5.aliyuncs.com/master/demo/apischool/public/images/presensi/'+row.presensi_foto" alt="" style="max-width: 150px">
               </p>
             </div>
             <div v-if="column.field == 'tanggal'">

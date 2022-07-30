@@ -74,7 +74,7 @@ watch(
 	<Modal
 		:title="props.mode"
 		:show="props.mode"
-		:breadcrumb="Array('LMS', 'Materi Belajar', 'Materi File', props.mode)"
+		:breadcrumb="Array('Absensi', 'Rekapitulasi', 'Siswa', props.mode)"
 		@closeModal="handleClose"
 		@confirm="handleSubmit"
 		@dismiss="handleClose">
