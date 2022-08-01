@@ -126,6 +126,7 @@ import * as Yup from "yup";
 import axios from "axios";
 import QueryString from "qs";
 import { useToast } from "vue-toast-notification";
+import md5 from 'md5'
 
 const store = useStore();
 const router = useRouter();
@@ -144,7 +145,7 @@ const onSubmitLogin = async (values) => {
   // Clear existing errors
   store.dispatch(Actions.LOGOUT);
 
-  axios.post('https://apisekolah.edumu.id/v1prod/sekolah', QueryString.stringify({code: values.kode}))
+  axios.post('https://apisekolah.edumu.id/v3prod/sekolah', QueryString.stringify({code: values.kode}))
     .then(res => {
       if (res.data.status) {
         postLogin(values, res.data.data.sekolahs[0])
@@ -156,64 +157,20 @@ const onSubmitLogin = async (values) => {
       console.log(err)
       useToast().error(err.message)
     })
-
-  return false
-
-  if (submitButton.value) {
-    // eslint-disable-next-line
-    submitButton.value.disabled = true;
-    // Activate indicator
-    submitButton.value.setAttribute("data-kt-indicator", "on");
-  }
-
-  // Send login request
-  await store.dispatch(Actions.LOGIN, values);
-  const [errorName] = Object.keys(store.getters.getErrors);
-  const error = store.getters.getErrors[errorName];
-
-  if (!error) {
-    Swal.fire({
-      text: "You have successfully logged in!",
-      icon: "success",
-      buttonsStyling: false,
-      confirmButtonText: "Ok, got it!",
-      customClass: {
-        confirmButton: "btn fw-bold btn-light-primary",
-      },
-    }).then(function () {
-      // Go to page after successfully login
-      router.push({ name: "dashboard" });
-    });
-  } else {
-    Swal.fire({
-      text: error[0],
-      icon: "error",
-      buttonsStyling: false,
-      confirmButtonText: "Try again!",
-      customClass: {
-        confirmButton: "btn fw-bold btn-light-danger",
-      },
-    });
-  }
-
-  //Deactivate indicator
-  submitButton.value?.removeAttribute("data-kt-indicator");
-  // eslint-disable-next-line
-    submitButton.value.disabled = false;
 };
 
 function postLogin(data, sekolah) {
   const formData = {
-    user_username: data.username,
-    user_kunci: data.password,
-    user_kodesekolah: data.kode,
-    user_namasekolah: sekolah.sekolah_nama,
+    username: data.username,
+    password: md5(md5(data.password)),
   }
-  axios.post('https://apiedumu.edumu.id/demo/apischool/login', QueryString.stringify(formData))
+  axios.post('https://apiedumu.edumu.id/demo/apischool/siswawali/user/login', QueryString.stringify(formData))
   .then(res => {
-    if (res.data.success) {
-      store.dispatch(Actions.LOGIN, {...res.data.data, ...sekolah})
-
+    if (res.data.status) {
+      store.dispatch(Actions.LOGIN, {...res.data.data.users[0], ...sekolah})
+      
+      console.log(res.data.data.users[0])
+      
       Swal.fire({
       text: "You have successfully logged in!",
       icon: "success",
@@ -227,7 +184,7 @@ function postLogin(data, sekolah) {
       });
         
     } else {
-      useToast().error(res.data.message)
+      useToast().error(res.data.text)
     }
   }).catch(err => {
     console.log(err)
