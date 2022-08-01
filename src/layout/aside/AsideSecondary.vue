@@ -757,9 +757,9 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
             class="btn btn-bg-light btn-color-gray-600 btn-flex btn-active-color-primary flex-center w-100"
             data-bs-toggle="tooltip" data-bs-custom-class="tooltip-dark" data-bs-trigger="hover" data-bs-offset="0,5"
             data-bs-dismiss-="click">
-            <span class="btn-label">{{ t("Dokumentasi Pengguna") }}</span>
+            <span class="btn-label">{{"Bantuan dan Masukan"}}</span>
             <span class="svg-icon btn-icon svg-icon-4 ms-2">
-              <inline-svg src="media/icons/duotune/general/gen005.svg" />
+              <inline-svg src="media/icons/duotune/general/gen046.svg" />
             </span>
           </a>
         </div>
