@@ -61,8 +61,8 @@ export default defineComponent({
         icon: "media/icons/duotune/art/art005.svg",
         color: "success",
         title: "Kelas",
-        description: "Pengerjaan tugas secara offline",
-        route: "/lms/tugas-offline"
+        description: "Jadwal Pelajaran dan Kursus",
+        route: "/siswa/kelas"
       },
       {
         icon: "media/icons/duotune/electronics/elc001.svg",

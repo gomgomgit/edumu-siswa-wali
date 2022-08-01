@@ -5,7 +5,7 @@ import store from '../store';
 const currentUser = store.getters.currentUser
 
 const request = axios.create({
-	baseURL: `${process.env.VUE_APP_API_URL}/${currentUser.sekolah_kode}/apischool`,
+	baseURL: `${process.env.VUE_APP_API_URL}/${currentUser.sekolah_kode}/apischool/siswawali`,
 })
 
 request.interceptors.request.use((config) => {

@@ -15,6 +15,41 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/Dashboard.vue"),
       },
       {
+        path: "/siswa/kelas",
+        name: "siswa-kelas",
+        component: () => import("@/views/siswa/kelas/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/siswa/kelas/hari-ini",
+          },
+          {
+            path: "hari-ini",
+            name: "siswa-kelas-hari-ini",
+            component: () =>
+              import("@/views/siswa/kelas/tabs/Today.vue"),
+          },
+          {
+            path: "mingguan",
+            name: "siswa-kelas-mingguan",
+            component: () =>
+              import("@/views/siswa/kelas/tabs/Weekly.vue"),
+          },
+          {
+            path: "kursus",
+            name: "siswa-kelas-kursus",
+            component: () =>
+              import("@/views/siswa/kelas/tabs/Course.vue"),
+          },
+        ]
+      },
+
+
+
+
+
+
+      {
         path: "/lms/tugas-offline",
         name: "lms-tugas-offline",
         component: () => import("@/views/lms/tugas-offline/Index.vue"),
