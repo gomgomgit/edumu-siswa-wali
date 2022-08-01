@@ -1,8 +1,8 @@
-<template>
+<template>  
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder text-dark">Absensi</span>
+      <span class="card-label fw-bolder text-dark">Informasi</span>
     </h3>
   </div>
   <!--end::Header-->
@@ -180,26 +180,26 @@ export default defineComponent({
       {
         pages: [
           {
-            heading: "Skema Absensi",
-            route: "/absensi/skema-absensi",
+            heading: "Notifikasi",
+            route: "/iuran/iuran-siswa",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
           {
-            heading: "Rekapitulasi",
-            route: "/absensi/rekapitulasi",
+            heading: "Pengumuman",
+            route: "/iuran/grup-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
           {
-            heading: "Absensi Manual",
-            route: "/absensi/absensi-manual",
+            heading: "Event",
+            route: "/iuran/jenis-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
           {
-            heading: "Waktu Absensi",
-            route: "/absensi/waktu-absensi",
+            heading: "Penghargaan",
+            route: "/iuran/master-iuran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

@@ -3,10 +3,9 @@
 import { defineComponent } from "vue";
 import { useI18n } from "vue-i18n/index";
 import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
-import KTLms from "@/layout/aside/tabs/Lms.vue";
+import KTSiswa from "@/layout/aside/tabs/Siswa.vue";
 import KTSekolah from "@/layout/aside/tabs/Sekolah.vue";
-import KTIuran from "@/layout/aside/tabs/Iuran.vue";
-import KTAbsensi from "@/layout/aside/tabs/Absensi.vue";
+import KTInformasi from "@/layout/aside/tabs/Informasi.vue";
 import KTPengaturan from "@/layout/aside/tabs/Pengaturan.vue";
 import {
   minimizedAsideSecondary,
@@ -735,20 +734,16 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
               </div>
             </div>
 
-            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_lms" role="tabpanel">
-              <KTLms></KTLms>
+            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_siswa" role="tabpanel">
+              <KTSiswa></KTSiswa>
             </div>
 
             <div class="submenus tab-pane fade" id="kt_aside_nav_tab_sekolah" role="tabpanel">
               <KTSekolah></KTSekolah>
             </div>
 
-            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_iuran" role="tabpanel">
-              <KTIuran></KTIuran>
-            </div>
-
-            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_absensi" role="tabpanel">
-              <KTAbsensi></KTAbsensi>
+            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_informasi" role="tabpanel">
+              <KTInformasi></KTInformasi>
             </div>
 
             <div class="submenus tab-pane fade" id="kt_aside_nav_tab_pengaturan" role="tabpanel">

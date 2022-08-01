@@ -200,114 +200,19 @@ export default defineComponent({
       {
         pages: [
           {
-            sectionTitle: "Profil Pengguna",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Siswa",
-                route: "/sekolah/profil-pengguna/siswa",
-              },
-              {
-                heading: "Wali",
-                route: "/sekolah/profil-pengguna/wali",
-              },
-              {
-                heading: "Guru",
-                route: "/sekolah/profil-pengguna/guru",
-              },
-            ],
-          },
-          {
-            sectionTitle: "Akademik",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Tahun Ajar",
-                route: "/sekolah/akademik/tahun-ajar",
-              },
-              {
-                heading: "Data Kelas",
-                route: "/sekolah/akademik/data-kelas",
-              },
-              {
-                heading: "Kalender Akademik",
-                route: "/sekolah/akademik/kalender-akademik",
-              },
-            ],
-          },
-          {
-            sectionTitle: "Mata Pelajaran",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Data Mapel",
-                route: "/sekolah/mata-pelajaran/data-mapel",
-              },
-              {
-                heading: "Jadwal Pelajaran",
-                route: "/sekolah/mata-pelajaran/jadwal-pelajaran",
-              },
-            ],
-          },
-          {
-            sectionTitle: "Informasi",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Pengumuman",
-                route: "/sekolah/informasi/pengumuman",
-              },
-              {
-                heading: "Prestasi Sekolah",
-                route: "/sekolah/informasi/prestasi",
-              },
-              {
-                heading: "Event Sekolah",
-                route: "/sekolah/informasi/event",
-              },
-              {
-                heading: "Berita",
-                route: "/sekolah/informasi/berita",
-              },
-            ],
-          },
-          {
-            heading: "E Dokumen",
-            route: "/sekolah/e-document",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-          },
-          {
-            sectionTitle: "Laporan",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "User Online",
-                route: "/sekolah/laporan/user-online",
-              },
-              // {
-              //   heading: "Kartu Aktifitas",
-              //   route: "/profile",
-              // },
-            ]
-          },
-          {
-            heading: "Akreditasi",
+            heading: "Kalender",
             route: "/sekolah/akreditasi",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
           {
-            heading: "Media",
+            heading: "To Do",
+            route: "/sekolah/media",
+            svgIcon: "media/icons/duotune/general/gen022.svg",
+            fontIcon: "bi-archive",
+          },
+          {
+            heading: "Kehadiran",
             route: "/sekolah/media",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",

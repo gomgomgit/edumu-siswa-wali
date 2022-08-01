@@ -2,7 +2,7 @@
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder text-dark">LMS</span>
+      <span class="card-label fw-bolder text-dark">Siswa</span>
     </h3>
   </div>
   <!--end::Header-->
@@ -60,7 +60,7 @@ export default defineComponent({
       {
         icon: "media/icons/duotune/art/art005.svg",
         color: "success",
-        title: "Tugas Offline",
+        title: "Kelas",
         description: "Pengerjaan tugas secara offline",
         route: "/lms/tugas-offline"
       },
@@ -74,7 +74,7 @@ export default defineComponent({
       {
         icon: "media/icons/duotune/files/fil019.svg",
         color: "primary",
-        title: "Bank Soal",
+        title: "Tugas",
         description: "Kumpulan soal-soal pembelajaran",
         route: "/lms/bank-soal"
       },
@@ -84,13 +84,6 @@ export default defineComponent({
         title: "Materi Belajar",
         description: "Kumpulan materi pembelajaran",
         route: "/lms/materi-belajar"
-      },
-      {
-        icon: "media/icons/duotune/general/gen049.svg",
-        color: "info",
-        title: "Laporan Nilai",
-        description: "Rekap nilai tugas dan ujian",
-        route: "/lms/laporan-nilai"
       },
     ];
 
