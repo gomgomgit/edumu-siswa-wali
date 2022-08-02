@@ -3,7 +3,8 @@ import { ref } from "vue";
 
 const props = defineProps({
   fileInputData: Array,
-  multiple: {Boolean, default: false}
+  multiple: {Boolean, default: false},
+  showFile: {Boolean, default: true}
 })
 const emits = defineEmits('update:fileInputData')
 
@@ -53,7 +54,7 @@ function selectedFile() {
       <input @change="selectedFile" type="file" :multiple="props.multiple" id="dropzoneFile" class="dropzoneFile" />
     </div>
   </div>
-  <div class="d-flex flex-column gap-2 mt-3">
+  <div v-if="props.showFile" class="d-flex flex-column gap-2 mt-3">
     <template v-if="multiple" v-for="file in dropzoneFile">
       <p class="m-0 fs-4">File: {{ file.name }} - {{file.size}} bytes</p>
     </template>

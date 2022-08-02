@@ -43,6 +43,16 @@ const routes: Array<RouteRecordRaw> = [
           },
         ]
       },
+      {
+        path: "/siswa/tugas",
+        name: "siswa-tugas",
+        component: () => import("@/views/siswa/tugas/Index.vue"),
+      },
+      {
+        path: "/siswa/tugas/detail/:id",
+        name: "siswa-tugas-detail",
+        component: () => import("@/views/siswa/tugas/Detail.vue"),
+      },
 
 
 

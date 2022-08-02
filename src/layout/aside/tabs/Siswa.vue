@@ -75,8 +75,8 @@ export default defineComponent({
         icon: "media/icons/duotune/files/fil019.svg",
         color: "primary",
         title: "Tugas",
-        description: "Kumpulan soal-soal pembelajaran",
-        route: "/lms/bank-soal"
+        description: "Kumpulan Tugas tugas",
+        route: "/siswa/tugas"
       },
       {
         icon: "media/icons/duotune/general/gen005.svg",
