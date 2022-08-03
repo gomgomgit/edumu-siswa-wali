@@ -201,7 +201,7 @@ export default defineComponent({
         pages: [
           {
             heading: "Kalender",
-            route: "/sekolah/akreditasi",
+            route: "/sekolah/kalender",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

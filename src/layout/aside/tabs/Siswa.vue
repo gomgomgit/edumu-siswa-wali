@@ -69,7 +69,7 @@ export default defineComponent({
         color: "warning",
         title: "Ujian Online",
         description: "Pengerjaan ujian secara online",
-        route: "/lms/ujian-online"
+        route: "/siswa/ujian-online"
       },
       {
         icon: "media/icons/duotune/files/fil019.svg",
