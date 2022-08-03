@@ -83,7 +83,7 @@ export default defineComponent({
         color: "danger",
         title: "Materi Belajar",
         description: "Kumpulan materi pembelajaran",
-        route: "/lms/materi-belajar"
+        route: "/siswa/materi"
       },
     ];
 

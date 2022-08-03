@@ -54,6 +54,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/siswa/tugas/Detail.vue"),
       },
 
+      {
+        path: "/siswa/materi",
+        name: "siswa-materi",
+        component: () => import("@/views/siswa/materi/Index.vue"),
+      },
+
 
 
 
