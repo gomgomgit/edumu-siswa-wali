@@ -152,10 +152,10 @@ import { useStore } from "vuex";
                     </span>
                   </div>
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{event.libur_desc}}</a>
-                    <span class="text-muted fw-semobold d-block">{{event.kelas_nama}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{event.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{event.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-success">{{event.libur_tanggal}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-success">{{event.calendar_date}}</span>
                 </div>
               </template>
             </div>
@@ -218,10 +218,10 @@ import { useStore } from "vuex";
                     </span>
                   </div>
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{academic.libur_desc}}</a>
-                    <span class="text-muted fw-semobold d-block">{{academic.kelas_nama}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{academic.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{academic.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-warning">{{academic.libur_tanggal}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-warning">{{academic.calendar_date}}</span>
                 </div>
               </template>
             </div>
