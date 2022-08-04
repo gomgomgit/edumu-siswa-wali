@@ -71,6 +71,16 @@ const routes: Array<RouteRecordRaw> = [
         name: "siswa-ujian-online-detail",
         component: () => import("@/views/siswa/ujian-online/Detail.vue"),
       },
+      {
+        path: "/siswa/ujian-online/soal/:id",
+        name: "siswa-ujian-online-soal",
+        component: () => import("@/views/siswa/ujian-online/Soal.vue"),
+      },
+      {
+        path: "/siswa/ujian-online/Result/:id",
+        name: "siswa-ujian-online-Result",
+        component: () => import("@/views/siswa/ujian-online/Result.vue"),
+      },
       
       {
         path: "/siswa/tugas",

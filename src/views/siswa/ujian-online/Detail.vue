@@ -13,7 +13,7 @@ import axios from 'axios';
 
 onMounted(() => {
   getData()
-  setCurrentPageBreadcrumbs('Detail Tugas', ['LMS', 'Tugas Offline'])
+  setCurrentPageBreadcrumbs('Detail', ['LMS', 'Ujian Online'])
 })
 
 const store = useStore()
@@ -103,13 +103,13 @@ function formatingDate(date) {
             </div>
             <div class="row py-4">
               <div class="col-4"><h4 class="text-black-50">Status</h4></div>
-              <div class="col-8"><h4 class="fw-bold">: {{detailData.exam_status}}</h4></div>
+              <div class="col-8"><h4 class="fw-bold">: {{detailData.exam_status ? 'Aktif' : 'Non Aktif'}}</h4></div>
             </div>
           </div>
         </div>
         <div class="separator border-black-50 border-2 my-3"></div>
         <div class="d-flex justify-content-end">
-          <router-link to="/lms/tugas-offline/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+          <router-link :to="`/siswa/ujian-online/soal/${examId}`" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
             <i class="bi bi-play-fill fs-1"></i>
             <span>
               Mulai
