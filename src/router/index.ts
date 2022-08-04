@@ -105,6 +105,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/kalender/Index.vue"),
       },
 
+      //Absensi
+      {
+        path: "/absensi/kehadiran",
+        name: "absensi-kehadiran",
+        component: () => import("@/views/absensi/kehadiran/Index.vue"),
+      },
 
 
 

@@ -213,7 +213,7 @@ export default defineComponent({
           },
           {
             heading: "Kehadiran",
-            route: "/sekolah/media",
+            route: "/absensi/kehadiran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
