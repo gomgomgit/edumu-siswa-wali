@@ -622,12 +622,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah-old/media/Album.vue"),
       },
 
-      // Absensi
-      {
-        path: "/absensi/waktu-absensi",
-        name: "absensi-waktu-absensi",
-        component: () => import("@/views/absensi/waktu-absensi/Index.vue"),
-      },
       {
         path: "/pengaturan/umum",
         name: "pengaturan-umum",
