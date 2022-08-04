@@ -43,7 +43,7 @@ function getData() {
       exam_id: ujianId
     }
   }).then(res => {
-    console.log(res)
+    
     detailData.value = res.data.data
     kelasOption.value = res.data.part
   })

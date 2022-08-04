@@ -217,6 +217,30 @@ export default defineComponent({
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
+          {
+            sectionTitle: "Staff",
+            route: "/pages",
+            svgIcon: "media/icons/duotune/general/gen022.svg",
+            fontIcon: "bi-archive",
+            sub: [
+              {
+                heading: "Guru",
+                route: "/sekolah/staff/guru",
+              },
+              {
+                heading: "Akademik",
+                route: "/sekolah/staff/akademik",
+              },
+              {
+                heading: "TU/Keuangan",
+                route: "/sekolah/staff/keuangan",
+              },
+              {
+                heading: "Administrator",
+                route: "/sekolah/staff/administrator",
+              },
+            ],
+          },
         ],
       },
     ];

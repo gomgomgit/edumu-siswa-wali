@@ -104,6 +104,26 @@ const routes: Array<RouteRecordRaw> = [
         name: "sekolah-kalender",
         component: () => import("@/views/sekolah/kalender/Index.vue"),
       },
+      {
+        path: "/sekolah/staff/guru",
+        name: "sekolah-staff-guru",
+        component: () => import("@/views/sekolah/staff/guru/Index.vue"),
+      },
+      {
+        path: "/sekolah/staff/akademik",
+        name: "sekolah-staff-akademik",
+        component: () => import("@/views/sekolah/staff/akademik/Index.vue"),
+      },
+      {
+        path: "/sekolah/staff/keuangan",
+        name: "sekolah-staff-keuangan",
+        component: () => import("@/views/sekolah/staff/keuangan/Index.vue"),
+      },
+      {
+        path: "/sekolah/staff/administrator",
+        name: "sekolah-staff-administrator",
+        component: () => import("@/views/sekolah/staff/administrator/Index.vue"),
+      },
 
       //Absensi
       {

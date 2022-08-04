@@ -27,7 +27,7 @@ import { useStore } from "vuex";
       mapel_id: mapelFilter.value,
       page: payload?.page ?? 1
     })).then(res => {
-      console.log(res)
+      
       materiData.rows = res.data.data.materi.data
       materiData.totalRows = res.data.data.materi.total
     }).catch(err => {

@@ -78,7 +78,7 @@ import DetailModal from './DetailModal.vue'
             <template #table-row="{column, row}">
               <div v-if="column.field == 'foto'">
                 <div class="bg-secondary p-2 d-inline-block">
-                  <img :src="row.presensi_foto" alt="">
+                  <img :src="row.presensi_foto" alt="" style="max-height: 80px">
                 </div>
               </div>
               <div v-if="column.field == 'deskripsi'">

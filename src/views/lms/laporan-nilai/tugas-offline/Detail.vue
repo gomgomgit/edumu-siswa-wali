@@ -42,7 +42,7 @@ function getData() {
       cari: searchSiswa.value
     }
   }).then(res => {
-    console.log(res)
+    
     detailData.value = res.data.data
 
     dataJawab.rows = res.data.data.jawab
