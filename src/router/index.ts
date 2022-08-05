@@ -105,6 +105,31 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/kalender/Index.vue"),
       },
       {
+        path: "/sekolah/informasi/pengumuman",
+        name: "sekolah-informasi-pengumuman",
+        component: () => import("@/views/sekolah/informasi/pengumuman/Index.vue"),
+      },
+      {
+        path: "/sekolah/informasi/pengumuman/detail/:id",
+        name: "sekolah-informasi-pengumuman-detail",
+        component: () => import("@/views/sekolah/informasi/pengumuman/Detail.vue"),
+      },
+      {
+        path: "/sekolah/informasi/prestasi",
+        name: "sekolah-informasi-prestasi",
+        component: () => import("@/views/sekolah/informasi/prestasi/Index.vue"),
+      },
+      {
+        path: "/sekolah/informasi/event",
+        name: "sekolah-informasi-event",
+        component: () => import("@/views/sekolah/informasi/event/Index.vue"),
+      },
+      // {
+      //   path: "/sekolah/informasi/aktifitas",
+      //   name: "sekolah-informasi-aktifitas",
+      //   component: () => import("@/views/sekolah/informasi/aktifitas/Index.vue"),
+      // },
+      {
         path: "/sekolah/staff/guru",
         name: "sekolah-staff-guru",
         component: () => import("@/views/sekolah/staff/guru/Index.vue"),
@@ -453,84 +478,6 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah-old/mata-pelajaran/jadwal-pelajaran/Import.vue")
       },
       
-      {
-        path: "/sekolah/informasi/pengumuman",
-        name: "sekolah-informasi-pengumuman",
-        component: () => import("@/views/sekolah-old/informasi/pengumuman/Index.vue"),
-      },
-      {
-        path: "/sekolah/informasi/pengumuman/tambah",
-        name: "sekolah-informasi-pengumuman-tambah",
-        component: () => import("@/views/sekolah-old/informasi/pengumuman/Tambah.vue"),
-      },
-      {
-        path: "/sekolah/informasi/pengumuman/edit/:id",
-        name: "sekolah-informasi-pengumuman-edit",
-        component: () => import("@/views/sekolah-old/informasi/pengumuman/Edit.vue"),
-      },
-      {
-        path: "/sekolah/informasi/prestasi",
-        name: "sekolah-informasi-prestasi",
-        component: () => import("@/views/sekolah-old/informasi/prestasi/Index.vue"),
-      },
-      {
-        path: "/sekolah/informasi/prestasi/tambah",
-        name: "sekolah-informasi-prestasi-tambah",
-        component: () => import("@/views/sekolah-old/informasi/prestasi/Tambah.vue"),
-      },
-      {
-        path: "/sekolah/informasi/prestasi/edit/:id",
-        name: "sekolah-informasi-prestasi-edit",
-        component: () => import("@/views/sekolah-old/informasi/prestasi/Edit.vue"),
-      },
-      {
-        path: "/sekolah/informasi/event",
-        name: "sekolah-informasi-event",
-        component: () => import("@/views/sekolah-old/informasi/event/Index.vue"),
-      },
-      {
-        path: "/sekolah/informasi/event/tambah",
-        name: "sekolah-informasi-event-tambah",
-        component: () => import("@/views/sekolah-old/informasi/event/Tambah.vue"),
-      },
-      {
-        path: "/sekolah/informasi/event/edit/:id",
-        name: "sekolah-informasi-event-edit",
-        component: () => import("@/views/sekolah-old/informasi/event/Edit.vue"),
-      },
-      {
-        path: "/sekolah/informasi/berita",
-        name: "sekolah-informasi-berita",
-        component: () => import("@/views/sekolah-old/informasi/berita/Index.vue"),
-        children: [
-          {
-            path: "",
-            redirect: "/sekolah/informasi/berita/utama",
-          },
-          {
-            path: "utama",
-            name: "sekolah-informasi-berita-utama",
-            component: () =>
-              import("@/views/sekolah-old/informasi/berita/tabs/Utama.vue"),
-          },
-          {
-            path: "kategori",
-            name: "sekolah-informasi-berita-kategori",
-            component: () =>
-              import("@/views/sekolah-old/informasi/berita/tabs/Kategori.vue"),
-          },
-        ],
-      },
-      {
-        path: "/sekolah/informasi/berita/tambah",
-        name: "sekolah-informasi-berita-tambah",
-        component: () => import("@/views/sekolah-old/informasi/berita/Tambah.vue"),
-      },
-      {
-        path: "/sekolah/informasi/berita/edit/:id",
-        name: "sekolah-informasi-berita-edit",
-        component: () => import("@/views/sekolah-old/informasi/berita/Edit.vue"),
-      },
       {
         path: "/sekolah/e-document",
         name: "sekolah-e-document",

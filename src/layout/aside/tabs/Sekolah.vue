@@ -218,6 +218,30 @@ export default defineComponent({
             fontIcon: "bi-archive",
           },
           {
+            sectionTitle: "Informasi",
+            route: "/pages",
+            svgIcon: "media/icons/duotune/general/gen022.svg",
+            fontIcon: "bi-archive",
+            sub: [
+              {
+                heading: "Pengumuman",
+                route: "/sekolah/informasi/pengumuman",
+              },
+              {
+                heading: "Prestasi Sekolah",
+                route: "/sekolah/informasi/prestasi",
+              },
+              {
+                heading: "Event Selolah",
+                route: "/sekolah/informasi/event",
+              },
+              {
+                heading: "Aktifitas",
+                route: "/sekolah/informasi/aktifitas",
+              },
+            ],
+          },
+          {
             sectionTitle: "Staff",
             route: "/pages",
             svgIcon: "media/icons/duotune/general/gen022.svg",
