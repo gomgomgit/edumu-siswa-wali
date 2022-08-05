@@ -120,9 +120,19 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/informasi/prestasi/Index.vue"),
       },
       {
+        path: "/sekolah/informasi/prestasi/detail/:id",
+        name: "sekolah-informasi-prestasi-detail",
+        component: () => import("@/views/sekolah/informasi/prestasi/Detail.vue"),
+      },
+      {
         path: "/sekolah/informasi/event",
         name: "sekolah-informasi-event",
         component: () => import("@/views/sekolah/informasi/event/Index.vue"),
+      },
+      {
+        path: "/sekolah/informasi/event/detail/:id",
+        name: "sekolah-informasi-event-detail",
+        component: () => import("@/views/sekolah/informasi/event/Detail.vue"),
       },
       // {
       //   path: "/sekolah/informasi/aktifitas",

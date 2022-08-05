@@ -10,7 +10,7 @@ import { useStore } from 'vuex';
 
 onMounted(() => {
   getData()
-  setCurrentPageBreadcrumbs('Detail', ['Sekolah', 'Informasi', 'Pengumuman'])
+  setCurrentPageBreadcrumbs('Detail', ['Sekolah', 'Informasi', 'Event'])
 })
 
 const store = useStore()
@@ -23,10 +23,9 @@ const detailData = ref([])
 
 
 function getData() {
-  request.post('pengumuman/detail', queryString.stringify({
-    content_id: contentId,
-  })).then(res => {
-    detailData.value = res.data.data.content[0]
+  request.get('event/' + contentId
+  ).then(res => {
+    detailData.value = res.data.data
   })
 }
 
@@ -57,31 +56,14 @@ function formatingDate(date) {
         </div>
         <div class="separator border-black-50 border-2 mb-6"></div>
         <div>
-          <div class="fs-1 fw-bold text-center">{{detailData.content_name}}</div>
-          <div class="fs-5 font-gray-700 text-center">{{detailData.content_create_date}}</div>
+          <div class="fs-1 fw-bold text-center">{{detailData.event_judul}}</div>
+          <div class="fs-5 font-gray-700 text-center">{{detailData.event_create_date}}</div>
           <div class="my-4 text-center">
             <div class="p-2 bg-secondary d-inline-block mw-100">
-              <img class="mw-100"  :src="storagePublic + '/images/konten/' + detailData.content_image" alt="">
+              <img class="mw-100"  :src="storagePublic + '/images/event/' + detailData.event_foto" alt="">
             </div>
           </div>
-          <div class="mt-6 fs-4" v-html="detailData.content_desc"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5 mb-xxl-8">
-    <div class="card-body pt-5 pb-5">
-      <div class="page-content">
-        <div class="mb-4">
-          <div class="d-flex justify-content-between">
-            <h2 class="fs-1 fw-bold py-4">File Lampiran</h2>
-          </div>
-        </div>
-        <div class="separator border-black-50 border-2 mb-6"></div>
-        <div>
-          <template v-for="file in detailData.file_content" :key="file.content_file_id">
-            <a :href="file.content_file_url" target="_blank"><i class="bi bi-file-earmark-text-fill me-3 fs-3 text-primary"></i>{{file.content_file_nama}}</a>
-          </template>
+          <div class="mt-6 fs-4" v-html="detailData.event_desc"></div>
         </div>
       </div>
     </div>

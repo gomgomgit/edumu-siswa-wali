@@ -87,11 +87,11 @@
                   'Aktif' : 'Non Aktif'}}</span>
               </div>
               <div v-if="column.field == 'action'">
-                <button @click="deletePengumuman(row.content_id)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                <router-link :to="`/sekolah/informasi/prestasi/detail/${row.content_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                   <span class="svg-icon svg-icon-3">
                     <i class="bi bi-eye-fill fs-3"></i>
                   </span>
-                </button>
+                </router-link>
               </div>
             </template>
           </ServerSideTable>

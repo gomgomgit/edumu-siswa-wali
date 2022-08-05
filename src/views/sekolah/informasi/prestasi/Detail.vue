@@ -10,7 +10,7 @@ import { useStore } from 'vuex';
 
 onMounted(() => {
   getData()
-  setCurrentPageBreadcrumbs('Detail', ['Sekolah', 'Informasi', 'Pengumuman'])
+  setCurrentPageBreadcrumbs('Detail', ['Sekolah', 'Informasi', 'Prestasi'])
 })
 
 const store = useStore()
@@ -65,23 +65,6 @@ function formatingDate(date) {
             </div>
           </div>
           <div class="mt-6 fs-4" v-html="detailData.content_desc"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="card mb-5 mb-xxl-8">
-    <div class="card-body pt-5 pb-5">
-      <div class="page-content">
-        <div class="mb-4">
-          <div class="d-flex justify-content-between">
-            <h2 class="fs-1 fw-bold py-4">File Lampiran</h2>
-          </div>
-        </div>
-        <div class="separator border-black-50 border-2 mb-6"></div>
-        <div>
-          <template v-for="file in detailData.file_content" :key="file.content_file_id">
-            <a :href="file.content_file_url" target="_blank"><i class="bi bi-file-earmark-text-fill me-3 fs-3 text-primary"></i>{{file.content_file_nama}}</a>
-          </template>
         </div>
       </div>
     </div>
