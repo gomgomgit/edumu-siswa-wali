@@ -2,7 +2,7 @@
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder text-dark">Siswa</span>
+      <span class="card-label fw-bolder text-dark">LMS</span>
     </h3>
   </div>
   <!--end::Header-->
@@ -58,32 +58,25 @@ export default defineComponent({
   setup() {
     const items = [
       {
-        icon: "media/icons/duotune/art/art005.svg",
-        color: "success",
-        title: "Kelas",
-        description: "Jadwal Pelajaran dan Kursus",
-        route: "/siswa/kelas"
-      },
-      {
         icon: "media/icons/duotune/electronics/elc001.svg",
         color: "warning",
         title: "Ujian Online",
         description: "Pengerjaan ujian secara online",
-        route: "/siswa/ujian-online"
+        route: "/lms/ujian-online"
       },
       {
         icon: "media/icons/duotune/files/fil019.svg",
         color: "primary",
         title: "Tugas",
         description: "Kumpulan Tugas tugas",
-        route: "/siswa/tugas"
+        route: "/lms/tugas"
       },
       {
         icon: "media/icons/duotune/general/gen005.svg",
         color: "danger",
         title: "Materi Belajar",
         description: "Kumpulan materi pembelajaran",
-        route: "/siswa/materi"
+        route: "/lms/materi"
       },
     ];
 

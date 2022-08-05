@@ -1,30 +1,27 @@
 <script setup>
 import PageTabs from '@/components/page-tabs/index.vue'
+import { ref } from 'vue'
 
 const tabs = [
-	{
-		to: '/lms/ujian-online/utama',
-		title: 'Utama'
-	},
-	{
-		to: '/lms/ujian-online/pantau-ujian',
-		title: 'Pantau Ujian'
-	},
-	{
-		to: '/lms/ujian-online/kategori',
-		title: 'Kategori'
-	},
+  {
+    to: '/siswa/ujian-online/ujian',
+    title: 'Ujian Online'
+  },
+  {
+    to: '/siswa/ujian-online/tugas',
+    title: 'Tugas Online'
+  },
 ]
 </script>
 
 <template>
-	<div>
-		<PageTabs :tabs="tabs"></PageTabs>
+  <div>
+    <PageTabs :tabs="tabs"></PageTabs>
 
-		<router-view v-slot="{ Component, route }">
-			<transition :name="route.meta.transition || 'slide-fade'">
-				<component :is="Component" />
-			</transition>
-		</router-view>
-	</div>
+    <router-view v-slot="{ Component, route }">
+      <transition :name="route.meta.transition || 'slide-fade'">
+        <component :is="Component"/>
+      </transition>
+    </router-view> 
+  </div>
 </template>

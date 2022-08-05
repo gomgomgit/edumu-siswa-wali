@@ -12,16 +12,17 @@ import moment from "moment";
 import { useStore } from "vuex";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Kursus", ['Siswa', "Kelas"]);
+    setCurrentPageBreadcrumbs("Mingguan", ['Sekolah', "Kelas"]);
   })
 
   const store = useStore()
   const currentUser = store.getters.currentUser;
 
   function getJadwal (payload) {
-    request.post('jadwal/classes', QueryString.stringify(
+    request.post('jadwal/week', QueryString.stringify(
       {
         kelas_id: currentUser.kelas_id,
+        siswa_id: currentUser.siswa_id,
       }
     ))
     .then(res => {
@@ -31,9 +32,8 @@ import { useStore } from "vuex";
 
   const jadwal = reactive({
     columns: [
-      { label: 'Mapel', field: 'mapel_nama', sortable: false },
-      { label: 'Guru', field: 'user_nama', sortable: false },
-      { label: 'Jadwal', field: 'desc', sortable: false },
+      { label: 'Hari', field: 'jadwal_hari_name', sortable: false },
+      { label: 'Mapel', field: 'jadwals', sortable: false },
     ],
     rows: [],
     totalRows: 0,
@@ -56,8 +56,23 @@ import { useStore } from "vuex";
             @loadItems="getJadwal"
           >
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'desc'">
-                <div v-html="row.desc"></div>
+              <div v-if="column.field == 'jadwals'">
+                <div class="d-flex gap-6">
+                  <div class="d-flex flex-column gap-6">
+                    <template v-for="jadwal in row.jadwals" :key="jadwal.jadwal_id">
+                      <div>
+                        {{jadwal.mapel_nama}}
+                      </div>
+                    </template>
+                  </div>
+                  <div class="d-flex flex-column gap-6">
+                    <template v-for="jadwal in row.jadwals" :key="jadwal.jadwal_id">
+                      <div>
+                        {{jadwal.jadwal_mulai}} - {{jadwal.jadwal_selesai}}
+                      </div>
+                    </template>
+                  </div>
+                </div>
               </div>
             </template>
           </ServerSideTable>

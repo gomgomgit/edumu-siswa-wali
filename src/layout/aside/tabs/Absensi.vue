@@ -2,7 +2,7 @@
   <!--begin::Header-->
   <div class="card-header border-0 pt-5">
     <h3 class="card-title align-items-start flex-column">
-      <span class="card-label fw-bolder text-dark">Sekolah</span>
+      <span class="card-label fw-bolder text-dark">Absensi</span>
     </h3>
   </div>
   <!--end::Header-->
@@ -67,12 +67,9 @@
           <div
             v-if="menuItem.sectionTitle"
             :class="{ show: hasActiveChildren(menuItem.route) }"
-            class="menu-item menu-accordion position-relative"
+            class="menu-item menu-accordion"
             data-kt-menu-sub="accordion"
-            data-kt-menu-trigger="hover"
-            @mouseenter="showSubMenu"
-            @mouseleave="hideSubMenu"
-            @click="clickSubMenu"
+            data-kt-menu-trigger="click"
           >
             <span class="menu-link">
               <span
@@ -160,26 +157,9 @@
       </template>
     </div>
     <!--end::Menu-->
-
   </div>
   <!--end::Menu wrapper-->
 </template>
-
-<style scoped>
-.menu-sub.menu-sub-accordion {
-  height: 0;
-  max-height: 0;
-  display: block;
-  overflow: hidden;
-  transition: all .4s ease-in-out;
-}
-.menu-sub.menu-sub-accordion.show {
-  height: 100%;
-  max-height: 150px;
-  overflow: hidden;
-  transition: all .4s ease-in;
-}
-</style>
 
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
@@ -200,76 +180,10 @@ export default defineComponent({
       {
         pages: [
           {
-            heading: "To Do",
-            route: "/sekolah/media",
+            heading: "Kehadiran",
+            route: "/absensi/kehadiran",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
-          },
-          {
-            heading: "Kelas",
-            route: "/sekolah/kelas",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-          },
-          {
-            sectionTitle: "Akademik",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Kalender Akademik",
-                route: "/sekolah/kalender",
-              },
-            ]
-          },
-          {
-            sectionTitle: "Informasi",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Pengumuman",
-                route: "/sekolah/informasi/pengumuman",
-              },
-              {
-                heading: "Prestasi Sekolah",
-                route: "/sekolah/informasi/prestasi",
-              },
-              {
-                heading: "Event Selolah",
-                route: "/sekolah/informasi/event",
-              },
-              {
-                heading: "Aktifitas",
-                route: "/sekolah/informasi/aktifitas",
-              },
-            ],
-          },
-          {
-            sectionTitle: "Staff",
-            route: "/pages",
-            svgIcon: "media/icons/duotune/general/gen022.svg",
-            fontIcon: "bi-archive",
-            sub: [
-              {
-                heading: "Guru",
-                route: "/sekolah/staff/guru",
-              },
-              {
-                heading: "Akademik",
-                route: "/sekolah/staff/akademik",
-              },
-              {
-                heading: "TU/Keuangan",
-                route: "/sekolah/staff/keuangan",
-              },
-              {
-                heading: "Administrator",
-                route: "/sekolah/staff/administrator",
-              },
-            ],
           },
         ],
       },
@@ -293,38 +207,12 @@ export default defineComponent({
       return route.path.indexOf(match) !== -1;
     };
 
-    function showSubMenu(event) {
-      event.target.classList.add('show', 'hover')
-      event.target.getElementsByClassName('menu-sub')[0].classList.add('show')
-    }
-    function hideSubMenu(event) {
-      event.target.classList.remove('show', 'hover')
-      event.target.getElementsByClassName('menu-sub')[0].classList.remove('show')
-    }
-
-    function clickSubMenu(event) {
-      const oldMenu = document.querySelectorAll('.menu-item.show')
-      if (oldMenu.length > 0) {
-        oldMenu[0].classList.remove('show', 'hover')
-        oldMenu[0].getElementsByClassName('menu-sub')[0].classList.remove('show')
-      } else {
-        const menu = event.target.closest('.menu-item')
-        menu.classList.add('show', 'hover')
-        menu.getElementsByClassName('menu-sub')[0].classList.add('show')
-      }
-
-
-    }
-
     return {
       hasActiveChildren,
       MainMenuConfig,
       asideMenuIcons,
       version,
       translate,
-      showSubMenu,
-      hideSubMenu,
-      clickSubMenu,
     };
   },
 });

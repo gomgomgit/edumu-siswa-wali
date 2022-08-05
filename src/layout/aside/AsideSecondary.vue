@@ -5,6 +5,7 @@ import { useI18n } from "vue-i18n/index";
 import Dropdown1 from "@/components/dropdown/Dropdown1.vue";
 import KTSiswa from "@/layout/aside/tabs/Siswa.vue";
 import KTSekolah from "@/layout/aside/tabs/Sekolah.vue";
+import KTAbsensi from "@/layout/aside/tabs/Absensi.vue";
 import KTInformasi from "@/layout/aside/tabs/Informasi.vue";
 import KTPengaturan from "@/layout/aside/tabs/Pengaturan.vue";
 import {
@@ -740,6 +741,10 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
 
             <div class="submenus tab-pane fade" id="kt_aside_nav_tab_sekolah" role="tabpanel">
               <KTSekolah></KTSekolah>
+            </div>
+
+            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_absensi" role="tabpanel">
+              <KTAbsensi></KTAbsensi>
             </div>
 
             <div class="submenus tab-pane fade" id="kt_aside_nav_tab_informasi" role="tabpanel">

@@ -4,12 +4,16 @@ import { ref } from 'vue'
 
 const tabs = [
   {
-    to: '/siswa/ujian-online/ujian',
-    title: 'Ujian Online'
+    to: '/sekolah/kelas/hari-ini',
+    title: 'Hari ini'
   },
   {
-    to: '/siswa/ujian-online/tugas',
-    title: 'Tugas Online'
+    to: '/sekolah/kelas/mingguan',
+    title: 'Mingguan'
+  },
+  {
+    to: '/sekolah/kelas/kursus',
+    title: 'Kursus'
   },
 ]
 </script>
