@@ -23,8 +23,18 @@ import { useStore } from "vuex";
         siswa_id: currentUser.siswa_id,
         exam_cat_type: 'exam'
       })).then(res => {
-        examData.rows = res.data.data.exam_categorys
-        examData.totalRows = res.data.data.total
+        var allExam = []
+        var category = res.data.data.exam_categorys
+        category.forEach(cat => {
+          let catName = cat.exam_cat_name
+
+          cat.exam.forEach(exam => {
+            allExam.push({...exam, exam_cat_name: catName})
+          });
+        });
+
+        examData.rows = allExam
+        console.log(allExam)
       })
     }
 
@@ -70,26 +80,8 @@ import { useStore } from "vuex";
           @loadItems="getExam"
         >
           <template #table-row="{column, row}">
-              <div v-if="column.field == 'exam_title'">
-                {{row.exam[0].exam_title}}
-              </div>
-              <div v-if="column.field == 'exam_desc'">
-                {{row.exam[0].exam_desc}}
-              </div>
-              <div v-if="column.field == 'exam_start_date'">
-                {{row.exam[0].exam_start_date}}
-              </div>
-              <div v-if="column.field == 'exam_end_date'">
-                {{row.exam[0].exam_end_date}}
-              </div>
-              <div v-if="column.field == 'exam_type'">
-                {{row.exam[0].exam_type}}
-              </div>
-              <div v-if="column.field == 'exam_time_limit'">
-                {{row.exam[0].exam_time_limit}}
-              </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="`/lms/ujian-online/detail/${row.exam[0].exam_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="`/lms/ujian-online/detail/${row.exam_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <i class="bi bi-eye-fill fs-3"></i>
                   </span>

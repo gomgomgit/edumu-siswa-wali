@@ -27,8 +27,11 @@ const router = useRouter()
 
 const examId = route.params.id
 const antrian = ref([])
-const examData = ref([])
 const scoreUjian = ref([])
+
+const examData = ref([])
+const examSingle = ref([])
+const examEssay = ref([])
 
 
 function getData() {
@@ -63,6 +66,19 @@ function getQuestion() {
     entryId: antrian.value.exam_entries.entry_id,
   })).then(res => {
     examData.value = res.data.data.exams
+    var singleQs = []
+    var essayQs = []
+    
+    res.data.data.exams.exam_questions.forEach(exam => {
+      if (exam.question_type == 'single') {
+        singleQs.push(exam)
+      }
+      if (exam.question_type == 'essay') {
+        essayQs.push({...exam, answering: '', answered: null})
+      }
+      examSingle.value = singleQs
+      examEssay.value = essayQs
+    });
   })
 }
 
@@ -74,7 +90,7 @@ function getScore() {
     scoreUjian.value = res.data.data
   })
 }
-function answer(question, option) {
+function answerSingle(question, option) {
   axios.post(`https://apiujian.edumu.id/${currentUser.sekolah_kode}/apischool/siswawali/exam/answer-question-single`, QueryString.stringify({
     examId: examId,
     entryId: antrian.value.exam_entries.entry_id,
@@ -84,12 +100,23 @@ function answer(question, option) {
     useToast().success('dijawab')
   })
 }
+function answerEssay(question, no, answer) {
+  axios.post(`https://apiujian.edumu.id/${currentUser.sekolah_kode}/apischool/siswawali/exam/answer-question-essay`, QueryString.stringify({    
+    examId: examId,
+    entryId: antrian.value.exam_entries.entry_id,
+    questionId: question,
+    answerText: answer
+  })).then(res => {
+    useToast().success('dijawab')
+    examEssay.value[no].answered = answer
+  })
+}
 function finish() {
   axios.post(`https://apiujian.edumu.id/${currentUser.sekolah_kode}/apischool/siswawali/exam/exam-finish`, QueryString.stringify({
     examId: examId,
     entryId: antrian.value.exam_entries.entry_id
   })).then(res => {
-    router.push(`/siswa/ujian-online/result/${examId}`)
+    router.push(`/lms/ujian-online/result/${examId}`)
   })
 }
 
@@ -126,24 +153,59 @@ function finish() {
           </div>
           <div class="separator border-black-50 border-2 mb-6"></div>
           <div>
-            <template v-for="(quest, no) in examData.exam_questions" :key="quest.question_id">
-              <div class="d-flex fs-3 gap-4 mb-5">
-                <div class="fw-bold">{{no + 1}}.</div>
-                <div class="flex-grow-1">
-                  <div class="mb-3">{{quest.question_text}}</div>
-                  <div class="row">
-                    <template v-for="option in quest.exam_question_option" :key="option.option_id">
-                      <div class="col-6 form-check gap-6 d-flex align-items-center">
-                        <input @change="answer(option.question_id, option.option_id)" class="form-check-input" type="radio" :name="`answer-${option.question_id}`" :id="`option${option.option_id}`">
-                        <label class="form-check-label" :for="`option${option.option_id}`">
-                          {{option.option_text}}
-                        </label>
-                      </div>
-                    </template>
+            <div v-if="examSingle.length > 0">
+              <div>
+                <h2 class="text-center mb-4 fw-bold fs-1">Pilihan Ganda</h2>
+              </div>
+              <template v-for="(quest, no) in examSingle" :key="quest.question_id">
+                <div class="d-flex fs-3 gap-4 mb-5">
+                  <div class="fw-bold">{{no + 1}}.</div>
+                  <div class="flex-grow-1">
+                    <div class="mb-3" v-html="quest.question_text"></div>
+                    <div class="row">
+                      <template v-for="option in quest.exam_question_option" :key="option.option_id">
+                        <div class="col-6 form-check gap-6 d-flex align-items-center">
+                          <input @change="answerSingle(option.question_id, option.option_id)" class="form-check-input" type="radio" :name="`answer-${option.question_id}`" :id="`option${option.option_id}`">
+                          <label class="form-check-label" :for="`option${option.option_id}`">
+                            {{option.option_text}}
+                          </label>
+                        </div>
+                      </template>
+                    </div>
                   </div>
                 </div>
+              </template>
+              <div class="separator border-black-50 border-2 mb-6"></div>
+            </div>
+            <div v-if="examEssay.length > 0">
+              <div>
+                <h2 class="text-center mb-4 fw-bold fs-1">Essay</h2>
               </div>
-            </template>
+              <template v-for="(quest, no) in examEssay" :key="quest.question_id">
+                <div class="d-flex fs-3 gap-4 mb-5">
+                  <div class="fw-bold">{{no + 1}}.</div>
+                  <div class="flex-grow-1">
+                    <div class="mb-3" v-html="quest.question_text"></div>
+                    <div class="row">
+                      <p>Jawaban : {{quest.answered ?? quest.answer_text}}</p>
+                      <el-input
+                        v-model="quest.answering"
+                        :rows="3"
+                        type="textarea"
+                        placeholder="Silahkan diisi"
+                      />
+                      <div class="d-flex justify-content-end mt-3">
+                        <a @click="answerEssay(quest.question_id, no, quest.answering)" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                          <span>
+                            Simpan Jawaban
+                          </span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
           </div>
           <div class="separator border-black-50 border-2 mb-6"></div>
           <div class="d-flex justify-content-end">
