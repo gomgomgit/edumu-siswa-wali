@@ -13,7 +13,7 @@ import moment from "moment";
 import { useStore } from "vuex";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Tugas", ['Siswa']);
+    setCurrentPageBreadcrumbs("Tugas", ['LMS']);
     getData()
   })
   
@@ -155,7 +155,7 @@ import { useStore } from "vuex";
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="`/siswa/tugas/detail/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
+                <router-link :to="`/lms/tugas/detail/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/files/fil001.svg" />
                   </span>

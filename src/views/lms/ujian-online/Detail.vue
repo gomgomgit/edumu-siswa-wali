@@ -109,7 +109,7 @@ function formatingDate(date) {
         </div>
         <div class="separator border-black-50 border-2 my-3"></div>
         <div class="d-flex justify-content-end">
-          <router-link :to="`/siswa/ujian-online/soal/${examId}`" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+          <router-link :to="`/lms/ujian-online/soal/${examId}`" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
             <i class="bi bi-play-fill fs-1"></i>
             <span>
               Mulai

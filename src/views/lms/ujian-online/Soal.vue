@@ -48,7 +48,7 @@ function getData() {
         confirmButtonText: 'Lihat Hasil'
       }).then((result) => {
         if (result.isConfirmed) {
-          router.push(`/siswa/ujian-online/result/${examId}`)
+          router.push(`/lms/ujian-online/result/${examId}`)
         }
       })
     }

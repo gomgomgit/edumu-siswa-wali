@@ -11,7 +11,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import { useStore } from "vuex";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Ujian", ['Siswa', "Ujian Online"]);
+    setCurrentPageBreadcrumbs("Ujian", ['LMS', "Ujian Online"]);
   })
 
   const store = useStore()
@@ -89,7 +89,7 @@ import { useStore } from "vuex";
                 {{row.exam[0].exam_time_limit}}
               </div>
               <div v-if="column.field == 'action'">
-                <router-link :to="`/siswa/ujian-online/detail/${row.exam[0].exam_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
+                <router-link :to="`/lms/ujian-online/detail/${row.exam[0].exam_id}`" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <i class="bi bi-eye-fill fs-3"></i>
                   </span>

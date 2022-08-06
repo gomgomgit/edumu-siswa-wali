@@ -38,7 +38,7 @@ function getScore() {
         <div class="mb-4 d-flex justify-content-between">
           <h2 class="fs-1 fw-bold py-3">Hasil Nilai</h2>
           <div>
-            <router-link :to="'/siswa/ujian-online'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+            <router-link :to="'/lms/ujian-online'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <i class="bi bi-arrow-left-circle fs-1"></i>
               <span>
                 Kembali
