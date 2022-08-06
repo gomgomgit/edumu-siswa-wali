@@ -66,7 +66,7 @@ function handleSubmit () {
 
 watch(
 	() => props.activeData,
-	activeData => !isEmpty(activeData) && Object.assign(form, { ...activeData, materi_file: 'https://www.youtube.com/watch?v=' + activeData.materi_file, kelas_id: activeData.kelas_id.split(",").map( Number ) }),
+	activeData => (form, { ...activeData, materi_file: 'https://www.youtube.com/watch?v=' + activeData.materi_file, kelas_id: activeData.kelas_id.split(",").map( Number ) }),
 	{ deep: true }
 )
 </script>

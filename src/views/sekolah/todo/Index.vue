@@ -13,7 +13,7 @@ import FormModal from "./FormModal.vue";
   onMounted(() => {
     setCurrentPageBreadcrumbs("Todo", ["Sekolah"]);
   })
-  const date = ref(moment().format('YYYY-MM'))
+  const date = ref(moment().format('YYYY-MM-DD'))
   
   const store = useStore()
   const currentUser = store.getters.currentUser;
@@ -24,10 +24,11 @@ import FormModal from "./FormModal.vue";
 
   const todoData = reactive({
     columns: [
-      { label: 'Foto', field: 'foto', sortable: false },
-      { label: 'Tipe', field: 'presensi_tipe', sortable: false },
-      { label: 'Deskripsi', field: 'deskripsi', sortable: false },
-      { label: 'Status', field: 'presensi_status', sortable: false },
+      { label: 'Judul', field: 'calendar_title', sortable: false },
+      { label: 'Deskripsi', field: 'calendar_desc', sortable: false },
+      { label: 'Tanggal Buat', field: 'calendar_date', sortable: false },
+      { label: 'Tanggal Berakhir', field: 'calendar_time_end', sortable: false },
+      { label: 'Status', field: 'calendar_status', sortable: false },
       { label: 'Action', field: 'action', sortable: false, width: '100px' },
     ],
     rows: [],
@@ -40,12 +41,18 @@ import FormModal from "./FormModal.vue";
       date: date.value,
       user_id: currentUser.siswa_id
     })).then(res => {
-      todoData.rows = res.data.data.presensis.data
-      todoData.totalRows = res.data.data.presensis.totalRows
+      todoData.rows = res.data.data.calendars
+      todoData.totalRows = res.data.total
     })
+  }
+  
+  function handleEdit (row) {
+    activeData.value = row
+    formMode.value = 'Edit Data'
   }
   function handleFormClose() {
     formMode.value = false
+    activeData.value = null
   }
 </script>
 
@@ -61,10 +68,10 @@ import FormModal from "./FormModal.vue";
             <div class="position-relative d-flex align-items-center gap-4">
               <el-date-picker
                 v-model="date"
-                type="month"
+                type="date"
                 placeholder="Tanggal"
                 size="large"
-                value-format="YYYY-MM"
+                value-format="YYYY-MM-DD"
                 @change="getTodo()"
               />
               
@@ -87,20 +94,15 @@ import FormModal from "./FormModal.vue";
             @loadItems="getTodo"
           >
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'foto'">
-                <div class="bg-secondary p-2 d-inline-block">
-                  <img :src="row.presensi_foto" alt="" style="max-height: 80px">
-                </div>
-              </div>
-              <div v-if="column.field == 'deskripsi'">
-                {{row.presensi_create_date}} - {{row.presensi_create_time}}
+              <div v-if="column.field == 'calendar_status'">
+                    <span :class="`badge badge-light-${row.calendar_status == '1' ? 'success' : 'danger'}`">{{row.calendar_status == '1' ?  "Aktif" : " Non Aktif"}}</span>
               </div>
               <div v-if="column.field == 'action'">
-                <a @click="activeData = row" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
+                <button @click="handleEdit(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
-                    <i class="bi bi-eye-fill fs-3"></i>
+                    <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
-                </a>
+                </button>
               </div>
             </template>
           </ServerSideTable>

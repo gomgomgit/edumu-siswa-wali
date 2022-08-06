@@ -35,11 +35,12 @@ function handleClose () {
 function handleSubmit () {
   const formData = new FormData()
   formData.append('user_id', currentUser.user_id)
+  formData.append('calendar_id', form.calendar_id)
   formData.append('date', form.date)
   formData.append('title', form.title)
   formData.append('desc', form.desc)
 
-  const endpoint = props.activeData ? 'materi/edit' : 'calendar/todo-add'
+  const endpoint = props.activeData ? 'calendar/todo-update' : 'calendar/todo-add'
   const message = props.activeData ? 'Data Berhasil Diedit!' : 'Data Berhasil Ditambahkan!'
   request.post(endpoint, formData, {
     headers: {
@@ -55,7 +56,7 @@ function handleSubmit () {
 
 watch(
 	() => props.activeData,
-	activeData => !isEmpty(activeData) && Object.assign(form, { ...activeData, kelas_id: activeData.multikelas.split(",").map( Number ) }),
+	activeData => !isEmpty(activeData) && Object.assign(form, {calendar_id: activeData.calendar_id,title: activeData.calendar_title, desc: activeData.calendar_desc, date: activeData.calendar_time_end}),
 	{ deep: true }
 )
 </script>
@@ -87,12 +88,13 @@ watch(
       </div>
       <div class="row">
         <div class="col-3 align-items-center d-flex">
-          <p class="m-0 fs-4 fw-bold">Tanggal</p>
+          <p class="m-0 fs-4 fw-bold">Tanggal Berakhir</p>
         </div>
         <div class="col-9 align-items-center d-flex gap-4">
           <el-date-picker
             v-model="form.date"
             type="datetime"
+            value-format="YYYY-MM-DD H:m:s"
             placeholder="Pilih Tanggal"
           />
         </div>
