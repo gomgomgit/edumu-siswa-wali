@@ -8,19 +8,21 @@
   import { useToast } from 'vue-toast-notification';
 import moment from "moment";
 import { useStore } from "vuex";
-import DetailModal from './DetailModal.vue'
+import FormModal from "./FormModal.vue";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Kehadiran", ["Absensi"]);
+    setCurrentPageBreadcrumbs("Todo", ["Sekolah"]);
   })
   const date = ref(moment().format('YYYY-MM'))
   
   const store = useStore()
   const currentUser = store.getters.currentUser;
 
+  const tableRef = ref()
+  const formMode = ref()
   const activeData = ref()
 
-  const kehadiranData = reactive({
+  const todoData = reactive({
     columns: [
       { label: 'Foto', field: 'foto', sortable: false },
       { label: 'Tipe', field: 'presensi_tipe', sortable: false },
@@ -32,17 +34,18 @@ import DetailModal from './DetailModal.vue'
     totalRows: 0,
   })
 
-  function getKehadiran(payload) {
-    request.post('attendance/data', QueryString.stringify({
-      page: payload?.page ?? 1,
-      type_date: "month",
+  function getTodo(payload) {
+    request.post('calendar/todo', QueryString.stringify({
+      type_date: "week",
       date: date.value,
-      siswa_id:	currentUser.siswa_id,
-      status:	"all",
+      user_id: currentUser.siswa_id
     })).then(res => {
-      kehadiranData.rows = res.data.data.presensis.data
-      kehadiranData.totalRows = res.data.data.presensis.totalRows
+      todoData.rows = res.data.data.presensis.data
+      todoData.totalRows = res.data.data.presensis.totalRows
     })
+  }
+  function handleFormClose() {
+    formMode.value = false
   }
 </script>
 
@@ -53,27 +56,35 @@ import DetailModal from './DetailModal.vue'
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <h2 class="fs-1 fw-bold py-2">Kehadiran</h2>
+              <h2 class="fs-1 fw-bold py-2">Todo</h2>
             </div>
-            <div class="position-relative d-flex gap-4">
+            <div class="position-relative d-flex align-items-center gap-4">
               <el-date-picker
                 v-model="date"
                 type="month"
                 placeholder="Tanggal"
                 size="large"
                 value-format="YYYY-MM"
-                @change="getKehadiran()"
+                @change="getTodo()"
               />
+              
+              <button @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <i class="bi bi-plus fs-1"></i>
+                <span>
+                  Tambah Todo
+                </span>
+              </button>
             </div>
           </div>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="mb-5 mb-xxl-8">
           <ServerSideTable
-            :totalRows="kehadiranData.totalRows || 0"
-            :columns="kehadiranData.columns"
-            :rows="kehadiranData.rows"
-            @loadItems="getKehadiran"
+            ref="tableRef"
+            :totalRows="todoData.totalRows || 0"
+            :columns="todoData.columns"
+            :rows="todoData.rows"
+            @loadItems="getTodo"
           >
             <template #table-row="{column, row}">
               <div v-if="column.field == 'foto'">
@@ -96,9 +107,10 @@ import DetailModal from './DetailModal.vue'
         </div>
       </div>
     </div>
-    
-    <detailModal 
+    <FormModal 
+      :mode="formMode"
       :activeData="activeData"
-      @close="activeData = null"/>
+      @close="handleFormClose"
+      @submit="tableRef.loadItems()" />
   </div>
 </template>

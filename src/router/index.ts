@@ -71,6 +71,11 @@ const routes: Array<RouteRecordRaw> = [
 
       //Sekolah
       {
+        path: "/sekolah/todo",
+        name: "sekolah-todo",
+        component: () => import("@/views/sekolah/todo/Index.vue"),
+      },
+      {
         path: "/sekolah/kalender",
         name: "sekolah-kalender",
         component: () => import("@/views/sekolah/kalender/Index.vue"),

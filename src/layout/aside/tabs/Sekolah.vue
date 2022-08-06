@@ -201,7 +201,7 @@ export default defineComponent({
         pages: [
           {
             heading: "To Do",
-            route: "/sekolah/media",
+            route: "/sekolah/todo",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },
