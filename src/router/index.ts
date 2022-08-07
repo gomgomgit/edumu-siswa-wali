@@ -139,11 +139,29 @@ const routes: Array<RouteRecordRaw> = [
         name: "sekolah-informasi-event-detail",
         component: () => import("@/views/sekolah/informasi/event/Detail.vue"),
       },
-      // {
-      //   path: "/sekolah/informasi/aktifitas",
-      //   name: "sekolah-informasi-aktifitas",
-      //   component: () => import("@/views/sekolah/informasi/aktifitas/Index.vue"),
-      // },
+      {
+        path: "/sekolah/informasi/aktifitas",
+        name: "sekolah-informasi-aktifitas",
+        component: () => import("@/views/sekolah/informasi/aktifitas/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/sekolah/informasi/aktifitas/pengumuman",
+          },
+          {
+            path: "pengumuman",
+            name: "sekolah-informasi-aktifitas-pengumuman",
+            component: () =>
+              import("@/views/sekolah/informasi/aktifitas/tabs/Pengumuman.vue"),
+          },
+          {
+            path: "aktifitas",
+            name: "sekolah-informasi-aktifitas-aktifitas",
+            component: () =>
+              import("@/views/sekolah/informasi/aktifitas/tabs/Aktifitas.vue"),
+          },
+        ]
+      },
       {
         path: "/sekolah/staff/guru",
         name: "sekolah-staff-guru",
