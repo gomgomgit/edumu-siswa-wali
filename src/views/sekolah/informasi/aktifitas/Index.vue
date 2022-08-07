@@ -4,12 +4,12 @@ import { ref } from 'vue'
 
 const tabs = [
   {
-    to: '/sekolah/informasi/aktifitas/pengumuman',
-    title: 'Pengumuman'
+    to: '/sekolah/informasi/aktifitas/informasi',
+    title: 'Informasi'
   },
   {
-    to: '/sekolah/informasi/aktifitas/aktifitas',
-    title: 'Aktifitas'
+    to: '/sekolah/informasi/aktifitas/pembelajaran',
+    title: 'Pembelajaran'
   },
 ]
 </script>

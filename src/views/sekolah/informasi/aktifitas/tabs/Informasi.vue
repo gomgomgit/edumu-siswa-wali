@@ -13,25 +13,25 @@
 import moment from "moment";
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Pengumuman", ['Sekolah', "Informasi", "Aktifitas"]);
+    setCurrentPageBreadcrumbs("Informasi", ['Sekolah', "Informasi", "Aktifitas"]);
   })
 
   const store = useStore()
   const currentUser = store.getters.currentUser
 
-  function getPengumuman (payload) {
+  function getInformasi (payload) {
       request.post('notification/announcement', queryString.stringify({
         page: payload?.page ?? 1,
         kelasId:	currentUser.kelas_id,
         siswa_id:	currentUser.siswa_id,
         user_id:	currentUser.user_id,
       })).then(res => {
-        pengumuman.rows = res.data.data.notifications
-        pengumuman.totalRows = res.data.data.total
+        informasi.rows = res.data.data.notifications
+        informasi.totalRows = res.data.data.total
       })
     }
   
-  const pengumuman = reactive({
+  const informasi = reactive({
     columns: [
       { label: 'Tipe', field: 'notification_type', sortable: false },
       { label: 'Judul', field: 'notification_title', sortable: false },
@@ -54,15 +54,15 @@ import moment from "moment";
     <div class="card mb-5 mb-xxl-8">
       <div class="card-body py-6">
         <div class="py-6 d-flex justify-content-between align-items-center">
-          <h2 class="fs-1 fw-bold">Pengumuman</h2>
+          <h2 class="fs-1 fw-bold">Informasi</h2>
         </div>
         <div class="separator border-black-50 border-2 my-3"></div>
         <div class="my-5 mb-xxl-8">
           <ServerSideTable 
-            :totalRows="pengumuman.totalRows || 0" 
-            :columns="pengumuman.columns" 
-            :rows="pengumuman.rows"
-            @loadItems="getPengumuman">
+            :totalRows="informasi.totalRows || 0" 
+            :columns="informasi.columns" 
+            :rows="informasi.rows"
+            @loadItems="getInformasi">
             <template #table-row="{column, row}">
               <div v-if="column.field == 'notification_date'">
                 {{dateFormating(row.notification_date)}}

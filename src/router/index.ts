@@ -146,19 +146,19 @@ const routes: Array<RouteRecordRaw> = [
         children: [
           {
             path: "",
-            redirect: "/sekolah/informasi/aktifitas/pengumuman",
+            redirect: "/sekolah/informasi/aktifitas/informasi",
           },
           {
-            path: "pengumuman",
-            name: "sekolah-informasi-aktifitas-pengumuman",
+            path: "informasi",
+            name: "sekolah-informasi-aktifitas-informasi",
             component: () =>
-              import("@/views/sekolah/informasi/aktifitas/tabs/Pengumuman.vue"),
+              import("@/views/sekolah/informasi/aktifitas/tabs/Informasi.vue"),
           },
           {
-            path: "aktifitas",
-            name: "sekolah-informasi-aktifitas-aktifitas",
+            path: "pembelajaran",
+            name: "sekolah-informasi-aktifitas-pembelajaran",
             component: () =>
-              import("@/views/sekolah/informasi/aktifitas/tabs/Aktifitas.vue"),
+              import("@/views/sekolah/informasi/aktifitas/tabs/Pembelajaran.vue"),
           },
         ]
       },
