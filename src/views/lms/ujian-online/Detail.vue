@@ -22,8 +22,10 @@ const currentUser = store.getters.currentUser
 const route = useRoute()
 
 const examId = route.params.id
-const detailData = ref([])
+const detailData = ref('')
 const hint = ref([])
+
+const notPermitted = ref(false)
 
 
 function getData() {
@@ -34,6 +36,8 @@ function getData() {
     }
   }).then(res => {
     detailData.value = res.data.data.exams
+  }).catch(err => {
+    notPermitted.value = true
   })
   
   axios.post('https://apisekolah.edumu.id/v3prod/content/content/petunjuk-pengerjaan-ujian', null)
@@ -108,7 +112,17 @@ function formatingDate(date) {
           </div>
         </div>
         <div class="separator border-black-50 border-2 my-3"></div>
-        <div class="d-flex justify-content-end">
+        <div v-if="notPermitted">
+          <div class="alert alert-dismissible bg-danger d-flex flex-column align-items-center gap-4 flex-sm-row p-5">
+            <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-sm-0">
+              <i class="bi bi-exclamation-triangle-fill text-white fs-1"></i>
+            </span>
+            <div class="d-flex flex-column text-white pe-0 pe-sm-10">
+                <h4 class="mb-0 text-white">Anda tidak diperbolehkan mengerjakan ujian, mohon hubungi admin untuk meminta akses.</h4>
+            </div>
+          </div>
+        </div>
+        <div v-if="detailData" class="d-flex justify-content-end">
           <router-link :to="`/lms/ujian-online/soal/${examId}`" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
             <i class="bi bi-play-fill fs-1"></i>
             <span>
