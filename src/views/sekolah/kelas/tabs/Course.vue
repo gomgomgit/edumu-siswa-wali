@@ -12,7 +12,7 @@ import moment from "moment";
 import { useStore } from "vuex";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Kursus", ['Sekolah', "Kelas"]);
+    setCurrentPageBreadcrumbs("Ekstrakurikuler", ['Sekolah', "Kelas"]);
   })
 
   const store = useStore()
@@ -46,7 +46,7 @@ import { useStore } from "vuex";
       <div class="page-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
-            <h2 class="fs-1 fw-bold py-6">Pelajaran Hari Ini</h2>
+            <h2 class="fs-1 fw-bold py-6">Jadwal Ekstrakurikuler</h2>
           </div>
         </div>
         <div class="mb-5 mb-xxl-8">

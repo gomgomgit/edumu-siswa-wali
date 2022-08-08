@@ -47,7 +47,7 @@ import { useStore } from "vuex";
       <div class="page-content">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
-            <h2 class="fs-1 fw-bold py-6">Pelajaran Hari Ini</h2>
+            <h2 class="fs-1 fw-bold py-6">Jadwal Hari Ini</h2>
           </div>
         </div>
         <div class="mb-5 mb-xxl-8">
