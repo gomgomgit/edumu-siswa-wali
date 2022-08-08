@@ -206,7 +206,7 @@ export default defineComponent({
             fontIcon: "bi-archive",
           },
           {
-            heading: "Kelas",
+            heading: "Jadwal Pelajaran",
             route: "/sekolah/kelas",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
