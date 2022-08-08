@@ -68,13 +68,13 @@ function openSubMenu(menu) {
             data-bs-trigger="hover"
             data-bs-placement="right"
             data-bs-dismiss="click"
-            data-bs-original-title="Siswa"
+            data-bs-original-title="Lms"
           >
             <a
               class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
               data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_siswa"
-              @mouseenter="openSubMenu('kt_aside_nav_tab_siswa')"
+              href="#kt_aside_nav_tab_lms"
+              @mouseenter="openSubMenu('kt_aside_nav_tab_lms')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
