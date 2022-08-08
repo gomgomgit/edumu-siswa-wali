@@ -13,7 +13,7 @@ const tabs = [
   },
   {
     to: '/sekolah/kelas/kursus',
-    title: 'Kursus'
+    title: 'Ekstrakurikuler'
   },
 ]
 </script>
