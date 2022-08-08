@@ -92,15 +92,6 @@ import { useStore } from "vuex";
           <div class="d-flex gap-4">
             <h2 class="fs-1 fw-bold py-6">Data Tugas</h2>
           </div>
-
-          <div class="position-relative d-flex ">
-            <router-link to="/lms/tugas-offline/tambah" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-              <i class="bi bi-plus fs-1"></i>
-              <span>
-                Tambah Tugas
-              </span>
-            </router-link>
-          </div>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
