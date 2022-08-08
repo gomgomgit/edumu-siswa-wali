@@ -48,10 +48,16 @@ function getData() {
       Swal.fire({
         icon: 'error',
         title: res.data.text,
-        confirmButtonText: 'Lihat Hasil'
+        showCancelButton: true,
+        reverseButtons: true,
+        confirmButtonText: 'Lihat Hasil',
+        cancelButtonText: 'Kembali'
       }).then((result) => {
         if (result.isConfirmed) {
           router.push(`/lms/ujian-online/result/${examId}`)
+        }
+        if (result.isDismissed) {
+          router.push(`/lms/ujian-online`)
         }
       })
     }
