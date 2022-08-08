@@ -22,11 +22,12 @@ import { useStore } from "vuex";
 
   function getTugasData (payload) {
     request.post('tugas/all', QueryString.stringify({
+      kelas_id: currentUser.kelas_id,
       page: payload?.page ?? 1,
-      sortby: sortFilter.value,
       mapel_id: mapelFilter.value,
+      sortby: sortFilter.value,
       judul_tugas: searchTugas.value,
-      siswa_id: currentUser.siswa_id
+      siswa_id: currentUser.siswa_id,
     })).then(res => {
       tugasData.rows = res.data.data.tugas.data 
       tugasData.totalRows = res.data.data.tugas.total
@@ -57,7 +58,7 @@ import { useStore } from "vuex";
 
   const tugasData = reactive({
     columns: [
-      { label: 'Mapel', field: 'mapel_nama', sortable: false },
+      { label: 'Mapel', field: 'mapel.mapel_nama', sortable: false },
       { label: 'Guru', field: 'user.user_nama', sortable: false },
       { label: 'Judul', field: 'tugas_judul', sortable: false },
       { label: 'Tgl Pembuatan', field: 'tugas_create_date' },
@@ -151,8 +152,8 @@ import { useStore } from "vuex";
               <div v-if="column.field == 'tugas_status'">
                 <span :class="'badge badge-light-' + (row.tugas_status == 1 ? 'success' : 'danger')">{{row.tugas_status == 1 ? 'Aktif' : 'Non Aktif'}}</span>
               </div>
-              <div v-if="column.field == 'materi_create_date'">
-                {{dateFormating(row.materi_create_date)}}
+              <div v-if="column.field == 'tugas_create_date'">
+                {{dateFormating(row.tugas_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
                 <router-link :to="`/lms/tugas/detail/${row.tugas_id}`" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
