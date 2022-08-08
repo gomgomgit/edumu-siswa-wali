@@ -102,8 +102,8 @@ const routes: Array<RouteRecordRaw> = [
               import("@/views/sekolah/kelas/tabs/Weekly.vue"),
           },
           {
-            path: "kursus",
-            name: "sekolah-kelas-kursus",
+            path: "pelajaran",
+            name: "sekolah-kelas-pelajaran",
             component: () =>
               import("@/views/sekolah/kelas/tabs/Course.vue"),
           },
