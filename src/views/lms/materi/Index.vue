@@ -23,8 +23,8 @@ import { useStore } from "vuex";
     console.log(payload)
     request.post('materi/all', QueryString.stringify({
       kelas_id: currentUser.kelas_id,
-      user_id: guruFilter.value,
-      mapel_id: mapelFilter.value,
+      user_id: guruFilter.value == '' ? '0' : guruFilter.value,
+      mapel_id: mapelFilter.value == '' ? '0' : mapelFilter.value,
       page: payload?.page ?? 1
     })).then(res => {
       
@@ -108,22 +108,22 @@ import { useStore } from "vuex";
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
             <div>
-              <FilterSelect searchable v-model:filterValue="guruFilter" placeholder="Pilih Guru" @changeFilter="getMateriData()">
-                <el-option
-                  v-for="guru in guruOption"
-                  :key="guru.user_id"
-                  :label="guru.user_nama"
-                  :value="guru.user_id"
-                />
-              </FilterSelect>
-            </div>
-            <div>
               <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getMateriData()">
                 <el-option
                   v-for="mapel in mapelOption"
                   :key="mapel.mapel_id"
                   :label="mapel.mapel_nama"
                   :value="mapel.mapel_id"
+                />
+              </FilterSelect>
+            </div>
+            <div>
+              <FilterSelect searchable v-model:filterValue="guruFilter" placeholder="Pilih Guru" @changeFilter="getMateriData()">
+                <el-option
+                  v-for="guru in guruOption"
+                  :key="guru.user_id"
+                  :label="guru.user_nama"
+                  :value="guru.user_id"
                 />
               </FilterSelect>
             </div>
