@@ -45,19 +45,6 @@
     },
   ]
 
-
-  function changeFilter(changed){
-    console.log(changed)
-  }
-  // function deletePrestasi(id){
-  //   deleteConfirmation(() => {
-  //     request.get('prestasi/delete/' + id)
-  //     .then(res => {
-  //       useToast().success('Data Berhasil Dihapus!')
-  //       getPengumuman()
-  //     })
-  //   })
-  // }
 </script>
 
 <template>

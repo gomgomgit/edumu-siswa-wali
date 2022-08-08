@@ -20,7 +20,6 @@ import { useStore } from "vuex";
   const currentUser = store.getters.currentUser;
 
   function getMateriData (payload) {
-    console.log(payload)
     request.post('materi/all', QueryString.stringify({
       kelas_id: currentUser.kelas_id,
       user_id: guruFilter.value == '' ? '0' : guruFilter.value,

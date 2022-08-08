@@ -154,7 +154,6 @@ const onSubmitLogin = async (values) => {
       }
     })
     .catch(err => {
-      console.log(err)
       useToast().error(err.message)
     })
 };
@@ -168,8 +167,6 @@ function postLogin(data, sekolah) {
   .then(res => {
     if (res.data.status) {
       store.dispatch(Actions.LOGIN, {...res.data.data.users[0], ...sekolah})
-      
-      console.log(res.data.data.users[0])
       
       Swal.fire({
       text: "You have successfully logged in!",
@@ -187,7 +184,6 @@ function postLogin(data, sekolah) {
       useToast().error(res.data.text)
     }
   }).catch(err => {
-    console.log(err)
     useToast().error(err.message)
   })
 }

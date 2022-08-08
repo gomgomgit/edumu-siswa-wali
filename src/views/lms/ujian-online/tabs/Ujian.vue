@@ -34,7 +34,6 @@ import { useStore } from "vuex";
         });
 
         examData.rows = allExam
-        console.log(allExam)
       })
     }
 
