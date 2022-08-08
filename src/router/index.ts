@@ -81,13 +81,13 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/sekolah/kalender/Index.vue"),
       },
       {
-        path: "/sekolah/kelas",
+        path: "/sekolah/jadwal",
         name: "sekolah-kelas",
         component: () => import("@/views/sekolah/kelas/Index.vue"),
         children: [
           {
             path: "",
-            redirect: "/sekolah/kelas/hari-ini",
+            redirect: "/sekolah/jadwal/pelajaran",
           },
           {
             path: "hari-ini",

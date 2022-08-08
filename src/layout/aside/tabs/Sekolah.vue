@@ -207,7 +207,7 @@ export default defineComponent({
           },
           {
             heading: "Jadwal Pelajaran",
-            route: "/sekolah/kelas",
+            route: "/sekolah/jadwal",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

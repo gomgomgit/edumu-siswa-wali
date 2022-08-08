@@ -4,15 +4,15 @@ import { ref } from 'vue'
 
 const tabs = [
   {
-    to: '/sekolah/kelas/pelajaran',
+    to: '/sekolah/jadwal/pelajaran',
     title: 'Pelajaran'
   },
   {
-    to: '/sekolah/kelas/hari-ini',
+    to: '/sekolah/jadwal/hari-ini',
     title: 'Hari ini'
   },
   {
-    to: '/sekolah/kelas/mingguan',
+    to: '/sekolah/jadwal/mingguan',
     title: 'Mingguan'
   },
 ]
