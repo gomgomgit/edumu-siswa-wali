@@ -12,7 +12,7 @@ import moment from "moment";
 import { useStore } from "vuex";
   
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Pelajaran", ['Sekolah', "Kelas"]);
+    setCurrentPageBreadcrumbs("Pelajaran", ['Sekolah', "Jadwal"]);
   })
 
   const store = useStore()
