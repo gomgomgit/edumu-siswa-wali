@@ -84,6 +84,9 @@ function getQuestion() {
       }
       examSingle.value = singleQs
       examEssay.value = essayQs
+
+      console.log(examSingle.value)
+      console.log('dfafds', randomArray(examSingle.value))
     });
   })
 }
@@ -126,6 +129,13 @@ function finish() {
   })
 }
 
+function randomArray(items) {
+      return items
+          .map((item) => ({ sort: Math.random(), value: item }))
+          .sort((a, b) => a.sort - b.sort)
+          .map((item) => item.value);
+}
+
 </script>
 <template>
 <div>
@@ -163,7 +173,7 @@ function finish() {
               <div>
                 <h2 class="text-center mb-4 fw-bold fs-1">Pilihan Ganda</h2>
               </div>
-              <template v-for="(quest, no) in examSingle" :key="quest.question_id">
+              <template v-for="(quest, no) in examData.exam_random == '1' ? randomArray(examSingle) : examSingle" :key="quest.question_id">
                 <div class="d-flex fs-3 gap-4 mb-5">
                   <div class="fw-bold">{{no + 1}}.</div>
                   <div class="flex-grow-1">
@@ -187,7 +197,7 @@ function finish() {
               <div>
                 <h2 class="text-center mb-4 fw-bold fs-1">Essay</h2>
               </div>
-              <template v-for="(quest, no) in examEssay" :key="quest.question_id">
+              <template v-for="(quest, no) in examData.exam_random == '1' ? randomArray(examEssay) : examEssay" :key="quest.question_id">
                 <div class="d-flex fs-3 gap-4 mb-5">
                   <div class="fw-bold">{{no + 1}}.</div>
                   <div class="flex-grow-1">
@@ -211,9 +221,9 @@ function finish() {
                   </div>
                 </div>
               </template>
+              <div class="separator border-black-50 border-2 mb-6"></div>
             </div>
           </div>
-          <div class="separator border-black-50 border-2 mb-6"></div>
           <div class="d-flex justify-content-end">
             <a @click="finish()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
               <i class="bi bi-clipboard2-check-fill fs-1"></i>
