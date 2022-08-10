@@ -3,13 +3,14 @@ import { setCurrentPageBreadcrumbs } from '@/core/helpers/breadcrumb';
 import { request } from '@/util';
 import moment from 'moment';
 import { onMounted, reactive, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import FilterSelect from '@/components/filter-select/index.vue';
 import { Search } from '@element-plus/icons-vue'
 import ServerSideTable from '@/components/ServerSideTable.vue';
 import { computed } from '@vue/reactivity';
 import { useStore } from 'vuex';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 onMounted(() => {
   getData()
@@ -20,6 +21,7 @@ const store = useStore()
 const currentUser = store.getters.currentUser
 
 const route = useRoute()
+const router = useRouter()
 
 const examId = route.params.id
 const detailData = ref('')
@@ -27,6 +29,29 @@ const hint = ref([])
 
 const notPermitted = ref(false)
 
+function startExam() {
+  console.log(detailData.value.entry_status)
+  if (detailData.value.entry_status == 'finish') {
+    Swal.fire({
+        icon: 'error',
+        title: 'Ujian Sudah Selesai',
+        showCancelButton: true,
+        showConfirmButton: detailData.value.exam_show_score == '1',
+        reverseButtons: true,
+        confirmButtonText: 'Lihat Hasil',
+        cancelButtonText: 'Kembali'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          router.push(`/lms/ujian-online/result/${examId}`)
+        }
+        if (result.isDismissed) {
+          router.push(`/lms/ujian-online`)
+        }
+      })
+  } else {
+    router.push(`/lms/ujian-online/soal/${examId}`)
+  }
+}
 
 function getData() {
   axios.post(`https://apiujian.edumu.id/${currentUser.sekolah_kode}/apischool/siswawali/exam/detail`, null, {
@@ -123,12 +148,12 @@ function formatingDate(date) {
           </div>
         </div>
         <div v-if="detailData" class="d-flex justify-content-end">
-          <router-link :to="`/lms/ujian-online/soal/${examId}`" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+          <a @click="startExam()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
             <i class="bi bi-play-fill fs-1"></i>
             <span>
               Mulai
             </span>
-          </router-link>
+          </a>
         </div>
       </div>
     </div>

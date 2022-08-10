@@ -51,6 +51,7 @@ function getData() {
         showCancelButton: true,
         reverseButtons: true,
         confirmButtonText: 'Lihat Hasil',
+        showConfirmButton: examData.value.exam_show_score == '1',
         cancelButtonText: 'Kembali'
       }).then((result) => {
         if (result.isConfirmed) {
@@ -84,9 +85,6 @@ function getQuestion() {
       }
       examSingle.value = singleQs
       examEssay.value = essayQs
-
-      console.log(examSingle.value)
-      console.log('dfafds', randomArray(examSingle.value))
     });
   })
 }
@@ -125,7 +123,11 @@ function finish() {
     examId: examId,
     entryId: antrian.value.exam_entries.entry_id
   })).then(res => {
-    router.push(`/lms/ujian-online/result/${examId}`)
+    if (examData.value.exam_show_score == '1') {
+      router.push(`/lms/ujian-online/result/${examId}`)
+    } else {
+      router.push(`/lms/ujian-online`)
+    }
   })
 }
 
