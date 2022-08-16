@@ -109,15 +109,15 @@ import { useStore } from "vuex";
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
               <template v-for="todo in todoData" :key="todo.calendar_id">
-                <div class="mb-8 d-flex align-items-center">
+                <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-info"></span>
-                  <div class="form-check form-check-custom form-check-solid mx-5">
+                  <!-- <div class="form-check form-check-custom form-check-solid mx-5">
                     <span class="btn btn-icon btn-bg-light btn-active-color-info btn-sm me-2">
                       <span class="svg-icon svg-icon-3">
                         <i class="bi bi-eye-fill fs-3"></i>
                       </span>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{todo.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{todo.calendar_desc}}</span>
@@ -142,15 +142,15 @@ import { useStore } from "vuex";
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
               <template v-for="event in eventData" :key="event.calendar_id">
-                <div class="mb-8 d-flex align-items-center">
+                <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-success"></span>
-                  <div class="form-check form-check-custom form-check-solid mx-5">
+                  <!-- <div class="form-check form-check-custom form-check-solid mx-5">
                     <span class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
                       <span class="svg-icon svg-icon-3">
                         <i class="bi bi-eye-fill fs-3"></i>
                       </span>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{event.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{event.calendar_desc}}</span>
@@ -175,15 +175,15 @@ import { useStore } from "vuex";
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
               <template v-for="schedule in scheduleData" :key="schedule.calendar_id">
-                <div class="mb-8 d-flex align-items-center">
+                <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-primary"></span>
-                  <div class="form-check form-check-custom form-check-solid mx-5">
+                  <!-- <div class="form-check form-check-custom form-check-solid mx-5">
                     <span class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                       <span class="svg-icon svg-icon-3">
                         <i class="bi bi-eye-fill fs-3"></i>
                       </span>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{schedule.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{schedule.calendar_desc}}</span>
@@ -208,15 +208,15 @@ import { useStore } from "vuex";
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
               <template v-for="academic in academicData" :key="academic.calendar_id">
-                <div class="mb-8 d-flex align-items-center">
+                <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-warning"></span>
-                  <div class="form-check form-check-custom form-check-solid mx-5">
+                  <!-- <div class="form-check form-check-custom form-check-solid mx-5">
                     <span class="btn btn-icon btn-bg-light btn-active-color-warning btn-sm me-2">
                       <span class="svg-icon svg-icon-3">
                         <i class="bi bi-eye-fill fs-3"></i>
                       </span>
                     </span>
-                  </div>
+                  </div> -->
                   <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{academic.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{academic.calendar_desc}}</span>
