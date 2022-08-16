@@ -34,7 +34,7 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
           data-kt-scroll-dependencies="#kt_aside_secondary_footer" 
           data-kt-scroll-offset="0px">
           <div class="tab-content">
-            <div class="submenus tab-pane fade active show" id="kt_aside_nav_tab_projects" role="tabpanel">
+            <!-- <div class="submenus tab-pane fade active show" id="kt_aside_nav_tab_projects" role="tabpanel">
               <div class="m-0">
                 <div class="d-flex mb-10">
                   <div id="kt_header_search" class="d-flex align-items-center w-lg-400px" data-kt-search-keypress="true"
@@ -733,9 +733,9 @@ const emit = defineEmits(['togglePin', 'openAside', 'closeAside'])
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
-            <div class="submenus tab-pane fade" id="kt_aside_nav_tab_lms" role="tabpanel">
+            <div class="submenus tab-pane fade active show" id="kt_aside_nav_tab_lms" role="tabpanel">
               <KTLms></KTLms>
             </div>
 

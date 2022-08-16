@@ -50,16 +50,14 @@ function openSubMenu(menu) {
             data-bs-dismiss="click"
             data-bs-original-title="Projects"
           >
-            <a
-              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light active"
-              data-bs-toggle="tab"
-              href="#kt_aside_nav_tab_projects"
-              @mouseenter="openSubMenu('kt_aside_nav_tab_projects')"
+            <router-link
+              to="/"
+              class="nav-link btn btn-icon btn-active-color-primary btn-color-gray-400 btn-active-light"
             >
               <span class="svg-icon svg-icon-2x">
                 <inline-svg src="media/icons/duotune/general/gen025.svg" />
               </span>
-            </a>
+            </router-link>
           </li>
 
           <li
