@@ -65,8 +65,8 @@ function openSubMenu(menuId) {
     data-kt-drawer-toggle="#kt_aside_toggle"
   >
     <KTAsidePrimary
-      @mouseenter="openAside"
-      @mouseleave="closeAside"
+      @openMenu="openAside"
+      @closeMenu="closeAside"
       @openSubMenu="openSubMenu"
     ></KTAsidePrimary>
     <KTAsideSecondary

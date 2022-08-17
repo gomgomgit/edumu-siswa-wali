@@ -4,13 +4,14 @@ import KTQuickLinksMenu from "@/layout/header/partials/QuickLinksMenu.vue";
 import KTUserMenu from "@/layout/header/partials/UserMenu.vue";
 import { useStore } from "vuex";
 
-const emit = defineEmits(['openSubMenu', 'closeSubMenu'])
+const emit = defineEmits(['openSubMenu', 'closeSubMenu', 'openMenu', 'closeMenu'])
 
 const store = useStore()
 const userData = store.getters.currentUser
 
 function openSubMenu(menu) {
   emit('openSubMenu', menu)
+  emit('openMenu')
 }
 
 </script>
@@ -73,6 +74,7 @@ function openSubMenu(menu) {
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_lms"
               @mouseenter="openSubMenu('kt_aside_nav_tab_lms')"
+              @mouseleave="emit('closeMenu')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -118,6 +120,7 @@ function openSubMenu(menu) {
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_sekolah"
               @mouseenter="openSubMenu('kt_aside_nav_tab_sekolah')"
+              @mouseleave="emit('closeMenu')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
@@ -162,6 +165,7 @@ function openSubMenu(menu) {
               data-bs-toggle="tab"
               href="#kt_aside_nav_tab_absensi"
               @mouseenter="openSubMenu('kt_aside_nav_tab_absensi')"
+              @mouseleave="emit('closeMenu')"
             >
               <span class="svg-icon svg-icon-2x">
                 <svg
