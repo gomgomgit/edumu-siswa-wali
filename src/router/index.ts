@@ -203,6 +203,12 @@ const routes: Array<RouteRecordRaw> = [
     ],
   },
   {
+    path: "/sign-in-process/:data",
+    name: "sign-in-process",
+    component: () =>
+      import("@/views/crafted/authentication/basic-flow/SignInProcess.vue"),
+  },
+  {
     path: "/",
     component: () => import("@/components/page-layouts/Auth.vue"),
     children: [
