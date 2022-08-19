@@ -42,6 +42,9 @@ import DetailModal from './DetailModal.vue'
     })).then(res => {
       kehadiranData.rows = res.data.data.presensis.data
       kehadiranData.totalRows = res.data.data.presensis.totalRows
+    }).catch(err => {
+      kehadiranData.rows = []
+      kehadiranData.totalRows = 0
     })
   }
 </script>
