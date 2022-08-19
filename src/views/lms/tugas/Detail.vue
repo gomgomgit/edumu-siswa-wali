@@ -89,8 +89,6 @@ function postLink() {
     useToast().success('Link Dikirim!')
 
     getData()
-  }).catch(err => {
-    useToast().error(err.data.text)
   })
 }
 
@@ -103,11 +101,9 @@ function postFile() {
   request.post(`tugas/upload-answer`, formData
   ).then(res => {
     linkUpload.value = ''
-    useToast().success('Link Dikirim!')
+    useToast().success('File Dikirim!')
 
     getData()
-  }).catch(err => {
-    useToast().error(err.data.text)
   })
 }
 

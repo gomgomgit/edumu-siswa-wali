@@ -30,9 +30,7 @@ function getUser(payload) {
 	}).then(res => {
     userData.rows = res.data.data.users
     userData.totalRows = res.data.data.users.total
-	}).catch(err => {
-      useToast().error(err.data.text)
-  })
+	})
 }
 </script>
 
