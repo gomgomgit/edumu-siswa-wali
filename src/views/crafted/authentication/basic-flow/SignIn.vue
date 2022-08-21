@@ -163,11 +163,16 @@ function postLogin(data, sekolah) {
     username: data.username,
     password: md5(md5(data.password)),
   }
-  axios.post('https://apiedumu.edumu.id/demo/apischool/siswawali/user/login', QueryString.stringify(formData))
+
+  const loginUrl = data.kode === process.vue.VUE_APP_REVAMP_SCHOOL
+    ? `${process.vue.VUE_APP_REVAMP_API_URL}/siswawali/user/login`
+    : `${process.env.VUE_APP_API_URL}/${data.kode}/apischool/siswawali/user/login`
+
+  axios.post(loginUrl, QueryString.stringify(formData))
   .then(res => {
     if (res.data.status) {
       store.dispatch(Actions.LOGIN, {...res.data.data.users[0], ...sekolah})
-      
+
       Swal.fire({
       text: "You have successfully logged in!",
       icon: "success",
@@ -179,7 +184,7 @@ function postLogin(data, sekolah) {
       }).then(function () {
         router.push({ name: "dashboard" });
       });
-        
+
     } else {
       useToast().error(res.data.text)
     }
