@@ -101,7 +101,7 @@ export default defineComponent({
     const signOut = () => {
       store
         .dispatch(Actions.LOGOUT)
-          window.location.href = loginUrl
+        window.location.href = loginUrl
     };
 
     const setLang = (lang) => {

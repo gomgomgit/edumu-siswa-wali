@@ -124,7 +124,7 @@ export default defineComponent({
 
     const loginUrl = process.env.VUE_APP_LOGIN_URL
 
-    // show page loading
+      // show page loading
     if (!loaderEnabled) {
       store.dispatch(Actions.ADD_BODY_CLASSNAME, "page-loading");
     }
