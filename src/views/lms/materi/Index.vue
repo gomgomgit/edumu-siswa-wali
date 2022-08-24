@@ -18,6 +18,7 @@ import { useStore } from "vuex";
 
   const store = useStore()
   const currentUser = store.getters.currentUser;
+  const storageUrl = process.env.VUE_APP_STORAGE_URL;
 
   function getMateriData (payload) {
     request.post('materi/all', QueryString.stringify({
@@ -152,7 +153,7 @@ import { useStore } from "vuex";
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <a :href="row.materi_tipe == 'video' ? 'https://www.youtube.com/watch?v=' + row.materi_file : storagePublic + '/files/' + row.materi_file" target="_blank" class="btn btn-bg-light btn-active-color-primary btn-sm me-2">
+                <a :href="row.materi_tipe == 'video' ? 'https://www.youtube.com/watch?v=' + row.materi_file : `${storageUrl}/${currentUser.sekolah_kode}/apischool/public` + '/files/' + row.materi_file" target="_blank" class="btn btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <i :class="`bi ${row.materi_tipe == 'video' ? 'bi-play-fill' : 'bi-cloud-arrow-down'} fs-2`"></i>{{row.materi_tipe == 'video' ? 'Youtube' : 'Download'}} 
                   </span>

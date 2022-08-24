@@ -164,8 +164,8 @@ function postLogin(data, sekolah) {
     password: md5(md5(data.password)),
   }
 
-  const loginUrl = data.kode === process.vue.VUE_APP_REVAMP_SCHOOL
-    ? `${process.vue.VUE_APP_REVAMP_API_URL}/siswawali/user/login`
+  const loginUrl = data.kode === process.env.VUE_APP_REVAMP_SCHOOL
+    ? `${process.env.VUE_APP_REVAMP_API_URL}/siswawali/user/login`
     : `${process.env.VUE_APP_API_URL}/${data.kode}/apischool/siswawali/user/login`
 
   axios.post(loginUrl, QueryString.stringify(formData))

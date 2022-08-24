@@ -101,7 +101,7 @@ export default defineComponent({
   },
   setup() {
     onMounted(() => {
-      setCurrentPageBreadcrumbs("Dashboard", ['dsaf', 'dfdsfa']);
+      setCurrentPageBreadcrumbs("Dashboard", []);
     });
   },
 });

@@ -15,6 +15,7 @@ onMounted(() => {
 
 const store = useStore()
 const currentUser = store.getters.currentUser
+const storageUrl = process.env.VUE_APP_STORAGE_URL;
 
 const route = useRoute()
 
@@ -61,7 +62,7 @@ function formatingDate(date) {
           <div class="fs-5 font-gray-700 text-center">{{detailData.content_create_date}}</div>
           <div class="my-4 text-center">
             <div class="p-2 bg-secondary d-inline-block mw-100">
-              <img class="mw-100"  :src="storagePublic + '/images/konten/' + detailData.content_image" alt="">
+              <img class="mw-100"  :src="`${storageUrl}/${currentUser.sekolah_kode}/apischool/public` + '/images/konten/' + detailData.content_image" alt="">
             </div>
           </div>
           <div class="mt-6 fs-4" v-html="detailData.content_desc"></div>

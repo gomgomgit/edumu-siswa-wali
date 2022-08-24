@@ -10,10 +10,15 @@ import { useToast } from "vue-toast-notification";
 import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 import queryString from "qs";
 import moment from "moment";
+import { useStore } from "vuex";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Event", ['Sekolah', "Informasi"]);
   })
+  
+  const store = useStore()
+  const currentUser = store.getters.currentUser
+  const storageUrl = process.env.VUE_APP_STORAGE_URL;
 
   function getBerita (payload) {
       request.post('event', queryString.stringify({
@@ -70,7 +75,7 @@ import moment from "moment";
               <div v-if="column.field == 'event_foto'">
                 <div class="p-2 bg-secondary d-inline-block">
                   <template v-if="row.event_foto">
-                    <img class="image-thumbnail"  :src="storagePublic + '/images/event/' + row.event_foto" alt="">
+                    <img class="image-thumbnail"  :src="`${storageUrl}/${currentUser.sekolah_kode}/apischool/public` + '/images/event/' + row.event_foto" alt="">
                   </template>
                   <template v-if="!row.event_foto">
                     <span class="fw-bold fs-6 mx-2">NO IMAGE</span>

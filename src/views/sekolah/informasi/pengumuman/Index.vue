@@ -17,6 +17,7 @@
 
   const store = useStore()
   const currentUser = store.getters.currentUser
+  const storageUrl = process.env.VUE_APP_STORAGE_URL;
 
   function getPengumuman (payload) {
       request.post('pengumuman/all', queryString.stringify({
@@ -85,7 +86,7 @@
               <div v-if="column.field == 'content_image'">
                 <div class="p-2 bg-secondary d-inline-block">
                   <template v-if="row.content_image">
-                    <img class="image-thumbnail"  :src="storagePublic + '/images/konten/' + row.content_image" alt="">
+                    <img class="image-thumbnail"  :src="`${storageUrl}/${currentUser.sekolah_kode}/apischool/public` + '/images/konten/' + row.content_image" alt="">
                   </template>
                   <template v-if="!row.content_image">
                     <span class="fw-bold fs-6 mx-2">NO IMAGE</span>
