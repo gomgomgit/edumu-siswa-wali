@@ -83,8 +83,9 @@ function getQuestion() {
       if (exam.question_type == 'essay') {
         essayQs.push({...exam, answering: '', answered: null})
       }
-      examSingle.value = singleQs
-      examEssay.value = essayQs
+      
+      examSingle.value = examData.exam_random == '1' ? randomArray(singleQs) : singleQs
+      examEssay.value = examData.exam_random == '1' ? randomArray(essayQs) : essayQs
     });
   })
 }
@@ -175,7 +176,7 @@ function randomArray(items) {
               <div>
                 <h2 class="text-center mb-4 fw-bold fs-1">Pilihan Ganda</h2>
               </div>
-              <template v-for="(quest, no) in examData.exam_random == '1' ? randomArray(examSingle) : examSingle" :key="quest.question_id">
+              <template v-for="(quest, no) in examSingle" :key="quest.question_id">
                 <div class="d-flex fs-3 gap-4 mb-5">
                   <div class="fw-bold">{{no + 1}}.</div>
                   <div class="flex-grow-1">
@@ -199,7 +200,7 @@ function randomArray(items) {
               <div>
                 <h2 class="text-center mb-4 fw-bold fs-1">Essay</h2>
               </div>
-              <template v-for="(quest, no) in examData.exam_random == '1' ? randomArray(examEssay) : examEssay" :key="quest.question_id">
+              <template v-for="(quest, no) in examEssay" :key="quest.question_id">
                 <div class="d-flex fs-3 gap-4 mb-5">
                   <div class="fw-bold">{{no + 1}}.</div>
                   <div class="flex-grow-1">

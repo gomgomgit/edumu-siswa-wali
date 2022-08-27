@@ -19,7 +19,7 @@
             {{userData.user_nama}}
           </div>
           <span class="fw-bold text-muted text-hover-primary fs-7">
-            {{userData.user_level}}
+            {{userData.kelas_nama}}
           </span>
         </div>
         <!--end::Username-->

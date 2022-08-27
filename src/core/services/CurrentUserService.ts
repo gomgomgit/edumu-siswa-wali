@@ -12,6 +12,7 @@ export const getUser = () => {
 
     siswa_id: window.localStorage.getItem('siswa_id'),
     kelas_id: window.localStorage.getItem('kelas_id'),
+    kelas_nama: window.localStorage.getItem('kelas_nama'),
 
     sekolah_id: window.localStorage.getItem('sekolah_id'),
     sekolah_kode: window.localStorage.getItem('sekolah_kode'),
@@ -33,6 +34,7 @@ export const saveUser = (user): void => {
 
   window.localStorage.setItem('siswa_id', user.siswa.siswa_id);
   window.localStorage.setItem('kelas_id', user.siswa.kelas_id);
+  window.localStorage.setItem('kelas_nama', user.siswa.kelas.kelas_nama);
 
   window.localStorage.setItem('sekolah_id', user.sekolah_id);
   window.localStorage.setItem('sekolah_kode', user.sekolah_kode);
@@ -51,6 +53,7 @@ export const destroyUser = (): void => {
 
   window.localStorage.removeItem('siswa_id');
   window.localStorage.removeItem('kelas_id');
+  window.localStorage.removeItem('kelas_nama');
 
   window.localStorage.removeItem('sekolah_id');
   window.localStorage.removeItem('sekolah_kode');
