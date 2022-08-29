@@ -22,6 +22,7 @@ import { useStore } from "vuex";
     request.post('jadwal/today', QueryString.stringify(
       {
         kelas_id: currentUser.kelas_id,
+        siswa_id: currentUser.siswa_id,
         day: moment().day()
       }
     ))

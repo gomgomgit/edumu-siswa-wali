@@ -21,6 +21,7 @@ import { useStore } from "vuex";
   function getJadwal (payload) {
     request.post('jadwal/classes', QueryString.stringify(
       {
+        siswa_id: currentUser.siswa_id,
         kelas_id: currentUser.kelas_id,
       }
     ))

@@ -9,6 +9,7 @@ export const getUser = () => {
     user_level: window.localStorage.getItem('user_level'),
     user_nama: window.localStorage.getItem('user_nama'),
     user_username: window.localStorage.getItem('user_username'),
+    user_foto: window.localStorage.getItem('user_foto'),
 
     siswa_id: window.localStorage.getItem('siswa_id'),
     kelas_id: window.localStorage.getItem('kelas_id'),
@@ -31,6 +32,7 @@ export const saveUser = (user): void => {
   window.localStorage.setItem('user_level', user.user_level);
   window.localStorage.setItem('user_nama', user.user_nama);
   window.localStorage.setItem('user_username', user.user_username);
+  window.localStorage.setItem('user_foto', user.user_foto);
 
   window.localStorage.setItem('siswa_id', user.siswa.siswa_id);
   window.localStorage.setItem('kelas_id', user.siswa.kelas_id);
@@ -50,6 +52,7 @@ export const destroyUser = (): void => {
   window.localStorage.removeItem('user_level');
   window.localStorage.removeItem('user_nama');
   window.localStorage.removeItem('user_username');
+  window.localStorage.removeItem('user_foto');
 
   window.localStorage.removeItem('siswa_id');
   window.localStorage.removeItem('kelas_id');
