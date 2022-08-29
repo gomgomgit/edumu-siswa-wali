@@ -9,7 +9,7 @@
       <div class="menu-content d-flex align-items-center px-3">
         <!--begin::Avatar-->
         <div class="symbol symbol-50px me-5">
-          <img alt="Foto" :src="userData.user_foto ?? userData.sekolah_foto" />
+          <img alt="Foto" :src="userData.sekolah_foto" />
         </div>
         <!--end::Avatar-->
 
@@ -19,7 +19,7 @@
             {{userData.user_nama}}
           </div>
           <span class="fw-bold text-muted text-hover-primary fs-7">
-            {{userData.kelas_nama}}
+            {{userData.user_username}}
           </span>
         </div>
         <!--end::Username-->
