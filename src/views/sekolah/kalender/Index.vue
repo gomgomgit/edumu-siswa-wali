@@ -118,11 +118,16 @@ import { useStore } from "vuex";
                       </span>
                     </span>
                   </div> -->
-                  <div class="flex-grow-1">
+                  <!-- <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{todo.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{todo.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-info">{{todo.calendar_date}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-info">{{todo.calendar_date}}</span> -->
+                  <div class="flex-grow-1">
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{todo.libur_desc}}</a>
+                    <span class="text-muted fw-semobold d-block">{{todo.kelas_nama}}</span>
+                  </div>
+                  <span class="badge fs-8 fw-bold badge-light-success">{{todo.libur_tanggal}}</span>
                 </div>
               </template>
             </div>
@@ -184,11 +189,16 @@ import { useStore } from "vuex";
                       </span>
                     </span>
                   </div> -->
-                  <div class="flex-grow-1">
+                  <!-- <div class="flex-grow-1">
                     <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{schedule.calendar_title}}</a>
                     <span class="text-muted fw-semobold d-block">{{schedule.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-primary">{{schedule.calendar_time_start}} - {{schedule.calendar_time_end}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-primary">{{schedule.calendar_time_start}} - {{schedule.calendar_time_end}}</span> -->
+                  <div class="flex-grow-1">
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{schedule.libur_desc}}</a>
+                    <span class="text-muted fw-semobold d-block">{{schedule.kelas_nama}}</span>
+                  </div>
+                  <span class="badge fs-8 fw-bold badge-light-success">{{schedule.libur_tanggal}}</span>
                 </div>
               </template>
             </div>

@@ -180,8 +180,14 @@ export default defineComponent({
       {
         pages: [
           {
-            heading: "Kehadiran",
+            heading: "Absensi Kehadiran",
             route: "/absensi/kehadiran",
+            svgIcon: "media/icons/duotune/general/gen022.svg",
+            fontIcon: "bi-archive",
+          },
+          {
+            heading: "Absensi Mapel",
+            route: "/absensi/mapel",
             svgIcon: "media/icons/duotune/general/gen022.svg",
             fontIcon: "bi-archive",
           },

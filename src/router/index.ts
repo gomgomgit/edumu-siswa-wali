@@ -67,6 +67,24 @@ const routes: Array<RouteRecordRaw> = [
         path: "/lms/materi",
         name: "lms-materi",
         component: () => import("@/views/lms/materi/Index.vue"),
+        children: [
+          {
+            path: "",
+            redirect: "/lms/materi/video",
+          },
+          {
+            path: "video",
+            name: "lms-materi-video",
+            component: () =>
+              import("@/views/lms/materi/tabs/Video.vue"),
+          },
+          {
+            path: "file",
+            name: "lms-materi-file",
+            component: () =>
+              import("@/views/lms/materi/tabs/File.vue"),
+          },
+        ]
       },
 
       //Sekolah
@@ -188,6 +206,11 @@ const routes: Array<RouteRecordRaw> = [
         path: "/absensi/kehadiran",
         name: "absensi-kehadiran",
         component: () => import("@/views/absensi/kehadiran/Index.vue"),
+      },
+      {
+        path: "/absensi/mapel",
+        name: "absensi-mapel",
+        component: () => import("@/views/absensi/mapel/Index.vue"),
       },
 
       {

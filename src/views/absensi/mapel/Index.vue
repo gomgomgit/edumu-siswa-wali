@@ -11,7 +11,7 @@ import { useStore } from "vuex";
 import DetailModal from './DetailModal.vue'
 
   onMounted(() => {
-    setCurrentPageBreadcrumbs("Absensi Kehadiran", ["Absensi"]);
+    setCurrentPageBreadcrumbs("Absensi Mapel", ["Absensi"]);
   })
   const date = ref(moment().format('YYYY-MM'))
   
@@ -56,7 +56,7 @@ import DetailModal from './DetailModal.vue'
         <div>
           <div class="d-flex flex-wrap justify-content-between align-items-center">
             <div class="d-flex gap-4">
-              <h2 class="fs-1 fw-bold py-2">Data Absensi Kehadiran</h2>
+              <h2 class="fs-1 fw-bold py-2">Data Absensi Mapel</h2>
             </div>
             <div class="position-relative d-flex gap-4">
               <el-date-picker
