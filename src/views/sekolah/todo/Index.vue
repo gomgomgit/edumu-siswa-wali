@@ -36,12 +36,11 @@ import FormModal from "./FormModal.vue";
   })
 
   function getTodo(payload) {
-    request.post('calendar/todo', QueryString.stringify({
+    request.post('calendar/todo-all', QueryString.stringify({
       type_date: "week",
-      date: date.value,
       user_id: currentUser.siswa_id
     })).then(res => {
-      todoData.rows = res.data.data.calendars
+      todoData.rows = res.data.data
       todoData.totalRows = res.data.total
     })
   }
@@ -66,14 +65,14 @@ import FormModal from "./FormModal.vue";
               <h2 class="fs-1 fw-bold py-2">Todo</h2>
             </div>
             <div class="position-relative d-flex align-items-center gap-4">
-              <el-date-picker
+              <!-- <el-date-picker
                 v-model="date"
                 type="date"
                 placeholder="Tanggal"
                 size="large"
                 value-format="YYYY-MM-DD"
                 @change="getTodo()"
-              />
+              /> -->
               
               <button @click="formMode = 'Tambah Data'" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
                 <i class="bi bi-plus fs-1"></i>
