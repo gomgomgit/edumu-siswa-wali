@@ -3,7 +3,7 @@
   <div class="footer pt-4 pb-6 d-flex flex-lg-column" id="kt_footer">
     <!--begin::Container-->
     <div
-      class="d-flex flex-column flex-md-row align-items-center justify-content-between"
+      class="d-flex flex-column flex-md-row align-items-center justify-content-end"
       :class="{
         'container-fluid': footerWidthFluid,
         'container-xxl': !footerWidthFluid,
@@ -17,23 +17,6 @@
           >eduMU | Majelis Dikdasmen PP Muhammadiyah</a
         >
       </div>
-      <!--end::Copyright-->
-
-      <!--begin::Menu-->
-      <ul class="menu menu-gray-600 menu-hover-primary fw-bold order-1">
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">About</a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">Support</a>
-        </li>
-
-        <li class="menu-item">
-          <a href="#" target="_blank" class="menu-link px-2">Purchase</a>
-        </li>
-      </ul>
-      <!--end::Menu-->
     </div>
     <!--end::Container-->
   </div>
