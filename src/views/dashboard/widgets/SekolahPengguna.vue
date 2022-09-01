@@ -64,7 +64,7 @@
           </div>
           <div class="col bg-light-success px-6 py-8 rounded-2 position-relative">
             <div class="position-absolute" style="top: 10px; right: 10px;">
-              <span class="badge badge-square px-3 fw-normal fs-6 bg-success">{{siswaOnline}}</span>
+              <span class="badge badge-square px-3 fw-normal fs-6 bg-success">12</span>
             </div>
             <span class="display-5 text-success fw-normal d-block my-2">
               255
