@@ -23,6 +23,7 @@
         <div class="">
           <h3 class="card-title my-1 fw-bolder text-white">{{currentUser.sekolah_nama}},</h3>
           <p class="fw-bolder my-1 text-white">{{currentUser.user_nama}}</p>
+          <p class="fw-bolder my-1 text-white">{{currentUser.kelas_nama}}</p>
           <!-- <p class="fw-bolder my-1 text-white"><span class="bi bi-telephone-fill me-2"></span>{{currentUser.sekolah_telepon}}</p>
           <p class="fw-bolder my-1 text-white"><span class="bi bi-envelope-fill me-2"></span>{{currentUser.sekolah_email}}</p> -->
         </div>

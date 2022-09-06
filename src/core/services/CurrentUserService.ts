@@ -37,6 +37,7 @@ export const saveUser = (user): void => {
 
   window.localStorage.setItem('siswa_id', user.siswa.siswa_id);
   window.localStorage.setItem('kelas_id', user.siswa.kelas_id);
+  window.localStorage.setItem('kelas_nama', user.siswa.kelas.kelas_nama);
 
   window.localStorage.setItem('sekolah_id', user.sekolah_id);
   window.localStorage.setItem('sekolah_kode', user.sekolah_kode);
