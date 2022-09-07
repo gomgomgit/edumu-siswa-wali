@@ -31,7 +31,6 @@
     <div class="col-xxl-8">
       <Tugas
         :total="datas?.count?.countTugas"
-        :created="datas?.count?.countTugasCreated"
         :datas="datas?.dataTugas"
         widget-classes="card-xxl-stretch mb-5 mb-xl-8"
       ></Tugas>
