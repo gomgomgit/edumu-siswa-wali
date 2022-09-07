@@ -238,7 +238,7 @@ export default defineComponent({
                 route: "/sekolah/informasi/prestasi",
               },
               {
-                heading: "Event Selolah",
+                heading: "Event Sekolah",
                 route: "/sekolah/informasi/event",
               },
               {
