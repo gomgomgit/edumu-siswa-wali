@@ -41,7 +41,7 @@ import { useStore } from "vuex";
       date: date.value,
       user_id: currentUser.siswa_id
     })).then(res => {
-      todoData.value = res.data.data.calendars
+      todoData.value = res.data.data
     })
   }
   function getEvent() {
@@ -49,7 +49,7 @@ import { useStore } from "vuex";
       type_date: "week",
       date: date.value,
     })).then(res => {
-      eventData.value = res.data.data.calendars
+      eventData.value = res.data.data
     })
   }
   function getSchedule() {
@@ -58,7 +58,7 @@ import { useStore } from "vuex";
       date: date.value,
       siswa_id: currentUser.siswa_id
     })).then(res => {
-      scheduleData.value = res.data.data.calendars
+      scheduleData.value = res.data.data
     })
   }
   function getAcademic() {
@@ -66,7 +66,7 @@ import { useStore } from "vuex";
       type_date: "week",
       date: date.value,
     })).then(res => {
-      academicData.value = res.data.data.calendars
+      academicData.value = res.data.data
     })
   }
 </script>
@@ -108,7 +108,7 @@ import { useStore } from "vuex";
             </div>
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
-              <template v-for="todo in todoData" :key="todo.calendar_id">
+              <template v-for="todo in todoData?.calendars" :key="todo.calendar_id">
                 <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-info"></span>
                   <!-- <div class="form-check form-check-custom form-check-solid mx-5">
@@ -119,10 +119,10 @@ import { useStore } from "vuex";
                     </span>
                   </div> -->
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{todo.calendar_title}}</a>
-                    <span class="text-muted fw-semobold d-block">{{todo.calendar_desc}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{todoData?.isOff ? todo.libur_desc : todo.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{todoData?.isOff ? todo.kelas_nama : todo.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-info">{{todo.calendar_date}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-info">{{todoData?.isOff ? todo.libur_tanggal : todo.calendar_date}}</span>
                 </div>
               </template>
             </div>
@@ -141,7 +141,7 @@ import { useStore } from "vuex";
             </div>
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
-              <template v-for="event in eventData" :key="event.calendar_id">
+              <template v-for="event in eventData?.calendars" :key="event.calendar_id">
                 <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-success"></span>
                   <!-- <div class="form-check form-check-custom form-check-solid mx-5">
@@ -152,10 +152,10 @@ import { useStore } from "vuex";
                     </span>
                   </div> -->
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{event.calendar_title}}</a>
-                    <span class="text-muted fw-semobold d-block">{{event.calendar_desc}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{eventData?.isOff ? event.libur_desc : event.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{eventData?.isOff ? event.kelas_nama : event.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-primary">{{event.calendar_time_start}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-primary">{{eventData?.isOff ? event.libur_tanggal : event.calendar_time_start}}</span>
                 </div>
               </template>
             </div>
@@ -174,7 +174,7 @@ import { useStore } from "vuex";
             </div>
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
-              <template v-for="schedule in scheduleData" :key="schedule.calendar_id">
+              <template v-for="schedule in scheduleData?.calendars" :key="schedule.calendar_id">
                 <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-primary"></span>
                   <!-- <div class="form-check form-check-custom form-check-solid mx-5">
@@ -185,10 +185,10 @@ import { useStore } from "vuex";
                     </span>
                   </div> -->
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{schedule.calendar_title}}</a>
-                    <span class="text-muted fw-semobold d-block">{{schedule.calendar_desc}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{scheduleData?.isOff ? schedule.libur_desc : schedule.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{scheduleData?.isOff ? schedule.kelas_nama : schedule.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-primary">{{schedule.calendar_time_start}} - {{schedule.calendar_time_end}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-primary">{{scheduleData?.isOff ? schedule.libur_tanggal : schedule.calendar_time_start + ' - ' + schedule.calendar_time_end}}</span>
                 </div>
               </template>
             </div>
@@ -207,7 +207,7 @@ import { useStore } from "vuex";
             </div>
             <div class="separator border-black-50 border-2"></div>
             <div class="my-5 mb-xxl-8">
-              <template v-for="academic in academicData" :key="academic.calendar_id">
+              <template v-for="academic in academicData?.calendars" :key="academic.calendar_id">
                 <div class="mb-8 d-flex align-items-center gap-6">
                   <span class="bullet bullet-vertical h-40px bg-warning"></span>
                   <!-- <div class="form-check form-check-custom form-check-solid mx-5">
@@ -218,10 +218,10 @@ import { useStore } from "vuex";
                     </span>
                   </div> -->
                   <div class="flex-grow-1">
-                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{academic.calendar_title}}</a>
-                    <span class="text-muted fw-semobold d-block">{{academic.calendar_desc}}</span>
+                    <a href="#" class="text-gray-800 text-hover-primary fw-bold fs-6">{{academicData?.isOff ? academic.libur_desc : academic.calendar_title}}</a>
+                    <span class="text-muted fw-semobold d-block">{{academicData?.isOff ? academic.kelas_nama : academic.calendar_desc}}</span>
                   </div>
-                  <span class="badge fs-8 fw-bold badge-light-primary">{{academic.calendar_time_start}}</span>
+                  <span class="badge fs-8 fw-bold badge-light-primary">{{academicData?.isOff ? academic.libur_tanggal : academic.calendar_time_start}}</span>
                 </div>
               </template>
             </div>
