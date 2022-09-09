@@ -62,7 +62,6 @@ import { useStore } from "vuex";
       { label: 'Guru', field: 'user.user_nama', sortable: false },
       { label: 'Judul', field: 'tugas_judul', sortable: false },
       { label: 'Tgl Pembuatan', field: 'tugas_create_date' },
-      { label: 'Status', field: 'tugas_status' },
       { label: 'Action', field: 'action', sortable: false, width: '100px' },
     ],
     rows: [],
@@ -95,7 +94,7 @@ import { useStore } from "vuex";
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-          <div class="d-flex gap-4">
+          <!-- <div class="d-flex gap-4">
             <div>
               <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getTugasData()">
                 <el-option
@@ -116,7 +115,7 @@ import { useStore } from "vuex";
                 />
               </FilterSelect>
             </div>
-          </div>
+          </div> -->
           
           <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
               <el-input
