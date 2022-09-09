@@ -9,6 +9,7 @@
 import moment from "moment";
 import { useStore } from "vuex";
 import FormModal from "./FormModal.vue";
+import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   onMounted(() => {
     setCurrentPageBreadcrumbs("Todo", ["Sekolah"]);
@@ -29,7 +30,7 @@ import FormModal from "./FormModal.vue";
       { label: 'Tanggal Buat', field: 'calendar_date', sortable: false },
       { label: 'Tanggal Berakhir', field: 'calendar_time_end', sortable: false },
       { label: 'Status', field: 'calendar_status', sortable: false },
-      { label: 'Action', field: 'action', sortable: false, width: '100px' },
+      { label: 'Action', field: 'action', sortable: false, width: '150px' },
     ],
     rows: [],
     totalRows: 0,
@@ -52,6 +53,15 @@ import FormModal from "./FormModal.vue";
   function handleFormClose() {
     formMode.value = false
     activeData.value = null
+  }
+  function deleteTodo(id) {
+    deleteConfirmation(function() {
+      request.post('/todo/delete', QueryString.stringify({calendar_id: id}))
+      .then(res => {
+        useToast().success('Data Berhasil Dihapus!')
+        getTodo()
+      })
+    })
   }
 </script>
 
@@ -100,6 +110,11 @@ import FormModal from "./FormModal.vue";
                 <button @click="handleEdit(row)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
+                  </span>
+                </button>
+                <button @click="deleteTodo(row.calendar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                  <span class="svg-icon svg-icon-3">
+                    <inline-svg src="media/icons/duotune/general/gen027.svg" />
                   </span>
                 </button>
               </div>
