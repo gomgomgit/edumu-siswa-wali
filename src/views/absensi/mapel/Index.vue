@@ -13,7 +13,7 @@ import DetailModal from './DetailModal.vue'
   onMounted(() => {
     setCurrentPageBreadcrumbs("Absensi Mapel", ["Absensi"]);
   })
-  const date = ref(moment().format('YYYY-MM'))
+  const date = ref(moment().format('YYYY-MM-DD'))
   
   const store = useStore()
   const currentUser = store.getters.currentUser;
@@ -22,26 +22,26 @@ import DetailModal from './DetailModal.vue'
 
   const kehadiranData = reactive({
     columns: [
-      { label: 'Foto', field: 'foto', sortable: false },
-      { label: 'Tipe', field: 'presensi_tipe', sortable: false },
-      { label: 'Deskripsi', field: 'deskripsi', sortable: false },
-      { label: 'Status', field: 'presensi_status', sortable: false },
-      { label: 'Action', field: 'action', sortable: false, width: '100px' },
+      { label: 'Guru', field: 'user_nama', sortable: false },
+      { label: 'Mapel', field: 'mapel_nama', sortable: false },
+      { label: 'Tgl/Jam', field: 'pg_create_date', sortable: false },
+      { label: 'Status', field: 'pg_status', sortable: false },
+      { label: 'Deskripsi', field: 'pg_note', sortable: false },
+      // { label: 'Action', field: 'action', sortable: false, width: '100px' },
     ],
     rows: [],
     totalRows: 0,
   })
 
   function getKehadiran(payload) {
-    request.post('attendance/data', QueryString.stringify({
+    request.post('attendance/mapel', QueryString.stringify({
       page: payload?.page ?? 1,
-      type_date: "month",
       date: date.value,
       siswa_id:	currentUser.siswa_id,
-      status:	"all",
     })).then(res => {
-      kehadiranData.rows = res.data.data.presensis.data
-      kehadiranData.totalRows = res.data.data.presensis.totalRows
+      console.log(res)
+      kehadiranData.rows = res.data.data.attendance_classes
+      kehadiranData.totalRows = res.data.total
     }).catch(err => {
       kehadiranData.rows = []
       kehadiranData.totalRows = 0
@@ -61,10 +61,10 @@ import DetailModal from './DetailModal.vue'
             <div class="position-relative d-flex gap-4">
               <el-date-picker
                 v-model="date"
-                type="month"
+                type="date"
                 placeholder="Tanggal"
                 size="large"
-                value-format="YYYY-MM"
+                value-format="YYYY-MM-DD"
                 @change="getKehadiran()"
               />
             </div>
@@ -79,14 +79,6 @@ import DetailModal from './DetailModal.vue'
             @loadItems="getKehadiran"
           >
             <template #table-row="{column, row}">
-              <div v-if="column.field == 'foto'">
-                <div class="bg-secondary p-2 d-inline-block">
-                  <img :src="row.presensi_foto" alt="" style="max-height: 80px">
-                </div>
-              </div>
-              <div v-if="column.field == 'deskripsi'">
-                {{row.presensi_create_date}} - {{row.presensi_create_time}}
-              </div>
               <div v-if="column.field == 'action'">
                 <a @click="activeData = row" class="btn btn-icon btn-bg-light btn-active-color-success btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
