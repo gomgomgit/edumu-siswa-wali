@@ -29,7 +29,7 @@ store.dispatch(Actions.ADD_BODY_CLASSNAME, "page-loading");
 
 function loginProcess() {
   var bytes = cryoptojs.AES.decrypt(loginData.replace(/ /g, '+'), "edumuv2").toString(cryoptojs.enc.Utf8)
-  var data = QueryString.parse(bytes);
+  var data = QueryString.parse(bytes)
 
   store.dispatch(Actions.LOGIN, data)
 }
