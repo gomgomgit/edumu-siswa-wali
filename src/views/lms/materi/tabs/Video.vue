@@ -13,7 +13,7 @@ import { useStore } from "vuex";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Materi Video", ['LMS', 'Materi']);
-    getData()
+    // getData()
   })
 
   const store = useStore()
@@ -21,15 +21,15 @@ import { useStore } from "vuex";
   const storageUrl = process.env.VUE_APP_STORAGE_URL;
 
   function getMateriData (payload) {
-    request.post('materi/all', QueryString.stringify({
+    request.post('materi/video', QueryString.stringify({
       kelas_id: currentUser.kelas_id,
-      user_id: guruFilter.value == '' ? '0' : guruFilter.value,
-      mapel_id: mapelFilter.value == '' ? '0' : mapelFilter.value,
+      // user_id: guruFilter.value == '' ? '0' : guruFilter.value,
+      // mapel_id: mapelFilter.value == '' ? '0' : mapelFilter.value,
       page: payload?.page ?? 1
     })).then(res => {
       
-      materiData.rows = res.data.data.materi.data
-      materiData.totalRows = res.data.data.materi.total
+      materiData.rows = res.data.data.materi
+      materiData.totalRows = res.data.total
     }).catch(err => {
       materiData.rows = []
     })
@@ -62,8 +62,7 @@ import { useStore } from "vuex";
       { label: 'Mapel', field: 'mapel.mapel_nama', sortable: false },
       { label: 'Judul', field: 'materi_judul', sortable: false },
       { label: 'Guru', field: 'user.user_nama', sortable: false },
-      { label: 'File/Link', field: 'materi_file', sortable: false },
-      { label: 'Ukuran File', field: 'materi_filesize', sortable: false },
+      { label: 'Link', field: 'materi_file', sortable: false },
       { label: 'Action', field: 'action', sortable: false, width: '200px' },
     ],
     rows: [],
@@ -105,7 +104,7 @@ import { useStore } from "vuex";
           </div>
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
-        <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <!-- <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <div class="d-flex gap-4">
             <div>
               <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getMateriData()">
@@ -128,7 +127,7 @@ import { useStore } from "vuex";
               </FilterSelect>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="mb-5 mb-xxl-8">
           <ServerSideTable
             ref="tableRef"
@@ -143,19 +142,16 @@ import { useStore } from "vuex";
           >
             <template #table-row="{column, row}">
               <div v-if="column.field == 'materi_file'">
-                <i :class="`text-primary bi ${row.materi_tipe == 'video' ? 'bi-play-circle-fill' : 'bi-file-earmark-font-fill' }`"></i>
-                {{row.materi_tipe == 'video' ? 'https://www.youtube.com/watch?v=' + row.materi_file : row.materi_file}}
-              </div>
-              <div v-if="column.field == 'materi_filesize'">
-                {{row.materi_tipe == 'video' ? '-' : row.materi_filesize}}
+                <i :class="`text-primary bi bi-play-circle-fill }`"></i>
+                {{'https://www.youtube.com/watch?v=' + row.materi_file}}
               </div>
               <div v-if="column.field == 'materi_create_date'">
                 {{dateFormating(row.materi_create_date)}}
               </div>
               <div v-if="column.field == 'action'">
-                <a :href="row.materi_tipe == 'video' ? 'https://www.youtube.com/watch?v=' + row.materi_file : `${storageUrl}/${currentUser.sekolah_kode}/apischool/public` + '/files/' + row.materi_file" target="_blank" class="btn btn-bg-light btn-active-color-primary btn-sm me-2">
+                <a :href="'https://www.youtube.com/watch?v=' + row.materi_file" target="_blank" class="btn btn-bg-light btn-active-color-primary btn-sm me-2">
                   <span class="svg-icon svg-icon-3">
-                    <i :class="`bi ${row.materi_tipe == 'video' ? 'bi-play-fill' : 'bi-cloud-arrow-down'} fs-2`"></i>{{row.materi_tipe == 'video' ? 'Youtube' : 'Download'}} 
+                    <i :class="`bi bi-play-fill fs-2`"></i>{{'Youtube'}} 
                   </span>
                 </a>
               </div>
