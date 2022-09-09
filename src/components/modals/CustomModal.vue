@@ -1,8 +1,11 @@
 <script setup>
   const props = defineProps({
-    show: {type:  String},
+    show: {type:  [String, Boolean]},
     title: {type: String},
-    breadcrumb: {type: Array, required: false}
+    confirmText: { type: String, required: false },
+    breadcrumb: {type: Array, required: false},
+    width: {type:String, required:false},
+    dismissable: {type:Boolean, default: true}
   })
 
   const emits = defineEmits(['closeModal', 'confirm', 'dismiss'])
@@ -10,46 +13,46 @@
 
 <template>
   <div class="modal-wrapper">
-      <transition name="fade">
-        <div v-if="props.show" class="modal-overlay"></div>
-      </transition>
+    <transition name="fade">
+      <div v-if="props.show" class="modal-overlay"></div>
+    </transition>
 
-      <transition name="slide-fade">
-        <div v-if="props.show" class="modal-container">
-          <div class="modal-header d-block border-bottom border-secondary">
-            <div class="fw-bold fs-1 m-4 d-flex justify-content-between">
-              <div>
-                <span>{{props.title}}</span>
-              </div>
-              <div @click="emits('closeModal')" class="btn btn-icon btn-sm btn-active-light-danger ms-2">
-                <span class="svg-icon svg-icon-2x">
-                  <i class="bi bi-x fs-1"></i>
-                </span>
-              </div>
+    <transition name="slide-fade">
+      <div v-if="props.show" class="modal-container" :style="`width: ${props.width ?? '650px'}`">
+        <div class="modal-header d-block border-bottom border-secondary">
+          <div class="fw-bold fs-1 m-4 d-flex justify-content-between">
+            <div>
+              <span>{{props.title}}</span>
             </div>
-            <div class="fw-bold fs-4 m-4">
-              <template v-if="props.breadcrumb" v-for="bc, index in props.breadcrumb" :key="index">
-                <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span>
-                <span v-else class="text-black-50">
-                  <span>{{bc}} / </span>
-                </span>
-              </template>
+            <div @click="emits('closeModal')" class="btn btn-icon btn-sm btn-active-light-danger ms-2">
+              <span class="svg-icon svg-icon-2x">
+                <i class="bi bi-x fs-1"></i>
+              </span>
             </div>
           </div>
-          <div class="modal-body py-4">
-            <slot/>
-            <div class="modal-body-separator"></div>
-          </div>
-          <div class="modal-footer border-top border-secondary">
-            <div class="modal-footer-fade"></div>
-            <div class="d-flex justify-content-end gap-4">
-              <button @click="emits('dismiss')" class="btn btn-light">Batal</button>
-              <button @click="emits('confirm')" class="btn btn-primary text-white">Simpan</button>
-            </div>
+          <div class="fw-bold fs-4 m-4">
+            <template v-if="props.breadcrumb" v-for="bc, index in props.breadcrumb" :key="index">
+              <span v-if="index == props.breadcrumb.length - 1">{{bc}}</span>
+              <span v-else class="text-black-50">
+                <span>{{bc}} / </span>
+              </span>
+            </template>
           </div>
         </div>
-      </transition>
-    </div>
+        <div class="modal-body py-4">
+          <slot />
+          <div class="modal-body-separator"></div>
+        </div>
+        <div class="modal-footer border-top border-secondary">
+          <div class="modal-footer-fade"></div>
+          <div class="d-flex justify-content-end gap-4">
+            <button v-if="dismissable" @click="emits('dismiss')" class="btn btn-light">Batal</button>
+            <button @click="emits('confirm')" class="btn btn-primary text-white">{{ props.confirmText ?? 'Simpan' }}</button>
+          </div>
+        </div>
+      </div>
+    </transition>
+  </div>
 </template>
 
 <style scoped>
@@ -75,13 +78,12 @@
     bottom: 0;
     left: 0;
     margin: auto;
-    width: 650px;
     max-width: 90%;
     height: fit-content;
     border-radius: 1rem;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
     background: #FFF;
-    z-index: 999;
+    z-index: 99;
     transform: none;
   }
   .modal-body {
