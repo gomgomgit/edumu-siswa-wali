@@ -54,14 +54,14 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
     formMode.value = false
     activeData.value = null
   }
-  function deleteTodo(id) {
+  function inActiveTodo(id) {
     deleteConfirmation(function() {
-      request.post('/todo/delete', QueryString.stringify({calendar_id: id}))
+      request.post('/calendar/todo-delete', QueryString.stringify({calendar_id: id}))
       .then(res => {
         useToast().success('Data Berhasil Dihapus!')
         getTodo()
       })
-    })
+    }, null, 'Anda yakin ingin menonaktifkan ini?')
   }
 </script>
 
@@ -112,9 +112,9 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
                     <inline-svg src="media/icons/duotune/art/art005.svg" />
                   </span>
                 </button>
-                <button @click="deleteTodo(row.calendar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
+                <button v-if="row.calendar_status == '1'" @click="inActiveTodo(row.calendar_id)" class="btn btn-icon btn-bg-light btn-active-color-danger btn-sm">
                   <span class="svg-icon svg-icon-3">
-                    <inline-svg src="media/icons/duotune/general/gen027.svg" />
+                    <i class="bi bi-x-circle-fill"></i>
                   </span>
                 </button>
               </div>
