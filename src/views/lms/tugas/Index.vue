@@ -61,7 +61,7 @@ import { useStore } from "vuex";
       { label: 'Mapel', field: 'mapel.mapel_nama', sortable: false },
       { label: 'Guru', field: 'user.user_nama', sortable: false },
       { label: 'Judul', field: 'tugas_judul', sortable: false },
-      { label: 'Tgl Pembuatan', field: 'tugas_create_date' },
+      { label: 'Tgl Pembuatan', field: 'tugas_create_date', sortable: false },
       { label: 'Action', field: 'action', sortable: false, width: '100px' },
     ],
     rows: [],
