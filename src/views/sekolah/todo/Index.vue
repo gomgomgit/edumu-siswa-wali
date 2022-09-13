@@ -38,7 +38,6 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   function getTodo(payload) {
     request.post('calendar/todo-all', QueryString.stringify({
-      type_date: "week",
       user_id: currentUser.siswa_id
     })).then(res => {
       todoData.rows = res.data.data

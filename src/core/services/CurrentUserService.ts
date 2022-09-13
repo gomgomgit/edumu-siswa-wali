@@ -36,11 +36,7 @@ export const saveUser = (user): void => {
   window.localStorage.setItem('user_nama', user.user_nama);
   window.localStorage.setItem('user_username', user.user_username);
   window.localStorage.setItem('user_foto', user.user_foto);
-
-  window.localStorage.setItem('siswa_id', user.siswa.siswa_id);
-  window.localStorage.setItem('kelas_id', user.siswa.kelas_id);
-  window.localStorage.setItem('kelas_nama', user.siswa.kelas.kelas_nama);
-
+  
   window.localStorage.setItem('sekolah_id', user.sekolah_id);
   window.localStorage.setItem('sekolah_kode', user.sekolah_kode);
   window.localStorage.setItem('sekolah_nama', user.sekolah_nama);
@@ -48,6 +44,10 @@ export const saveUser = (user): void => {
   window.localStorage.setItem('sekolah_alamat', `${user.sekolah_alamat}, ${user.sekolah_kota}, ${user.sekolah_provinsi}` );
   window.localStorage.setItem('sekolah_telepon', user.sekolah_cp_telepon);
   window.localStorage.setItem('sekolah_email', user.sekolah_cp_email);
+  
+  window.localStorage.setItem('siswa_id', user.siswa?.siswa_id);
+  window.localStorage.setItem('kelas_id', user.siswa?.kelas_id);
+  window.localStorage.setItem('kelas_nama', user.siswa?.kelas.kelas_nama);
 };
 
 /**
