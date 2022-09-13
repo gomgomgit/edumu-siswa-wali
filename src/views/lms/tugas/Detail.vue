@@ -216,7 +216,8 @@ watch(() => fileUpload.value, () => {
           </div>
         </div>
       </div>
-      <div class="card mb-5 mb-xxl-8">
+
+      <div v-if="currentUser.user_level == 'siswa'" class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
           <div class="page-content">
             <div class="mb-4">
@@ -232,7 +233,7 @@ watch(() => fileUpload.value, () => {
           </div>
         </div>
       </div>
-      <div class="card mb-5 mb-xxl-8">
+      <div v-if="currentUser.user_level == 'siswa'" class="card mb-5 mb-xxl-8">
         <div class="card-body pt-5 pb-5">
           <div class="page-content">
             <div class="mb-4">
