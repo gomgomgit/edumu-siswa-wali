@@ -38,7 +38,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
 
   function getTodo(payload) {
     request.post('calendar/todo-all', QueryString.stringify({
-      user_id: currentUser.siswa_id
+      user_id: currentUser.user_id
     })).then(res => {
       todoData.rows = res.data.data
       todoData.totalRows = res.data.total
@@ -57,7 +57,7 @@ import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
     deleteConfirmation(function() {
       request.post('/calendar/todo-delete', QueryString.stringify({calendar_id: id}))
       .then(res => {
-        useToast().success('Data Berhasil Dihapus!')
+        useToast().success('Data Berhasil Dinonaktifkan!')
         getTodo()
       })
     }, null, 'Anda yakin ingin menonaktifkan ini?')

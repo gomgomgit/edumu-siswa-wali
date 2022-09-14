@@ -34,7 +34,7 @@ function handleClose () {
 
 function handleSubmit () {
   const formData = new FormData()
-  formData.append('user_id', currentUser.siswa_user_id)
+  formData.append('user_id', currentUser.user_id)
   formData.append('calendar_id', form.calendar_id)
   formData.append('date', form.date)
   formData.append('title', form.title)
