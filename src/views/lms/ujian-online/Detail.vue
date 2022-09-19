@@ -30,8 +30,7 @@ const hint = ref([])
 const notPermitted = ref(false)
 
 function startExam() {
-  console.log(detailData.value.entry_status)
-  if (detailData.value.entry_status == 'finish') {
+  if (detailData.value.entry_status == 'finish' || detailData.value.entry_status == 'correction') {
     Swal.fire({
         icon: 'error',
         title: 'Ujian Sudah Selesai',
@@ -51,6 +50,9 @@ function startExam() {
   } else {
     router.push(`/lms/ujian-online/soal/${examId}`)
   }
+}
+function showResult() {
+  router.push(`/lms/ujian-online/result/${examId}`)
 }
 
 function getData() {
@@ -136,24 +138,39 @@ function formatingDate(date) {
             </div>
           </div>
         </div>
-        <div class="separator border-black-50 border-2 my-3"></div>
-        <div v-if="notPermitted || !detailData.can_start">
-          <div class="alert alert-dismissible bg-danger d-flex flex-column align-items-center gap-4 flex-sm-row p-5">
-            <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-sm-0">
-              <i class="bi bi-exclamation-triangle-fill text-white fs-1"></i>
-            </span>
-            <div class="d-flex flex-column text-white pe-0 pe-sm-10">
-                <h4 class="mb-0 text-white">Anda tidak diperbolehkan mengerjakan ujian, mohon hubungi admin untuk meminta akses.</h4>
+        <div v-if="currentUser.user_level == 'siswa'">
+          <div class="separator border-black-50 border-2 my-3"></div>
+          <div v-if="notPermitted || !detailData?.can_start">
+            <div class="alert alert-dismissible bg-danger d-flex flex-column align-items-center gap-4 flex-sm-row p-5">
+              <span class="svg-icon svg-icon-2hx svg-icon-light me-4 mb-sm-0">
+                <i class="bi bi-exclamation-triangle-fill text-white fs-1"></i>
+              </span>
+              <div class="d-flex flex-column text-white pe-0 pe-sm-10">
+                  <h4 class="mb-0 text-white">Anda tidak diperbolehkan mengerjakan ujian, mohon hubungi admin untuk meminta akses.</h4>
+              </div>
             </div>
           </div>
+          <div v-if="detailData && detailData?.can_start" class="d-flex justify-content-end">
+            <a @click="startExam()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+              <i class="bi bi-play-fill fs-1"></i>
+              <span>
+                Mulai
+              </span>
+            </a>
+          </div>
         </div>
-        <div v-if="detailData && detailData.can_start" class="d-flex justify-content-end">
-          <a @click="startExam()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
-            <i class="bi bi-play-fill fs-1"></i>
-            <span>
-              Mulai
-            </span>
-          </a>
+        <div v-if="detailData && currentUser.user_level == 'wali'">
+          <div v-if="detailData?.exam_show_score == '1' && ( detailData?.entry_status == 'finish' || detailData?.entry_status == 'correction')">
+            <div class="separator border-black-50 border-2 my-3"></div>
+            <div class="d-flex justify-content-end">
+              <a @click="showResult()" class="btn btn-primary d-flex gap-3 align-items-center w-auto">
+                <i class="bi bi-eye-fill fs-1"></i>
+                <span>
+                  Lihat Nilai
+                </span>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
