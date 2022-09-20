@@ -9,8 +9,8 @@
   import { Search } from '@element-plus/icons-vue'
   import { useToast } from "vue-toast-notification"
   import { deleteConfirmation } from "@/core/helpers/deleteconfirmation";
-import moment from "moment";
-import { useStore } from "vuex";
+  import moment from "moment";
+  import { useStore } from "vuex";
   
   onMounted(() => {
     setCurrentPageBreadcrumbs("Tugas", ['LMS']);
@@ -25,6 +25,7 @@ import { useStore } from "vuex";
       kelas_id: currentUser.kelas_id,
       page: payload?.page ?? 1,
       mapel_id: mapelFilter.value,
+      guru_id: guruFilter.value,
       sortby: sortFilter.value,
       judul_tugas: searchTugas.value,
       siswa_id: currentUser.siswa_id,
@@ -42,10 +43,16 @@ import { useStore } from "vuex";
     .then(res => {
       mapelOption.value = res.data.data.filtermapel
     })
+    
+    request.post('tugas/guru')
+    .then(res => {
+      guruOption.value = res.data.data.filterguru
+    })
   }
 
   const sortFilter = ref()
   const mapelFilter = ref()
+  const guruFilter = ref()
   const searchTugas = ref()
 
   const sortOption = ref([
@@ -55,6 +62,7 @@ import { useStore } from "vuex";
     {value: 'pembuatanDESC',label: 'Tanggal Pembuatan DESC'},
   ])
   const mapelOption = ref([])
+  const guruOption = ref([])
 
   const tugasData = reactive({
     columns: [
@@ -94,7 +102,7 @@ import { useStore } from "vuex";
         </div>
         <div class="separator border-black-50 border-2 my-6"></div>
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
-          <!-- <div class="d-flex gap-4">
+          <div class="d-flex gap-4">
             <div>
               <FilterSelect v-model:filterValue="mapelFilter" placeholder="Pilih Mapel" @changeFilter="getTugasData()">
                 <el-option
@@ -106,16 +114,16 @@ import { useStore } from "vuex";
               </FilterSelect>
             </div>
             <div>
-              <FilterSelect searchable v-model:filterValue="sortFilter" placeholder="Pilih Sortir" @changeFilter="getTugasData()">
+              <FilterSelect searchable v-model:filterValue="guruFilter" placeholder="Pilih Guru" @changeFilter="getTugasData()">
                 <el-option
-                  v-for="sort in sortOption"
-                  :key="sort.value"
-                  :label="sort.label"
-                  :value="sort.value"
+                  v-for="guru in guruOption"
+                  :key="guru.user_id"
+                  :label="guru.user_nama"
+                  :value="guru.user_id"
                 />
               </FilterSelect>
             </div>
-          </div> -->
+          </div>
           
           <div class="d-flex w-100 w-lg-50 w-xl-25 gap-4">
               <el-input
