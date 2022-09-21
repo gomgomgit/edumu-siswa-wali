@@ -186,7 +186,8 @@ function randomArray(items) {
                         <div class="col-6 form-check gap-6 d-flex align-items-center">
                           <input @change="answerSingle(option.question_id, option.option_id)" class="form-check-input" type="radio" :name="`answer-${option.question_id}`" :id="`option${option.option_id}`">
                           <label class="form-check-label" :for="`option${option.option_id}`">
-                            {{option.option_text}}
+                            <div v-html="option.option_text">
+                            </div>
                           </label>
                         </div>
                       </template>
